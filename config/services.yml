@@ -1,0 +1,56 @@
+services:
+    gfksx.thanks_for_posts.listener:
+        class: gfksx\thanks_for_posts\event\listener
+        arguments:
+            - @config
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - @cache.driver
+            - %core.root_path%
+            - %core.php_ext%
+            - @gfksx.thanks_for_posts.helper
+        tags:
+            - { name: event.listener }
+    gfksx.thanks_for_posts.helper:
+        class: gfksx\thanks_for_posts\core\helper
+        arguments:
+            - @config
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - @cache.driver
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%
+    gfksx.thanks_for_posts.controller.thankslist:
+        class: gfksx\thanks_for_posts\controller\thankslist
+        arguments:
+            - @config
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - @cache.driver
+            - %core.root_path%
+            - %core.php_ext%
+            - @controller.helper
+            - @service_container
+            - @request
+    gfksx.thanks_for_posts.controller.toplist:
+        class: gfksx\thanks_for_posts\controller\toplist
+        arguments:
+            - @config
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - @cache.driver
+            - %core.root_path%
+            - %core.php_ext%
+            - @controller.helper
+            - @service_container
+            - @gfksx.thanks_for_posts.helper
+            - @request

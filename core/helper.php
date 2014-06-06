@@ -1,0 +1,882 @@
+<?php
+/** 
+*
+* @author Sergeiy Varzaev (Палыч)  phpbbguru.net varzaev@mail.ru
+* @version $Id: functions_thanks.php,v 135 2012-10-10 10:02:51 Палыч $
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
+
+namespace gfksx\thanks_for_posts\core;
+
+/**
+* @ignore
+*/
+if (!defined('IN_PHPBB'))
+{
+	exit; 
+}
+
+class helper
+{
+	protected $thankers = array();
+	protected $forum_thanks = array();
+	protected $max_post_thanks;
+	protected $max_topic_thanks;
+	protected $max_forum_thanks;
+	protected $poster_list_count;
+	
+    public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, $table_prefix)
+    {
+		$this->config = $config;
+		$this->db = $db;
+ 		$this->auth = $auth;
+		$this->template = $template;
+        $this->user = $user;
+		$this->cache = $cache;
+		$this->phpbb_root_path = $phpbb_root_path;
+		$this->php_ext = $php_ext;
+		$this->table_prefix = $table_prefix;
+		define('THANKS_TABLE', $this->table_prefix . 'thanks');
+    }
+
+	// Output thanks list
+	public function get_thanks($post_id)
+	{
+		$view = request_var('view', '');
+		$return = '';
+		$user_list = array();
+		$count = 0;
+		$maxcount = (isset($this->config['thanks_number_post']) ? $this->config['thanks_number_post'] : false);
+		$further_thanks = 0;
+		$further_thanks_text = '';
+
+		foreach($this->thankers as $key => $value)
+		{
+			if ($this->thankers[$key]['post_id'] == $post_id)
+			{
+				if ($count >= $maxcount)
+				{
+					$further_thanks++;
+				}
+				else
+				{
+				$user_list[$this->thankers[$key]['username_clean']] = array(
+					'thanks_time' => $this->thankers[$key]['thanks_time'],
+					'username' => $this->thankers[$key]['username'],
+					'user_id' => $this->thankers[$key]['user_id'],
+					'user_colour' => $this->thankers[$key]['user_colour'],
+					);
+				}
+
+				$count++;
+			}
+		}
+		array_multisort($user_list, SORT_DESC);
+		$comma = '';
+		foreach($user_list as $key => $value)
+		{
+			$return .= $comma;
+			$return .= get_username_string('full', $value['user_id'], $value['username'], $value['user_colour']);
+			if (isset($this->config['thanks_time_view']) ? $this->config['thanks_time_view'] : false)
+			{
+				$return .= ($value['thanks_time']) ? ' ('.$this->user->format_date($value['thanks_time'], false, ($view == 'print') ? true : false) . ')' : '';
+			}
+			$comma = ' &bull; ';
+		}
+
+	   if ($further_thanks > 0)
+	   {
+		  $further_thanks_text = ($further_thanks == 1) ? $this->user->lang['FURTHER_THANKS'] : sprintf($this->user->lang['FURTHER_THANKS_PL'], $further_thanks);
+	   }
+	   $return = ($return == '') ? false : ($return . $further_thanks_text);
+	   return $return;
+	}
+
+	//get thanks number
+	public function get_thanks_number($post_id)
+	{
+		$i = 0;
+		foreach($this->thankers as $key => $value)
+		{
+			if ($this->thankers[$key]['post_id'] == $post_id)
+			{
+				$i++;
+			}
+		}
+		return $i;
+	}
+
+	// add a user to the thanks list
+	public function insert_thanks($post_id, $user_id, $forum_id)
+	{
+		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+		$to_id = request_var('to_id', 0);
+		$from_id = request_var('from_id', 0);	
+		$sql_array = array(
+			'SELECT'	=> 'p.post_id, p.poster_id, p.topic_id, p.forum_id',
+			'FROM'		=> array (POSTS_TABLE => 'p'),
+			'WHERE'		=> 'p.post_id =' . (int) $post_id );
+		$sql = $this->db->sql_build_query('SELECT', $sql_array);
+		$result = $this->db->sql_query($sql);
+		$row = $this->db->sql_fetchrow($result);
+		$this->db->sql_freeresult($result);
+		if ($this->user->data['user_type'] != USER_IGNORE && !empty($to_id))
+		{
+			if ($row['poster_id'] != $user_id && $row['poster_id'] == $to_id && !$this->already_thanked($post_id, $user_id, $this->thankers) && ($this->auth->acl_get('f_thanks', $row['forum_id']) || (!$row['forum_id'] && (isset($this->config['thanks_global_post']) ? $this->config['thanks_global_post'] : false))) && $from_id == $user_id)
+			{
+				$sql = 'INSERT INTO ' . THANKS_TABLE . ' ' . $this->db->sql_build_array('INSERT', array(
+					'user_id'	=> (int) $user_id,
+					'post_id'	=> $post_id,
+					'poster_id'	=> $to_id,
+					'topic_id'	=> (int) $row['topic_id'],
+					'forum_id'	=> (int) $row['forum_id'],
+					'thanks_time'	=> time()
+				));
+				$this->db->sql_query($sql);
+			
+				$lang_act = 'GIVE';
+				if (isset($config ['thanks_notice_on']) ? $config ['thanks_notice_on'] : false)
+				{
+					send_thanks_pm($user_id, $to_id, $send_pm = true, $post_id, $lang_act);
+					send_thanks_email($to_id, $post_id, $lang_act);
+				}	
+				if (isset($this->config['thanks_info_page']) ? $this->config['thanks_info_page'] : false)
+				{
+					meta_refresh (1, append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id .'&amp;p=' . $post_id . '#p' . $post_id));
+					trigger_error($this->user->lang['THANKS_INFO_'.$lang_act] . '<br /><br /><a href="'.append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id .'&amp;p=' . $post_id . '#p' . $post_id) . '">' . $this->user->lang['RETURN_POST'] . '</a>');
+				}
+				else
+				{
+					redirect (append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id));			
+				}
+			}
+			elseif (!$row['forum_id'] && (isset($this->config['thanks_global_post']) ? !$this->config['thanks_global_post'] : true))
+			{
+				trigger_error($this->user->lang['GLOBAL_INCORRECT_THANKS'] . '<br /><br /><a href="'.append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id) . '">' . $this->user->lang['RETURN_POST'] . '</a>');
+			}
+			else
+			{
+				trigger_error($this->user->lang['INCORRECT_THANKS'] . '<br /><br /><a href="'.append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id) . '">' . $this->user->lang['RETURN_POST'] . '</a>');
+			}
+		}
+		return;
+	}
+
+	// clear list user's thanks
+	public function clear_list_thanks($object_id, $list_thanks = '')
+	{
+		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+
+		// confirm
+		$s_hidden_fields = build_hidden_fields(array(
+			'list_thanks'		=> $list_thanks,
+			)
+		);
+		$lang_act = $field_act = '';
+		if (confirm_box(true))
+		{
+			if (!empty($list_thanks) && $this->auth->acl_get('m_thanks'))
+			{
+				if ($list_thanks === 'give')
+				{	
+					$lang_act = 'GIVE';
+					$field_act = 'user_id';
+				}	
+				elseif ($list_thanks === 'receive')
+				{
+					$lang_act = 'RECEIVE';
+					$field_act = 'poster_id';
+				}	
+				elseif ($list_thanks === 'post')
+				{
+					$lang_act = 'POST';
+					$field_act = 'post_id';
+				}	
+
+				if (!empty($field_act))
+				{
+					$sql = "DELETE FROM " . THANKS_TABLE . '
+						WHERE ' . $field_act . ' = ' . (int)$object_id;				
+					$result = $this->db->sql_query($sql);		
+				
+					if ($result != 0)
+					{
+						if (isset($this->config['thanks_info_page']) ? $this->config['thanks_info_page'] : false)
+						{
+							if ($list_thanks === 'post')
+							{
+								meta_refresh (1, append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id));
+								trigger_error($this->user->lang['CLEAR_LIST_THANKS_' . $lang_act] . '<br /><br /><a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id) . '">' . $this->user->lang['BACK_TO_PREV'] . '</a>');
+							}
+							else
+							{
+								meta_refresh (1, append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $object_id));
+								trigger_error($this->user->lang['CLEAR_LIST_THANKS_'.$lang_act] . '<br /><br /><a href="' . append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext",'mode=viewprofile&amp;u=' . $object_id) . '">' . $this->user->lang['BACK_TO_PREV'] . '</a>');						
+							}
+						}
+						else
+						{
+							if ($list_thanks === 'post')
+							{
+								redirect (append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id));
+							}
+							else
+							{
+								redirect (append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $object_id));			
+							}
+						}
+					}
+				}	
+			}	
+			else
+			{
+				if ($list_thanks === 'post')
+				{
+					trigger_error($this->user->lang['INCORRECT_THANKS'] . '<br /><br /><a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id) . '">' . $this->user->lang['BACK_TO_PREV'] . '</a>');		
+				}
+				else
+				{
+					trigger_error($this->user->lang['INCORRECT_THANKS'] . '<br /><br /><a href="' . append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $object_id) . '">' . $this->user->lang['BACK_TO_PREV'] . '</a>');			
+				}
+			}
+		}
+		else
+		{
+			confirm_box(false, 'CLEAR_LIST_THANKS', $s_hidden_fields);
+			if ($list_thanks === 'post')
+			{		
+				redirect (append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $object_id . '#p' . $object_id));
+			}
+			else
+			{
+				redirect(append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $object_id));		
+			}
+		}
+		return;
+	}
+
+	// remove a user's thanks
+	public function delete_thanks($post_id, $user_id, $forum_id)
+	{
+		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+		$to_id = request_var('to_id', 0);
+		$forum_id = ($forum_id) ? : request_var('f', 0);
+		// confirm
+		$hidden = build_hidden_fields(array(
+			'to_id'		=> $to_id,
+			'rthanks'	=> $post_id,
+			)
+		);
+		if (isset($this->config['remove_thanks']) ? !$this->config['remove_thanks'] : true)
+		{
+			trigger_error($this->user->lang['DISABLE_REMOVE_THANKS'] . '<br /><br /><a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">' . $this->user->lang['RETURN_POST'] . '</a>');		
+		}
+		
+		if (confirm_box(true, 'REMOVE_THANKS', $hidden))
+		{
+			if ($this->user->data['user_type'] != USER_IGNORE && !empty($to_id) && $this->auth->acl_get('f_thanks', $forum_id))
+			{
+				$sql = "DELETE FROM " . THANKS_TABLE . '
+					WHERE post_id ='. (int) $post_id ." AND user_id = " . (int) $this->user->data['user_id'];
+				$this->db->sql_query($sql);
+				$result = $this->db->sql_affectedrows($sql);
+				if ($result != 0)
+				{
+					$lang_act = 'REMOVE';
+					if (isset($this->config['thanks_notice_on']) ? $this->config['thanks_notice_on'] : false)
+					{
+						send_thanks_pm($user_id, $to_id, $send_pm = true, $post_id, $lang_act);
+						send_thanks_email($to_id, $post_id, $lang_act);
+					}	
+					if (isset($this->config['thanks_info_page']) ? $this->config['thanks_info_page'] : false)
+					{
+						meta_refresh (1, append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id"));
+						trigger_error($this->user->lang['THANKS_INFO_' . $lang_act] . '<br /><br /><a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">' . $this->user->lang['RETURN_POST'] . '</a>');
+					}
+					else
+					{
+						redirect (append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id"));
+					}
+				}
+				else
+				{
+					trigger_error($this->user->lang['INCORRECT_THANKS'] . '<br /><br /><a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">' .$this->user->lang['RETURN_POST'] . '</a>');		
+				}
+			}
+		}
+		else
+		{
+			confirm_box(false, 'REMOVE_THANKS', $hidden);
+			redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id"));
+		}
+		return;
+	}
+
+	// display the text/image saying either to add or remove thanks
+	public function get_thanks_text($post_id)
+	{
+		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+		if ($this->already_thanked($post_id, $this->user->data['user_id'], $this->thankers))
+		{
+			return array(
+				'THANK_ALT'		=> $this->user->lang['REMOVE_THANKS'],
+				'THANKS_IMG'	=> 'removethanks-icon',
+			);
+		}
+		return array(
+			'THANK_ALT'		=> $this->user->lang['THANK_POST'],
+			'THANKS_IMG'	=> 'thanks-icon',
+		);
+	}
+
+	// change the variable sent via the link to avoid odd errors
+	public function get_thanks_link($post_id)
+	{
+		if ($this->already_thanked($post_id, $this->user->data['user_id'], $this->thankers))
+		{
+			return 'rthanks';
+		}
+		return 'thanks';
+	}
+
+	// check if the user has already thanked that post
+	public function already_thanked($post_id, $user_id)
+	{
+		$thanked = false;
+		foreach((array)$this->thankers as $key => $value)
+		{
+			if ($this->thankers[$key]['post_id'] == $post_id && $this->thankers[$key]['user_id'] == $user_id)
+			{
+				$thanked = true;
+			}
+		}
+		return $thanked;
+	}
+
+	// stuff goes here to avoid over-editing memberlist.php
+	public function output_thanks_memberlist($user_id, $ex_fid_ary)
+	{
+		$thankers_member = array();
+		$thankered_member = array();
+		$thanks = '';
+		$thanked = '';
+		$poster_receive_count = 0;
+		$poster_give_count = 0;
+		$poster_limit = isset($this->config['thanks_number']) ? $this->config['thanks_number'] : false;
+		
+		$sql = 'SELECT poster_id, COUNT(*) AS poster_receive_count
+			FROM ' . THANKS_TABLE . '
+			WHERE poster_id = ' . (int) $user_id. ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
+			GROUP BY poster_id';
+		$result = $this->db->sql_query($sql);
+		$poster_receive_count = (int) $this->db->sql_fetchfield('poster_receive_count');
+		$this->db->sql_freeresult($result);
+		
+		$sql_array = array(
+			'SELECT'	=> 't.*, u.username, u.user_colour',
+			'FROM'		=> array(THANKS_TABLE => 't', USERS_TABLE => 'u'),
+		);
+		$sql_array['WHERE'] = 't.poster_id =' . (int) $user_id .' AND ';
+		$sql_array['WHERE'] .= 'u.user_id = t.user_id AND ';
+		$sql_array['WHERE'] .= '('. $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0)'; 
+		$sql_array['ORDER_BY'] = 't.post_id DESC LIMIT ' . (int)$poster_limit;
+		$sql = $this->db->sql_build_query('SELECT', $sql_array);
+		$result = $this->db->sql_query($sql);
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$thankers_member[] = array(  
+				'user_id' 		=> $row['user_id'], 
+				'poster_id' 	=> $row['poster_id'], 
+				'post_id' 		=> $row['post_id'], 
+				'username'		=> $row['username'],
+				'user_colour'	=> $row['user_colour'],
+			);	
+
+		}	
+		$this->db->sql_freeresult($result);
+		$user_list = array();
+		$post_list = array ();
+		$i=0;
+		foreach($thankers_member as $key => $value)
+		{
+			if ($thankers_member[$key]['poster_id'] == $user_id)
+			{
+				$i++;
+				$user_list[$i] = array( 
+					'username' 		=> $thankers_member[$key]['username'],
+					'user_id' 		=> $thankers_member[$key]['user_id'], 
+					'user_colour' 	=> $thankers_member[$key]['user_colour'],
+					'post_id' 		=> $thankers_member[$key]['post_id'], 
+				);
+			}
+		}
+		unset ($value);
+		$collim = ($poster_limit > $poster_receive_count)? ceil($poster_receive_count/4) : ceil($poster_limit/4);
+		$thanked .= '<span style="float: left;">';
+		$i = $j = 0;
+		foreach($user_list as $value)
+		{
+			$i++;
+			if ($i <= $poster_limit)
+			{
+				$thanked .= '&nbsp;&nbsp;&bull;&nbsp;&nbsp;' . get_username_string('full', $value['user_id'], $value['username'], $value['user_colour']) . ' &#8594; <a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $value['post_id']. '#p' . $value['post_id']) . '">' . $this->user->lang['FOR_MESSAGE'] . '</a><br />';
+				$j++;	
+				if ($j > $collim or $i == $poster_receive_count or $i == $poster_limit)
+				{
+					$thanked .= '&nbsp;</span>';
+					$j = 0;
+					if ($i < $poster_limit and $i < $poster_receive_count)
+					{
+						$thanked .= '<span style="float: left;">';
+					}
+				}
+			}
+		}	
+		if ($poster_receive_count > $poster_limit)
+		{
+			$further_thanks = $poster_receive_count - $poster_limit;
+			$further_thanks_text = ($further_thanks == 1) ? $this->user->lang['FURTHER_THANKS'] : sprintf($this->user->lang['FURTHER_THANKS_PL'], $further_thanks);
+			$thanked .= '<span style="float: left;">&nbsp;' . $further_thanks_text . '</span>';
+		}
+		unset ($value);
+	//===
+		$sql = 'SELECT user_id, COUNT(*) AS poster_give_count
+			FROM ' . THANKS_TABLE . "
+			WHERE user_id = " . (int) $user_id.  ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
+			GROUP BY user_id';
+		$result = $this->db->sql_query($sql);
+		$poster_give_count = (int) $this->db->sql_fetchfield('poster_give_count');
+		$this->db->sql_freeresult($result);
+		
+		$sql_array = array(
+			'SELECT'	=> 't.*, u.username, u.user_colour',
+			'FROM'		=> array(THANKS_TABLE => 't', USERS_TABLE => 'u'),
+		);
+		$sql_array['WHERE'] = 't.user_id =' . (int) $user_id . ' AND ';
+		$sql_array['WHERE'] .= 'u.user_id = t.poster_id AND ';
+		$sql_array['WHERE'] .= '(' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0)'; 
+		$sql_array['ORDER_BY'] = 't.post_id DESC LIMIT ' . (int)$poster_limit;
+		$sql = $this->db->sql_build_query('SELECT', $sql_array);
+		$result = $this->db->sql_query($sql);
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$thankered_member[] = array(
+				'user_id' 		=> $row['user_id'],
+				'poster_id' 	=> $row['poster_id'],
+				'post_id' 		=> $row['post_id'],
+				'username'		=> $row['username'],
+				'user_colour'	=> $row['user_colour'],
+			);
+		}
+		$this->db->sql_freeresult($result);
+		
+		$i=0;
+		foreach($thankered_member as $key => $value)
+		{
+			if ($thankered_member[$key]['user_id'] == $user_id)
+			{
+				$i++;
+				$post_list[$i] = array(
+					'postername' 		=> $thankered_member[$key]['username'],
+					'poster_id' 		=> $thankered_member[$key]['poster_id'],
+					'poster_colour' 	=> $thankered_member[$key]['user_colour'],
+					'post_id' 			=> $thankered_member[$key]['post_id'],
+				);
+			}
+		}
+		unset ($value);
+		$collim = ($poster_limit > $poster_give_count)? ceil($poster_give_count/4) : ceil($poster_limit/4);
+		$thanks .= '<span style="float: left;">';
+		$i = $j = 0;
+		foreach($post_list as $value)
+		{
+			$i++;
+			if ($i <= $poster_limit)
+			{
+				$thanks .= '&nbsp;&nbsp;&bull;&nbsp;&nbsp;'. get_username_string('full', $value['poster_id'], $value['postername'], $value['poster_colour']) . ' &#8592; <a href="'. append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $value['post_id']. '#p' . $value['post_id']) . '">' . $this->user->lang['FOR_MESSAGE'] . '</a><br />';
+				$j++;	
+				if ($j > $collim or $i == $poster_give_count or $i == $poster_limit)
+				{
+					$thanks .= '</span>';
+					$j = 0;
+					if ($i < $poster_limit and $i < $poster_give_count)
+					{
+						$thanks .= '<span style="float: left;">';
+					}
+				}
+			}
+		}
+		if ($poster_give_count > $poster_limit)
+		{		
+			$further_thanks = $poster_give_count - $poster_limit;
+			$further_thanks_text = ($further_thanks == 1) ? $this->user->lang['FURTHER_THANKS'] : sprintf($this->user->lang['FURTHER_THANKS_PL'], $further_thanks);
+			$thanks .= '<span style="float: left;">&nbsp;' . $further_thanks_text . '</span>';
+		}
+		unset ($value);	
+
+		$this->template->assign_vars(array(
+			'DELETE_IMG' 					=> $this->user->img('icon_post_delete', $this->user->lang['CLEAR_LIST_THANKS']),
+			'POSTER_RECEIVE_COUNT'			=> $poster_receive_count,
+			'THANKS'						=> $thanks,
+			'POSTER_GIVE_COUNT'				=> $poster_give_count,
+			'THANKED'						=> $thanked,
+			'THANKS_PROFILELIST_VIEW'		=> isset($this->config['thanks_profilelist_view']) ? $this->config['thanks_profilelist_view'] : false,
+			'S_MOD_THANKS'					=> $this->auth->acl_get('m_thanks'),
+			'U_CLEAR_LIST_THANKS_GIVE'		=> append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $user_id . '&amp;list_thanks=give'),
+			'U_CLEAR_LIST_THANKS_RECEIVE'	=> append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $user_id . '&amp;list_thanks=receive'),
+		));
+	}
+
+	// stuff goes here to avoid over-editing viewtopic.php
+	public function output_thanks($poster_id, &$postrow, $row, $topic_data, $forum_id)
+	{
+		if (!empty($postrow))
+		{
+			$thanks_text = $this->get_thanks_text($row['post_id']);
+			$thank_mode = $this->get_thanks_link($row['post_id']);
+			$already_thanked = $this->already_thanked($row['post_id'], $this->user->data['user_id']);
+			$postrow = array_merge($postrow, $thanks_text, array(
+				'COND'						=> ($already_thanked) ? true : false,
+				'THANKS'					=> $this->get_thanks($row['post_id']),
+				'THANK_MODE'				=> $thank_mode,
+				'THANKS_LINK'				=> append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $row['post_id'] . '&amp;' . $thank_mode . '=' . $row['post_id'] . '&amp;to_id=' . $poster_id . '&amp;from_id=' . $this->user->data['user_id']),
+				'THANK_TEXT'				=> $this->user->lang['THANK_TEXT_1'],
+				'THANK_TEXT_2'				=> ($this->get_thanks_number($row['post_id']) != 1) ? sprintf($this->user->lang['THANK_TEXT_2PL'], $this->get_thanks_number($row['post_id'])) : $this->user->lang['THANK_TEXT_2'],
+				'THANKS_FROM'				=> $this->user->lang['THANK_FROM'],
+				'POSTER_RECEIVE_COUNT'		=> isset($this->poster_list_count[$poster_id]['R']) ? $this->poster_list_count[$poster_id]['R'] : '',
+				'POSTER_GIVE_COUNT'			=> isset($this->poster_list_count[$poster_id]['G']) ? $this->poster_list_count[$poster_id]['G'] : '',
+				'POSTER_RECEIVE_COUNT_LINK'	=> append_sid("{$this->phpbb_root_path}thankslist.$this->php_ext", "mode=givens&amp;author_id={$poster_id}&amp;give=false"),
+				'POSTER_GIVE_COUNT_LINK'	=> append_sid("{$this->phpbb_root_path}thankslist.$this->php_ext", "mode=givens&amp;author_id={$poster_id}&amp;give=true"),
+				'S_IS_OWN_POST'				=> ($this->user->data['user_id'] == $poster_id) ? true : false,
+				'S_POST_ANONYMOUS'			=> ($poster_id == ANONYMOUS) ? true : false,
+				'THANK_IMG' 				=> ($already_thanked) ? $this->user->img('removethanks', $this->user->lang['REMOVE_THANKS']. get_username_string('username', $poster_id, $row['username'], $row['user_colour'], $row['post_username'])) : $this->user->img('thankposts', $this->user->lang['THANK_POST']. get_username_string('username', $poster_id, $row['username'], $row['user_colour'], $row['post_username'])),
+				'DELETE_IMG' 				=> $this->user->img('icon_post_delete', $this->user->lang['CLEAR_LIST_THANKS']),
+				'THANKS_POSTLIST_VIEW'		=> isset($this->config['thanks_postlist_view']) ? $this->config['thanks_postlist_view'] : false,
+				'THANKS_COUNTERS_VIEW'		=> isset($this->config['thanks_counters_view']) ? $this->config['thanks_counters_view'] : false,
+				'S_ALREADY_THANKED'			=> $already_thanked,
+				'S_REMOVE_THANKS'			=> isset($this->config['remove_thanks']) ? $this->config['remove_thanks'] : false,
+				'S_FIRST_POST_ONLY'			=> isset($this->config['thanks_only_first_post']) ? $this->config['thanks_only_first_post'] : false,
+				'POST_REPUT'				=> ($this->get_thanks_number($row['post_id']) != 0) ? round($this->get_thanks_number($row['post_id']) / ($this->max_post_thanks / 100), $this->config['thanks_number_digits']) . '%' : '',
+				'S_THANKS_POST_REPUT_VIEW' 	=> isset($this->config['thanks_post_reput_view']) ? $this->config['thanks_post_reput_view'] : false,
+				'S_THANKS_REPUT_GRAPHIC' 	=> isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
+				'THANKS_REPUT_HEIGHT'		=> isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_height']) : false,
+				'THANKS_REPUT_GRAPHIC_WIDTH'=> isset($this->config['thanks_reput_level']) ? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']) : false) : false,
+				'THANKS_REPUT_IMAGE' 		=> isset($this->config['thanks_reput_image']) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
+				'THANKS_REPUT_IMAGE_BACK'	=> isset($this->config['thanks_reput_image_back']) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
+				'S_GLOBAL_POST_THANKS'		=> ($topic_data['topic_type'] == POST_GLOBAL) ? (isset($this->config['thanks_global_post']) ? !$this->config['thanks_global_post'] : true) : false,
+				'U_CLEAR_LIST_THANKS_POST'	=> append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $row['post_id'] . '&amp;list_thanks=post'),
+				'S_MOD_THANKS'				=> $this->auth->acl_get('m_thanks'),
+				'S_ONLY_TOPICSTART'         => ($topic_data['topic_first_post_id'] == $row['post_id']) ? true : false,
+			));
+		}
+	}
+
+	//refresh counts if post delete
+	public function delete_post_thanks($post_ids)
+	{
+		$sql = 'DELETE FROM ' . THANKS_TABLE . '
+				WHERE ' . $this->db->sql_in_set('post_id', $post_ids);
+		$this->db->sql_query($sql);
+	}
+
+	//send pm
+	public function send_thanks_pm($user_id, $to_id, $send_pm = true, $post_id = 0, $lang_act)
+	{
+		if (isset($this->config['thanks_notice_on']) ? !$this->config['thanks_notice_on'] : true)
+		{
+			return;	
+		}
+		$allow_thanks_pm = 0;
+		$sql_array = array(
+			'SELECT'	=> 'u.user_allow_thanks_pm',
+			'FROM'		=> array(USERS_TABLE => 'u'),
+		);
+		$sql_array['WHERE'] = 'u.user_id ='. (int) $to_id;
+		$sql = $this->db->sql_build_query('SELECT', $sql_array);
+		$result = $this->db->sql_query($sql);
+		$allow_thanks_pm = (int) $this->db->sql_fetchfield('user_allow_thanks_pm');
+		$this->db->sql_freeresult($result);
+		
+		if (!$allow_thanks_pm)
+		{
+			return;	
+		}
+		include($this->phpbb_root_path . 'includes/functions_privmsgs.' . $this->php_ext);
+		$this->user->data['user_lang'] = (file_exists($this->phpbb_root_path . 'language/' . $this->user->data['user_lang'] . "/mods/thanks_mod.$this->php_ext")) ? $this->user->data['user_lang'] : $this->config['default_lang'];
+		$this->user->add_lang('mods/thanks_mod');
+		$message = '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $post_id .'#p' . $post_id) .'">'. $this->user->lang['THANKS_PM_MES_'. $lang_act] .'</a>';
+		$pm_data = array(
+			'from_user_id'			=> $this->user->data['user_id'],
+			'from_user_ip'			=> $this->user->ip,
+			'from_username'			=> $this->user->data['username'],
+			'enable_sig'			=> false,
+			'enable_bbcode'			=> true,
+			'enable_smilies'		=> false,
+			'enable_urls'			=> false,
+			'icon_id'				=> 0,
+			'bbcode_bitfield'		=> '',
+			'bbcode_uid'			=> '',
+			'message'				=> $message,
+			'address_list'			=> array('u' => array($to_id => 'to')),
+		);
+		generate_text_for_storage($pm_data['message'], $pm_data['bbcode_uid'], $pm_data['bbcode_bitfield'], $flags, $pm_data['enable_bbcode'], $pm_data['enable_urls'], $pm_data['enable_smilies']);
+		submit_pm('post', $this->user->lang['THANKS_PM_SUBJECT_'.$lang_act], $pm_data, false);
+		return;
+	}
+	//send email
+	public function send_thanks_email($to_id, $post_id, $lang_act)
+	{
+		if (isset($this->config['thanks_notice_on']) ? !$this->config['thanks_notice_on'] : true)
+		{
+			return;	
+		}
+		if ($this->config['email_enable'])
+		{
+			$sql_array = array(
+				'SELECT'	=> 'u.user_allow_thanks_email',
+				'FROM'		=> array(USERS_TABLE => 'u'),
+					);
+			$sql_array['WHERE'] = 'u.user_id ='. (int) $to_id;
+			$sql = $this->db->sql_build_query('SELECT', $sql_array);
+			$result = $this->db->sql_query($sql);
+			$allow_thanks_email = (int) $this->db->sql_fetchfield('user_allow_thanks_email');
+			$this->db->sql_freeresult($result);	
+
+			if (!$allow_thanks_email)
+			{
+				return;	
+			}
+			$server_url = generate_board_url();
+			$sql_array = array(
+			'SELECT'	=> 'u.user_email, u.user_lang, u.user_email, u.username, u.user_jabber',
+			'FROM'		=> array(USERS_TABLE => 'u'),
+				);
+			$sql_array['WHERE'] = 'u.user_id =' . (int) $to_id;
+			$sql = $this->db->sql_build_query('SELECT', $sql_array);
+			$result = $this->db->sql_query($sql);
+			$user_row = $this->db->sql_fetchrow($result);
+			$this->db->sql_freeresult($result);
+			
+			$user_row['user_lang'] = (file_exists($this->phpbb_root_path . 'language/' . $user_row['user_lang'] . "/mods/thanks_mod.$this->php_ext")) ? $user_row['user_lang'] : $this->config['default_lang'];
+			
+			include_once($this->phpbb_root_path . 'includes/functions_messenger.' . $this->php_ext);
+
+			$messenger = new \messenger(false);
+			$messenger->template('user_thanks', $user_row['user_lang']);
+			$messenger->set_addresses($user_row);
+			$messenger->anti_abuse_headers($this->config, $this->user);
+			$messenger->assign_vars(array(
+				'THANKS_SUBG'	=> htmlspecialchars_decode($this->user->lang['GRATITUDES']),
+				'USERNAME'		=> htmlspecialchars_decode($this->user->data['username']),
+				'POST_THANKS'	=> htmlspecialchars_decode($this->user->lang['THANKS_PM_MES_'. $lang_act]),
+				'U_POST_THANKS'	=> "$server_url/viewtopic." . $this->php_ext . '?p=' . $post_id . '#p' . $post_id,
+			));
+			$messenger->send(NOTIFY_EMAIL);
+		}
+		return;
+	}
+
+	// create an array of all thanks info
+	public function array_all_thanks($post_list)
+	{
+		global $post_list, $forum_id;
+		$poster_list = array();
+
+		// max post thanks
+		if (isset($this->config['thanks_post_reput_view']) ? $this->config['thanks_post_reput_view'] : false)
+		{
+			$sql = 'SELECT MAX(tally) AS max_post_thanks
+				FROM (SELECT post_id, COUNT(*) AS tally FROM ' . THANKS_TABLE . ' GROUP BY post_id) t';
+			$result = $this->db->sql_query($sql);
+			$this->max_post_thanks = (int) $this->db->sql_fetchfield('max_post_thanks');
+			$this->db->sql_freeresult($result);
+		}
+		else
+		{
+		$this->max_post_thanks = 1;
+		}
+		
+		//array all user who say thanks on viewtopic page
+		if ($this->auth->acl_get('f_thanks', $forum_id))
+		{
+			$sql_array = array(
+				'SELECT'	=> 't.*, u.username, u.username_clean, u.user_colour',
+				'FROM'		=> array(THANKS_TABLE => 't', USERS_TABLE => 'u'),
+			);
+			$sql_array['WHERE'] = 'u.user_id = t.user_id AND ' . $this->db->sql_in_set('t.post_id', $post_list);
+			$sql = $this->db->sql_build_query('SELECT', $sql_array);
+			$result = $this->db->sql_query($sql);
+			$j = 0;
+			while ($row = $this->db->sql_fetchrow($result))
+			{
+				$this->thankers[$j] = array(  
+					'user_id' 			=> $row['user_id'],
+					'poster_id' 		=> $row['poster_id'],
+					'post_id' 			=> $row['post_id'],
+					'thanks_time'		=> $row['thanks_time'],
+					'username'			=> $row['username'],
+					'username_clean'	=> $row['username_clean'],
+					'user_colour'		=> $row['user_colour'],
+				);
+				$j++;
+			}
+			$this->db->sql_freeresult($result);
+		}
+		//array thanks_count for all poster on viewtopic page
+		if(isset($this->config['thanks_counters_view']) ? $this->config['thanks_counters_view'] : false)
+		{
+			$sql = 'SELECT DISTINCT poster_id FROM '. POSTS_TABLE . ' WHERE ' . $this->db->sql_in_set('post_id', $post_list);
+			$result = $this->db->sql_query($sql);
+			while ($row = $this->db->sql_fetchrow($result))
+			{
+				$poster_list[] = $row['poster_id'];
+				$this->poster_list_count[$row['poster_id']]['R'] = $this->poster_list_count[$row['poster_id']]['G'] = 0;
+			}
+			$this->db->sql_freeresult($result);
+			
+			$sql = 'SELECT *, COUNT(poster_id) AS poster_count FROM ' . THANKS_TABLE . ' WHERE ' .$this->db->sql_in_set('poster_id', $poster_list). ' GROUP BY poster_id';
+			$result = $this->db->sql_query($sql);
+			while ($row = $this->db->sql_fetchrow($result))
+			{
+				$this->poster_list_count[$row['poster_id']]['R'] = $row['poster_count'];
+			}
+			$this->db->sql_freeresult($result);		
+
+			$sql = 'SELECT *, COUNT(user_id) AS user_count FROM ' . THANKS_TABLE . ' WHERE ' .$this->db->sql_in_set('user_id', $poster_list). ' GROUP BY user_id';
+			$result = $this->db->sql_query($sql);
+			while ($row = $this->db->sql_fetchrow($result))
+			{
+				$this->poster_list_count[$row['user_id']]['G'] = $row['user_count'];
+			}
+			$this->db->sql_freeresult($result);	
+		}
+		return;
+	}
+
+	// topic reput
+	public function get_thanks_topic_reput($topic_id, $max_topic_thanks, $topic_thanks)
+	{
+		$this->template->assign_block_vars('topicrow.reput', array(
+			'TOPIC_REPUT'				=> (isset($topic_thanks[$topic_id])) ? round($topic_thanks[$topic_id] / ($max_topic_thanks / 100), $this->config['thanks_number_digits']) . '%' : '',
+			'S_THANKS_TOPIC_REPUT_VIEW' => isset($this->config['thanks_topic_reput_view']) ? $this->config['thanks_topic_reput_view'] : false,
+			'S_THANKS_TOPIC_REPUT_VIEW_COLUMN' => isset($this->config['thanks_topic_reput_view_column']) ? $this->config['thanks_topic_reput_view_column'] : false,
+			'S_THANKS_REPUT_GRAPHIC' 	=> isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
+			'THANKS_REPUT_HEIGHT'		=> isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_height']) : false,
+			'THANKS_REPUT_GRAPHIC_WIDTH'=> isset($this->config['thanks_reput_level']) ? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']) : false) : false,
+			'THANKS_REPUT_IMAGE' 		=> isset($this->config['thanks_reput_image']) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
+			'THANKS_REPUT_IMAGE_BACK'	=> isset($this->config['thanks_reput_image_back']) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',	
+		));
+	}
+	// topic thanks number
+	public function get_thanks_topic_number($topic_list)
+	{
+		$topic_thanks = array();
+		if (isset($this->config['thanks_topic_reput_view']) ? $this->config['thanks_topic_reput_view'] : false)
+		{
+			$sql = 'SELECT topic_id, COUNT(*) AS topic_thanks
+				FROM ' . THANKS_TABLE . "
+				WHERE " . $this->db->sql_in_set('topic_id', $topic_list) . '
+				GROUP BY topic_id';
+			$result = $this->db->sql_query($sql);
+			while ($row = $this->db->sql_fetchrow($result))
+			{
+				$topic_thanks[$row['topic_id']] = $row['topic_thanks'];
+			}
+			$this->db->sql_freeresult($result);
+			return $topic_thanks;
+		}
+	}
+	// max topic thanks
+	public function get_max_topic_thanks()
+	{
+		if (isset($this->config['thanks_topic_reput_view']) ? $this->config['thanks_topic_reput_view'] : false)
+		{
+			$sql = 'SELECT MAX(tally) AS max_topic_thanks
+				FROM (SELECT topic_id, COUNT(*) AS tally FROM ' . THANKS_TABLE . ' GROUP BY topic_id) t';
+			$result = $this->db->sql_query($sql);
+			$this->max_topic_thanks = (int) $this->db->sql_fetchfield('max_topic_thanks');
+			$this->db->sql_freeresult($result);
+			return $this->max_topic_thanks;
+		}
+	}
+	// max post thanks for toplist
+	public function get_max_post_thanks()
+	{
+		$sql = 'SELECT MAX(tally) AS max_post_thanks
+			FROM (SELECT post_id, COUNT(*) AS tally FROM ' . THANKS_TABLE . ' GROUP BY post_id) t';
+		$result = $this->db->sql_query($sql);
+		$this->max_post_thanks = (int) $this->db->sql_fetchfield('max_post_thanks');
+		$this->db->sql_freeresult($result);
+		return $this->max_post_thanks;
+	}
+	// Generate thankslist if required ...
+	public function get_toplist_index($ex_fid_ary)
+	{
+		$thanks_list = '';
+		$sql = 'SELECT t.poster_id, COUNT(t.user_id) AS tally, u.user_id, u.username, u.user_colour
+			FROM ' . USERS_TABLE . ' u 
+			LEFT JOIN ' . THANKS_TABLE . ' t ON (u.user_id = t.poster_id)
+			WHERE ' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0
+			GROUP BY t.poster_id 
+			ORDER BY tally DESC';
+		$result = $this->db->sql_query_limit($sql, (isset($this->config['thanks_top_number']) ? $this->config['thanks_top_number'] : false), 0);	
+
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$thanks_list .= (($thanks_list != '') ? ', ' : '') . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']) . ' (' . $row['tally'] . ')';
+		}
+		$this->db->sql_freeresult($result);
+		return $thanks_list;
+	}
+
+	// forum reput
+	public function get_thanks_forum_reput($forum_id)
+	{
+		$this->template->assign_block_vars('forumrow.reput', array(
+			'FORUM_REPUT'				=> (isset($this->forum_thanks[$forum_id])) ? round($this->forum_thanks[$forum_id] / ($this->max_forum_thanks / 100), ($this->config['thanks_number_digits'])) . '%' : '',
+			'S_THANKS_FORUM_REPUT_VIEW'	=> isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view'] : false,
+			'S_THANKS_REPUT_GRAPHIC'	=> isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
+			'S_THANKS_FORUM_REPUT_VIEW_COLUMN' => isset($this->config['thanks_forum_reput_view_column']) ? $this->config['thanks_forum_reput_view_column'] : false,
+			'THANKS_REPUT_HEIGHT'		=> isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_height']) : false,
+			'THANKS_REPUT_GRAPHIC_WIDTH'=> isset($this->config['thanks_reput_level']) ? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']) : false) : false,
+			'THANKS_REPUT_IMAGE'		=> (isset($this->config['thanks_reput_image'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
+			'THANKS_REPUT_IMAGE_BACK'	=> (isset($this->config['thanks_reput_image_back'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',	
+		));
+	}
+	// forum thanks number
+	public function get_thanks_forum_number()
+	{
+		if (isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view'] : false)
+		{
+			if ($forum_thanks_rating = $this->cache->get('_forum_thanks_rating'))
+			{
+				$sql = 'SELECT forum_id, COUNT(*) AS forum_thanks
+					FROM ' . THANKS_TABLE . "
+					WHERE " . $this->db->sql_in_set('forum_id', $forum_thanks_rating) . '
+					GROUP BY forum_id';
+				$result = $this->db->sql_query($sql);
+				while ($row = $this->db->sql_fetchrow($result))
+				{
+					$this->forum_thanks[$row['forum_id']] = $row['forum_thanks'];
+				}
+				$this->db->sql_freeresult($result);
+			}
+			return $this->forum_thanks;
+		}
+	}
+	// max forum thanks
+	public function get_max_forum_thanks()
+	{
+		if (isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view'] : false)
+		{	
+			$sql = 'SELECT MAX(tally) AS max_forum_thanks
+				FROM (SELECT forum_id, COUNT(*) AS tally FROM ' . THANKS_TABLE . ' GROUP BY forum_id) t 
+				WHERE forum_id <> 0';
+			$result = $this->db->sql_query($sql);
+			$this->max_forum_thanks = (int) $this->db->sql_fetchfield('max_forum_thanks');
+			$this->db->sql_freeresult($result);
+			return $this->max_forum_thanks;
+		}
+	}
+}

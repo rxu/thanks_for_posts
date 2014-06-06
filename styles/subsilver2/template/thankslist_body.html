@@ -1,0 +1,58 @@
+	<!-- INCLUDE overall_header.html -->
+
+<table class="tablebg" width="100%" cellspacing="1">
+<tr>
+	<th nowrap="nowrap">#</th>
+	<th nowrap="nowrap" width="25%" align="{S_CONTENT_FLOW_BEGIN}"><!-- IF S_THANKS --><a href="{U_SORT_USERNAME}">{L_USERNAME}</a><!-- ELSE -->{L_USERNAME}<!-- ENDIF --></th>
+	<th nowrap="nowrap" width="15%"><!-- IF S_THANKS --><a href="{U_SORT_JOINED}">{L_JOINED}</a><!-- ELSE -->{L_JOINED}<!-- ENDIF --></th>
+	<th nowrap="nowrap" width="10%"><!-- IF S_THANKS --><a href="{U_SORT_POSTS}">{L_POSTS}</a><!-- ELSE -->{L_POSTS}<!-- ENDIF --></th>
+	<th nowrap="nowrap" width="15%">{L_RANK}</th>
+	<th nowrap="nowrap" width="11%"><!-- IF S_THANKS --><a href="{U_SORT_THANKS_G}">{L_GIVEN}</a><!-- ELSE -->{L_GIVEN}<!-- ENDIF --></th>
+	<th nowrap="nowrap" width="11%"><!-- IF S_THANKS --><a href="{U_SORT_THANKS_R}">{L_RECEIVED}</a><!-- ELSE -->{L_RECEIVED}<!-- ENDIF --></th>
+	<th nowrap="nowrap" width="11%">{L_WEBSITE}</th>
+</tr>
+<!-- BEGIN memberrow -->
+
+	<!-- IF memberrow.S_ROW_COUNT is even --><tr class="row2"><!-- ELSE -->	<tr class="row1"><!-- ENDIF -->
+
+		<td class="gen" align="center">&nbsp;{memberrow.ROW_NUMBER}&nbsp;</td>
+		<td class="genmed" align="{S_CONTENT_FLOW_BEGIN}">{memberrow.USERNAME_FULL}<!-- IF S_SELECT_SINGLE --> [&nbsp;<a href="#" onclick="insert_single('{memberrow.A_USERNAME}'); return false;">{L_SELECT}</a>&nbsp;]<!-- ENDIF --></td>
+		<td class="genmed" align="center" nowrap="nowrap">&nbsp;{memberrow.JOINED}&nbsp;</td>
+		<td class="gen" align="center">{memberrow.POSTS}</td>
+		<td class="gen" align="center"><!-- IF memberrow.RANK_IMG -->{memberrow.RANK_IMG}<!-- ELSE -->{memberrow.RANK_TITLE}<!-- ENDIF --></td>
+		<td class="gen" align="center">&nbsp;<!-- IF memberrow.GIVENS --><a href="{memberrow.U_SEARCH_USER_GIVENS}" title="{L_SEARCH_USER_POSTS}">{memberrow.GIVENS}</a><!-- ELSE -->{memberrow.GIVENS}<!-- ENDIF -->&nbsp;</td>
+		<td class="gen" align="center">&nbsp;<!-- IF memberrow.RECEIVED --><a href="{memberrow.U_SEARCH_USER_RECEIVED}" title="{L_SEARCH_USER_POSTS}">{memberrow.RECEIVED}</a><!-- ELSE -->{memberrow.RECEIVED}<!-- ENDIF -->&nbsp;</td>
+		<td class="gen" align="center">&nbsp;<!-- IF memberrow.U_WWW --><a href="{memberrow.U_WWW}">{memberrow.U_WWW}</a><!-- ENDIF -->&nbsp;</td>
+	</tr>
+<!-- BEGINELSE -->
+	<tr>
+		<td class="row1" colspan="<!-- IF S_IN_SEARCH_POPUP -->9<!-- ELSE -->8<!-- ENDIF -->" align="center">
+			<span class="gen">{L_NO_MEMBERS}</span>
+		</td>
+	</tr>
+<!-- END memberrow -->
+<tr>
+	<td class="cat" colspan="8" align="center"></td>
+</tr>
+</table>
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr>
+	<td class="pagination">{PAGE_NUMBER} [ {TOTAL_USERS} ]</td>
+	<td align="{S_CONTENT_FLOW_END}"><span class="pagination"><!-- INCLUDE pagination.html --></span></td>
+</tr>
+</table>
+
+
+
+<!-- IF S_IN_SEARCH_POPUP -->
+	<!-- INCLUDE simple_footer.html -->	
+<!-- ELSE -->
+	<br clear="all" />
+	
+	<!-- INCLUDE breadcrumbs.html -->
+	
+	<br clear="all" />
+	
+	<div align="{S_CONTENT_FLOW_END}"><!-- INCLUDE jumpbox.html --></div>	
+	<!-- INCLUDE overall_footer.html -->
+<!-- ENDIF -->

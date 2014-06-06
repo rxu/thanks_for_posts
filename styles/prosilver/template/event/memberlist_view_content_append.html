@@ -1,0 +1,58 @@
+<script type="text/JavaScript">
+// <![CDATA[
+function getElement(iElementId)
+{
+   if (document.all) 
+   {
+      return document.all[iElementId];
+   }
+   if (document.getElementById)
+   {
+      return document.getElementById(iElementId);
+   }
+}
+
+function toggleElement(oElement)
+{
+   if (oElement.style.display == "none")
+   {
+      oElement.style.display = "";
+   }
+   else
+   {
+      oElement.style.display = "none";
+   }
+}
+// ]]>
+</script>
+<!-- IF THANKS_PROFILELIST_VIEW -->
+<div class="panel bg1">
+	<div class="inner"><span class="corners-top"><span></span></span>
+	<h3>{L_GRATITUDES}</h3>
+		<!-- IF  S_MOD_THANKS and POSTER_GIVE_COUNT --><ul class="profile-icons"><li class="delete-icon"><a href="{U_CLEAR_LIST_THANKS_GIVE}" title="{L_CLEAR_LIST_THANKS}"><span>{L_CLEAR_LIST_THANKS}</span></a></li></ul><!-- ENDIF -->
+		<dl>
+			<dt><strong>{L_GIVEN}:</strong> {POSTER_GIVE_COUNT} {L_THANKS}</dt>
+			<dd>
+			<!-- IF POSTER_GIVE_COUNT -->
+			<a href="#" onclick="toggleElement( getElement('show_thanks')); return false;">{L_THANKS_LIST}</a>
+			<div id="show_thanks" style="display: none;">{THANKS}</div>
+			<!-- ENDIF -->
+			</dd>
+		</dl>
+	<span class="corners-bottom"><span></span></span></div>
+</div>
+<div class="panel bg2">
+	<div class="inner"><span class="corners-top"><span></span></span>
+		<!-- IF  S_MOD_THANKS and POSTER_RECEIVE_COUNT --><ul class="profile-icons"><li class="delete-icon"><a href="{U_CLEAR_LIST_THANKS_RECEIVE}" title="{L_CLEAR_LIST_THANKS}"><span>{L_CLEAR_LIST_THANKS}</span></a></li></ul><!-- ENDIF -->
+		<dl>
+			<dt><strong>{L_RECEIVED}:</strong> {POSTER_RECEIVE_COUNT} {L_THANKS}</dt>
+			<dd>
+			<!-- IF POSTER_RECEIVE_COUNT -->
+			<a href="#" onclick="toggleElement( getElement('show_thanked')); return false;">{L_THANKS_LIST}</a>
+			<div id="show_thanked" style="display: none;">{THANKED}</div>
+			<!-- ENDIF -->
+			</dd>
+		</dl>		
+	<span class="corners-bottom"><span></span></span></div>
+</div>
+<!-- ENDIF -->

@@ -1,0 +1,4 @@
+<!-- IF not postrow.S_POST_ANONYMOUS and postrow.THANKS_COUNTERS_VIEW -->
+	<dd><strong>{L_GIVEN}:</strong><!-- IF postrow.POSTER_GIVE_COUNT < 1 --> {postrow.POSTER_GIVE_COUNT} {L_THANK}<!-- ELSEIF postrow.POSTER_GIVE_COUNT > 1 --> <a href="{postrow.POSTER_GIVE_COUNT_LINK}">{postrow.POSTER_GIVE_COUNT}</a> {L_THANKS}<!-- ELSE --> <a href="{postrow.POSTER_GIVE_COUNT_LINK}">{postrow.POSTER_GIVE_COUNT}</a> {L_THANK}<!-- ENDIF --></dd>
+	<dd><strong>{L_RECEIVED}:</strong><!-- IF postrow.POSTER_RECEIVE_COUNT < 1 --> {postrow.POSTER_RECEIVE_COUNT} {L_THANK}<!-- ELSEIF postrow.POSTER_RECEIVE_COUNT > 1 --> <a href="{postrow.POSTER_RECEIVE_COUNT_LINK}">{postrow.POSTER_RECEIVE_COUNT}</a> {L_THANKS}<!-- ELSE --> <a href="{postrow.POSTER_RECEIVE_COUNT_LINK}">{postrow.POSTER_RECEIVE_COUNT}</a> {L_THANK}<!-- ENDIF --></dd>
+<!-- ENDIF -->

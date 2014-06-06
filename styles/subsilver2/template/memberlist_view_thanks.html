@@ -1,0 +1,20 @@
+			<!-- IF THANKS_PROFILELIST_VIEW -->
+				<tr>
+					<td class="gen" align="{S_CONTENT_FLOW_END}" valign="top" nowrap="nowrap"><!-- IF  S_MOD_THANKS and POSTER_GIVE_COUNT --><a href="{U_CLEAR_LIST_THANKS_GIVE}">{DELETE_IMG}</a>&nbsp;<!-- ENDIF -->{L_GIVEN}: </td>
+					<td><span class="gen"><b>{POSTER_GIVE_COUNT}</b> {L_THANKS}</span><br /><!-- IF POSTER_GIVE_COUNT --><a href="javascript: toggleElement( getElement('show_thanks'));">{L_THANKS_LIST}</a>
+						<div id="show_thanks" style="display: none;">
+							{THANKS}
+						</div>
+						<!-- ENDIF -->
+					</td>
+				</tr>
+				<tr>
+					<td class="gen" align="{S_CONTENT_FLOW_END}" valign="top" nowrap="nowrap"><!-- IF  S_MOD_THANKS and POSTER_RECEIVE_COUNT --><a href="{U_CLEAR_LIST_THANKS_RECEIVE}">{DELETE_IMG}</a>&nbsp;<!-- ENDIF -->{L_RECEIVED}: </td>
+					<td><span class="gen"><b>{POSTER_RECEIVE_COUNT}</b> {L_THANKS}</span><br /><!-- IF POSTER_RECEIVE_COUNT --><a href="javascript: toggleElement( getElement('show_thanked'));">{L_THANKS_LIST}</a>
+						<div id="show_thanked" style="display: none;">
+							{THANKED}
+						</div>
+						<!-- ENDIF -->
+					</td>
+				</tr>
+			<!-- ENDIF -->

@@ -1,0 +1,7 @@
+Subject: {THANKS_SUBG}
+
+Username {USERNAME} wrote:
+
+{POST_THANKS}: {U_POST_THANKS}
+
+{EMAIL_SIG}

@@ -1,0 +1,26 @@
+<!-- IF postrow.THANKS and postrow.THANKS_POSTLIST_VIEW -->
+	<hr />
+	<!-- IF not postrow.S_POST_ANONYMOUS and not S_IS_BOT and postrow.S_MOD_THANKS -->
+	<ul class="profile-icons" style="float:left"><li class="delete-icon"><a href="{postrow.U_CLEAR_LIST_THANKS_POST}" title="{L_CLEAR_LIST_THANKS}"><span>{L_CLEAR_LIST_THANKS}</span></a></li></ul>
+	<!-- ENDIF -->
+	<div class="content">
+		<!-- IF not postrow.S_POST_ANONYMOUS and not S_IS_BOT-->
+		<dl class="postbody small">
+			<dt>{postrow.THANK_TEXT}{postrow.POST_AUTHOR_FULL}{postrow.THANK_TEXT_2}</dt>
+			<dd>{postrow.THANKS}</dd>
+		</dl>
+		<!-- ENDIF -->	
+	</div>
+<!-- ENDIF -->
+<!-- IF postrow.S_THANKS_POST_REPUT_VIEW and postrow.POST_REPUT and not postrow.S_POST_ANONYMOUS and not S_IS_BOT -->
+	<div class="content">
+		<dl class="postbody">
+			<dt class="small"><strong>{L_REPUT}:</strong>&nbsp;{postrow.POST_REPUT}</dt>
+			<dd>
+			<!-- IF postrow.S_THANKS_REPUT_GRAPHIC -->
+			<div style="width: {postrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {postrow.THANKS_REPUT_HEIGHT}; background:  url({postrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><div style="height: {postrow.THANKS_REPUT_HEIGHT}; width: {postrow.POST_REPUT}; background: url({postrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;"></div></div>&nbsp;
+			<!-- ENDIF -->
+			</dd>
+		</dl>
+	</div>
+<!-- ENDIF -->

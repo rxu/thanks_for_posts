@@ -1,0 +1,77 @@
+<!-- INCLUDE overall_header.html -->
+<table width="100%" cellspacing="1">
+<tr>
+	<td colspan="2"><span class="titles"><!-- IF SEARCH_TITLE -->{SEARCH_TITLE}<!-- ELSE -->{SEARCH_MATCHES}<!-- ENDIF --></span><br /></td>
+</tr>
+<tr>
+	<td class="genmed"><!-- IF SEARCH_TOPIC -->{L_SEARCHED_TOPIC}: <a href="{U_SEARCH_TOPIC}"><b>{SEARCH_TOPIC}</b></a><br /><!-- ENDIF --><!-- IF SEARCH_WORDS -->{L_SEARCHED_FOR}: <a href="{U_SEARCH_WORDS}"><b>{SEARCH_WORDS}</b></a><!-- ENDIF --><!-- IF IGNORED_WORDS --> {L_IGNORED_TERMS}: <b>{IGNORED_WORDS}</b><!-- ENDIF --></td>
+	<td align="{S_CONTENT_FLOW_END}"><!-- IF SEARCH_IN_RESULTS --><span class="genmed">{L_SEARCH_IN_RESULTS}: </span><input type="text" name="add_keywords" value="" /> <input class="btnlite" type="submit" name="submit" value="{L_GO}" /><!-- ENDIF --></td>
+</tr>
+</table>
+
+<br clear="all" />
+
+	<table class="tablebg" width="100%" cellspacing="1">
+	<tr>
+		<th width="150" nowrap="nowrap">{L_AUTHOR}</th>
+		<th width="100%" nowrap="nowrap">{L_MESSAGE}</th>
+	</tr>
+
+	<!-- BEGIN searchresults -->
+		<tr class="row2">
+				<td colspan="2" height="25"><p class="topictitle"><a name="p{searchresults.POST_ID}" id="p{searchresults.POST_ID}"></a>&nbsp;<!-- IF searchresults.FORUM_ID --><a href="{searchresults.U_VIEW_FORUM}">{L_JUMP_TO_FORUM}</a><!-- ELSE -->{L_GLOBAL}<!-- ENDIF --> &nbsp; <a href="{searchresults.U_VIEW_TOPIC}">{L_JUMP_TO_TOPIC}</a> </p></td>
+			</tr>
+			<tr class="row1">
+				<td width="150" align="center" valign="middle"><b class="postauthor">{searchresults.POST_AUTHOR_FULL}</b></td>
+				<td height="25">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0">
+					<tr>
+						<td class="gensmall">
+							<div style="float: {S_CONTENT_FLOW_BEGIN};">
+							<!-- IF searchresults.POST_SUBJECT neq "" -->
+								&nbsp;<b>{L_POST_SUBJECT}:</b> <a href="{searchresults.U_VIEW_POST}">{searchresults.POST_SUBJECT}</a>
+							<!-- ELSE -->
+								[ <a href="{searchresults.U_VIEW_POST}">{L_JUMP_TO_POST}</a> ]
+							<!-- ENDIF -->
+							</div>
+							<div style="float: {S_CONTENT_FLOW_END};"><b>{L_POSTED}:</b> {searchresults.POST_DATE}&nbsp;</div>
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+			<tr class="row1">
+				<td width="150" align="center" valign="top"><br /><span class="postdetails"></td>
+				<td valign="top">
+					<table width="100%" cellspacing="5">
+					<tr>
+						<td class="postbody">{searchresults.MESSAGE}</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+		<tr>
+			<td class="spacer" colspan="2"><img src="images/spacer.gif" height="1" alt="" /></td>
+		</tr>
+	<!-- BEGINELSE -->
+		<tr valign="middle">
+			<td colspan="2" class="row3" align="center">{L_NO_SEARCH_RESULTS}</td>
+		</tr>
+	<!-- END searchresults -->
+	<tr>
+		<td class="cat" colspan="2" align="center"></td>
+	</tr>
+	</table>
+
+<div class="gensmall" style="float: {S_CONTENT_FLOW_BEGIN};"><span class="nav">{PAGE_NUMBER}</span> [ {SEARCH_MATCHES} ]</div>
+<div class="nav" style="float: {S_CONTENT_FLOW_END};"><!-- INCLUDE pagination.html --></div>
+
+<br clear="all" /><br />
+
+<!-- INCLUDE breadcrumbs.html -->
+
+<br clear="all" />
+
+<div align="{S_CONTENT_FLOW_END}"><!-- INCLUDE jumpbox.html --></div>
+
+<!-- INCLUDE overall_footer.html -->

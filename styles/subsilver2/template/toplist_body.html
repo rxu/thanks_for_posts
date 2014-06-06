@@ -1,0 +1,109 @@
+<!-- INCLUDE overall_header.html -->
+<h2 class="solo">{PAGE_TITLE}</h2>
+<br clear="all" />
+	<table width="100%" cellspacing="0" cellpadding="0">
+		<tr>
+			<td align="{S_CONTENT_FLOW_END}"><span class="pagination">{PAGE_NUMBER}</span></td>
+		</tr>
+	</table>
+<!-- IF S_THANKS_POST_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_FORUM_RATING -->	
+<h3 class="solo"><a href="{U_SEARCH_POST}" class="forumtitle">{L_RATING_TOP_POST}</a></h3>
+<br />
+	<table class="tablebg" cellspacing="1">
+		<thead>
+			<tr>
+				<th class="rating">{L_REPUT}</th>
+				<th class="rating">{L_RECEIVED}</th>
+				<th class="name">{L_AUTHOR}</th>
+				<th class="topictitle">{L_RATING_POST}</th>
+			</tr>
+		</thead>
+		<tbody>
+		<!-- BEGIN toppostrow -->
+			<tr class="<!-- IF toppostrow.S_ROW_COUNT is even -->row2<!-- ELSE -->row1<!-- ENDIF -->">
+				<td><span style="display: block;">{L_REPUT}:{toppostrow.POST_REPUT}
+					<!-- IF toppostrow.S_THANKS_REPUT_GRAPHIC -->
+					<span style="display: block; width: {toppostrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {toppostrow.THANKS_REPUT_HEIGHT}; background: URL({toppostrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {toppostrow.THANKS_REPUT_HEIGHT}; width: {toppostrow.POST_REPUT}; background: URL({toppostrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;">&nbsp;</span></span>
+					<!-- ENDIF -->
+				</span></td>
+				<td align="center" valign="middle" width="15%">{toppostrow.POST_THANKS}</td>
+				<td align="center" valign="middle" width="15%">{toppostrow.POST_AUTHOR}</td>
+				<td width="100%" class="postbody"><a href="{toppostrow.POST_ID}">{toppostrow.MINI_POST_IMG}{toppostrow.POST_DATE}&nbsp;{toppostrow.POST_SUBJECT}</a><br />{toppostrow.MESSAGE}</td>
+			</tr>
+		<!-- END toppostrow -->
+			<tr>
+				<td class="cat" colspan="4" align="center"></td>
+			</tr>
+		</tbody>
+	</table>
+<br />
+<!-- ENDIF -->
+<!-- IF S_THANKS_TOPIC_REPUT_VIEW and not S_FULL_POST_RATING and not S_FULL_FORUM_RATING -->	
+<h3 class="solo"><a href="{U_SEARCH_TOPIC}" class="forumtitle">{L_RATING_TOP_TOPIC}</a></h3>
+	<br />
+	<table class="tablebg" cellspacing="1">
+		<thead>
+			<tr>
+				<th class="rating">{L_REPUT}</th>
+				<th class="rating">{L_RECEIVED}</th>
+				<th class="name">{L_AUTHOR}</th>
+				<th class="topictitle">{L_RATING_TOPIC}</th>
+			</tr>
+		</thead>
+		<tbody>
+		<!-- BEGIN toptopicrow -->
+			<tr class="<!-- IF toptopicrow.S_ROW_COUNT is even -->row2<!-- ELSE -->row1<!-- ENDIF -->">
+				<td><span style="display: block;">{L_REPUT}:{toptopicrow.TOPIC_REPUT}
+					<!-- IF toptopicrow.S_THANKS_REPUT_GRAPHIC -->
+					<span style="display: block; width: {toptopicrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {toptopicrow.THANKS_REPUT_HEIGHT}; background: URL({toptopicrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {toptopicrow.THANKS_REPUT_HEIGHT}; width: {toptopicrow.TOPIC_REPUT}; background: URL({toptopicrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;">&nbsp;</span></span>
+					<!-- ENDIF -->
+				</span></td>
+				<td align="center" valign="middle" width="15%">{toptopicrow.TOPIC_THANKS}</td>
+				<td align="center" valign="middle" width="15%">{toptopicrow.TOPIC_AUTHOR}</td>
+				<td width="100%" style="background-image: url({toptopicrow.TOPIC_FOLDER_IMG_SRC}); background-repeat: no-repeat; background-position: 2px center; padding-left: 35px;"><a href="{toptopicrow.U_VIEW_TOPIC}" class="topictitle">{toptopicrow.TOPIC_TITLE}</a></td>
+			</tr>
+		<!-- END toptopicrow -->
+			<tr>
+				<td class="cat" colspan="4" align="center"></td>
+			</tr>
+		</tbody>
+	</table>
+<br />
+<!-- ENDIF -->
+<!-- IF S_THANKS_FORUM_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_POST_RATING -->
+<h3 class="solo"><a href="{U_SEARCH_FORUM}" class="forumtitle">{L_RATING_TOP_FORUM}</a></h3>
+	<br />
+	<table class="tablebg" cellspacing="1">
+		<thead>
+			<tr>
+				<th class="rating">{L_REPUT}</th>
+				<th class="rating">{L_RECEIVED}</th>
+				<th class="topictitle">{L_RATING_FORUM}</th>
+			</tr>
+		</thead>
+		<tbody>
+		<!-- BEGIN topforumrow -->
+			<tr class="<!-- IF topforumrow.S_ROW_COUNT is even -->row2<!-- ELSE -->row1<!-- ENDIF -->">
+				<td><span style="display: block;">{L_REPUT}:{topforumrow.FORUM_REPUT}
+					<!-- IF topforumrow.S_THANKS_REPUT_GRAPHIC -->
+					<span style="display: block; width: {topforumrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {topforumrow.THANKS_REPUT_HEIGHT}; background: URL({topforumrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {topforumrow.THANKS_REPUT_HEIGHT}; width: {topforumrow.FORUM_REPUT}; background: URL({topforumrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;">&nbsp;</span></span>
+					<!-- ENDIF -->
+				</span></td>
+				<td align="center" valign="middle" width="15%">{topforumrow.FORUM_THANKS}</td>
+				<td width="100%" style="background-image: url({topforumrow.FORUM_FOLDER_IMG_SRC}); background-repeat: no-repeat; background-position: 2px center; padding-left: 45px;"><a href="{topforumrow.U_VIEW_FORUM}" class="forumlink">{topforumrow.FORUM_NAME}</a></td>
+			</tr>
+		<!-- END topforumrow -->
+			<tr>
+				<td class="cat" colspan="3" align="center"></td>
+			</tr>
+		</tbody>
+	</table>
+<!-- ENDIF -->
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr>
+	<td class="pagination">{PAGE_NUMBER}</td>
+	<td align="{S_CONTENT_FLOW_END}"><span class="pagination"><!-- INCLUDE pagination.html --></span></td>
+</tr>
+</table>
+	<!-- INCLUDE jumpbox.html -->
+	<!-- INCLUDE overall_footer.html -->

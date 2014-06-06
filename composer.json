@@ -1,0 +1,28 @@
+{
+    "name": "gfksx/thanks_for_posts",
+    "type": "phpbb-extension",
+    "description": "Adds the ability to thank the author (thanks to cancel), and use the rating system posts/topics/forums based on the issued of thanks.",
+    "homepage": "http://www.phpbbguru.net",
+    "version": "2.0.0",
+    "time": "2014-03-09",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Палыч",
+            "homepage": "http://www.phpbbguru.net",
+            "role": "Developer"
+        },
+        {
+            "name": "rxu",
+            "homepage": "http://www.phpbbguru.net",
+            "role": "Converting to extension"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "phpbb/phpbb": "3.1.*@dev"
+    },
+    "extra": {
+        "display-name": "Thanks for posts"
+    }
+}
