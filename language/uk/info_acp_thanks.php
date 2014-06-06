@@ -140,4 +140,3 @@ $lang = array_merge($lang, array(
 	'ALLOW_THANKS_PM_ON'				=> 'Отримувати повідомлення про подяках в ПП',
 	'ALLOW_THANKS_EMAIL_ON'				=> 'Отримувати повідомлення про подяках на Email',
 ));
-?>

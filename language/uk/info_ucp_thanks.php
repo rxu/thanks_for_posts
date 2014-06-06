@@ -40,5 +40,3 @@ $lang = array_merge($lang, array(
 	'ALLOW_THANKS_EMAIL'		=> 'Отримувати повідомлення про подяки на Email',
 	'ALLOW_THANKS_EMAIL_EXPLAIN'=> 'Ви будете отримувати листи на Email при зміні списку подяк за ваші повідомлення.',
 ));
-
-?>
