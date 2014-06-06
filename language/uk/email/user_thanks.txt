@@ -1,0 +1,7 @@
+Subject: {THANKS_SUBG}
+
+Користувач {USERNAME} пише:
+
+{POST_THANKS}: {U_POST_THANKS}
+
+{EMAIL_SIG}
