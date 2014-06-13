@@ -1,0 +1,103 @@
+<?php
+/**
+*
+* thanks_mod [Ukrainian]
+*
+* @author: Oleksii Fryschyn (Sherlock)
+* @version $Id: thanks.php,v 135 2012-10-10 10:02:51 Палыч $ 
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
+/**
+* DO NOT CHANGE
+*/
+if (!defined('IN_PHPBB'))
+{
+   exit;
+}
+
+if (empty($lang) || !is_array($lang))
+{
+	$lang = array();
+}
+
+// DEVELOPERS PLEASE NOTE
+//
+// All language files should use UTF-8 as their encoding and the files must not contain a BOM.
+//
+// Placeholders can now contain order information, e.g. instead of
+// 'Page %s of %s' you can (and should) write 'Page %1$s of %2$s', this allows
+// translators to re-order the output of data while ensuring it remains correct
+//
+// You do not need this where single placeholders are used, e.g. 'Message %d' is fine
+// equally where a string contains only two placeholders which are used to wrap text
+// in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
+//
+// Some characters you may want to copy&paste:
+// ’ » “ ” …
+//
+
+$lang = array_merge($lang, array(
+	'CLEAR_LIST_THANKS'			=> 'Очистити список подяк',
+	'CLEAR_LIST_THANKS_CONFIRM'	=> 'Ви дійсно хочете очистити список подяк користувача?',
+	'CLEAR_LIST_THANKS_GIVE'	=> 'Cписок подяк, виданих користувачем, очищений.',
+	'CLEAR_LIST_THANKS_POST'	=> 'Список подяк у повідомленні очищений.',
+	'CLEAR_LIST_THANKS_RECEIVE'	=> 'Список подяк, отриманих користувачем, очищений.',
+	
+	'DISABLE_REMOVE_THANKS'		=> 'Видалення подяк відключено адміністратором.',	
+
+	'GIVEN'						=> 'Дякував&nbsp;(ла)',
+	'GLOBAL_INCORRECT_THANKS'	=> 'Ви не можете дякувати у важливих темах, що не мають прив\'язки до конкретного форуму.',
+	'GRATITUDES'				=> 'Подяки',
+
+	'INCORRECT_THANKS'			=> 'Некоректні параметри запитаної дії',
+
+	'JUMP_TO_FORUM'				=> 'Перейти в форум',
+	'JUMP_TO_TOPIC'				=> 'Перейти в тему',
+
+	'FOR_MESSAGE'				=> ' за повідомлення',
+	'FURTHER_THANKS'     	    => ' і ще один',
+	'FURTHER_THANKS_PL'         => ' і ще %d',
+
+	'NO_VIEW_USERS_THANKS'		=> 'У вас немає доступу до перегляду списку подяк.',
+	
+	'RECEIVED'					=> 'Подякували',
+	'REMOVE_THANKS'				=> 'Скасувати подяку автору: ',
+	'REMOVE_THANKS_CONFIRM'		=> 'Ви дійсно хочете видалити подяку?',
+	'REPUT'						=> 'Рейтинг',
+	'REPUT_TOPLIST'				=> 'Топ лист подяк',
+	'RETING_LOGIN_EXPLAIN'		=> 'Для перегляду топ листа ви повинні бути авторизовані',
+	'RATING_NO_VIEW_TOPLIST'	=> 'Ви не авторизовані для перегляду топ листа',
+	'RATING_VIEW_TOPLIST_NO'	=> 'Топ лист порожній або відключений адміністратором',
+	'RATING_FORUM'				=> 'Форум',
+	'RATING_POST'				=> 'Повідомлення',
+	'RATING_TOP_FORUM'			=> 'Рейтинг форумів',
+	'RATING_TOP_POST'			=> 'Рейтинг повідомлень',
+	'RATING_TOP_TOPIC'			=> 'Рейтинг тем',	
+	'RATING_TOPIC'				=> 'Тема',
+	'RETURN_POST'				=> 'Повернутися до повідомлення',
+
+	'THANK'						=> 'раз.',
+	'THANK_POST'				=> 'Подякувати за повідомлення автора: ',
+	'THANK_FROM'				=> 'від',
+	'THANK_TEXT_1'				=> 'За це повідомлення автора ',
+	'THANK_TEXT_2'				=> ' подякував:',
+	'THANK_TEXT_2PL'			=> ' подякували (всього %d):',
+	'THANKS'					=> 'раз.',
+	'THANKS_BACK'				=> 'Повернутися до листу подяк',
+	'THANKS_INFO_GIVE'			=> 'Ви подякували автора повідомлення',
+	'THANKS_INFO_REMOVE'		=> 'Ви скасували подяку автору',
+	'THANKS_LIST'				=> 'Показати/Приховати список',
+	'THANKS_PM_MES_GIVE'		=> 'Дякую за повідомлення',
+	'THANKS_PM_MES_REMOVE'		=> 'Відміняю подяку за повідомлення',
+	'THANKS_PM_SUBJECT_GIVE'	=> 'Подяка за повідомлення',
+	'THANKS_PM_SUBJECT_REMOVE'	=> 'Подяка за повідомлення скасована',
+	'THANKS_USER'				=> 'Лист подяк',
+// Блок установки
+	'THANKS_INSTALLED'			=> 'Подяка за повідомлення',
+	'THANKS_INSTALLED_EXPLAIN' 	=> '<strong>УВАГА!<br />Рекомендується запускати дану установку тільки після виконання інструкції по внесенню змін в код файлів конференції (або виконання встановлення за допомогою AutoMod)!<br />Також наполегливо рекомендується включити опцію Відображати всі результати (нижче)!</strong>',
+	'THANKS_CUSTOM0_FUNCTION'	=> 'Оновлення даних у таблиці _thanks',
+	'THANKS_CUSTOM1_FUNCTION'	=> 'Перевірка видалення модуля',
+	'THANKS_CUSTOM2_FUNCTION'	=> 'Перевірка оновлення кеша',
+));
