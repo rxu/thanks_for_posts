@@ -1,3 +1,8 @@
 <!-- IF  not postrow.S_FIRST_POST_ONLY or postrow.S_ONLY_TOPICSTART -->
-	<!-- IF not postrow.S_GLOBAL_POST_THANKS and not postrow.S_POST_ANONYMOUS and postrow.S_FORUM_THANKS and S_USER_LOGGED_IN and not postrow.S_IS_OWN_POST and (not postrow.S_ALREADY_THANKED or postrow.S_REMOVE_THANKS) --><li class="{postrow.THANKS_IMG}"><a href="{postrow.THANKS_LINK}" title="{postrow.THANK_ALT}{postrow.POST_AUTHOR}"></a></li><!-- ENDIF -->				
+	<!-- IF not postrow.S_GLOBAL_POST_THANKS and not postrow.S_POST_ANONYMOUS and postrow.S_FORUM_THANKS and S_USER_LOGGED_IN and not postrow.S_IS_OWN_POST and (not postrow.S_ALREADY_THANKED or postrow.S_REMOVE_THANKS) -->
+    <li>
+		<a id='lnk_thanks_post{postrow.POST_ID}' href='{postrow.U_AJAX_THANKS_HANDLER}'   data-ajax="togle_thanks" title="{postrow.THANK_ALT}{postrow.POST_AUTHOR}" class="button icon-button  {postrow.THANKS_IMG}"><span>&nbsp;</span></a>
+	</li>
+    
+    <!-- ENDIF -->				
 <!-- ENDIF -->

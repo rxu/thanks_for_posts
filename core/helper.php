@@ -568,6 +568,7 @@ class helper
 				'U_CLEAR_LIST_THANKS_POST'	=> append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $row['post_id'] . '&amp;list_thanks=post'),
 				'S_MOD_THANKS'				=> $this->auth->acl_get('m_thanks'),
 				'S_ONLY_TOPICSTART'         => ($topic_data['topic_first_post_id'] == $row['post_id']) ? true : false,
+	            'U_AJAX_THANKS_HANDLER'	=> append_sid('./app.php/thanks_for_posts/' . $thank_mode . '/' . $poster_id . '/' . $row['forum_id']. '/' . $row['topic_id'] . '/' . $row['post_id']),
 			));
 		}
 	}
@@ -722,6 +723,7 @@ class helper
 				$j++;
 			}
 			$this->db->sql_freeresult($result);
+            $this->cache->put('_thankers', $this->thankers);   
 		}
 		//array thanks_count for all poster on viewtopic page
 		if(isset($this->config['thanks_counters_view']) ? $this->config['thanks_counters_view'] : false)

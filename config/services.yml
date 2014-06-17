@@ -54,3 +54,19 @@ services:
             - @service_container
             - @gfksx.thanks_for_posts.helper
             - @request
+    gfksx.thanks_for_posts.thanks_ajax_handler:
+        class: gfksx\thanks_for_posts\controller\thanks_ajax_handler
+        arguments:
+            - @config
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - @cache.driver
+            - %core.root_path%
+            - %core.php_ext%
+            - @controller.helper
+            - @service_container
+            - @gfksx.thanks_for_posts.helper
+            - @request
+            - %core.table_prefix%

@@ -1,7 +1,8 @@
+<div id='list_thanks{postrow.POST_ID}'>
 <!-- IF postrow.THANKS and postrow.THANKS_POSTLIST_VIEW -->
 	<hr />
 	<!-- IF not postrow.S_POST_ANONYMOUS and not S_IS_BOT and postrow.S_MOD_THANKS -->
-	<ul class="profile-icons" style="float:left"><li class="delete-icon"><a href="{postrow.U_CLEAR_LIST_THANKS_POST}" title="{L_CLEAR_LIST_THANKS}"><span>{L_CLEAR_LIST_THANKS}</span></a></li></ul>
+	<ul class="profile-icons" style="float:left"><li class="delete-icon"><a id='clear_list_thanks{postrow.POST_ID}' poster_id='{postrow.POSTER_ID}' href="{postrow.U_CLEAR_LIST_THANKS_POST}" title="{L_CLEAR_LIST_THANKS}"><span>{L_CLEAR_LIST_THANKS}</span></a></li></ul>
 	<!-- ENDIF -->
 	<div class="content">
 		<!-- IF not postrow.S_POST_ANONYMOUS and not S_IS_BOT-->
@@ -12,6 +13,8 @@
 		<!-- ENDIF -->	
 	</div>
 <!-- ENDIF -->
+</div>
+<div id='div_post_reput{postrow.POST_ID}'>
 <!-- IF postrow.S_THANKS_POST_REPUT_VIEW and postrow.POST_REPUT and not postrow.S_POST_ANONYMOUS and not S_IS_BOT -->
 	<div class="content">
 		<dl class="postbody">
@@ -24,3 +27,5 @@
 		</dl>
 	</div>
 <!-- ENDIF -->
+</div>
+

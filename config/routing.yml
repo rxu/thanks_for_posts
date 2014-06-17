@@ -5,3 +5,9 @@ thankslist_controller:
 toplist_controller:
     pattern: /toplist
     defaults: { _controller: gfksx.thanks_for_posts.controller.toplist:main, mode: "", start: 0, topic_id: 0, return_chars: 300 }
+
+thanks_for_posts_controller:
+    path: /thanks_for_posts/{action}/{poster}/{forum}/{topic}/{post}
+    defaults: { _controller: gfksx.thanks_for_posts.thanks_ajax_handler:main }
+    requirements:
+        post: \d+

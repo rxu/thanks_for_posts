@@ -1,0 +1,275 @@
+<!-- INCLUDEJS jquery.noty.js -->
+<!-- INCLUDEJS default.js -->
+<!-- INCLUDEJS topRight.js -->
+<!-- INCLUDEJS topCenter.js -->
+
+<!-- IF IS_POSTROW -->
+<script type="text/javascript">
+    (function ($) {  // Avoid conflicts with other libraries
+
+        "use strict";
+
+        phpbb.addAjaxCallback('togle_thanks', function (data) {
+            if (data['ERROR']) {
+                for (i = 0; i < data['ERROR_COUNT']; i++) {
+                    output_info_new(data['ERROR'][i], 'error');
+                }
+                return;
+            }
+            output_info_new( data['SUCCESS'], 'warning');
+
+            //update icon and tooltip
+            $("#lnk_thanks_post" + data.POST_ID).removeClass().addClass('button icon-button ' + data.CLASS_ICON).attr('title', data.THANK_ALT).attr('href', data.THANK_PATH);
+
+            //update thanks img 
+            if (data.THANKS_NUMBER == 0) 
+            {
+                $('#div_post_reput' + data['POST_ID']).html('');
+                $('#list_thanks' + data.POST_ID).html('');
+
+            }
+            else 
+            {
+                if (data.S_THANKS_POST_REPUT_VIEW) 
+                {
+                    var updDiv = "<div class='content'>";
+                    updDiv = updDiv + "<dl class='postbody'>";
+                    updDiv = updDiv + "<dt class='small'><strong>{L_REPUT}:</strong>&nbsp;" + data.POST_REPUT + "</dt>";
+                    updDiv = updDiv + "<dd>";
+                    if (data.S_THANKS_REPUT_GRAPHIC) 
+                    {
+                        updDiv = updDiv + "<div style='width: " + data.THANKS_REPUT_GRAPHIC_WIDTH + "; height: " + data.THANKS_REPUT_HEIGHT + "; background:  url(" + data.THANKS_REPUT_IMAGE_BACK + "); background-repeat: repeat-x;'>";
+                        updDiv = updDiv + "<div style='height:" + data.THANKS_REPUT_HEIGHT + "; width: " + data.POST_REPUT + "; background: url(" + data.THANKS_REPUT_IMAGE + "); background-repeat: repeat-x;'></div></div>&nbsp";
+                    }
+                    updDiv = updDiv + "</dd></dl></div>";
+                    $('#div_post_reput' + data.POST_ID).html(updDiv);
+                }
+                else 
+                {
+                    $('#div_post_reput' + data['POST_ID']).html('');
+                }
+                //update reput list
+                if (data.THANKS && data.THANKS_POSTLIST_VIEW) {
+                    var div_list_thanks = $('#list_thanks' + data.POST_ID);
+                    var updDiv = "<hr />";
+                    if (parseInt(data.S_MOD_THANKS) > 0) {
+                        updDiv = updDiv + "<ul class='profile-icons' style='float:left'><li class='delete-icon'>";
+                        updDiv = updDiv + "<a id='clear_list_thanks" + data.POST_ID + "' poster_id='" +  data.POSTER_ID  + "'  href='" + data.U_CLEAR_LIST_THANKS_POST + "' title='{L_CLEAR_LIST_THANKS}'><span>{L_CLEAR_LIST_THANKS}</span></a></li></ul>";
+                    }
+                    updDiv = updDiv + "<div class='content'>";
+                    if (!data.S_POST_ANONYMOUS) 
+                    {
+                        updDiv = updDiv + "<dl class='postbody small'>";
+                        updDiv = updDiv + "<dt>" + data.THANK_TEXT + data.POST_AUTHOR_FULL + data.THANK_TEXT_2 + "</dt>";
+                        updDiv = updDiv + "<dd>" + data.THANKS;
+                        updDiv = updDiv + "</dd></dl></div>";
+                    }
+
+                    $(div_list_thanks).html(updDiv);
+                    $(div_list_thanks).find('a').each(function () {
+                        $(this).attr('href', $(this).attr('href').replace(/..\//g, ''));
+                    });
+                }
+                else 
+                {
+                    $(div_list_thanks).html('');
+                }
+            }
+
+            //update profile
+            if (!data.S_POST_ANONYMOUS && data.THANKS_COUNTERS_VIEW) 
+            {
+                $("span[id='" + "poster_receive" + data['POSTER_ID'] + "']").each(function () {
+                    var rcv = '';
+                    if (data.POSTER_RECEIVE_COUNT < 1) 
+                    {
+                        rcv = rcv + data.POSTER_RECEIVE_COUNT + " {L_THANK}";
+                    }
+                    else 
+                    {
+                        if (data.POSTER_RECEIVE_COUNT > 1) 
+                        {
+                            rcv = rcv + " <a href='" + data.POSTER_RECEIVE_COUNT_LINK + "'>" + data.POSTER_RECEIVE_COUNT + "</a> {L_THANKS}";
+                        }
+                        else 
+                        {
+                            rcv = rcv + " <a href='" + data.POSTER_RECEIVE_COUNT_LINK + "'>" + data.POSTER_RECEIVE_COUNT + "</a> {L_THANK}";
+                        }
+                    }
+                    $(this).html(rcv);
+                    $(this).find('a').each(function () {
+                        $(this).attr('href', $(this).attr('href').replace(/..\//g, ''));
+                    });
+
+                });
+
+                $("span[id='" + "user_give" + data['USER_ID'] + "']").each(function () {
+                    var give = '';
+                    if (data.POSTER_GIVE_COUNT < 1) 
+                    {
+                        give = give + data.POSTER_GIVE_COUNT + " {L_THANK}";
+                    }
+                    else {
+                        if (data.POSTER_GIVE_COUNT > 1) 
+                        {
+                            give = give + " <a href='" + data.POSTER_GIVE_COUNT_LINK + "'>" + data.POSTER_GIVE_COUNT + "</a> {L_THANKS}";
+                        }
+                        else 
+                        {
+                            give = give + " <a href='" + data.POSTER_GIVE_COUNT_LINK + "'>" + data.POSTER_GIVE_COUNT + "</a> {L_THANK}";
+                        }
+                    }
+                    $(this).html(give);
+                    $(this).find('a').each(function () {
+                        $(this).attr('href', $(this).attr('href').replace(/..\//g, ''));
+                    });
+
+                });
+            }
+
+   
+
+
+        });
+
+        //data-ajax="clear_thanks"
+        $("div.postbody").on('click', 'a[id^="clear_list_thanks"]',  function (e) {
+
+            e.preventDefault();
+            var post_id = $(this).attr('id').replace(/clear_list_thanks/g, '');
+            var poster_id = $(this).attr('poster_id');
+            var lnk=$(this);
+            var n = noty({
+             text: '{L_CLEAR_LIST_THANKS_CONFIRM}',
+             type: 'notification',
+             dismissQueue: false,
+             layout: 'topCenter',
+              timeout: false, // delay for closing event. Set false for sticky notifications
+               modal: true,
+                closeWith: ['button'], // ['click', 'button', 'hover']
+ 
+                 theme: 'defaultTheme',
+                 buttons: [
+                {addClass: 'btn btn-primary', text: '{L_YES}',  title:"aaa", onClick: function( $noty){
+                     
+                     var path = './app.php/thanks_for_posts/clear_thanks/' + poster_id + '/' + $("input[name='forum_id']").val() + '/' + $("input[name='topic_id']").val() + '/' + post_id;
+                    //*****todo*****
+                    //$(lnk).off('click');
+                    //$(lnk).attr('data-ajax', 'clear_thanks').attr('href', path);
+//                   //$(lnk).click();
+                    //*****end todo*****
+
+                   $.ajax({
+		                type: 'POST',
+		                dataType: 'json',
+		                url: path,
+		                success: function(data){
+			                list_thanks_for_post_cleared(data);
+		                }
+	                });
+
+                    $noty.close();
+                  }
+                },
+                {addClass: 'btn btn-danger', text: '{L_NO}', onClick: function($noty) {
+                    $noty.close();
+                  }
+                }
+              ]
+             });
+       });
+
+       function list_thanks_for_post_cleared(data)
+       {
+             if(data['ERROR'])
+	        {
+		        for(i = 0; i < data['ERROR_COUNT']; i++)
+		        {
+			        output_info_new( data['ERROR'][i], 'error');
+		        }
+                return;
+	        } 
+            output_info_new( data['SUCCESS'], 'warning');      
+            //clear list and reput
+            $('#div_post_reput' + data['POST_ID']).html('');
+            $('#list_thanks' + data['POST_ID']).html('');
+
+            //update thanks img  
+            $("#lnk_thanks_post" + data.POST_ID).removeClass().addClass('button icon-button thanks-icon' ).attr('title', data.THANK_ALT).attr('href', data.THANK_PATH);
+   
+            //update profile
+            if (!data.S_POST_ANONYMOUS && data.THANKS_COUNTERS_VIEW) {
+                $("span[id='" + "poster_receive" + data['POSTER_ID'] + "']").each(function () {
+                var rcv = '';
+                if (data.POSTER_RECEIVE_COUNT < 1) {
+                    rcv = rcv + data.POSTER_RECEIVE_COUNT + " {L_THANK}";
+                }
+                else {
+                    if (data.POSTER_RECEIVE_COUNT > 1) {
+                        rcv = rcv + " <a href='" + data.POSTER_RECEIVE_COUNT_LINK + "'>" + data.POSTER_RECEIVE_COUNT + "</a> {L_THANKS}";
+                    }
+                    else {
+                        rcv = rcv + " <a href='" + data.POSTER_RECEIVE_COUNT_LINK + "'>" + data.POSTER_RECEIVE_COUNT + "</a> {L_THANK}";
+                    }
+                }
+                $(this).html(rcv);
+                $(this).find('a').each(function () {
+                    $(this).attr('href', $(this).attr('href').replace(/..\//g, ''));
+                });
+
+            });
+
+                        $("span[id='" + "user_give" + data['USER_ID'] + "']").each(function () {
+                            var give = '';
+                            if (data.POSTER_GIVE_COUNT < 1) {
+                                give = give + data.POSTER_GIVE_COUNT + " {L_THANK}";
+                            }
+                            else {
+                                if (data.POSTER_GIVE_COUNT > 1) {
+                                    give = give + " <a href='" + data.POSTER_GIVE_COUNT_LINK + "'>" + data.POSTER_GIVE_COUNT + "</a> {L_THANKS}";
+                                }
+                                else {
+                                    give = give + " <a href='" + data.POSTER_GIVE_COUNT_LINK + "'>" + data.POSTER_GIVE_COUNT + "</a> {L_THANK}";
+                                }
+                            }
+                            $(this).html(give);
+                            $(this).find('a').each(function () {
+                                $(this).attr('href', $(this).attr('href').replace(/..\//g, ''));
+                            });
+
+                        });
+                    }
+
+       
+       }
+
+        phpbb.addAjaxCallback('clear_thanks', function (data) {
+            alert('clear_thanks');
+        });
+
+//creates a new jQuery UI notification message
+function output_info_new( message, type,  expire, is_reload)
+{
+    if(type == null) type= 'notification';
+    if(expire == null) expire = 4000;
+    var n = noty({
+         text: message,
+         type: type,
+         timeout: expire,
+         //dismissQueue: false,
+         layout: 'topRight',
+         theme: 'defaultTheme',
+         callback: {
+            afterClose: function() 
+            {
+                if (is_reload == null || is_reload == '' || is_reload != true)  return;
+                window.location.reload();
+            }
+            },
+
+ 
+         }); 
+}
+    })(jQuery);                              // Avoid conflicts with other libraries
+</script>
+<!-- ENDIF -->
