@@ -72,40 +72,20 @@ dl.thanks dt {
 ul.profile-icons li.removethanks-icon, a.removethanks	{ width: 20px; height: 20px; }*/
 
 /* Profile & navigation icons */
-.thanks-icon, .thanks-icon a	
-{ 
-    background-image: url("./images/thankposts.gif"); 
-    padding:0 3px 0 3px; 
-    background-repeat:no-repeat;
-    }
+
 .thanks-icon:before							
 { 
-    background: transparent 0 0 no-repeat;
-	content: '';
-	display: inline-block;
-	float: right;
-	height: 12px;
-	margin: 3px 0 0 2px;
-	width: 12px;
+     background-position: -3px -1px; 
+     background-image: url("./images/icons_button_likes.png"); 
 }
-.thanks-icon:hover					{background-image: url("./images/thankposts.gif");background-position: 0 -21px; } 
+.thanks-icon:hover:before{ background-position: -3px -19px; } 
 
-.removethanks-icon, .removethanks-icon a	
-{ 
-    background-image: url("./images/removethanks.gif"); 
-    padding:0 3px 0 3px; 
-    background-repeat:no-repeat;
-    }
 .removethanks-icon:before							
 { 
-    background: transparent 0 0 no-repeat;
-	content: '';
-	display: inline-block;
-	float: right;
-	height: 12px;
-	margin: 3px 0 0 2px;
-	width: 12px;
+	background-position: -18px -2px; 
+    background-image: url("./images/icons_button_likes.png"); 
+
 }
-.removethanks-icon:hover					{background-image: url("./images/removethanks.gif");background-position: 0 -21px; } 
+.removethanks-icon:hover:before	{background-position: -18px -20px; } 
 
 
