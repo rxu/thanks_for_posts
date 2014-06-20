@@ -2,14 +2,11 @@
 <!-- INCLUDEJS default.js -->
 <!-- INCLUDEJS topRight.js -->
 <!-- INCLUDEJS topCenter.js -->
-
-<!-- IF IS_POSTROW -->
 <script type="text/javascript">
     (function ($) {  // Avoid conflicts with other libraries
-
-        "use strict";
-
+ qwertyu
         phpbb.addAjaxCallback('togle_thanks', function (data) {
+      
             if (data['ERROR']) {
                 for (i = 0; i < data['ERROR_COUNT']; i++) {
                     output_info_new(data['ERROR'][i], 'error');
@@ -272,4 +269,3 @@ function output_info_new( message, type,  expire, is_reload)
 }
     })(jQuery);                              // Avoid conflicts with other libraries
 </script>
-<!-- ENDIF -->
