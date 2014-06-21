@@ -70,3 +70,4 @@ services:
             - @gfksx.thanks_for_posts.helper
             - @request
             - %core.table_prefix%
+            
