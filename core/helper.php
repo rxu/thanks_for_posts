@@ -138,8 +138,8 @@ class helper
 				$lang_act = 'GIVE';
 				if (isset($config ['thanks_notice_on']) ? $config ['thanks_notice_on'] : false)
 				{
-					send_thanks_pm($user_id, $to_id, $send_pm = true, $post_id, $lang_act);
-					send_thanks_email($to_id, $post_id, $lang_act);
+					$this->send_thanks_pm($user_id, $to_id, $send_pm = true, $post_id, $lang_act);
+					$this->send_thanks_email($to_id, $post_id, $lang_act);
 				}	
 				if (isset($this->config['thanks_info_page']) ? $this->config['thanks_info_page'] : false)
 				{
@@ -286,8 +286,8 @@ class helper
 					$lang_act = 'REMOVE';
 					if (isset($this->config['thanks_notice_on']) ? $this->config['thanks_notice_on'] : false)
 					{
-						send_thanks_pm($user_id, $to_id, $send_pm = true, $post_id, $lang_act);
-						send_thanks_email($to_id, $post_id, $lang_act);
+						$this->send_thanks_pm($user_id, $to_id, $send_pm = true, $post_id, $lang_act);
+						$this->send_thanks_email($to_id, $post_id, $lang_act);
 					}	
 					if (isset($this->config['thanks_info_page']) ? $this->config['thanks_info_page'] : false)
 					{
