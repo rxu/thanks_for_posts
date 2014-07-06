@@ -48,7 +48,7 @@ class listener implements EventSubscriberInterface
 			'core.viewtopic_cache_user_data'		=> 'viewtopic_alter_user_cache_data',
 			'core.viewtopic_modify_post_row'		=> 'viewtopic_modify_postrow',
 			'core.display_forums_modify_forum_rows'	=> 'forumlist_display_rating',
-			'core.display_forums_modify_template_vars'	=> 'forumlist_modify_template_vars',
+			'core.display_forums_add_template_data'	=> 'forumlist_modify_template_vars',
 		);
 	}
 
@@ -67,6 +67,7 @@ class listener implements EventSubscriberInterface
 		$this->template->assign_vars(array(
 			'THANKS_LIST'		=> ($thanks_list != '') ? $thanks_list : false,
 			'S_THANKS_LIST'		=> (isset($this->config['thanks_top_number']) && $thanks_list != '') ? true : false,
+			'U_THANKS_LIST'		=> append_sid("{$this->phpbb_root_path}thankslist"),
 			'L_TOP_THANKS_LIST'	=> isset($this->config['thanks_top_number']) ? sprintf($this->user->lang['REPUT_TOPLIST'], (int) $this->config['thanks_top_number']) : false,
 		));
 	}
@@ -185,7 +186,7 @@ class listener implements EventSubscriberInterface
 			'S_THANKS_FORUM_REPUT_VIEW_COLUMN' => isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view_column'] : false,
 			'THANKS_REPUT_GRAPHIC_WIDTH'=> isset($this->config['thanks_reput_level'])? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']) : false) : false,
 		));
-		if (isset($this->config['thanks_forum_reput_view']))
+		if (isset($this->config['thanks_forum_reput_view']) && $this->config['thanks_forum_reput_view'])
 		{
 			$this->helper->get_thanks_forum_reput($row['forum_id']);
 		}

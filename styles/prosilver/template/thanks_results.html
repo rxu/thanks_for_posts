@@ -1,15 +1,17 @@
 <!-- INCLUDE overall_header.html -->
 
 <h2>{SEARCH_MATCHES}</h2>
-<p><a class="{S_CONTENT_FLOW_BEGIN}" href="{U_THANKS}" title="{L_THANKS_BACK}">{L_THANKS_BACK}</a></p>
-
-<!-- IF PAGINATION or PAGE_NUMBER -->
-	<div class="topic-actions">
-		<div class="rightside pagination">
-			{SEARCH_MATCHES}<!-- IF PAGINATION --> &bull; <a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <span>{PAGINATION}</span><!-- ELSE --> &bull; {PAGE_NUMBER}<!-- ENDIF -->
-		</div>
+<!-- IF .pagination or SEARCH_MATCHES -->
+	<div class="pagination">
+		{SEARCH_MATCHES} &bull;
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			{PAGE_NUMBER}
+		<!-- ENDIF -->
 	</div>
 <!-- ENDIF -->
+<p><a class="arrow-{S_CONTENT_FLOW_BEGIN}" href="{U_THANKS}" title="{L_THANKS_BACK}">{L_THANKS_BACK}</a></p>
 
 	<!-- BEGIN searchresults -->
 		<div class="search post <!-- IF searchresults.S_ROW_COUNT is odd -->bg1<!-- ELSE -->bg2<!-- ENDIF --><!-- IF searchresults.S_POST_REPORTED --> reported<!-- ENDIF -->">
@@ -44,14 +46,17 @@
 		</div>
 	<!-- END searchresults -->
 
-<!-- IF PAGINATION or .searchresults or PAGE_NUMBER -->
-	<ul class="linklist">
-		<li class="rightside pagination">
-			{SEARCH_MATCHES}<!-- IF PAGINATION --> &bull; <a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <span>{PAGINATION}</span><!-- ELSE --> &bull; {PAGE_NUMBER}<!-- ENDIF -->
-		</li>
-	</ul>
+<!-- IF .pagination or SEARCH_MATCHES -->
+	<div class="pagination">
+		{SEARCH_MATCHES} &bull;
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			{PAGE_NUMBER}
+		<!-- ENDIF -->
+	</div>
 <!-- ENDIF -->
-
+<div class="clear"></div>
 <!-- INCLUDE jumpbox.html -->
 
 <!-- INCLUDE overall_footer.html -->

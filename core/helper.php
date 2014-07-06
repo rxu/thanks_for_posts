@@ -364,7 +364,9 @@ class helper
 		$poster_receive_count = 0;
 		$poster_give_count = 0;
 		$poster_limit = isset($this->config['thanks_number']) ? $this->config['thanks_number'] : false;
-		
+
+		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+
 		$sql = 'SELECT poster_id, COUNT(*) AS poster_receive_count
 			FROM ' . THANKS_TABLE . '
 			WHERE poster_id = ' . (int) $user_id. ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
@@ -515,11 +517,13 @@ class helper
 		}
 		unset ($value);	
 
+		$l_poster_receive_count = ($poster_receive_count) ? $this->user->lang('THANKS', $poster_receive_count) : '';
+		$l_poster_give_count = ($poster_give_count) ? $this->user->lang('THANKS', $poster_give_count) : '';
 		$this->template->assign_vars(array(
 			'DELETE_IMG' 					=> $this->user->img('icon_post_delete', $this->user->lang['CLEAR_LIST_THANKS']),
-			'POSTER_RECEIVE_COUNT'			=> $poster_receive_count,
+			'POSTER_RECEIVE_COUNT'			=> $l_poster_receive_count,
 			'THANKS'						=> $thanks,
-			'POSTER_GIVE_COUNT'				=> $poster_give_count,
+			'POSTER_GIVE_COUNT'				=> $l_poster_give_count,
 			'THANKED'						=> $thanked,
 			'THANKS_PROFILELIST_VIEW'		=> isset($this->config['thanks_profilelist_view']) ? $this->config['thanks_profilelist_view'] : false,
 			'S_MOD_THANKS'					=> $this->auth->acl_get('m_thanks'),
@@ -536,6 +540,8 @@ class helper
 			$thanks_text = $this->get_thanks_text($row['post_id']);
 			$thank_mode = $this->get_thanks_link($row['post_id']);
 			$already_thanked = $this->already_thanked($row['post_id'], $this->user->data['user_id']);
+			$l_poster_receive_count = (isset($this->poster_list_count[$poster_id]['R']) && $this->poster_list_count[$poster_id]['R']) ? $this->user->lang('THANKS', (int) $this->poster_list_count[$poster_id]['R']) : '';
+			$l_poster_give_count = (isset($this->poster_list_count[$poster_id]['G']) && $this->poster_list_count[$poster_id]['G']) ? $this->user->lang('THANKS', (int) $this->poster_list_count[$poster_id]['G']) : '';
 			$postrow = array_merge($postrow, $thanks_text, array(
 				'COND'						=> ($already_thanked) ? true : false,
 				'THANKS'					=> $this->get_thanks($row['post_id']),
@@ -544,10 +550,10 @@ class helper
 				'THANK_TEXT'				=> $this->user->lang['THANK_TEXT_1'],
 				'THANK_TEXT_2'				=> ($this->get_thanks_number($row['post_id']) != 1) ? sprintf($this->user->lang['THANK_TEXT_2PL'], $this->get_thanks_number($row['post_id'])) : $this->user->lang['THANK_TEXT_2'],
 				'THANKS_FROM'				=> $this->user->lang['THANK_FROM'],
-				'POSTER_RECEIVE_COUNT'		=> isset($this->poster_list_count[$poster_id]['R']) ? $this->poster_list_count[$poster_id]['R'] : '',
-				'POSTER_GIVE_COUNT'			=> isset($this->poster_list_count[$poster_id]['G']) ? $this->poster_list_count[$poster_id]['G'] : '',
-				'POSTER_RECEIVE_COUNT_LINK'	=> append_sid("{$this->phpbb_root_path}thankslist.$this->php_ext", "mode=givens&amp;author_id={$poster_id}&amp;give=false"),
-				'POSTER_GIVE_COUNT_LINK'	=> append_sid("{$this->phpbb_root_path}thankslist.$this->php_ext", "mode=givens&amp;author_id={$poster_id}&amp;give=true"),
+				'POSTER_RECEIVE_COUNT'		=> $l_poster_receive_count,
+				'POSTER_GIVE_COUNT'			=> $l_poster_give_count,
+				'POSTER_RECEIVE_COUNT_LINK'	=> append_sid("{$this->phpbb_root_path}thankslist/givens/{$poster_id}/false"),
+				'POSTER_GIVE_COUNT_LINK'	=> append_sid("{$this->phpbb_root_path}thankslist/givens/{$poster_id}/true"),
 				'S_IS_OWN_POST'				=> ($this->user->data['user_id'] == $poster_id) ? true : false,
 				'S_POST_ANONYMOUS'			=> ($poster_id == ANONYMOUS) ? true : false,
 				'THANK_IMG' 				=> ($already_thanked) ? $this->user->img('removethanks', $this->user->lang['REMOVE_THANKS']. get_username_string('username', $poster_id, $row['username'], $row['user_colour'], $row['post_username'])) : $this->user->img('thankposts', $this->user->lang['THANK_POST']. get_username_string('username', $poster_id, $row['username'], $row['user_colour'], $row['post_username'])),

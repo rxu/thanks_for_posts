@@ -27,15 +27,12 @@ class thankslist
 		$this->request = $request;
     }
 
-	public function main()
+	public function main($mode, $author_id, $give)
 	{
 		$this->user->add_lang(array('memberlist', 'groups', 'search'));
 		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
 
 		// Grab data
-		$mode = $this->request->variable('mode', '');
-		$author_id = $this->request->variable('author_id', ANONYMOUS);
-		$give = $this->request->variable('give', '');
 		$row_number	= $total_users = 0;
 		$givens = $reseved = $rowsp = $rowsu = $words = $where = array();
 		$sthanks = false;
@@ -63,7 +60,7 @@ class thankslist
 		switch ($mode)
 		{
 				case 'givens':
-				$per_page = $config['topics_per_page'];
+				$per_page = $this->config['posts_per_page'];
 				$total_match_count = 0;
 				$page_title = $this->user->lang['SEARCH'];
 				$template_html = 'thanks_results.html';
@@ -71,7 +68,7 @@ class thankslist
 				switch ($give)
 				{
 					case 'true':
-					$u_search = append_sid("{$this->phpbb_root_path}thankslist.$this->php_ext", 'mode=givens&amp;author_id=$author_id&amp;give=true');
+					$u_search = append_sid("{$this->phpbb_root_path}thankslist/givens/$author_id/true");
 					
 					$sql = 'SELECT COUNT(user_id) AS total_match_count
 						FROM ' . THANKS_TABLE . '  
@@ -80,7 +77,7 @@ class thankslist
 					break;
 						
 					case 'false':
-					$u_search = append_sid("{$this->phpbb_root_path}thankslist.$this->php_ext", "mode=givens&amp;author_id=$author_id&amp;give=false");
+					$u_search = append_sid("{$this->phpbb_root_path}thankslist/givens/$author_id/false");
 					
 					$sql = 'SELECT COUNT(DISTINCT post_id) as total_match_count
 						FROM ' . THANKS_TABLE . '  
@@ -97,7 +94,7 @@ class thankslist
 				}
 				else
 				{
-					$total_match_count = $row['total_match_count'];
+					$total_match_count = (int) $row['total_match_count'];
 					$this->db->sql_freeresult($result);
 
 					$sql_array = array(
@@ -114,7 +111,7 @@ class thankslist
 						'ON'	=> 't.post_id = p.post_id'
 					);
 					$sql = $this->db->sql_build_query('SELECT_DISTINCT', $sql_array);
-					$result = $this->db->sql_query_limit($sql, $config['topics_per_page'], $start);
+					$result = $this->db->sql_query_limit($sql, $per_page, $start);
 			
 					if (!$row = $this->db->sql_fetchrow($result))
 					{
@@ -182,18 +179,20 @@ class thankslist
 				if ($total_match_count > 1000)
 				{
 					$total_match_count--;
-					$l_search_matches = sprintf($this->user->lang['FOUND_MORE_SEARCH_MATCHES'], $total_match_count);
+					$l_search_matches = $this->user->lang('FOUND_MORE_SEARCH_MATCHES', $total_match_count);
 				}
 				else
 				{
-				$l_search_matches = ($total_match_count == 1) ? sprintf($this->user->lang['FOUND_SEARCH_MATCH'], $total_match_count) : sprintf($this->user->lang['FOUND_SEARCH_MATCHES'], $total_match_count);
+					$l_search_matches = $this->user->lang('FOUND_SEARCH_MATCHES', $total_match_count);
 				}
+				$pagination = $this->phpbb_container->get('pagination');
+				$pagination->generate_template_pagination($u_search, 'pagination', 'start', $total_match_count, $per_page, $start);
 				$this->template->assign_vars(array(
-					'PAGINATION'		=> generate_pagination($u_search, $total_match_count, $per_page, $start),
-					'PAGE_NUMBER'		=> on_page($total_match_count, $per_page, $start),
+				//	'PAGINATION'		=> generate_pagination($u_search, $total_match_count, $per_page, $start),
+					'PAGE_NUMBER'		=> $pagination->on_page($total_match_count, $per_page, $start),
 					'TOTAL_MATCHES'		=> $total_match_count,
 					'SEARCH_MATCHES'	=> $l_search_matches,
-					'U_THANKS'			=> append_sid("{$this->phpbb_root_path}thankslist.$this->php_ext"),
+					'U_THANKS'			=> append_sid("{$this->phpbb_root_path}thankslist"),
 				));
 
 				break;
@@ -269,7 +268,7 @@ class thankslist
 						continue;
 					}
 
-					$param = call_user_func_array(array($this, 'request->variable'), $call);
+					$param = call_user_func_array(array($this->request, 'variable'), $call);
 					$param = urlencode($key) . '=' . ((is_string($param)) ? urlencode($param) : $param);
 					$params[] = $param;
 
@@ -278,8 +277,8 @@ class thankslist
 						$sort_params[] = $param;
 					}
 				}
-				$pagination_url = append_sid("{$this->phpbb_root_path}thankslist.$this->php_ext", implode('&amp;', $params));
-				$sort_url = append_sid("{$this->phpbb_root_path}thankslist.$this->php_ext", $mode);
+				$pagination_url = append_sid("{$this->phpbb_root_path}thankslist", implode('&amp;', $params));
+				$sort_url = append_sid("{$this->phpbb_root_path}thankslist", $mode);
 
 				// Grab relevant data
 				$sql = 'SELECT DISTINCT poster_id
@@ -399,8 +398,8 @@ class thankslist
 							'USER_COLOR'			=> get_username_string('colour', $row['user_id'], $row['username'], $row['user_colour']),
 							'U_VIEW_PROFILE'		=> get_username_string('profile', $row['user_id'], $row['username'], $row['user_colour']),
 							'U_SEARCH_USER'			=> ($this->auth->acl_get('u_search')) ? append_sid("{$this->phpbb_root_path}search.$this->php_ext", "author_id=$user_id&amp;sr=posts") : '',
-							'U_SEARCH_USER_GIVENS'	=> ($this->auth->acl_get('u_search')) ? append_sid("{$this->phpbb_root_path}thankslist.$this->php_ext", "mode=givens&amp;author_id=$user_id&amp;give=true") : '',
-							'U_SEARCH_USER_RECEIVED'=> ($this->auth->acl_get('u_search')) ? append_sid("{$this->phpbb_root_path}thankslist.$this->php_ext", "mode=givens&amp;author_id=$user_id&amp;give=false") : '',
+							'U_SEARCH_USER_GIVENS'	=> ($this->auth->acl_get('u_search')) ? append_sid("{$this->phpbb_root_path}thankslist/givens/$user_id/true") : '',
+							'U_SEARCH_USER_RECEIVED'=> ($this->auth->acl_get('u_search')) ? append_sid("{$this->phpbb_root_path}thankslist/givens/$user_id/false") : '',
 							'L_VIEWING_PROFILE'		=> sprintf($this->user->lang['VIEWING_PROFILE'], $row['username']),
 						//	'LOCATION'				=> ($row['user_from']) ? $row['user_from'] : '',
 						//	'U_WWW'					=> (!empty($row['user_website'])) ? $row['user_website'] : '',
@@ -450,7 +449,7 @@ class thankslist
 		// Output the page
 		$this->template->assign_vars(array(
 			'TOTAL_USERS'		=> $this->user->lang('LIST_USERS', $total_users),
-			'U_THANKS'			=> append_sid("{$this->phpbb_root_path}thankslist.$this->php_ext"),
+			'U_THANKS'			=> append_sid("{$this->phpbb_root_path}thankslist"),
 			'S_THANKS'			=> $sthanks,
 		));
 
