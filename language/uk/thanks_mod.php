@@ -65,6 +65,7 @@ $lang = array_merge($lang, array(
 	'RECEIVED'					=> 'Подякували',
 	'REMOVE_THANKS'				=> 'Скасувати подяку автору: ',
 	'REMOVE_THANKS_CONFIRM'		=> 'Ви дійсно хочете видалити подяку?',
+	'REMOVE_THANKS_SHORT'		=> 'Скасувати подяку',
 	'REPUT'						=> 'Рейтинг',
 	'REPUT_TOPLIST'				=> 'Топ лист подяк',
 	'RETING_LOGIN_EXPLAIN'		=> 'Для перегляду топ листа ви повинні бути авторизовані',
@@ -80,6 +81,7 @@ $lang = array_merge($lang, array(
 
 	'THANK'						=> 'раз.',
 	'THANK_POST'				=> 'Подякувати за повідомлення автора: ',
+	'THANK_POST_SHORT'			=> 'Подякувати',
 	'THANK_FROM'				=> 'від',
 	'THANK_TEXT_1'				=> 'За це повідомлення автора ',
 	'THANK_TEXT_2'				=> ' подякував:',

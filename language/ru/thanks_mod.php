@@ -65,6 +65,7 @@ $lang = array_merge($lang, array(
 	'RECEIVED'					=> 'Поблагодарили',
 	'REMOVE_THANKS'				=> 'Отменить благодарность автору: ',
 	'REMOVE_THANKS_CONFIRM'		=> 'Вы действительно хотите удалить благодарность?',
+	'REMOVE_THANKS_SHORT'		=> 'Отменить благодарность',
 	'REPUT'						=> 'Рейтинг',
 	'REPUT_TOPLIST'				=> 'Топлист — %d благодарностей',
 	'RETING_LOGIN_EXPLAIN'		=> 'Для просмотра топлиста вы должны быть авторизованы',
@@ -80,6 +81,7 @@ $lang = array_merge($lang, array(
 
 	'THANK'						=> 'раз.',
 	'THANK_POST'				=> 'Поблагодарить за сообщение автора: ',
+	'THANK_POST_SHORT'			=> 'Поблагодарить',
 	'THANK_FROM'				=> 'от',
 	'THANK_TEXT_1'				=> 'За это сообщение автора ',
 	'THANK_TEXT_2'				=> ' поблагодарил:',
