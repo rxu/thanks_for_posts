@@ -1,3 +1,4 @@
+<div id='list_thanks{postrow.POST_ID}'>
 <!-- IF postrow.THANKS and postrow.THANKS_POSTLIST_VIEW -->
 	<hr />
 	<!-- IF not postrow.S_POST_ANONYMOUS and not S_IS_BOT and postrow.S_MOD_THANKS -->
@@ -7,7 +8,7 @@
 		</li>
 	</ul>
 	<!-- ENDIF -->
-	<div id='list_thanks{postrow.POST_ID}' class="content">
+	<div class="content">
 		<!-- IF not postrow.S_POST_ANONYMOUS and not S_IS_BOT-->
 		<dl class="postbody small">
 			<dt>{postrow.THANK_TEXT}{postrow.POST_AUTHOR_FULL}{postrow.THANK_TEXT_2}</dt>
@@ -16,8 +17,10 @@
 		<!-- ENDIF -->	
 	</div>
 <!-- ENDIF -->
+</div>
+<div id='div_post_reput{postrow.POST_ID}'>
 <!-- IF postrow.S_THANKS_POST_REPUT_VIEW and postrow.POST_REPUT and not postrow.S_POST_ANONYMOUS and not S_IS_BOT -->
-	<div id='div_post_reput{postrow.POST_ID}' class="content">
+	<div class="content">
 		<dl class="postbody">
 			<dt class="small"><strong>{L_REPUT}:</strong>&nbsp;{postrow.POST_REPUT}</dt>
 			<dd>
@@ -28,3 +31,4 @@
 		</dl>
 	</div>
 <!-- ENDIF -->
+</div>
