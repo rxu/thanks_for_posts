@@ -18,7 +18,7 @@ class v_2_0_0 extends \phpbb\db\migration\migration
 
 	static public function depends_on()
 	{
-		return array('\gfksx\thanks_for_posts\migrations\v_1_3_4');
+			return array('\ext\gfksx\thanks_for_posts\migrations\1.3.4');
 	}
 
 	public function update_schema()
@@ -40,7 +40,7 @@ class v_2_0_0 extends \phpbb\db\migration\migration
 			// Current version
 			array('config.add', array('thanks_for_posts_version', '2.0.0')),
 			array('if', array(
-				(isset($this->config['thanks_for_posts_version'])),
+				(isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '2.0.0', '<')),
 				array('config.update', array('thanks_for_posts_version', '2.0.0')),
 			)),
 

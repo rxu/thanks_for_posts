@@ -13,13 +13,13 @@ class v_1_2_9 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return (isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.2.9', '>='))
-				|| (isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.2.9', '>='));
+		return isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.2.9', '>=')
+				|| isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.2.9', '>=');
 	}
-
 	static public function depends_on()
 	{
-		return array('\gfksx\thanks_for_posts\migrations\v_1_2_8');
+			return array('\phpbb\db\migration\data\v310\dev');
+			return array('\ext\gfksx\thanks_for_posts\migrations\1.2.8');
 	}
 
 	public function update_schema()
@@ -48,7 +48,7 @@ class v_1_2_9 extends \phpbb\db\migration\migration
 			// Current version
 			array('config.add', array('thanks_for_posts_version', '1.2.9')),
 			array('if', array(
-				(isset($this->config['thanks_for_posts_version'])),
+				(isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.2.9', '<')),
 				array('config.update', array('thanks_for_posts_version', '1.2.9')),
 			)),
 

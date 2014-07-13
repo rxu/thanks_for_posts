@@ -13,13 +13,14 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return (isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.2.8', '>='))
-				|| (isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.2.8', '>='));
+		return isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.2.8', '>=')
+				|| isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.2.8', '>=');
 	}
 
 	static public function depends_on()
 	{
-		return array('\gfksx\thanks_for_posts\migrations\v_1_2_6');
+			return array('\phpbb\db\migration\data\v310\dev');
+			return array('\ext\gfksx\thanks_for_posts\migrations\1.2.6');
 	}
 
 	public function update_schema()
@@ -53,15 +54,15 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 			array('config.add', array('thanks_number_digits', 2)),
 			array('config.add', array('thanks_number_row_reput', 5)),
 			array('config.add', array('thanks_reput_graphic', 1)),
-			array('config.add', array('thanks_reput_image', 'ext/gfksx/thanks_for_posts/images/rating/reput_star_gold.gif')),
-			array('config.add', array('thanks_reput_image_back', 'ext/gfksx/thanks_for_posts/images/rating/reput_star_back.gif')),
+			array('config.add', array('thanks_reput_image', 'images/rating/reput_star_gold.gif')),
+			array('config.add', array('thanks_reput_image_back', 'images/rating/reput_star_back.gif')),
 			array('config.add', array('thanks_time_view', 1)),
 			array('config.add', array('thanks_top_number', 0)),
 
 			// Current version
 			array('config.add', array('thanks_for_posts_version', '1.2.8')),
 			array('if', array(
-				(isset($this->config['thanks_for_posts_version'])),
+				(isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.2.8', '<')),
 				array('config.update', array('thanks_for_posts_version', '1.2.8')),
 			)),
 
@@ -83,7 +84,7 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 		);
 	}
 
-	public function update_thanks_table()
+	public function update_thanks_table($action, $version)
 	{
 		if (!defined('THANKS_TABLE'))
 		{
