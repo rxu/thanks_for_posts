@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class toplist
 {
-    public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\controller\helper $helper, $phpbb_container, $gfksx_helper, \phpbb\request\request_interface $request)
+    public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\controller\helper $helper, $phpbb_container, $gfksx_helper, \phpbb\request\request_interface $request)
     {
 		$this->config = $config;
 		$this->db = $db;
