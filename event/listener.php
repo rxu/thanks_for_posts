@@ -49,6 +49,12 @@ class listener implements EventSubscriberInterface
 			'core.viewtopic_modify_post_row'		=> 'viewtopic_modify_postrow',
 			'core.display_forums_modify_forum_rows'	=> 'forumlist_display_rating',
 			'core.display_forums_add_template_data'	=> 'forumlist_modify_template_vars',
+			'core.ucp_prefs_personal_data'			=> 'ucp_add_personal_prefs',
+			'core.ucp_prefs_personal_update_data'	=> 'ucp_update_personal_prefs',
+			'core.acp_users_prefs_modify_data'		=> 'acp_modify_users_prefs_data',
+			'core.acp_users_prefs_modify_sql'		=> 'acp_users_prefs_modify_sql',
+			'core.acp_users_prefs_modify_template_data'	=> 'acp_users_prefs_modify_template_data',
+			'core.ucp_prefs_modify_common'			=> 'add_ucp_prefs_template_vars',
 		);
 	}
 
@@ -191,5 +197,76 @@ class listener implements EventSubscriberInterface
 			$this->helper->get_thanks_forum_reput($row['forum_id']);
 		}
 		$event['forum_row'] = $forum_row;
+	}
+
+	public function ucp_add_personal_prefs($event)
+	{
+		$data = $event['data'];
+		$data = array_merge($data, array(
+			'allowthankspm'	=> request_var('allowthankspm', (bool) (isset($this->user->data['user_allow_thanks_pm']) ? $this->user->data['user_allow_thanks_pm'] : false)),
+			'allowthanksemail'	=> request_var('allowthanksemail', (bool) (isset($this->user->data['user_allow_thanks_email']) ? $this->user->data['user_allow_thanks_email'] : false)),
+		));
+		$event['data'] = $data;
+	}
+
+	public function ucp_update_personal_prefs($event)
+	{
+		$sql_ary = $event['sql_ary'];
+		$data = $event['data'];
+		if (isset($this->user->data['user_allow_thanks_pm']) && isset($this->user->data['user_allow_thanks_email']))
+		{
+			$sql_ary = array_merge($sql_ary, array(
+				'user_allow_thanks_pm'	=> $data['allowthankspm'],
+				'user_allow_thanks_email'=> $data['allowthanksemail'],
+			));		
+		}
+		$event['sql_ary'] = $sql_ary;
+	}
+
+	public function acp_modify_users_prefs_data($event)
+	{
+		$data = $event['data'];
+		$user_row = $event['user_row'];
+		$data = array_merge($data, array(
+			'allowthankspm'		=> request_var('allowthankspm', $user_row['user_allow_thanks_pm']),
+			'allowthanksemail'	=> request_var('allowthanksemail', $user_row['user_allow_thanks_email']),
+		));
+		$event['data'] = $data;
+	}
+
+	public function acp_users_prefs_modify_sql($event)
+	{
+		$sql_ary = $event['sql_ary'];
+		$data = $event['data'];
+		$sql_ary = array_merge($sql_ary, array(
+			'user_allow_thanks_pm'	=> $data['allowthankspm'],
+			'user_allow_thanks_email'	=> $data['allowthanksemail'],
+		));
+		$event['sql_ary'] = $sql_ary;
+	}
+
+	public function acp_users_prefs_modify_template_data($event)
+	{
+		$user_prefs_data = $event['user_prefs_data'];
+		$data = $event['data'];
+		$user_prefs_data = array_merge($user_prefs_data, array(
+			'ALLOW_THANKS_PM'	=> $data['allowthankspm'],
+			'ALLOW_THANKS_EMAIL' => $data['allowthanksemail'],
+		));
+		$event['user_prefs_data'] = $user_prefs_data;
+	}
+
+	public function add_ucp_prefs_template_vars($event)
+	{
+		$mode = $event['mode'];
+		$data = $event['data'];
+		if ($mode = 'personal')
+		{
+			$this->template->assign_vars(array(
+				'S_ALLOW_THANKS_PM'	=> $data['allowthankspm'],
+				'S_ALLOW_THANKS_EMAIL'=> $data['allowthanksemail'],
+				'S_THANKS_NOTICE_ON'=> isset($this->config['thanks_notice_on']) ? $this->config['thanks_notice_on'] : false,
+			));
+		}
 	}
 }
