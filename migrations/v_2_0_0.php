@@ -18,7 +18,7 @@ class v_2_0_0 extends \phpbb\db\migration\migration
 
 	static public function depends_on()
 	{
-			return array('\ext\gfksx\thanks_for_posts\migrations\1.3.4');
+			return array('\gfksx\thanks_for_posts\migrations\v_1_3_4');
 	}
 
 	public function update_schema()

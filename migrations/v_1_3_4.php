@@ -13,13 +13,13 @@ class v_1_3_4 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.3.4', '>=')
-				|| isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.3.4', '>=');
+		return (isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.3.4', '>='))
+				|| (isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.3.4', '>='));
 	}
 
 	static public function depends_on()
 	{
-			return array('\ext\gfksx\thanks_for_posts\migrations\1.3.3');
+			return array('\gfksx\thanks_for_posts\migrations\v_1_3_3');
 	}
 
 	public function update_schema()
