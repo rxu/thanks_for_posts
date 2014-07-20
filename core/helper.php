@@ -566,7 +566,7 @@ class helper
 				'S_REMOVE_THANKS'			=> isset($this->config['remove_thanks']) ? $this->config['remove_thanks'] : false,
 				'S_FIRST_POST_ONLY'			=> isset($this->config['thanks_only_first_post']) ? $this->config['thanks_only_first_post'] : false,
 				'POST_REPUT'				=> ($this->get_thanks_number($row['post_id']) != 0) ? round($this->get_thanks_number($row['post_id']) / ($this->max_post_thanks / 100), $this->config['thanks_number_digits']) . '%' : '',
-				'S_THANKS_POST_REPUT_VIEW' 	=> isset($this->config['thanks_post_reput_view']) ? $this->config['thanks_post_reput_view'] : false,
+				'S_THANKS_POST_REPUT_VIEW' 	=> isset($this->config['thanks_post_reput_view']) ? (bool) $this->config['thanks_post_reput_view'] : false,
 				'S_THANKS_REPUT_GRAPHIC' 	=> isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
 				'THANKS_REPUT_HEIGHT'		=> isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_height']) : false,
 				'THANKS_REPUT_GRAPHIC_WIDTH'=> isset($this->config['thanks_reput_level']) ? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']) : false) : false,
@@ -767,8 +767,8 @@ class helper
 	{
 		$this->template->assign_block_vars('topicrow.reput', array(
 			'TOPIC_REPUT'				=> (isset($topic_thanks[$topic_id])) ? round($topic_thanks[$topic_id] / ($max_topic_thanks / 100), $this->config['thanks_number_digits']) . '%' : '',
-			'S_THANKS_TOPIC_REPUT_VIEW' => isset($this->config['thanks_topic_reput_view']) ? $this->config['thanks_topic_reput_view'] : false,
-			'S_THANKS_TOPIC_REPUT_VIEW_COLUMN' => isset($this->config['thanks_topic_reput_view_column']) ? $this->config['thanks_topic_reput_view_column'] : false,
+			'S_THANKS_TOPIC_REPUT_VIEW' => isset($this->config['thanks_topic_reput_view']) ? (bool) $this->config['thanks_topic_reput_view'] : false,
+			'S_THANKS_TOPIC_REPUT_VIEW_COLUMN' => isset($this->config['thanks_topic_reput_view_column']) ? (bool) $this->config['thanks_topic_reput_view_column'] : false,
 			'S_THANKS_REPUT_GRAPHIC' 	=> isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
 			'THANKS_REPUT_HEIGHT'		=> isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_height']) : false,
 			'THANKS_REPUT_GRAPHIC_WIDTH'=> isset($this->config['thanks_reput_level']) ? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']) : false) : false,
@@ -843,9 +843,9 @@ class helper
 	{
 		$this->template->assign_block_vars('forumrow.reput', array(
 			'FORUM_REPUT'				=> (isset($this->forum_thanks[$forum_id])) ? round($this->forum_thanks[$forum_id] / ($this->max_forum_thanks / 100), ($this->config['thanks_number_digits'])) . '%' : '',
-			'S_THANKS_FORUM_REPUT_VIEW'	=> isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view'] : false,
+			'S_THANKS_FORUM_REPUT_VIEW'	=> isset($this->config['thanks_forum_reput_view']) ? (bool) $this->config['thanks_forum_reput_view'] : false,
 			'S_THANKS_REPUT_GRAPHIC'	=> isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-			'S_THANKS_FORUM_REPUT_VIEW_COLUMN' => isset($this->config['thanks_forum_reput_view_column']) ? $this->config['thanks_forum_reput_view_column'] : false,
+			'S_THANKS_FORUM_REPUT_VIEW_COLUMN' => isset($this->config['thanks_forum_reput_view_column']) ? (bool) $this->config['thanks_forum_reput_view_column'] : false,
 			'THANKS_REPUT_HEIGHT'		=> isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_height']) : false,
 			'THANKS_REPUT_GRAPHIC_WIDTH'=> isset($this->config['thanks_reput_level']) ? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']) : false) : false,
 			'THANKS_REPUT_IMAGE'		=> (isset($this->config['thanks_reput_image'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
