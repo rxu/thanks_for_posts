@@ -83,7 +83,7 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 		);
 	}
 
-	public function update_thanks_table($action, $version)
+	public function update_thanks_table()
 	{
 		if (!defined('THANKS_TABLE'))
 		{
