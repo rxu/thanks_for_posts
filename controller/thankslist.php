@@ -367,23 +367,67 @@ class thankslist
 				}		
 				else
 				{
+					
+					$user_list = array();
+					$id_cache = array();
 					do
 					{
+						$user_list[] = (int) $row['user_id'];
+						$id_cache[$row['user_id']] = $row;
+					} while ($row = $this->db->sql_fetchrow($result));
+					$this->db->sql_freeresult($result);
+					
+					// Load custom profile fields
+					if ($this->config['load_cpf_memberlist'])
+					{
+						$cp = $this->phpbb_container->get('profilefields.manager');
+						
+						$cp_row = $cp->generate_profile_fields_template_headlines('field_show_on_ml');
+						foreach ($cp_row as $profile_field)
+						{
+							$this->template->assign_block_vars('custom_fields', $profile_field);
+						}
+						
+						// Grab all profile fields from users in id cache for later use - similar to the poster cache
+						$profile_fields_cache = $cp->grab_profile_fields_data($user_list);
+
+						// Filter the fields we don't want to show
+						foreach ($profile_fields_cache as $user_id => $user_profile_fields)
+						{
+							foreach ($user_profile_fields as $field_ident => $profile_field)
+							{
+								if (!$profile_field['data']['field_show_on_ml'])
+								{
+									unset($profile_fields_cache[$user_id][$field_ident]);
+								}
+							}
+						}
+					}
+					
+					//do
+					for ($i = 0, $end = sizeof($user_list); $i < $end; ++$i)
+					{
+						$user_id = $user_list[$i];
+						$row = $id_cache[$user_id];
 						$last_visit = $row['user_lastvisit'];
-						$user_id = $row['user_id'];
+						//$user_id = $row['user_id'];
 						$rank_title = $rank_img = $rank_img_src = '';
 						include_once($this->phpbb_root_path . 'includes/functions_display.' . $this->php_ext);
 						get_user_rank($row['user_rank'], (($user_id == ANONYMOUS) ? false : $row['user_posts']), $rank_title, $rank_img, $rank_img_src);
 						$sthanks = true;
 						// Custom Profile Fields
-						$profile_fields = array();
-						if ($this->config['load_cpf_viewprofile'])
+						$cp_row = array();
+						if ($this->config['load_cpf_memberlist'])
 						{
-							$cp = $this->phpbb_container->get('profilefields.manager');
-							$profile_fields = $cp->grab_profile_fields_data($user_id);
-							$profile_fields = (isset($profile_fields[$user_id])) ? $cp->generate_profile_fields_template_data($profile_fields[$user_id]) : array();
+							$cp_row = $cp->generate_profile_fields_template_data($profile_fields_cache[$user_id], false);
 						}
-						$this->template->assign_block_vars('memberrow', array(
+						//if ($this->config['load_cpf_viewprofile'])
+						//{
+							//$cp = $this->phpbb_container->get('profilefields.manager');
+							//$profile_fields = $cp->grab_profile_fields_data($user_id);
+							//$profile_fields = (isset($profile_fields[$user_id])) ? $cp->generate_profile_fields_template_data($profile_fields[$user_id]) : array();
+						//}
+						$memberrow = array_merge(phpbb_show_profile($row), array(
 							'ROW_NUMBER'			=> $row_number + ($start + 1),
 							'RANK_TITLE'			=> $rank_title,
 							'RANK_IMG'				=> $rank_img,
@@ -404,26 +448,42 @@ class thankslist
 						//	'LOCATION'				=> ($row['user_from']) ? $row['user_from'] : '',
 						//	'U_WWW'					=> (!empty($row['user_website'])) ? $row['user_website'] : '',
 							'VISITED'				=> (empty($last_visit)) ? ' - ' : $this->user->format_date($last_visit),
-							'S_CUSTOM_FIELDS'		=> (isset($profile_fields['row']) && sizeof($profile_fields['row'])) ? true : false,
+							//'S_CUSTOM_FIELDS'		=> (isset($profile_fields['row']) && sizeof($profile_fields['row'])) ? true : false,
+							'S_CUSTOM_FIELDS'		=> (isset($cp_row['row']) && sizeof($cp_row['row'])) ? true : false,
 						));
 
-						if (!empty($profile_fields['row']))
+						if (isset($cp_row['row']) && sizeof($cp_row['row']))
 						{
-							$this->template->assign_vars($profile_fields['row']);
+							$memberrow = array_merge($memberrow, $cp_row['row']);
 						}
+						
+						$this->template->assign_block_vars('memberrow', $memberrow);
 
-						if (!empty($profile_fields['blockrow']))
+						if (isset($cp_row['blockrow']) && sizeof($cp_row['blockrow']))
 						{
-							foreach ($profile_fields['blockrow'] as $field_data)
+							foreach ($cp_row['blockrow'] as $field_data)
 							{
-								$this->template->assign_block_vars('custom_fields', $field_data);
+								$this->template->assign_block_vars('memberrow.custom_fields', $field_data);
 							}
 						}
+						
+						//if (!empty($profile_fields['row']))
+						//{
+						//	$this->template->assign_vars($profile_fields['row']);
+						//}
+
+						//if (!empty($profile_fields['blockrow']))
+						//{
+							//foreach ($profile_fields['blockrow'] as $field_data)
+							//{
+							//	$this->template->assign_block_vars('custom_fields', $field_data);
+							//}
+						//}
 
 						$row_number++;
 					}
-					while ($row = $this->db->sql_fetchrow($result));
-					$this->db->sql_freeresult($result);
+					//while ($row = $this->db->sql_fetchrow($result));
+					//$this->db->sql_freeresult($result);
 					// www.phpBB-SEO.com SEO TOOLKIT BEGIN
 					$seo_sep = strpos($sort_url, '?') === false ? '?' : '&amp;';
 					// www.phpBB-SEO.com SEO TOOLKIT END
