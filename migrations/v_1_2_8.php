@@ -27,8 +27,8 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 		return 	array(
 			'add_columns' => array(
 				$this->table_prefix . 'thanks' => array(
-					'topic_id'		=> array('BOOL', 0),
-					'forum_id'		=> array('BOOL', 0),
+					'topic_id'		=> array('UINT', 0),
+					'forum_id'		=> array('UINT', 0),
 					'thanks_time'	=> array('UINT:11', 0),
 				),
 			),
