@@ -83,3 +83,15 @@ dl.thanks dt {
 
 }
 .removethanks-icon:hover:before	{background-position: -18px -20px; } 
+
+.thanks_reput_image_back 
+{
+	background:  url(../../../images/rating/reput_star_back.gif); 
+	background-repeat: repeat-x;
+}
+.thanks_reput_image 
+{
+	background:  url(../../../images/rating/reput_star_gold.gif); 
+	background-repeat: repeat-x;
+}
+
