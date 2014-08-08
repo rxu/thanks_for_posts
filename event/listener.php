@@ -1,21 +1,13 @@
 <?php
 /**
  *
- * @package thanks_for_posts
+ * @package ThanksForPosts
  * @copyright (c) 2014 Sergeiy Varzaev (Палыч)  phpbbguru.net varzaev@mail.ru
  * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  *
  */
 
-namespace gfksx\thanks_for_posts\event;
-
-/**
-* @ignore
-*/
-if (!defined('IN_PHPBB'))
-{
-    exit;
-}
+namespace gfksx\ThanksForPosts\event;
 
 /**
 * Event listener
@@ -60,7 +52,7 @@ class listener implements EventSubscriberInterface
 
 	public function get_thanks_list($event)
 	{
-		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 
 		// Generate thankslist if required ...
 		$thanks_list = '';
@@ -86,7 +78,7 @@ class listener implements EventSubscriberInterface
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : false;
 
-		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		if (isset($_REQUEST['list_thanks'])) 
 		{
 			$this->helper->clear_list_thanks($user_id, request_var('list_thanks', ''));

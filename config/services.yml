@@ -1,6 +1,6 @@
 services:
-    gfksx.thanks_for_posts.listener:
-        class: gfksx\thanks_for_posts\event\listener
+    gfksx.ThanksForPosts.listener:
+        class: gfksx\ThanksForPosts\event\listener
         arguments:
             - @config
             - @dbal.conn
@@ -10,11 +10,11 @@ services:
             - @cache.driver
             - %core.root_path%
             - %core.php_ext%
-            - @gfksx.thanks_for_posts.helper
+            - @gfksx.ThanksForPosts.helper
         tags:
             - { name: event.listener }
-    gfksx.thanks_for_posts.helper:
-        class: gfksx\thanks_for_posts\core\helper
+    gfksx.ThanksForPosts.helper:
+        class: gfksx\ThanksForPosts\core\helper
         arguments:
             - @config
             - @dbal.conn
@@ -25,8 +25,8 @@ services:
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
-    gfksx.thanks_for_posts.controller.thankslist:
-        class: gfksx\thanks_for_posts\controller\thankslist
+    gfksx.ThanksForPosts.controller.thankslist:
+        class: gfksx\ThanksForPosts\controller\thankslist
         arguments:
             - @config
             - @dbal.conn
@@ -39,8 +39,8 @@ services:
             - @controller.helper
             - @service_container
             - @request
-    gfksx.thanks_for_posts.controller.toplist:
-        class: gfksx\thanks_for_posts\controller\toplist
+    gfksx.ThanksForPosts.controller.toplist:
+        class: gfksx\ThanksForPosts\controller\toplist
         arguments:
             - @config
             - @dbal.conn
@@ -52,5 +52,5 @@ services:
             - %core.php_ext%
             - @controller.helper
             - @service_container
-            - @gfksx.thanks_for_posts.helper
+            - @gfksx.ThanksForPosts.helper
             - @request

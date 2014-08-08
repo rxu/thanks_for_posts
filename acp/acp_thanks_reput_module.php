@@ -7,7 +7,7 @@
 *
 */
 
-namespace gfksx\thanks_for_posts\acp;
+namespace gfksx\ThanksForPosts\acp;
 
 /**
 * @ignore

@@ -1,6 +1,6 @@
 thankslist_controller_user:
     pattern: /thankslist/{mode}/{author_id}/{give}
-    defaults: { _controller: gfksx.thanks_for_posts.controller.thankslist:main, top: 0, start: 0, sort_key: "a", sort_dir: "d", topic_id: 0, return_chars: 300 }
+    defaults: { _controller: gfksx.ThanksForPosts.controller.thankslist:main, top: 0, start: 0, sort_key: "a", sort_dir: "d", topic_id: 0, return_chars: 300 }
     requirements:
         mode: \w+
         author_id: \d+
@@ -8,8 +8,8 @@ thankslist_controller_user:
 
 thankslist_controller:
     pattern: /thankslist
-    defaults: { _controller: gfksx.thanks_for_posts.controller.thankslist:main, mode: "", author_id: 1, give: "", top: 0, start: 0, sort_key: "a", sort_dir: "d", topic_id: 0, return_chars: 300 }
+    defaults: { _controller: gfksx.ThanksForPosts.controller.thankslist:main, mode: "", author_id: 1, give: "", top: 0, start: 0, sort_key: "a", sort_dir: "d", topic_id: 0, return_chars: 300 }
 
 toplist_controller:
     pattern: /toplist
-    defaults: { _controller: gfksx.thanks_for_posts.controller.toplist:main, mode: "", start: 0, topic_id: 0, return_chars: 300 }
+    defaults: { _controller: gfksx.ThanksForPosts.controller.toplist:main, mode: "", start: 0, topic_id: 0, return_chars: 300 }

@@ -7,7 +7,7 @@
 *
 */
 
-namespace gfksx\thanks_for_posts\controller;
+namespace gfksx\ThanksForPosts\controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class thankslist
@@ -30,7 +30,7 @@ class thankslist
 	public function main($mode, $author_id, $give)
 	{
 		$this->user->add_lang(array('memberlist', 'groups', 'search'));
-		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 
 		// Grab data
 		$row_number	= $total_users = 0;

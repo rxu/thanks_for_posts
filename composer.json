@@ -1,5 +1,5 @@
 {
-    "name": "gfksx/thanks_for_posts",
+    "name": "gfksx/ThanksForPosts",
     "type": "phpbb-extension",
     "description": "Adds the ability to thank the author (thanks to cancel), and use the rating system posts/topics/forums based on the issued of thanks.",
     "homepage": "http://www.phpbbguru.net",
@@ -21,7 +21,10 @@
     "require": {
         "php": ">=5.3.3"
     },
-    "extra": {
+   "require-dev": {
+      "phpbb/epv": "dev-master"
+   },
+   "extra": {
         "display-name": "Thanks for posts",
         "soft-require": {
            "phpbb/phpbb": "3.1.*@dev"

@@ -1,13 +1,13 @@
 <?php
 /**
 *
-* @package thanks_for_posts
+* @package ThanksForPosts
 * @copyright (c) 2014 gfksx
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-namespace gfksx\thanks_for_posts\migrations;
+namespace gfksx\ThanksForPosts\migrations;
 
 class v_2_0_0 extends \phpbb\db\migration\migration
 {
@@ -18,7 +18,7 @@ class v_2_0_0 extends \phpbb\db\migration\migration
 
 	static public function depends_on()
 	{
-			return array('\gfksx\thanks_for_posts\migrations\v_1_3_4');
+			return array('\gfksx\ThanksForPosts\migrations\v_1_3_4');
 	}
 
 	public function update_schema()
@@ -53,28 +53,28 @@ class v_2_0_0 extends \phpbb\db\migration\migration
 			// Add ACP modules
 			array('module.add', array('acp', 'ACP_CAT_DOT_MODS', 'ACP_THANKS')),
 			array('module.add', array('acp', 'ACP_THANKS', array(
-					'module_basename'	=> '\gfksx\thanks_for_posts\acp\acp_thanks_module',
+					'module_basename'	=> '\gfksx\ThanksForPosts\acp\acp_thanks_module',
 					'module_langname'	=> 'ACP_THANKS_SETTINGS',
 					'module_mode'		=> 'thanks',
-					'module_auth'		=> 'ext_gfksx/thanks_for_posts && acl_a_board',
+					'module_auth'		=> 'ext_gfksx/ThanksForPosts && acl_a_board',
 			))),
 			array('module.add', array('acp', 'ACP_THANKS', array(
-					'module_basename'	=> '\gfksx\thanks_for_posts\acp\acp_thanks_refresh_module',
+					'module_basename'	=> '\gfksx\ThanksForPosts\acp\acp_thanks_refresh_module',
 					'module_langname'	=> 'ACP_THANKS_REFRESH',
 					'module_mode'		=> 'thanks',
-					'module_auth'		=> 'ext_gfksx/thanks_for_posts && acl_a_board',
+					'module_auth'		=> 'ext_gfksx/ThanksForPosts && acl_a_board',
 			))),
 			array('module.add', array('acp', 'ACP_THANKS', array(
-					'module_basename'	=> '\gfksx\thanks_for_posts\acp\acp_thanks_truncate_module',
+					'module_basename'	=> '\gfksx\ThanksForPosts\acp\acp_thanks_truncate_module',
 					'module_langname'	=> 'ACP_THANKS_TRUNCATE',
 					'module_mode'		=> 'thanks',
-					'module_auth'		=> 'ext_gfksx/thanks_for_posts && acl_a_board',
+					'module_auth'		=> 'ext_gfksx/ThanksForPosts && acl_a_board',
 			))),
 			array('module.add', array('acp', 'ACP_THANKS', array(
-					'module_basename'	=> '\gfksx\thanks_for_posts\acp\acp_thanks_reput_module',
+					'module_basename'	=> '\gfksx\ThanksForPosts\acp\acp_thanks_reput_module',
 					'module_langname'	=> 'ACP_THANKS_REPUT_SETTINGS',
 					'module_mode'		=> 'thanks',
-					'module_auth'		=> 'ext_gfksx/thanks_for_posts && acl_a_board',
+					'module_auth'		=> 'ext_gfksx/ThanksForPosts && acl_a_board',
 			))),
 		);
 	}

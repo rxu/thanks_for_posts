@@ -1,13 +1,13 @@
 <?php
 /**
 *
-* @package thanks_for_posts
+* @package ThanksForPosts
 * @copyright (c) 2014 gfksx
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-namespace gfksx\thanks_for_posts\migrations;
+namespace gfksx\ThanksForPosts\migrations;
 
 class v_1_3_1 extends \phpbb\db\migration\migration
 {
@@ -19,7 +19,7 @@ class v_1_3_1 extends \phpbb\db\migration\migration
 
 	static public function depends_on()
 	{
-			return array('\gfksx\thanks_for_posts\migrations\v_1_2_9');
+			return array('\gfksx\ThanksForPosts\migrations\v_1_2_9');
 	}
 
 	public function update_schema()

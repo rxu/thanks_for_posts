@@ -7,7 +7,7 @@
 *
 */
 
-namespace gfksx\thanks_for_posts\controller;
+namespace gfksx\ThanksForPosts\controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class toplist
@@ -32,7 +32,7 @@ class toplist
 	{
 		include_once($this->phpbb_root_path . 'includes/functions_display.' . $this->php_ext);
 		$this->user->add_lang(array('memberlist', 'groups', 'search'));
-		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 
 		// Grab data
 		$mode = $this->request->variable('mode', '');

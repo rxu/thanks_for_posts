@@ -7,15 +7,7 @@
 *
 */
 
-namespace gfksx\thanks_for_posts\acp;
-
-/**
-* @ignore
-*/
-if (!defined('IN_PHPBB'))
-{
-	exit;
-}
+namespace gfksx\ThanksForPosts\acp;
 
 /**
 * @package acp

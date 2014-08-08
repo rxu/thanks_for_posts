@@ -7,15 +7,7 @@
 *
 */
 
-namespace gfksx\thanks_for_posts\core;
-
-/**
-* @ignore
-*/
-if (!defined('IN_PHPBB'))
-{
-	exit; 
-}
+namespace gfksx\ThanksForPosts\core;
 
 class helper
 {
@@ -110,7 +102,7 @@ class helper
 	// add a user to the thanks list
 	public function insert_thanks($post_id, $user_id, $forum_id)
 	{
-		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		$to_id = request_var('to_id', 0);
 		$from_id = request_var('from_id', 0);	
 		$sql_array = array(
@@ -166,7 +158,7 @@ class helper
 	// clear list user's thanks
 	public function clear_list_thanks($object_id, $list_thanks = '')
 	{
-		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 
 		// confirm
 		$s_hidden_fields = build_hidden_fields(array(
@@ -259,7 +251,7 @@ class helper
 	// remove a user's thanks
 	public function delete_thanks($post_id, $user_id, $forum_id)
 	{
-		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		$to_id = request_var('to_id', 0);
 		$forum_id = ($forum_id) ? : request_var('f', 0);
 		// confirm
@@ -316,7 +308,7 @@ class helper
 	// display the text/image saying either to add or remove thanks
 	public function get_thanks_text($post_id)
 	{
-		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		if ($this->already_thanked($post_id, $this->user->data['user_id'], $this->thankers))
 		{
 			return array(
@@ -367,7 +359,7 @@ class helper
 		$poster_give_count = 0;
 		$poster_limit = isset($this->config['thanks_number']) ? $this->config['thanks_number'] : false;
 
-		$this->user->add_lang_ext('gfksx/thanks_for_posts', 'thanks_mod');
+		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 
 		$sql = 'SELECT poster_id, COUNT(*) AS poster_receive_count
 			FROM ' . THANKS_TABLE . '

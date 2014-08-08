@@ -6,15 +6,7 @@
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 */
 
-namespace gfksx\thanks_for_posts\acp;
-
-/**
-* @ignore
-*/
-if (!defined('IN_PHPBB'))
-{
-	exit;
-}
+namespace gfksx\ThanksForPosts\acp;
 	
 /**
 * @package acp
