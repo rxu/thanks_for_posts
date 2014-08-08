@@ -94,7 +94,7 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 			FROM '. POSTS_TABLE . '
 			WHERE post_id = ' . THANKS_TABLE . '.post_id)';
 		$this->db->sql_query($sql);
-		
+
 		$sql = 'UPDATE '. THANKS_TABLE . '
 			SET topic_id = (SELECT topic_id
 			FROM '. POSTS_TABLE . '

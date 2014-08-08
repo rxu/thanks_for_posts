@@ -14,7 +14,7 @@
 */
 if (!defined('IN_PHPBB'))
 {
-   exit;
+	exit;
 }
 
 if (empty($lang) || !is_array($lang))
@@ -46,20 +46,20 @@ $lang = array_merge($lang, array(
 	'CLEAR_LIST_THANKS_RECEIVE'	=> 'List of thanks obtained by the user was cleared.',
 
 	'DISABLE_REMOVE_THANKS'		=> 'Deleting thanks has been disabled by the administrator',
-	
+
 	'GIVEN'						=> 'Has&nbsp;thanked',
 	'GLOBAL_INCORRECT_THANKS'	=> 'You cannot give thanks for a Global Announcement that has no reference to a particular forum.',
 	'GRATITUDES'				=> 'Thanks list',
-	
+
 	'INCORRECT_THANKS'			=> 'Invalid thank',
-	
+
 	'JUMP_TO_FORUM'				=> 'Jump to forum',
 	'JUMP_TO_TOPIC'				=> 'Jump to topic',
 
 	'FOR_MESSAGE'				=> ' for post',
 	'FURTHER_THANKS'     	    => ' and one more user',
 	'FURTHER_THANKS_PL'         => ' and %d more users',
-	
+
 	'NO_VIEW_USERS_THANKS'		=> 'You are not authorised to view the Thanks List.',
 
 	'RECEIVED'					=> 'Been&nbsp;thanked',
@@ -75,7 +75,7 @@ $lang = array_merge($lang, array(
 	'RATING_POST'				=> 'Post',
 	'RATING_TOP_FORUM'			=> 'Rating forums',
 	'RATING_TOP_POST'			=> 'Rating posts',
-	'RATING_TOP_TOPIC'			=> 'Rating topics',	
+	'RATING_TOP_TOPIC'			=> 'Rating topics',
 	'RATING_TOPIC'				=> 'Topic',
 	'RETURN_POST'				=> 'Return',
 
@@ -106,4 +106,3 @@ $lang = array_merge($lang, array(
 	'THANKS_CUSTOM1_FUNCTION'	=> 'Check remove module',
 	'THANKS_CUSTOM2_FUNCTION'	=> 'Check refrech cache',
 ));
-?>

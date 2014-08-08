@@ -8,17 +8,18 @@
 */
 
 namespace gfksx\ThanksForPosts\controller;
+
 use Symfony\Component\HttpFoundation\Response;
 
 class toplist
 {
-    public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\controller\helper $helper, $phpbb_container, $gfksx_helper, \phpbb\request\request_interface $request)
-    {
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\controller\helper $helper, $phpbb_container, $gfksx_helper, \phpbb\request\request_interface $request)
+	{
 		$this->config = $config;
 		$this->db = $db;
 		$this->auth = $auth;
-        $this->template = $template;
-        $this->user = $user;
+		$this->template = $template;
+		$this->user = $user;
 		$this->cache = $cache;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
@@ -26,7 +27,7 @@ class toplist
 		$this->phpbb_container = $phpbb_container;
 		$this->gfksx_helper = $gfksx_helper;
 		$this->request = $request;
-    }
+	}
 
 	public function main()
 	{
@@ -69,11 +70,11 @@ class toplist
 					WHERE ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true);
 				$result = $this->db->sql_query($sql);
 				$total_match_count = (int) $this->db->sql_fetchfield('total_post_count');
-				$this->db->sql_freeresult($result);			
+				$this->db->sql_freeresult($result);	
 				$full_post_rating = true;
 				$notoplist = false;
 				break;
-				
+
 				case 'topic':
 				$sql = 'SELECT COUNT(DISTINCT topic_id) as total_topic_count
 					FROM ' . THANKS_TABLE .'
@@ -84,7 +85,7 @@ class toplist
 				$full_topic_rating = true;
 				$notoplist = false;
 				break;
-				
+
 				case 'forum':
 				$sql = 'SELECT COUNT(DISTINCT forum_id) as total_forum_count
 					FROM ' . THANKS_TABLE .'
@@ -95,7 +96,7 @@ class toplist
 				$full_forum_rating = true;
 				$notoplist = false;
 				break;
-				
+
 				default:
 				$page_title = $this->user->lang['REPUT_TOPLIST'];
 				$total_match_count = 0;
@@ -106,7 +107,7 @@ class toplist
 			{
 				$end = ($full_post_rating) ?  $this->config['topics_per_page'] : $end_row_rating;
 
-				$sql_p_array['FROM']	= array(THANKS_TABLE => 't');		
+				$sql_p_array['FROM']	= array(THANKS_TABLE => 't');
 				$sql_p_array['SELECT'] = 'u.user_id, u.username, u.user_colour, p.post_subject, p.post_id, p.post_time, p.poster_id, p.post_username, p.topic_id, p.forum_id, p.post_text, p.bbcode_uid, p.bbcode_bitfield, p.post_attachment';
 				$sql_p_array['SELECT'] .= ', t.post_id, COUNT(*) AS post_thanks';			
 				$sql_p_array['LEFT_JOIN'][] = array(
@@ -117,21 +118,21 @@ class toplist
 					'FROM'	=> array(USERS_TABLE => 'u'),
 					'ON'	=> 'p.poster_id = u.user_id'
 				);
-				$sql_p_array['GROUP_BY'] = 't.post_id';	
-				$sql_p_array['ORDER_BY'] = 'post_thanks DESC';		
-				$sql_p_array['WHERE'] = $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true);		
-					
+				$sql_p_array['GROUP_BY'] = 't.post_id';
+				$sql_p_array['ORDER_BY'] = 'post_thanks DESC';
+				$sql_p_array['WHERE'] = $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true);
+
 				$sql = $this->db->sql_build_query('SELECT',$sql_p_array);
-				$result = $this->db->sql_query_limit($sql, $end, $start);	
-				$u_search_post = append_sid("{$this->phpbb_root_path}toplist.$this->php_ext", "mode=post");		
+				$result = $this->db->sql_query_limit($sql, $end, $start);
+				$u_search_post = append_sid("{$this->phpbb_root_path}toplist.$this->php_ext", "mode=post");
 				if (!$row = $this->db->sql_fetchrow($result))
 				{
 					trigger_error('RATING_VIEW_TOPLIST_NO');
-				}		
+				}
 				else
 				{
 					$notoplist = false;
-					$bbcode_bitfield = $text_only_message = '';		
+					$bbcode_bitfield = $text_only_message = '';
 					do
 					{
 							// We pre-process some variables here for later usage
@@ -187,7 +188,7 @@ class toplist
 								}
 
 								$row['post_text'] = bbcode_nl2br($row['post_text']);
-								$row['post_text'] = smiley_text($row['post_text']);						
+								$row['post_text'] = smiley_text($row['post_text']);
 							}
 
 						$post_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $row['post_id'] . '#p' . $row['post_id']);
@@ -209,17 +210,17 @@ class toplist
 						));
 					}
 					while ($row = $this->db->sql_fetchrow($result));
-					$this->db->sql_freeresult($result);			
+					$this->db->sql_freeresult($result);
 				}
 			}
 		//topic rating
 			if (!$full_forum_rating && !$full_post_rating && $this->config['thanks_topic_reput_view'])
 			{
 				$end = ($full_topic_rating) ?  $this->config['topics_per_page'] : $end_row_rating;
-			
-				$sql_t_array['FROM']	= array(THANKS_TABLE => 'f');		
+
+				$sql_t_array['FROM']	= array(THANKS_TABLE => 'f');
 				$sql_t_array['SELECT'] = 'u.user_id, u.username, u.user_colour, t.topic_title, t.topic_id, t.topic_time, t.topic_poster, t.topic_first_poster_name, t.topic_first_poster_colour, t.forum_id, t.topic_type, t.topic_status, t.poll_start';
-				$sql_t_array['SELECT'] .= ', f.topic_id, COUNT(*) AS topic_thanks';			
+				$sql_t_array['SELECT'] .= ', f.topic_id, COUNT(*) AS topic_thanks';
 				$sql_t_array['LEFT_JOIN'][] = array(
 					'FROM'	=> array (TOPICS_TABLE => 't'),
 					'ON'	=> 'f.topic_id = t.topic_id',
@@ -228,17 +229,17 @@ class toplist
 					'FROM'	=> array(USERS_TABLE => 'u'),
 					'ON'	=> 't.topic_poster = u.user_id'
 				);
-				$sql_t_array['GROUP_BY'] = 'f.topic_id';	
-				$sql_t_array['ORDER_BY'] = 'topic_thanks DESC';		
+				$sql_t_array['GROUP_BY'] = 'f.topic_id';
+				$sql_t_array['ORDER_BY'] = 'topic_thanks DESC';
 				$sql_t_array['WHERE'] = $this->db->sql_in_set('f.forum_id', $ex_fid_ary, true);	
-				
+
 				$sql = $this->db->sql_build_query('SELECT',$sql_t_array);
 				$result = $this->db->sql_query_limit($sql, $end, $start);
-				$u_search_topic = append_sid("{$this->phpbb_root_path}toplist.$this->php_ext", "mode=topic");			
+				$u_search_topic = append_sid("{$this->phpbb_root_path}toplist.$this->php_ext", "mode=topic");
 				if (!$row = $this->db->sql_fetchrow($result))
 				{
 					trigger_error('RATING_VIEW_TOPLIST_NO');
-				}		
+				}
 				else
 				{
 					$notoplist = false;
@@ -252,7 +253,7 @@ class toplist
 						$this->template->assign_block_vars('toptopicrow', array(
 							'TOPIC_IMG_STYLE'			=> $folder_img,
 							'TOPIC_FOLDER_IMG_SRC'		=> $row['forum_id'] ? 'topic_read' : 'announce_read',
-							'TOPIC_TITLE'				=> ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row ['topic_title'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : $row ['topic_title']),
+							'TOPIC_TITLE'				=> ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['topic_title'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : $row['topic_title']),
 							'U_VIEW_TOPIC'				=> $view_topic_url,
 							'TOPIC_AUTHOR'				=> get_username_string('full', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']),
 							'TOPIC_THANKS'				=> $row['topic_thanks'],
@@ -266,32 +267,32 @@ class toplist
 						));
 					}
 					while ($row = $this->db->sql_fetchrow($result));
-					$this->db->sql_freeresult($result);			
+					$this->db->sql_freeresult($result);
 				}
 			}
 		//forum rating
 			if (!$full_topic_rating && !$full_post_rating && $this->config['thanks_forum_reput_view'])
 			{
 				$end = ($full_forum_rating) ?  $this->config['topics_per_page'] : $end_row_rating;
-			
-				$sql_f_array['FROM']	= array(THANKS_TABLE => 't');		
+
+				$sql_f_array['FROM']	= array(THANKS_TABLE => 't');
 				$sql_f_array['SELECT'] = 'f.forum_name, f.forum_id';
-				$sql_f_array['SELECT'] .= ', t.forum_id, COUNT(*) AS forum_thanks';			
+				$sql_f_array['SELECT'] .= ', t.forum_id, COUNT(*) AS forum_thanks';
 				$sql_f_array['LEFT_JOIN'][] = array(
 					'FROM'	=> array (FORUMS_TABLE => 'f'),
 					'ON'	=> 't.forum_id = f.forum_id',
 					);
-				$sql_f_array['GROUP_BY'] = 't.forum_id';	
-				$sql_f_array['ORDER_BY'] = 'forum_thanks DESC';		
-				$sql_f_array['WHERE'] = $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true);	
-				
+				$sql_f_array['GROUP_BY'] = 't.forum_id';
+				$sql_f_array['ORDER_BY'] = 'forum_thanks DESC';
+				$sql_f_array['WHERE'] = $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true);
+
 				$sql = $this->db->sql_build_query('SELECT',$sql_f_array);
-				$result = $this->db->sql_query_limit($sql, $end, $start);	
-				$u_search_forum = append_sid("{$this->phpbb_root_path}toplist.$this->php_ext", "mode=forum");				
+				$result = $this->db->sql_query_limit($sql, $end, $start);
+				$u_search_forum = append_sid("{$this->phpbb_root_path}toplist.$this->php_ext", "mode=forum");
 				if (!$row = $this->db->sql_fetchrow($result))
 				{
 					trigger_error('RATING_VIEW_TOPLIST_NO');
-				}		
+				}
 				else
 				{
 					$notoplist = false;
@@ -316,12 +317,12 @@ class toplist
 						}
 					}
 					while ($row = $this->db->sql_fetchrow($result));
-					$this->db->sql_freeresult($result);			
+					$this->db->sql_freeresult($result);
 				}
 			}
 			if ($notoplist)
 			{
-				trigger_error('RATING_VIEW_TOPLIST_NO');	
+				trigger_error('RATING_VIEW_TOPLIST_NO');
 			}
 
 			$pagination = $this->phpbb_container->get('pagination');

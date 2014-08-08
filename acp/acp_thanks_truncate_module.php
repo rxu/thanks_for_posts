@@ -7,7 +7,7 @@
 */
 
 namespace gfksx\ThanksForPosts\acp;
-	
+
 /**
 * @package acp
 */
@@ -22,7 +22,7 @@ class acp_thanks_truncate_module
 		$this->tpl_name = 'acp_thanks_truncate';
 		$this->page_title = 'ACP_THANKS_TRUNCATE';
 
-		$all_posts_thanks = $all_thanks = $del_thanks = $del_uposts = $del_posts = 0; 
+		$all_posts_thanks = $all_thanks = $del_thanks = $del_uposts = $del_posts = 0;
 
 		if (!defined('THANKS_TABLE'))
 		{
@@ -34,7 +34,7 @@ class acp_thanks_truncate_module
 		$result = $db->sql_query($sql);
 		$all_thanks = $end_thanks = $del_thanks = $db->sql_fetchfield('total_match_count');
 		$db->sql_freeresult($result);
-	
+
 		$sql = 'SELECT COUNT(DISTINCT post_id) as total_match_count
 			FROM ' . THANKS_TABLE;
 		$result = $db->sql_query($sql);
@@ -57,7 +57,7 @@ class acp_thanks_truncate_module
 				$sql = 'TRUNCATE TABLE ' . THANKS_TABLE;
 				$result = $db->sql_query($sql);
 				$db->sql_freeresult($result);
-				
+
 				$sql = 'SELECT COUNT(post_id) as total_match_count
 					FROM ' . THANKS_TABLE;
 				$result = $db->sql_query($sql);
@@ -65,8 +65,8 @@ class acp_thanks_truncate_module
 				$db->sql_freeresult($result);
 
 				$end_posts_thanks = $all_posts_thanks - $del_posts;
-				$end_users_thanks = $all_users_thanks - $del_uposts;	
-				$del_thanks = $all_thanks - $end_thanks;				
+				$end_users_thanks = $all_users_thanks - $del_uposts;
+				$del_thanks = $all_thanks - $end_thanks;
 			}
 			else
 			{
@@ -78,8 +78,8 @@ class acp_thanks_truncate_module
 				confirm_box(false, 'TRUNCATE_THANKS', $s_hidden_fields);
 				trigger_error($user->lang['TRUNCATE_NO_THANKS'] . adm_back_link($this->u_action));
 			}
-		}			
-	
+		}
+
 		$template->assign_vars(array(
 			'ALLTHANKS'		=> $all_thanks,
 			'POSTSTHANKS'	=> $all_posts_thanks,
@@ -87,8 +87,7 @@ class acp_thanks_truncate_module
 			'POSTSEND'		=> $end_posts_thanks,
 			'USERSEND'		=> $end_users_thanks,
 			'THANKSEND'		=> $end_thanks,
-			'S_TRUNCATE' 	=> $truncate,			
+			'S_TRUNCATE' 	=> $truncate,
 		));
 	}
 }
-?>

@@ -32,4 +32,3 @@ class acp_thanks_info
 	}
 }
 
-?>

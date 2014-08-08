@@ -10,14 +10,6 @@
 namespace gfksx\ThanksForPosts\acp;
 
 /**
-* @ignore
-*/
-if (!defined('IN_PHPBB'))
-{
-	exit;
-}
-
-/**
 * @package acp
 */
 class acp_thanks_reput_module
@@ -50,14 +42,14 @@ class acp_thanks_reput_module
 			'thanks_topic_reput_view_column' => array('lang' => 'THANKS_TOPIC_REPUT_VIEW_COLUMN', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_forum_reput_view'	=> array('lang' => 'THANKS_FORUM_REPUT_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_forum_reput_view_column' => array('lang' => 'THANKS_FORUM_REPUT_VIEW_COLUMN', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_number_digits'		=> array('lang' => 'THANKS_NUMBER_DIGITS', 'validate' => 'int:0',	'type' => 'text:4:4', 'explain' => false),		
-			'thanks_number_row_reput'	=> array('lang' => 'THANKS_NUMBER_ROW_REPUT', 'validate' => 'int:0', 'type' => 'text:4:6', 'explain' => true),			
-			'legend1'					=> 'GRAPHIC_OPTIONS',				
+			'thanks_number_digits'		=> array('lang' => 'THANKS_NUMBER_DIGITS', 'validate' => 'int:0',	'type' => 'text:4:4', 'explain' => false),
+			'thanks_number_row_reput'	=> array('lang' => 'THANKS_NUMBER_ROW_REPUT', 'validate' => 'int:0', 'type' => 'text:4:6', 'explain' => true),
+			'legend1'					=> 'GRAPHIC_OPTIONS',
 			'thanks_reput_graphic'		=> array('lang' => 'THANKS_REPUT_GRAPHIC', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_reput_height'		=> array('lang' => 'THANKS_REPUT_HEIGHT', 'validate' => 'int:1:25', 'type' => 'text:4:6', 'explain' => true, 'append' => ' ' . $user->lang['PIXEL']),	
+			'thanks_reput_height'		=> array('lang' => 'THANKS_REPUT_HEIGHT', 'validate' => 'int:1:25', 'type' => 'text:4:6', 'explain' => true, 'append' => ' ' . $user->lang['PIXEL']),
 			'thanks_reput_level'		=> array('lang' => 'THANKS_REPUT_LEVEL', 'validate' => 'int:4:13',	'type' => 'text:4:4', 'explain' => false),
 			'thanks_reput_image'		=> array('lang' => 'THANKS_REPUT_IMAGE', 'validate' => 'string', 'type' => 'text:25:255', 'explain' => true, 'append' => '<br /><img src="'.(($config['thanks_reput_image']) ? $phpbb_root_path . $config['thanks_reput_image'] : '').'" alt="'.$user->lang['THANKS_REPUT_IMAGE'].'"/>'),
-			'thanks_reput_image_back'	=> array('lang' => 'THANKS_REPUT_IMAGE_BACK', 'validate' => 'string',	'type' => 'text:25:255', 'explain' => true, 'append' => '<br /><img src="'.(($config['thanks_reput_image_back']) ? $phpbb_root_path . $config['thanks_reput_image_back'] : '').'" alt="'.$user->lang['THANKS_REPUT_IMAGE_BACK'].'"/>'),						
+			'thanks_reput_image_back'	=> array('lang' => 'THANKS_REPUT_IMAGE_BACK', 'validate' => 'string',	'type' => 'text:25:255', 'explain' => true, 'append' => '<br /><img src="'.(($config['thanks_reput_image_back']) ? $phpbb_root_path . $config['thanks_reput_image_back'] : '').'" alt="'.$user->lang['THANKS_REPUT_IMAGE_BACK'].'"/>'),
 			'legend2'					=> 'GRAPHIC_DEFAULT',
 			)
 		);
@@ -78,8 +70,7 @@ class acp_thanks_reput_module
 		{
 			$error[] = $user->lang['FORM_INVALID'];
 		}
-		
-		
+
 		// Do not write values if there is an error
 		if (sizeof($error))
 		{
@@ -92,7 +83,7 @@ class acp_thanks_reput_module
 		if (!empty($cfg_array['thanks_reput_image_back']) && !file_exists($phpbb_root_path . $config['thanks_reput_image_back']))
 		{
 			$error[] = $user->lang['THANKS_REPUT_IMAGE_BACK_NOEXIST'];
-		}	
+		}
 		// We go through the display_vars to make sure no one is trying to set variables he/she is not allowed to...
 		foreach ($display_vars['vars'] as $config_name => $null)
 		{
@@ -100,7 +91,7 @@ class acp_thanks_reput_module
 			{
 				continue;
 			}
-		
+
 			$this->new_config[$config_name] = $config_value = $cfg_array[$config_name];
 
 			if ($submit)
@@ -118,16 +109,16 @@ class acp_thanks_reput_module
 		}
 
 		$this->tpl_name = 'acp_thanks_reput';
-		$this->page_title = $display_vars['title']; 
+		$this->page_title = $display_vars['title'];
 
 		$template->assign_vars(array(
 			'L_TITLE'			=> $user->lang[$display_vars['title']],
 			'L_TITLE_EXPLAIN'	=> $user->lang[$display_vars['title'] . '_EXPLAIN'],
-            'GRAPHIC_STAR_BLUE_EXAMPLE' => $phpbb_root_path . $user->lang['GRAPHIC_STAR_BLUE'],
-            'GRAPHIC_STAR_GOLD_EXAMPLE' => $phpbb_root_path . $user->lang['GRAPHIC_STAR_GOLD'],
-            'GRAPHIC_STAR_BACK_EXAMPLE' => $phpbb_root_path . $user->lang['GRAPHIC_STAR_BACK'],
-            'GRAPHIC_BLOCK_RED_EXAMPLE' => $phpbb_root_path . $user->lang['GRAPHIC_BLOCK_RED'],
-            'GRAPHIC_BLOCK_BACK_EXAMPLE' => $phpbb_root_path . $user->lang['GRAPHIC_BLOCK_BACK'],
+			'GRAPHIC_STAR_BLUE_EXAMPLE' => $phpbb_root_path . $user->lang['GRAPHIC_STAR_BLUE'],
+			'GRAPHIC_STAR_GOLD_EXAMPLE' => $phpbb_root_path . $user->lang['GRAPHIC_STAR_GOLD'],
+			'GRAPHIC_STAR_BACK_EXAMPLE' => $phpbb_root_path . $user->lang['GRAPHIC_STAR_BACK'],
+			'GRAPHIC_BLOCK_RED_EXAMPLE' => $phpbb_root_path . $user->lang['GRAPHIC_BLOCK_RED'],
+			'GRAPHIC_BLOCK_BACK_EXAMPLE' => $phpbb_root_path . $user->lang['GRAPHIC_BLOCK_BACK'],
 			'S_ERROR'			=> (sizeof($error)) ? true : false,
 			'ERROR_MSG'			=> implode('<br />', $error),
 			'U_ACTION'			=> $this->u_action)
@@ -182,5 +173,3 @@ class acp_thanks_reput_module
 		}
 	}
 }
-
-?>

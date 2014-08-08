@@ -16,18 +16,18 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class listener implements EventSubscriberInterface
 {
-    public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, $helper)
-    {
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, $helper)
+	{
 		$this->config = $config;
 		$this->db = $db;
 		$this->auth = $auth;
-        $this->template = $template;
-        $this->user = $user;
+		$this->template = $template;
+		$this->user = $user;
 		$this->cache = $cache;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->helper = $helper;
-    }
+	}
 
 	static public function getSubscribedEvents()
 	{
@@ -79,7 +79,7 @@ class listener implements EventSubscriberInterface
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : false;
 
 		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
-		if (isset($_REQUEST['list_thanks'])) 
+		if (isset($_REQUEST['list_thanks']))
 		{
 			$this->helper->clear_list_thanks($user_id, request_var('list_thanks', ''));
 		}
@@ -117,7 +117,7 @@ class listener implements EventSubscriberInterface
 		$forum_id = (int) $event['forum_id'];
 		$this->helper->array_all_thanks($post_list);
 
-		if (isset($_REQUEST['thanks']) && !isset($_REQUEST['rthanks'])) 
+		if (isset($_REQUEST['thanks']) && !isset($_REQUEST['rthanks']))
 		{
 			$this->helper->insert_thanks(request_var('thanks', 0), $this->user->data['user_id'], $forum_id);
 		}
@@ -127,7 +127,7 @@ class listener implements EventSubscriberInterface
 			$this->helper->delete_thanks(request_var('rthanks', 0), $this->user->data['user_id'], $forum_id);
 		}
 
-		if (isset($_REQUEST['list_thanks'])) 
+		if (isset($_REQUEST['list_thanks']))
 		{
 			$this->helper->clear_list_thanks(request_var('p', 0), request_var('list_thanks', ''));
 		}
@@ -210,7 +210,7 @@ class listener implements EventSubscriberInterface
 			$sql_ary = array_merge($sql_ary, array(
 				'user_allow_thanks_pm'	=> $data['allowthankspm'],
 				'user_allow_thanks_email'=> $data['allowthanksemail'],
-			));		
+			));
 		}
 		$event['sql_ary'] = $sql_ary;
 	}

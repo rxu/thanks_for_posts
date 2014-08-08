@@ -14,7 +14,7 @@
 */
 if (!defined('IN_PHPBB'))
 {
-   exit;
+	exit;
 }
 
 if (empty($lang) || !is_array($lang))
@@ -44,8 +44,8 @@ $lang = array_merge($lang, array(
 	'CLEAR_LIST_THANKS_GIVE'	=> 'Cписок благодарностей, выданных пользователем, очищен.',
 	'CLEAR_LIST_THANKS_POST'	=> 'Список благодарностей в сообщении очищен.',
 	'CLEAR_LIST_THANKS_RECEIVE'	=> 'Список благодарностей, полученных пользователем, очищен.',
-	
-	'DISABLE_REMOVE_THANKS'		=> 'Удаление благодарностей отключено администратором.',	
+
+	'DISABLE_REMOVE_THANKS'		=> 'Удаление благодарностей отключено администратором.',
 
 	'GIVEN'						=> 'Благодарил&nbsp;(а)',
 	'GLOBAL_INCORRECT_THANKS'	=> 'Вы не можете благодарить в важных темах, не имеющих привязки к конкретному форуму.',
@@ -61,7 +61,7 @@ $lang = array_merge($lang, array(
 	'FURTHER_THANKS_PL'         => ' и ещё %d',
 
 	'NO_VIEW_USERS_THANKS'		=> 'У вас нет доступа к просмотру списка благодарностей.',
-	
+
 	'RECEIVED'					=> 'Поблагодарили',
 	'REMOVE_THANKS'				=> 'Отменить благодарность автору: ',
 	'REMOVE_THANKS_CONFIRM'		=> 'Вы действительно хотите удалить благодарность?',
@@ -75,7 +75,7 @@ $lang = array_merge($lang, array(
 	'RATING_POST'				=> 'Сообщение',
 	'RATING_TOP_FORUM'			=> 'Рейтинг форумов',
 	'RATING_TOP_POST'			=> 'Рейтинг сообщений',
-	'RATING_TOP_TOPIC'			=> 'Рейтинг тем',	
+	'RATING_TOP_TOPIC'			=> 'Рейтинг тем',
 	'RATING_TOPIC'				=> 'Тема',
 	'RETURN_POST'				=> 'Вернуться к сообщению',
 
@@ -108,4 +108,3 @@ $lang = array_merge($lang, array(
 	'THANKS_CUSTOM2_FUNCTION'	=> 'Проверка обновления кеша',
 	'TOPLIST'					=> 'Топлист',
 ));
-?>

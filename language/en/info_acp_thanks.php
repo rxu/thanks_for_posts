@@ -14,7 +14,7 @@
 */
 if (!defined('IN_PHPBB'))
 {
-   exit;
+	exit;
 }
 
 if (empty($lang) || !is_array($lang))
@@ -54,7 +54,7 @@ $lang = array_merge($lang, array(
 	'ACP_THANKS_SETTINGS'				=> 'Thanks Settings',
 	'ACP_THANKS_SETTINGS_EXPLAIN'		=> 'Default Thanks for posts settings can be changed here.',
 	'ACP_THANKS_REFRESH'				=> 'Update counters',
-	'ACP_UPDATETHANKS'					=> 'Updated recorded thanks',	
+	'ACP_UPDATETHANKS'					=> 'Updated recorded thanks',
 	'ACP_USERSEND'						=> 'Remaining users who thanked',
 	'ACP_USERSTHANKS'					=> 'Total users who thanked',
 
@@ -65,18 +65,18 @@ $lang = array_merge($lang, array(
 	'GRAPHIC_STAR_BACK'					=> 'ext/gfksx/thanks_for_posts/images/rating/reput_star_back.gif',
 	'GRAPHIC_STAR_BLUE'					=> 'ext/gfksx/thanks_for_posts/images/rating/reput_star_blue.gif',
 	'GRAPHIC_STAR_GOLD'					=> 'ext/gfksx/thanks_for_posts/images/rating/reput_star_gold.gif',
-	
+
 	'IMG_THANKPOSTS'					=> 'To thank for the post',
 	'IMG_REMOVETHANKS'					=> 'Cancel thanks',
 
 	'LOG_CONFIG_THANKS'					=> 'Updated configuration of Thanks for post MOD',
-	
+
 	'REFRESH'							=> 'Refresh',
 	'REMOVE_THANKS'						=> 'Remove thanks',
 	'REMOVE_THANKS_EXPLAIN'				=> 'Users can remove thanks if this option is enabled.',
-	
+
 	'STEPR'								=> ' - executed, step %s',
-	
+
 	'THANKS_COUNTERS_VIEW'				=> 'Thanks Counters',
 	'THANKS_COUNTERS_VIEW_EXPLAIN'		=> 'If enabled, the block information about the author will show the number of issued/received thanks.',
 	'THANKS_FORUM_REPUT_VIEW'			=> 'Show forums rating',
@@ -131,7 +131,7 @@ $lang = array_merge($lang, array(
 	'THANKS_TOPIC_REPUT_VIEW_COLUMN'	=> 'Show topic rating in a column',
 	'THANKS_TOPIC_REPUT_VIEW_COLUMN_EXPLAIN' => 'If enabled, topic rating will be displayed in a column when viewing a forum. <br /> Note: this option will only be effective for prosilver and if the above option is enabled.',
 	'THANKS_TOPIC_REPUT_VIEW_EXPLAIN'	=> 'If enabled, topic rating will be displayed when viewing a forum.',
-	'TRUNCATE'							=> 'Clear',	
+	'TRUNCATE'							=> 'Clear',
 	'TRUNCATE_THANKS'					=> 'Clear the list of thanks',
 	'TRUNCATE_THANKS_EXPLAIN'			=> 'This procedure completely clears all thanks counters (removes all issued thanks). <br /> Action is not reversible!',
 	'TRUNCATE_THANKS_MSG'				=> 'Thanks counters cleared.',
@@ -141,4 +141,3 @@ $lang = array_merge($lang, array(
 	'ALLOW_THANKS_PM_ON'				=> 'Notify me PM if someone thanks my post',
 	'ALLOW_THANKS_EMAIL_ON'				=> 'Notify me e-mail if someone thanks my post',
 ));
-?>

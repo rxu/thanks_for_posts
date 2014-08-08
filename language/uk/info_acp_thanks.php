@@ -14,7 +14,7 @@
 */
 if (!defined('IN_PHPBB'))
 {
-   exit;
+	exit;
 }
 
 if (empty($lang) || !is_array($lang))
@@ -57,7 +57,7 @@ $lang = array_merge($lang, array(
 	'ACP_UPDATETHANKS'					=> 'Оновлено врахованих подяк',
 	'ACP_USERSEND'						=> 'Залишилося подякувавших користувачів',
 	'ACP_USERSTHANKS'					=> 'Було подякувавших користувачів',
-	
+
 	'GRAPHIC_BLOCK_BACK'				=> 'images/rating/reput_block_back.gif',
 	'GRAPHIC_BLOCK_RED'					=> 'images/rating/reput_block_red.gif',
 	'GRAPHIC_DEFAULT'					=> 'Приклади зображень',
@@ -75,7 +75,7 @@ $lang = array_merge($lang, array(
 	'REMOVE_THANKS_EXPLAIN'				=> 'Якщо включено, користувач може скасувати видану подяку.',
 
 	'STEPR'								=> ' - виконання, крок %s',
-	
+
 	'THANKS_COUNTERS_VIEW'				=> 'Лічильники подяк',
 	'THANKS_COUNTERS_VIEW_EXPLAIN'		=> 'Якщо включено, в блоці інформації про автора буде відображатися кількість виданих/отриманих подяк.',
 	'THANKS_FORUM_REPUT_VIEW'			=> 'Відображення рейтингу для форумів',
@@ -130,7 +130,7 @@ $lang = array_merge($lang, array(
 	'THANKS_TOPIC_REPUT_VIEW_COLUMN'	=> 'Рейтинг для тем в колонці',
 	'THANKS_TOPIC_REPUT_VIEW_COLUMN_EXPLAIN' => 'Якщо включено, у списку тем рейтинг тим буде відображатися в окремій колонці. <br /> Примітка: ця опція ефективна тільки для стилю prosilver і тільки при включенні опції вище.',
 	'THANKS_TOPIC_REPUT_VIEW_EXPLAIN'	=> 'Якщо включено, у списку тем буде відображатися рейтинг для тем.',
-	'TRUNCATE'							=> 'Очистити',	
+	'TRUNCATE'							=> 'Очистити',
 	'TRUNCATE_THANKS'					=> 'Повне очищення списку подяк',
 	'TRUNCATE_THANKS_EXPLAIN'			=> 'Дана процедура повністю очищає всі лічильники подяк (видаляє всі видані подяки).<br /> Дію не можна буде повернути!',
 	'TRUNCATE_THANKS_MSG'				=> 'Лічильники подяк очищені.',

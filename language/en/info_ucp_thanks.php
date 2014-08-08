@@ -14,7 +14,7 @@
 */
 if (!defined('IN_PHPBB'))
 {
-   exit;
+	exit;
 }
 
 if (empty($lang) || !is_array($lang))
@@ -41,4 +41,3 @@ $lang = array_merge($lang, array(
 	'ALLOW_THANKS_EMAIL_EXPLAIN'=> 'You will receive an e-mail if someone says thank you for any of your posts.',
 ));
 
-?>

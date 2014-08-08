@@ -43,11 +43,11 @@ class acp_thanks_module
 			'thanks_notice_on'			=> array('lang' => 'THANKS_NOTICE_ON', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_info_page'			=> array('lang' => 'THANKS_INFO_PAGE', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_postlist_view'		=> array('lang' => 'THANKS_POSTLIST_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_number_post'		=> array('lang' => 'THANKS_NUMBER_POST', 'validate' => 'int:1:250', 'type' => 'text:4:6', 'explain' => true),	
-			'thanks_time_view'			=> array('lang' => 'THANKS_TIME_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),			
-			'thanks_counters_view'		=> array('lang' => 'THANKS_COUNTERS_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),			
+			'thanks_number_post'		=> array('lang' => 'THANKS_NUMBER_POST', 'validate' => 'int:1:250', 'type' => 'text:4:6', 'explain' => true),
+			'thanks_time_view'			=> array('lang' => 'THANKS_TIME_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
+			'thanks_counters_view'		=> array('lang' => 'THANKS_COUNTERS_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_profilelist_view'	=> array('lang' => 'THANKS_PROFILELIST_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_number'				=> array('lang' => 'THANKS_NUMBER', 'validate' => 'int:1',	'type' => 'text:4:4', 'explain' => false),		
+			'thanks_number'				=> array('lang' => 'THANKS_NUMBER', 'validate' => 'int:1',	'type' => 'text:4:4', 'explain' => false),
 			'thanks_top_number'			=> array('lang' => 'THANKS_TOP_NUMBER', 'validate' => 'int:0', 'type' => 'text:4:6', 'explain' => true),
 			)
 		);
@@ -81,7 +81,7 @@ class acp_thanks_module
 			{
 				continue;
 			}
-			
+
 			$this->new_config[$config_name] = $config_value = $cfg_array[$config_name];
 
 			if ($submit)
@@ -99,7 +99,7 @@ class acp_thanks_module
 		}
 
 		$this->tpl_name = 'acp_thanks';
-		$this->page_title = $display_vars['title']; 
+		$this->page_title = $display_vars['title'];
 
 		$template->assign_vars(array(
 			'L_TITLE'			=> $user->lang[$display_vars['title']],

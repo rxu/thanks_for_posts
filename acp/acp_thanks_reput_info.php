@@ -31,5 +31,3 @@ class acp_thanks_reput_info
 	{
 	}
 }
-
-?>

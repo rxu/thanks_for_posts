@@ -14,7 +14,7 @@
 */
 if (!defined('IN_PHPBB'))
 {
-   exit;
+	exit;
 }
 
 if (empty($lang) || !is_array($lang))
@@ -57,7 +57,7 @@ $lang = array_merge($lang, array(
 	'ACP_UPDATETHANKS'					=> 'Обновлено учтённых благодарностей',
 	'ACP_USERSEND'						=> 'Осталось благодаривших пользователей',
 	'ACP_USERSTHANKS'					=> 'Было благодаривших пользователей',
-	
+
 	'GRAPHIC_BLOCK_BACK'				=> 'ext/gfksx/thanks_for_posts/images/rating/reput_block_back.gif',
 	'GRAPHIC_BLOCK_RED'					=> 'ext/gfksx/thanks_for_posts/images/rating/reput_block_red.gif',
 	'GRAPHIC_DEFAULT'					=> 'Примеры изображений',
@@ -75,7 +75,7 @@ $lang = array_merge($lang, array(
 	'REMOVE_THANKS_EXPLAIN'				=> 'Если включено, пользователь может отменить выданную благодарность.',
 
 	'STEPR'								=> ' - выполнение, шаг %s',
-	
+
 	'THANKS_COUNTERS_VIEW'				=> 'Счётчики благодарностей',
 	'THANKS_COUNTERS_VIEW_EXPLAIN'		=> 'Если включено, в блоке информации об авторе будет отображаться количество выданных/полученных благодарностей.',
 	'THANKS_FORUM_REPUT_VIEW'			=> 'Отображение рейтинга для форумов',
@@ -130,7 +130,7 @@ $lang = array_merge($lang, array(
 	'THANKS_TOPIC_REPUT_VIEW_COLUMN'	=> 'Рейтинг для тем в колонке',
 	'THANKS_TOPIC_REPUT_VIEW_COLUMN_EXPLAIN' => 'Если включено, в списке тем рейтинг тем будет отображаться в отдельной колонке. <br /> Примечание: эта опция эффективна только для стиля prosilver и только при включении опции выше.',
 	'THANKS_TOPIC_REPUT_VIEW_EXPLAIN'	=> 'Если включено, в списке тем будет отображаться рейтинг для тем.',
-	'TRUNCATE'							=> 'Очистить',	
+	'TRUNCATE'							=> 'Очистить',
 	'TRUNCATE_THANKS'					=> 'Полная очистка списка благодарностей',
 	'TRUNCATE_THANKS_EXPLAIN'			=> 'Данная процедура полностью очищает все счётчики благодарностей (удаляет все выданные благодарности).<br /> Действие не обратимо!',
 	'TRUNCATE_THANKS_MSG'				=> 'Счётчики благодарностей очищены.',
@@ -140,4 +140,3 @@ $lang = array_merge($lang, array(
 	'ALLOW_THANKS_PM_ON'				=> 'Получать уведомления о благодарностях в ЛС',
 	'ALLOW_THANKS_EMAIL_ON'				=> 'Получать уведомления о благодарностях по Email',
 ));
-?>

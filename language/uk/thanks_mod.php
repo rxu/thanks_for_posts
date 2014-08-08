@@ -14,7 +14,7 @@
 */
 if (!defined('IN_PHPBB'))
 {
-   exit;
+	exit;
 }
 
 if (empty($lang) || !is_array($lang))
@@ -44,8 +44,8 @@ $lang = array_merge($lang, array(
 	'CLEAR_LIST_THANKS_GIVE'	=> 'Cписок подяк, виданих користувачем, очищений.',
 	'CLEAR_LIST_THANKS_POST'	=> 'Список подяк у повідомленні очищений.',
 	'CLEAR_LIST_THANKS_RECEIVE'	=> 'Список подяк, отриманих користувачем, очищений.',
-	
-	'DISABLE_REMOVE_THANKS'		=> 'Видалення подяк відключено адміністратором.',	
+
+	'DISABLE_REMOVE_THANKS'		=> 'Видалення подяк відключено адміністратором.',
 
 	'GIVEN'						=> 'Дякував&nbsp;(ла)',
 	'GLOBAL_INCORRECT_THANKS'	=> 'Ви не можете дякувати у важливих темах, що не мають прив\'язки до конкретного форуму.',
@@ -61,7 +61,7 @@ $lang = array_merge($lang, array(
 	'FURTHER_THANKS_PL'         => ' і ще %d',
 
 	'NO_VIEW_USERS_THANKS'		=> 'У вас немає доступу до перегляду списку подяк.',
-	
+
 	'RECEIVED'					=> 'Подякували',
 	'REMOVE_THANKS'				=> 'Скасувати подяку автору: ',
 	'REMOVE_THANKS_CONFIRM'		=> 'Ви дійсно хочете видалити подяку?',
@@ -75,7 +75,7 @@ $lang = array_merge($lang, array(
 	'RATING_POST'				=> 'Повідомлення',
 	'RATING_TOP_FORUM'			=> 'Рейтинг форумів',
 	'RATING_TOP_POST'			=> 'Рейтинг повідомлень',
-	'RATING_TOP_TOPIC'			=> 'Рейтинг тем',	
+	'RATING_TOP_TOPIC'			=> 'Рейтинг тем',
 	'RATING_TOPIC'				=> 'Тема',
 	'RETURN_POST'				=> 'Повернутися до повідомлення',
 
