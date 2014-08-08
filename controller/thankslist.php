@@ -82,7 +82,7 @@ class thankslist
 
 					$sql = 'SELECT COUNT(DISTINCT post_id) as total_match_count
 						FROM ' . THANKS_TABLE . '
-						WHERE (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0) AND poster_id = '.$author_id; 
+						WHERE (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0) AND poster_id = '.$author_id;
 					$where = 'poster_id';
 					break;
 				}
@@ -201,7 +201,7 @@ class thankslist
 				default:
 				$page_title = $this->user->lang['THANKS_USER'];
 				$template_html = 'thankslist_body.html';
-				
+
 				// Grab relevant data thanks
 				$sql = 'SELECT user_id, COUNT(user_id) AS tally
 					FROM ' . THANKS_TABLE . '  
@@ -223,7 +223,7 @@ class thankslist
 				{
 					$reseved[$row['poster_id']] = $row['tally'];
 				}
-				$this->db->sql_freeresult($result);	
+				$this->db->sql_freeresult($result);
 
 				// Sorting
 				$sort_key_text = array('a' => $this->user->lang['SORT_USERNAME'], 'b' => $this->user->lang['SORT_LOCATION'], 'c' => $this->user->lang['SORT_JOINED'], 'd' => $this->user->lang['SORT_POST_COUNT'], 'e' => 'R_THANKS', 'f' => 'G_THANKS',);

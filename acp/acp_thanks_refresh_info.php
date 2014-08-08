@@ -31,4 +31,3 @@ class acp_thanks_refresh_info
 	{
 	}
 }
-

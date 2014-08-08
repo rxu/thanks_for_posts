@@ -70,7 +70,7 @@ class toplist
 					WHERE ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true);
 				$result = $this->db->sql_query($sql);
 				$total_match_count = (int) $this->db->sql_fetchfield('total_post_count');
-				$this->db->sql_freeresult($result);	
+				$this->db->sql_freeresult($result);
 				$full_post_rating = true;
 				$notoplist = false;
 				break;
@@ -109,7 +109,7 @@ class toplist
 
 				$sql_p_array['FROM']	= array(THANKS_TABLE => 't');
 				$sql_p_array['SELECT'] = 'u.user_id, u.username, u.user_colour, p.post_subject, p.post_id, p.post_time, p.poster_id, p.post_username, p.topic_id, p.forum_id, p.post_text, p.bbcode_uid, p.bbcode_bitfield, p.post_attachment';
-				$sql_p_array['SELECT'] .= ', t.post_id, COUNT(*) AS post_thanks';			
+				$sql_p_array['SELECT'] .= ', t.post_id, COUNT(*) AS post_thanks';
 				$sql_p_array['LEFT_JOIN'][] = array(
 					'FROM'	=> array (POSTS_TABLE => 'p'),
 					'ON'	=> 't.post_id = p.post_id',
@@ -231,7 +231,7 @@ class toplist
 				);
 				$sql_t_array['GROUP_BY'] = 'f.topic_id';
 				$sql_t_array['ORDER_BY'] = 'topic_thanks DESC';
-				$sql_t_array['WHERE'] = $this->db->sql_in_set('f.forum_id', $ex_fid_ary, true);	
+				$sql_t_array['WHERE'] = $this->db->sql_in_set('f.forum_id', $ex_fid_ary, true);
 
 				$sql = $this->db->sql_build_query('SELECT',$sql_t_array);
 				$result = $this->db->sql_query_limit($sql, $end, $start);

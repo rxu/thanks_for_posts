@@ -40,4 +40,3 @@ $lang = array_merge($lang, array(
 	'ALLOW_THANKS_EMAIL'		=> 'Notify me via e-mail if someone thanks for my post',
 	'ALLOW_THANKS_EMAIL_EXPLAIN'=> 'You will receive an e-mail if someone says thank you for any of your posts.',
 ));
-

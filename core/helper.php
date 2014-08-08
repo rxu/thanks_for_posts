@@ -17,7 +17,7 @@ class helper
 	protected $max_topic_thanks;
 	protected $max_forum_thanks;
 	protected $poster_list_count;
-	
+
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, $table_prefix)
 	{
 		$this->config = $config;
@@ -79,7 +79,7 @@ class helper
 
 		if ($further_thanks > 0)
 		{
-		  $further_thanks_text = ($further_thanks == 1) ? $this->user->lang['FURTHER_THANKS'] : sprintf($this->user->lang['FURTHER_THANKS_PL'], $further_thanks);
+			$further_thanks_text = ($further_thanks == 1) ? $this->user->lang['FURTHER_THANKS'] : sprintf($this->user->lang['FURTHER_THANKS_PL'], $further_thanks);
 		}
 		$return = ($return == '') ? false : ($return . $further_thanks_text);
 		return $return;
@@ -128,7 +128,7 @@ class helper
 				$this->db->sql_query($sql);
 
 				$lang_act = 'GIVE';
-				if (isset($config ['thanks_notice_on']) ? $config['thanks_notice_on'] : false)
+				if (isset($config['thanks_notice_on']) ? $config['thanks_notice_on'] : false)
 				{
 					$this->send_thanks_pm($user_id, $to_id, $send_pm = true, $post_id, $lang_act);
 					$this->send_thanks_email($to_id, $post_id, $lang_act);
@@ -189,7 +189,7 @@ class helper
 				if (!empty($field_act))
 				{
 					$sql = "DELETE FROM " . THANKS_TABLE . '
-						WHERE ' . $field_act . ' = ' . (int) $object_id;				
+						WHERE ' . $field_act . ' = ' . (int) $object_id;
 					$result = $this->db->sql_query($sql);
 
 					if ($result != 0)
@@ -225,7 +225,7 @@ class helper
 			{
 				if ($list_thanks === 'post')
 				{
-					trigger_error($this->user->lang['INCORRECT_THANKS'] . '<br /><br /><a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id) . '">' . $this->user->lang['BACK_TO_PREV'] . '</a>');	
+					trigger_error($this->user->lang['INCORRECT_THANKS'] . '<br /><br /><a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id) . '">' . $this->user->lang['BACK_TO_PREV'] . '</a>');
 				}
 				else
 				{
@@ -581,7 +581,7 @@ class helper
 	}
 
 	//send pm
-	public function send_thanks_pm($user_id, $to_id, $send_pm = true, $post_id = 0, $lang_act= 'GIVE')
+	public function send_thanks_pm($user_id, $to_id, $send_pm = true, $post_id = 0, $lang_act = 'GIVE')
 	{
 		if (isset($this->config['thanks_notice_on']) ? !$this->config['thanks_notice_on'] : true)
 		{

@@ -233,10 +233,10 @@ class acp_thanks_refresh_module
 				$result = $db->sql_query($sql);
 				$end_users_thanks = $db->sql_affectedrows($result);
 				$db->sql_freeresult($result);
-				
+
 				$template->assign_vars(array(
 					'S_REFRESH'	=> true,
-				));	
+				));
 			}
 			else
 			{
