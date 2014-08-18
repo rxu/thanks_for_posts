@@ -19,10 +19,9 @@ class acp_thanks_reput_module
 
 	function main($id, $mode)
 	{
-		global $db, $user, $auth, $template;
-		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx;
+		global $request, $user, $template, $config, $phpbb_root_path, $phpbb_log;
 
-		$action	= request_var('action', '');
+		$action	= $request->variable('action', '');
 		$submit = (isset($_POST['submit'])) ? true : false;
 
 		$form_key = 'acp_thanks_reput';
@@ -60,7 +59,7 @@ class acp_thanks_reput_module
 		}
 
 		$this->new_config = $config;
-		$cfg_array = (isset($_REQUEST['config'])) ? utf8_normalize_nfc(request_var('config', array('' => ''), true)) : $this->new_config;
+		$cfg_array = (isset($_REQUEST['config'])) ? utf8_normalize_nfc($request->variable('config', array('' => ''), true)) : $this->new_config;
 		$error = array();
 
 		// We validate the complete config if whished
@@ -96,14 +95,14 @@ class acp_thanks_reput_module
 
 			if ($submit)
 			{
-				set_config($config_name, $config_value);
+				$config->set($config_name, $config_value);
 
 			}
 		}
 
 		if ($submit)
 		{
-			add_log('admin', 'LOG_CONFIG_' . strtoupper($mode));
+			$phpbb_log->add('admin', 'LOG_CONFIG_' . strtoupper($mode));
 
 			trigger_error($user->lang['CONFIG_UPDATED'] . adm_back_link($this->u_action));
 		}

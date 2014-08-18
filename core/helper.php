@@ -18,7 +18,7 @@ class helper
 	protected $max_forum_thanks;
 	protected $poster_list_count;
 
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, $table_prefix)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, $phpbb_root_path, $php_ext, $table_prefix)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -26,6 +26,7 @@ class helper
 		$this->template = $template;
 		$this->user = $user;
 		$this->cache = $cache;
+		$this->request = $request;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
@@ -35,7 +36,7 @@ class helper
 	// Output thanks list
 	public function get_thanks($post_id)
 	{
-		$view = request_var('view', '');
+		$view = $this->request->variable('view', '');
 		$return = '';
 		$user_list = array();
 		$count = 0;
@@ -103,8 +104,8 @@ class helper
 	public function insert_thanks($post_id, $user_id, $forum_id)
 	{
 		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
-		$to_id = request_var('to_id', 0);
-		$from_id = request_var('from_id', 0);
+		$to_id = $this->request->variable('to_id', 0);
+		$from_id = $this->request->variable('from_id', 0);
 		$sql_array = array(
 			'SELECT'	=> 'p.post_id, p.poster_id, p.topic_id, p.forum_id',
 			'FROM'		=> array (POSTS_TABLE => 'p'),
@@ -252,8 +253,8 @@ class helper
 	public function delete_thanks($post_id, $user_id, $forum_id)
 	{
 		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
-		$to_id = request_var('to_id', 0);
-		$forum_id = ($forum_id) ? : request_var('f', 0);
+		$to_id = $this->request->variable('to_id', 0);
+		$forum_id = ($forum_id) ? : $this->request->variable('f', 0);
 		// confirm
 		$hidden = build_hidden_fields(array(
 			'to_id'		=> $to_id,

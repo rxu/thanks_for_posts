@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class listener implements EventSubscriberInterface
 {
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, $helper)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, $phpbb_root_path, $php_ext, $helper)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -24,6 +24,7 @@ class listener implements EventSubscriberInterface
 		$this->template = $template;
 		$this->user = $user;
 		$this->cache = $cache;
+		$this->request = $request;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->helper = $helper;
@@ -81,7 +82,7 @@ class listener implements EventSubscriberInterface
 		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		if (isset($_REQUEST['list_thanks']))
 		{
-			$this->helper->clear_list_thanks($user_id, request_var('list_thanks', ''));
+			$this->helper->clear_list_thanks($user_id, $this->request->variable('list_thanks', ''));
 		}
 		if (isset($this->config['thanks_for_posts_version']))
 		{
@@ -119,17 +120,17 @@ class listener implements EventSubscriberInterface
 
 		if (isset($_REQUEST['thanks']) && !isset($_REQUEST['rthanks']))
 		{
-			$this->helper->insert_thanks(request_var('thanks', 0), $this->user->data['user_id'], $forum_id);
+			$this->helper->insert_thanks($this->request->variable('thanks', 0), $this->user->data['user_id'], $forum_id);
 		}
 
 		if (isset($_REQUEST['rthanks']) && !isset($_REQUEST['thanks']))
 		{
-			$this->helper->delete_thanks(request_var('rthanks', 0), $this->user->data['user_id'], $forum_id);
+			$this->helper->delete_thanks($this->request->variable('rthanks', 0), $this->user->data['user_id'], $forum_id);
 		}
 
 		if (isset($_REQUEST['list_thanks']))
 		{
-			$this->helper->clear_list_thanks(request_var('p', 0), request_var('list_thanks', ''));
+			$this->helper->clear_list_thanks($this->request->variable('p', 0), $this->request->variable('list_thanks', ''));
 		}
 	}
 
@@ -195,8 +196,8 @@ class listener implements EventSubscriberInterface
 	{
 		$data = $event['data'];
 		$data = array_merge($data, array(
-			'allowthankspm'	=> request_var('allowthankspm', (bool) (isset($this->user->data['user_allow_thanks_pm']) ? $this->user->data['user_allow_thanks_pm'] : false)),
-			'allowthanksemail'	=> request_var('allowthanksemail', (bool) (isset($this->user->data['user_allow_thanks_email']) ? $this->user->data['user_allow_thanks_email'] : false)),
+			'allowthankspm'	=> $this->request->variable('allowthankspm', (bool) (isset($this->user->data['user_allow_thanks_pm']) ? $this->user->data['user_allow_thanks_pm'] : false)),
+			'allowthanksemail'	=> $this->request->variable('allowthanksemail', (bool) (isset($this->user->data['user_allow_thanks_email']) ? $this->user->data['user_allow_thanks_email'] : false)),
 		));
 		$event['data'] = $data;
 	}
@@ -220,8 +221,8 @@ class listener implements EventSubscriberInterface
 		$data = $event['data'];
 		$user_row = $event['user_row'];
 		$data = array_merge($data, array(
-			'allowthankspm'		=> request_var('allowthankspm', $user_row['user_allow_thanks_pm']),
-			'allowthanksemail'	=> request_var('allowthanksemail', $user_row['user_allow_thanks_email']),
+			'allowthankspm'		=> $this->request->variable('allowthankspm', $user_row['user_allow_thanks_pm']),
+			'allowthanksemail'	=> $this->request->variable('allowthanksemail', $user_row['user_allow_thanks_email']),
 		));
 		$event['data'] = $data;
 	}

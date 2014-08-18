@@ -17,7 +17,7 @@ class acp_thanks_truncate_module
 
 	function main($id, $mode)
 	{
-		global $db, $user, $auth, $template, $table_prefix;
+		global $db, $request, $user, $template, $table_prefix;
 
 		$this->tpl_name = 'acp_thanks_truncate';
 		$this->page_title = 'ACP_THANKS_TRUNCATE';
@@ -47,7 +47,7 @@ class acp_thanks_truncate_module
 		$all_users_thanks = $del_uposts = $end_users_thanks = $db->sql_fetchfield('total_match_count');
 		$db->sql_freeresult($result);
 
-		$truncate = request_var('truncate', false);
+		$truncate = $request->variable('truncate', false);
 
 		if ($truncate)
 		{

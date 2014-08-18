@@ -18,7 +18,7 @@ class acp_thanks_refresh_module
 
 	function main($id, $mode)
 	{
-		global $db, $user, $auth, $template, $cache, $config, $table_prefix;
+		global $db, $user, $request, $template, $cache, $config, $table_prefix;
 
 		$this->tpl_name = 'acp_thanks_refresh';
 		$this->page_title = 'ACP_THANKS_REFRESH';
@@ -29,7 +29,7 @@ class acp_thanks_refresh_module
 
 		// check mode
 
-		$refresh = request_var('refresh', false);
+		$refresh = $request->variable('refresh', false);
 		if (!$refresh)
 		{
 			$cache->destroy('_all_posts_thanks');
