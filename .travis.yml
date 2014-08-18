@@ -28,7 +28,7 @@ matrix:
 
 env:
   global:
-    - EXTNAME="rxu/thanks_for_posts"  # CHANGE name of the extension HERE
+    - EXTNAME="gfksx/ThanksForPosts"  # CHANGE name of the extension HERE
     - SNIFF="1"            # Should we run code sniffer on your code?
     - IMAGE_ICC="1"        # Should we run icc profile sniffer on your images?
     - EPV="1"              # Should we run EPV (Extension Pre Validator) on your code?
@@ -39,6 +39,13 @@ branches:
     - master
     - develop
     - /^develop-.*$/
+
+before_install:
+  - sudo mkdir travis
+  - git clone "https://github.com/nickvergessen/phpbb-ext-acme-demo.git"
+  - sudo cp phpbb-ext-acme-demo/phpunit.xml.dist ./
+  - sudo cp phpbb-ext-acme-demo/travis/prepare-phpbb.sh travis
+  - sudo rm -rf phpbb-ext-acme-demo
 
 install:
   - composer install --dev --no-interaction --prefer-source

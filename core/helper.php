@@ -678,9 +678,8 @@ class helper
 	}
 
 	// create an array of all thanks info
-	public function array_all_thanks($post_list)
+	public function array_all_thanks($post_list, $forum_id)
 	{
-		global $post_list, $forum_id;
 		$poster_list = array();
 
 		// max post thanks
@@ -694,7 +693,7 @@ class helper
 		}
 		else
 		{
-		$this->max_post_thanks = 1;
+			$this->max_post_thanks = 1;
 		}
 
 		//array all user who say thanks on viewtopic page
