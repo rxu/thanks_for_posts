@@ -129,12 +129,12 @@ class helper
 				$this->db->sql_query($sql);
 
 				$lang_act = 'GIVE';
-				if (isset($config['thanks_notice_on']) ? $config['thanks_notice_on'] : false)
+				if (isset($this->config['thanks_notice_on']) && $this->config['thanks_notice_on'])
 				{
 					$this->send_thanks_pm($user_id, $to_id, $send_pm = true, $post_id, $lang_act);
 					$this->send_thanks_email($to_id, $post_id, $lang_act);
 				}
-				if (isset($this->config['thanks_info_page']) ? $this->config['thanks_info_page'] : false)
+				if (isset($this->config['thanks_info_page']) && $this->config['thanks_info_page'])
 				{
 					meta_refresh (1, append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id .'&amp;p=' . $post_id . '#p' . $post_id));
 					trigger_error($this->user->lang['THANKS_INFO_'.$lang_act] . '<br /><br /><a href="'.append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id .'&amp;p=' . $post_id . '#p' . $post_id) . '">' . $this->user->lang['RETURN_POST'] . '</a>');
@@ -277,12 +277,12 @@ class helper
 				if ($result != 0)
 				{
 					$lang_act = 'REMOVE';
-					if (isset($this->config['thanks_notice_on']) ? $this->config['thanks_notice_on'] : false)
+					if (isset($this->config['thanks_notice_on']) && $this->config['thanks_notice_on'])
 					{
 						$this->send_thanks_pm($user_id, $to_id, $send_pm = true, $post_id, $lang_act);
 						$this->send_thanks_email($to_id, $post_id, $lang_act);
 					}
-					if (isset($this->config['thanks_info_page']) ? $this->config['thanks_info_page'] : false)
+					if (isset($this->config['thanks_info_page']) && $this->config['thanks_info_page'])
 					{
 						meta_refresh (1, append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id"));
 						trigger_error($this->user->lang['THANKS_INFO_' . $lang_act] . '<br /><br /><a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">' . $this->user->lang['RETURN_POST'] . '</a>');
@@ -659,12 +659,12 @@ class helper
 			$user_row = $this->db->sql_fetchrow($result);
 			$this->db->sql_freeresult($result);
 
-			$user_row['user_lang'] = (file_exists($this->phpbb_root_path . 'language/' . $user_row['user_lang'] . "/mods/thanks_mod.$this->php_ext")) ? $user_row['user_lang'] : $this->config['default_lang'];
+		//	$user_row['user_lang'] = (file_exists($this->phpbb_root_path . 'language/' . $user_row['user_lang'] . "/mods/thanks_mod.$this->php_ext")) ? $user_row['user_lang'] : $this->config['default_lang'];
 
 			include_once($this->phpbb_root_path . 'includes/functions_messenger.' . $this->php_ext);
 
 			$messenger = new \messenger(false);
-			$messenger->template('user_thanks', $user_row['user_lang']);
+			$messenger->template('user_thanks', $user_row['user_lang'], 'ext/gfksx/ThanksForPosts/language/' . $user_row['user_lang'] . '/email');
 			$messenger->set_addresses($user_row);
 			$messenger->anti_abuse_headers($this->config, $this->user);
 			$messenger->assign_vars(array(
