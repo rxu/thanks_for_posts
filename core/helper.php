@@ -664,7 +664,7 @@ class helper
 			include_once($this->phpbb_root_path . 'includes/functions_messenger.' . $this->php_ext);
 
 			$messenger = new \messenger(false);
-			$messenger->template('user_thanks', $user_row['user_lang'], 'ext/gfksx/ThanksForPosts/language/' . $user_row['user_lang'] . '/email');
+			$messenger->template('@gfksx_ThanksForPosts/user_thanks', $user_row['user_lang']);
 			$messenger->set_addresses($user_row);
 			$messenger->anti_abuse_headers($this->config, $this->user);
 			$messenger->assign_vars(array(
