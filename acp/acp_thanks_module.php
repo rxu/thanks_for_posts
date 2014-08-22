@@ -92,7 +92,7 @@ class acp_thanks_module
 
 		if ($submit)
 		{
-			$phpbb_log->add('admin', 'LOG_CONFIG_' . strtoupper($mode));
+			$phpbb_log->add('admin', $user->data['user_id'], $user->ip, 'LOG_CONFIG_' . strtoupper($mode));
 
 			trigger_error($user->lang['CONFIG_UPDATED'] . adm_back_link($this->u_action));
 		}
