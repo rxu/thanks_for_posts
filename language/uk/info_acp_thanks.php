@@ -35,10 +35,6 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
-	'acl_f_thanks' 						=> array('lang' => 'Може дякувати за повідомлення', 'cat' => 'misc'),
-	'acl_m_thanks' 						=> array('lang' => 'Може очищати список подяк', 'cat' => 'misc'),
-	'acl_u_viewthanks' 					=> array('lang' => 'Може переглядати лист всіх подяк', 'cat' => 'misc'),
-	'acl_u_viewtoplist'					=> array('lang' => 'Може переглядати топ лист', 'cat' => 'misc'),
 	'ACP_DELTHANKS'						=> 'Видалено врахованих подяк',
 	'ACP_POSTS'							=> 'Всього повідомлень',
 	'ACP_POSTSEND'						=> 'Залишилося повідомлень з подяками',
