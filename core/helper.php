@@ -137,9 +137,7 @@ class helper
 					'post_subject'	=> $row['post_subject'],
 				));
 
-				$this->notification_manager->add_notifications(array(
-					'thanks',
-				), $thanks_data);
+				$this->add_notification($thanks_data);
 
 				if (isset($this->config['thanks_info_page']) && $this->config['thanks_info_page'])
 				{
@@ -295,9 +293,7 @@ class helper
 						'lang_act'	=> $lang_act,
 						'post_subject'	=> $row['post_subject'],
 					);
-					$this->notification_manager->add_notifications(array(
-						'thanks',
-					), $thanks_data);
+					$this->add_notification($thanks_data);
 
 					if (isset($this->config['thanks_info_page']) && $this->config['thanks_info_page'])
 					{
@@ -803,5 +799,13 @@ class helper
 			$this->db->sql_freeresult($result);
 			return $this->max_forum_thanks;
 		}
+	}
+
+	// Add notifications
+	public function add_notification($notification_data)
+	{
+		$this->notification_manager->add_notifications(array(
+			'thanks',
+		), $notification_data);
 	}
 }
