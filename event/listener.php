@@ -48,12 +48,13 @@ class listener implements EventSubscriberInterface
 			'core.acp_users_prefs_modify_sql'		=> 'acp_users_prefs_modify_sql',
 			'core.acp_users_prefs_modify_template_data'	=> 'acp_users_prefs_modify_template_data',
 			'core.ucp_prefs_modify_common'			=> 'add_ucp_prefs_template_vars',
+			'core.user_setup'						=> 'load_language_on_setup',
 		);
 	}
 
 	public function get_thanks_list($event)
 	{
-		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
+		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 
 		// Generate thankslist if required ...
 		$thanks_list = '';
@@ -79,7 +80,7 @@ class listener implements EventSubscriberInterface
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : false;
 
-		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
+		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		if (isset($_REQUEST['list_thanks']))
 		{
 			$this->helper->clear_list_thanks($user_id, $this->request->variable('list_thanks', ''));
@@ -261,5 +262,15 @@ class listener implements EventSubscriberInterface
 				'S_THANKS_NOTICE_ON'=> isset($this->config['thanks_notice_on']) ? $this->config['thanks_notice_on'] : false,
 			));
 		}
+	}
+
+	public function load_language_on_setup($event)
+	{
+		$lang_set_ext = $event['lang_set_ext'];
+		$lang_set_ext[] = array(
+			'ext_name' => 'gfksx/ThanksForPosts',
+			'lang_set' => 'thanks_mod',
+		);
+		$event['lang_set_ext'] = $lang_set_ext;
 	}
 }

@@ -24,6 +24,7 @@ services:
             - @user
             - @cache.driver
             - @request
+            - @notification_manager
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
@@ -56,3 +57,20 @@ services:
             - @service_container
             - @gfksx.ThanksForPosts.helper
             - @request
+    gfksx.ThanksForPosts.notification.type.thanks:
+        class: gfksx\ThanksForPosts\notification\thanks
+        scope: prototype # scope MUST be prototype for this to work!
+        arguments:
+            - @user_loader
+            - @dbal.conn
+            - @cache.driver
+            - @user
+            - @auth
+            - @config
+            - %core.root_path%
+            - %core.php_ext%
+            - %tables.notification_types%
+            - %tables.notifications%
+            - %tables.user_notifications%
+        tags:
+            - { name: notification.type }

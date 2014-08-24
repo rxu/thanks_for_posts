@@ -62,6 +62,10 @@ $lang = array_merge($lang, array(
 
 	'NO_VIEW_USERS_THANKS'		=> 'У вас нет доступа к просмотру списка благодарностей.',
 
+	'NOTIFICATION_THANKS_GIVE'	=> '<strong>Получена благодарность</strong> от пользователя %1$s за сообщение:',
+	'NOTIFICATION_THANKS_REMOVE'	=> '<strong>Удалена благодарность</strong> от пользователя %1$s за сообщение:',
+	'NOTIFICATION_TYPE_THANKS'	=> 'Вас поблагодарили за сообщение',
+
 	'RECEIVED'					=> 'Поблагодарили',
 	'REMOVE_THANKS'				=> 'Отменить благодарность автору: ',
 	'REMOVE_THANKS_CONFIRM'		=> 'Вы действительно хотите удалить благодарность?',
