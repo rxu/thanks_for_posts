@@ -37,7 +37,7 @@ class listener implements EventSubscriberInterface
 			'core.memberlist_view_profile'			=> 'memberlist_viewprofile',
 			'core.delete_posts_in_transaction'		=> 'delete_post_thanks',
 			'core.viewforum_modify_topicrow'		=> 'viewforum_output_topics_reput',
-			'core.viewtopic_get_post_data'			=> 'viewtopic_handle_thanks',
+			'core.viewtopic_get_post_data'			=> array('viewtopic_handle_thanks', -2), // Set lower priority for the case another ext want to change $post_list first
 			'core.viewtopic_cache_user_data'		=> 'viewtopic_alter_user_cache_data',
 			'core.viewtopic_modify_post_row'		=> 'viewtopic_modify_postrow',
 			'core.display_forums_modify_forum_rows'	=> 'forumlist_display_rating',
