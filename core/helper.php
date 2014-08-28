@@ -107,14 +107,7 @@ class helper
 		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		$to_id = $this->request->variable('to_id', 0);
 		$from_id = $this->request->variable('from_id', 0);
-		$sql_array = array(
-			'SELECT'	=> 'p.post_id, p.poster_id, p.topic_id, p.forum_id, p.post_subject',
-			'FROM'		=> array (POSTS_TABLE => 'p'),
-			'WHERE'		=> 'p.post_id =' . (int) $post_id );
-		$sql = $this->db->sql_build_query('SELECT', $sql_array);
-		$result = $this->db->sql_query($sql);
-		$row = $this->db->sql_fetchrow($result);
-		$this->db->sql_freeresult($result);
+		$row = $this->get_post_info($post_id);
 		if ($this->user->data['user_type'] != USER_IGNORE && !empty($to_id))
 		{
 			if ($row['poster_id'] != $user_id && $row['poster_id'] == $to_id && !$this->already_thanked($post_id, $user_id, $this->thankers) && ($this->auth->acl_get('f_thanks', $row['forum_id']) || (!$row['forum_id'] && (isset($this->config['thanks_global_post']) ? $this->config['thanks_global_post'] : false))) && $from_id == $user_id)
@@ -255,11 +248,12 @@ class helper
 	}
 
 	// remove a user's thanks
-	public function delete_thanks($post_id, $user_id, $forum_id)
+	public function delete_thanks($post_id, $forum_id)
 	{
 		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		$to_id = $this->request->variable('to_id', 0);
-		$forum_id = ($forum_id) ? : $this->request->variable('f', 0);
+		$forum_id = ($forum_id) ?: $this->request->variable('f', 0);
+		$row = $this->get_post_info($post_id);
 		// confirm
 		$hidden = build_hidden_fields(array(
 			'to_id'		=> $to_id,
@@ -287,13 +281,13 @@ class helper
 						'post_id'	=> $post_id,
 						'poster_id'	=> $to_id,
 						'topic_id'	=> (int) $row['topic_id'],
-						'forum_id'	=> (int) $row['forum_id'],
+						'forum_id'	=> $forum_id,
 						'thanks_time'	=> time(),
 						'username'	=> $this->user->data['username'],
 						'lang_act'	=> $lang_act,
 						'post_subject'	=> $row['post_subject'],
 					);
-					$this->add_notification($thanks_data);
+					$this->add_notification($thanks_data, 'thanks_remove');
 
 					if (isset($this->config['thanks_info_page']) && $this->config['thanks_info_page'])
 					{
@@ -802,10 +796,46 @@ class helper
 	}
 
 	// Add notifications
-	public function add_notification($notification_data)
+	public function add_notification($notification_data, $notification_type_name = 'thanks')
 	{
-		$this->notification_manager->add_notifications(array(
-			'thanks',
-		), $notification_data);
+		if ($this->notification_exists($notification_data, $notification_type_name))
+		{
+			$this->notification_manager->update_notifications($notification_type_name, $notification_data);
+		}
+		else
+		{
+			$this->notification_manager->add_notifications($notification_type_name, $notification_data);
+		}
+	}
+
+	public function notification_exists($thanks_data, $notification_type_name)
+	{
+		$notification_type_id = $this->notification_manager->get_notification_type_id($notification_type_name);
+		$sql = 'SELECT notification_id FROM ' . NOTIFICATIONS_TABLE . '
+			WHERE notification_type_id = ' . (int) $notification_type_id . '
+				AND item_id = ' . (int) $thanks_data['post_id'];
+		$result = $this->db->sql_query($sql);
+		$item_id = $this->db->sql_fetchfield('notification_id');
+		$this->db->sql_freeresult($result);
+
+		return ($item_id) ?: false;
+	}
+
+	public function get_post_info($post_id = false)
+	{
+		if (!$post_id)
+		{
+			return array();
+		}
+		$sql_array = array(
+			'SELECT'	=> 'p.post_id, p.poster_id, p.topic_id, p.forum_id, p.post_subject',
+			'FROM'		=> array (POSTS_TABLE => 'p'),
+			'WHERE'		=> 'p.post_id =' . (int) $post_id);
+		$sql = $this->db->sql_build_query('SELECT', $sql_array);
+		$result = $this->db->sql_query($sql);
+		$row = $this->db->sql_fetchrow($result);
+		$this->db->sql_freeresult($result);
+
+		return ($row) ?: array();
 	}
 }

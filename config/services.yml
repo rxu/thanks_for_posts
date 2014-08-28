@@ -74,3 +74,20 @@ services:
             - %tables.user_notifications%
         tags:
             - { name: notification.type }
+    gfksx.ThanksForPosts.notification.type.thanks_remove:
+        class: gfksx\ThanksForPosts\notification\thanks_remove
+        scope: prototype # scope MUST be prototype for this to work!
+        arguments:
+            - @user_loader
+            - @dbal.conn
+            - @cache.driver
+            - @user
+            - @auth
+            - @config
+            - %core.root_path%
+            - %core.php_ext%
+            - %tables.notification_types%
+            - %tables.notifications%
+            - %tables.user_notifications%
+        tags:
+            - { name: notification.type }

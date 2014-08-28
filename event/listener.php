@@ -126,7 +126,7 @@ class listener implements EventSubscriberInterface
 
 		if (isset($_REQUEST['rthanks']) && !isset($_REQUEST['thanks']))
 		{
-			$this->helper->delete_thanks($this->request->variable('rthanks', 0), $this->user->data['user_id'], $forum_id);
+			$this->helper->delete_thanks($this->request->variable('rthanks', 0), $forum_id);
 		}
 
 		if (isset($_REQUEST['list_thanks']))

@@ -35,7 +35,7 @@ class thanks extends \phpbb\notification\type\base
 	*
 	* @var string
 	*/
-	protected $language_key = 'NOTIFICATION_THANKS';
+	protected $language_key = 'NOTIFICATION_THANKS_GIVE';
 
 	/**
 	* Notification option data (for outputting to the user)
@@ -44,7 +44,7 @@ class thanks extends \phpbb\notification\type\base
 	* 					Array of data (including keys 'id', 'lang', and 'group')
 	*/
 	public static $notification_option = array(
-		'lang'	=> 'NOTIFICATION_TYPE_THANKS',
+		'lang'	=> 'NOTIFICATION_TYPE_THANKS_GIVE',
 		'group'	=> 'NOTIFICATION_GROUP_MISCELLANEOUS',
 	);
 
@@ -91,7 +91,6 @@ class thanks extends \phpbb\notification\type\base
 		), $options);
 
 		$users = array((int) $thanks_data['poster_id']);
-
 		return $this->check_user_notification_options($users, $options);
 	}
 
@@ -110,9 +109,37 @@ class thanks extends \phpbb\notification\type\base
 	*/
 	public function get_title()
 	{
-		$username = $this->user_loader->get_username($this->get_data('user_id'), 'no_profile');
+		$thankers = $this->get_data('thankers');
+		$usernames = array();
 
-		return $this->user->lang($this->language_key . '_' . $this->get_data('lang_act'), $username);
+		if (!is_array($thankers))
+		{
+			$thankers = array();
+		}
+
+		$thankers_cnt = sizeof($thankers);
+		$thankers = $this->trim_user_ary($thankers);
+		$trimmed_thankers_cnt = $thankers_cnt - sizeof($thankers);
+
+		foreach ($thankers as $thanker)
+		{
+			$usernames[] = $this->user_loader->get_username($thanker['user_id'], 'no_profile');
+		}
+
+		if ($trimmed_thankers_cnt > 20)
+		{
+			$usernames[] = $this->user->lang('NOTIFICATION_MANY_OTHERS');
+		}
+		else if ($trimmed_thankers_cnt)
+		{
+			$usernames[] = $this->user->lang('NOTIFICATION_X_OTHERS', $trimmed_thankers_cnt);
+		}
+
+		return $this->user->lang(
+			$this->language_key,
+			phpbb_generate_string_list($usernames, $this->user),
+			$thankers_cnt
+		);
 	}
 
 	/**
@@ -180,6 +207,22 @@ class thanks extends \phpbb\notification\type\base
 	}
 
 	/**
+	* Trim the user array passed down to 3 users if the array contains
+	* more than 4 users.
+	*
+	* @param array $users Array of users
+	* @return array Trimmed array of user_ids
+	*/
+	public function trim_user_ary($users)
+	{
+		if (sizeof($users) > 4)
+		{
+			array_splice($users, 3);
+		}
+		return $users;
+	}
+
+	/**
 	* Get email template variables
 	*
 	* @return array
@@ -207,11 +250,38 @@ class thanks extends \phpbb\notification\type\base
 	*/
 	public function create_insert_array($thanks_data, $pre_create_data = array())
 	{
-		$this->set_data('user_id', $thanks_data['user_id']);
+		$thankers = (isset($thanks_data['thankers'])) ? $thanks_data['thankers'] : array();
+		$thankers = array_merge($thankers,
+			array(array('user_id' => $thanks_data['user_id'],)
+		));
+		$this->set_data('thankers', $thankers);
+
 		$this->set_data('post_id', $thanks_data['post_id']);
 		$this->set_data('lang_act', $thanks_data['lang_act']);
 		$this->set_data('post_subject', $thanks_data['post_subject']);
 
 		return parent::create_insert_array($thanks_data, $pre_create_data);
+	}
+
+	/**
+	* Function for preparing the data for update in an SQL query
+	* (The service handles insertion)
+	*
+	* @param array $thanks_data Data unique to this notification type
+	* @return array Array of data ready to be updated in the database
+	*/
+	public function create_update_array($thanks_data)
+	{
+		$sql = 'SELECT notification_data
+			FROM ' . $this->notifications_table . '
+			WHERE notification_type_id = ' . (int) $this->notification_type_id . '
+				AND item_id = ' . (int) self::get_item_id($thanks_data);
+		$result = $this->db->sql_query($sql);
+		if ($row = $this->db->sql_fetchrow($result))
+		{
+			$data = unserialize($row['notification_data']);
+			$thanks_data['thankers'] = (!empty($data['thankers'])) ? $data['thankers'] : array();
+		}
+		return $this->create_insert_array($thanks_data);
 	}
 }

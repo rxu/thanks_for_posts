@@ -62,9 +62,16 @@ $lang = array_merge($lang, array(
 
 	'NO_VIEW_USERS_THANKS'		=> 'You are not authorised to view the Thanks List.',
 
-	'NOTIFICATION_THANKS_GIVE'	=> '<strong>Received thank</strong> from %1$s for the post:',
-	'NOTIFICATION_THANKS_REMPOVE'	=> '<strong>Removed thank</strong> by %1$s for the post:',
-	'NOTIFICATION_TYPE_THANKS'	=> 'Someone thanks you for a post',
+	'NOTIFICATION_THANKS_GIVE'	=> array(
+		1 => '<strong>Received thank</strong> from %1$s for the post:',
+		2 => '<strong>Received thanks</strong> from %1$s for the post:',
+	),
+	'NOTIFICATION_THANKS_REMOVE'=> array(
+		1 => '<strong>Removed thank</strong> from %1$s for the post:',
+		2 => '<strong>Removed thanks</strong> from %1$s for the post:',
+	),
+	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Someone thanks you for a post',
+	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Someone removed thanks for your post',
 
 	'RECEIVED'					=> 'Been&nbsp;thanked',
 	'REMOVE_THANKS'				=> 'Remove your thanks: ',
