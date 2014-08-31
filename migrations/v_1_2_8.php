@@ -24,7 +24,7 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 
 	public function update_schema()
 	{
-		return 	array(
+		return array(
 			'add_columns' => array(
 				$this->table_prefix . 'thanks' => array(
 					'topic_id'		=> array('UINT', 0),
@@ -37,7 +37,7 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 
 	public function revert_schema()
 	{
-		return 	array(
+		return array(
 		);
 	}
 

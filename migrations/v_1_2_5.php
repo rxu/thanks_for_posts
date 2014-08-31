@@ -24,7 +24,7 @@ class v_1_2_5 extends \phpbb\db\migration\migration
 
 	public function update_schema()
 	{
-		return 	array(
+		return array(
 			'add_tables' => array(
 				$this->table_prefix . 'thanks' => array(
 					'COLUMNS'		=> array(
@@ -35,21 +35,13 @@ class v_1_2_5 extends \phpbb\db\migration\migration
 					'PRIMARY_KEY'	=> array('post_id', 'user_id'),
 				),
 			),
-			'add_columns' => array(
-				$this->table_prefix . 'users' => array(
-					'user_allow_thanks_pm'		=> array('BOOL', 0),
-				),
-			),
 		);
 	}
 
 	public function revert_schema()
 	{
-		return 	array(
+		return array(
 			'drop_tables'	=> array($this->table_prefix . 'thanks'),
-			'drop_columns'	=> array(
-				$this->table_prefix . 'users' => array('user_allow_thanks_pm'),
-			),
 		);
 	}
 

@@ -23,21 +23,13 @@ class v_1_2_9 extends \phpbb\db\migration\migration
 
 	public function update_schema()
 	{
-		return 	array(
-			'add_columns' => array(
-				$this->table_prefix . 'users' => array(
-					'user_allow_thanks_email'	=> array('BOOL', 0),
-				),
-			),
+		return array(
 		);
 	}
 
 	public function revert_schema()
 	{
-		return 	array(
-			'drop_columns'	=> array(
-				$this->table_prefix . 'users' => array('user_allow_thanks_email'),
-			),
+		return array(
 		);
 	}
 

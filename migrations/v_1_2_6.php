@@ -24,13 +24,13 @@ class v_1_2_6 extends \phpbb\db\migration\migration
 
 	public function update_schema()
 	{
-		return 	array(
+		return array(
 		);
 	}
 
 	public function revert_schema()
 	{
-		return 	array(
+		return array(
 		);
 	}
 
