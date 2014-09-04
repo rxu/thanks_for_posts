@@ -54,13 +54,13 @@ $lang = array_merge($lang, array(
 	'ACP_USERSEND'						=> 'Залишилося подякувавших користувачів',
 	'ACP_USERSTHANKS'					=> 'Було подякувавших користувачів',
 
-	'GRAPHIC_BLOCK_BACK'				=> 'images/rating/reput_block_back.gif',
-	'GRAPHIC_BLOCK_RED'					=> 'images/rating/reput_block_red.gif',
+	'GRAPHIC_BLOCK_BACK'				=> 'ext/gfksx/ThanksForPosts/images/rating/reput_block_back.gif',
+	'GRAPHIC_BLOCK_RED'					=> 'ext/gfksx/ThanksForPosts/images/rating/reput_block_red.gif',
 	'GRAPHIC_DEFAULT'					=> 'Приклади зображень',
 	'GRAPHIC_OPTIONS'					=> 'Налаштування графіки',
-	'GRAPHIC_STAR_BACK'					=> 'images/rating/reput_star_back.gif',
-	'GRAPHIC_STAR_BLUE'					=> 'images/rating/reput_star_blue.gif',
-	'GRAPHIC_STAR_GOLD'					=> 'images/rating/reput_star_gold.gif',
+	'GRAPHIC_STAR_BACK'					=> 'ext/gfksx/ThanksForPosts/images/rating/reput_star_back.gif',
+	'GRAPHIC_STAR_BLUE'					=> 'ext/gfksx/ThanksForPosts/images/rating/reput_star_blue.gif',
+	'GRAPHIC_STAR_GOLD'					=> 'ext/gfksx/ThanksForPosts/images/rating/reput_star_gold.gif',
 
 	'IMG_THANKPOSTS'					=> 'Подякувати за повідомлення',
 	'IMG_REMOVETHANKS'					=> 'Видалити подяку',
