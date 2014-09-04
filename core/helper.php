@@ -645,7 +645,13 @@ class helper
 			}
 			$this->db->sql_freeresult($result);
 
-			$sql = 'SELECT *, COUNT(poster_id) AS poster_count FROM ' . THANKS_TABLE . ' WHERE ' .$this->db->sql_in_set('poster_id', $poster_list). ' GROUP BY poster_id';
+			$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
+			$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : false;
+
+			$sql = 'SELECT *, COUNT(poster_id) AS poster_count FROM ' . THANKS_TABLE . '
+				WHERE ' . $this->db->sql_in_set('poster_id', $poster_list) . '
+					AND ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . '
+				GROUP BY poster_id';
 			$result = $this->db->sql_query($sql);
 			while ($row = $this->db->sql_fetchrow($result))
 			{
@@ -653,7 +659,10 @@ class helper
 			}
 			$this->db->sql_freeresult($result);
 
-			$sql = 'SELECT *, COUNT(user_id) AS user_count FROM ' . THANKS_TABLE . ' WHERE ' .$this->db->sql_in_set('user_id', $poster_list). ' GROUP BY user_id';
+			$sql = 'SELECT *, COUNT(user_id) AS user_count FROM ' . THANKS_TABLE . '
+				WHERE ' . $this->db->sql_in_set('user_id', $poster_list) . '
+					AND ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . '
+				GROUP BY user_id';
 			$result = $this->db->sql_query($sql);
 			while ($row = $this->db->sql_fetchrow($result))
 			{
