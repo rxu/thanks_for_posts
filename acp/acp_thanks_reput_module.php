@@ -19,7 +19,7 @@ class acp_thanks_reput_module
 
 	function main($id, $mode)
 	{
-		global $request, $user, $template, $config, $phpbb_root_path, $phpbb_log;
+		global $request, $user, $template, $config, $phpbb_root_path, $phpbb_container;
 
 		$action	= $request->variable('action', '');
 		$submit = (isset($_POST['submit'])) ? true : false;
@@ -102,6 +102,7 @@ class acp_thanks_reput_module
 
 		if ($submit)
 		{
+			$phpbb_log = $phpbb_container->get('log');
 			$phpbb_log->add('admin', $user->data['user_id'], $user->ip, 'LOG_CONFIG_' . strtoupper($mode));
 
 			trigger_error($user->lang['CONFIG_UPDATED'] . adm_back_link($this->u_action));
