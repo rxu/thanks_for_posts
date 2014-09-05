@@ -27,7 +27,7 @@ class thanks extends \phpbb\notification\type\base
 	*/
 	public function get_type()
 	{
-		return 'thanks';
+		return 'gfksx.ThanksForPosts.notification.type.thanks';
 	}
 
 	/**
