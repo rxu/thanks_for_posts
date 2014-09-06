@@ -169,7 +169,7 @@ class toplist
 							if ($bbcode_bitfield !== '' and !class_exists('bbcode'))
 								{
 									include($this->phpbb_root_path . 'includes/bbcode.' . $this->php_ext);
-									$bbcode = new bbcode(base64_encode($bbcode_bitfield));
+									$bbcode = new \bbcode(base64_encode($bbcode_bitfield));
 								}
 							// Replace naughty words such as farty pants
 							$row['post_subject'] = censor_text($row['post_subject']);
