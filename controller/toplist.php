@@ -300,8 +300,10 @@ class toplist
 						if (!empty($row['forum_id']))
 						{
 							$u_viewforum = append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext", 'f=' . $row['forum_id']);
+							$folder_image = 'forum_read';
 							$this->template->assign_block_vars('topforumrow', array(
 								'FORUM_FOLDER_IMG_SRC'		=> $this->user->img('forum_read', 'NO_NEW_POSTS', false, '', 'src'),
+								'FORUM_IMG_STYLE'			=> $folder_image,
 								'FORUM_NAME'				=> ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['forum_name'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : $row['forum_name']),
 								'U_VIEW_FORUM'				=> $u_viewforum,
 								'FORUM_THANKS'				=> $row['forum_thanks'],
