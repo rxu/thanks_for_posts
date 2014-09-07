@@ -116,4 +116,5 @@ $lang = array_merge($lang, array(
 	'THANKS_CUSTOM0_FUNCTION'	=> 'Update values for the _thanks table',
 	'THANKS_CUSTOM1_FUNCTION'	=> 'Check remove module',
 	'THANKS_CUSTOM2_FUNCTION'	=> 'Check refrech cache',
+	'TOPLIST'					=> 'Posts toplist',
 ));

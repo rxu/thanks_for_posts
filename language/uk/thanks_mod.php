@@ -106,4 +106,5 @@ $lang = array_merge($lang, array(
 	'THANKS_CUSTOM0_FUNCTION'	=> 'Оновлення даних у таблиці _thanks',
 	'THANKS_CUSTOM1_FUNCTION'	=> 'Перевірка видалення модуля',
 	'THANKS_CUSTOM2_FUNCTION'	=> 'Перевірка оновлення кеша',
+	'TOPLIST'					=> 'Топ лист повідомлень',
 ));

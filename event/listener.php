@@ -42,6 +42,7 @@ class listener implements EventSubscriberInterface
 			'core.display_forums_modify_forum_rows'	=> 'forumlist_display_rating',
 			'core.display_forums_add_template_data'	=> 'forumlist_modify_template_vars',
 			'core.user_setup'						=> 'load_language_on_setup',
+			'core.page_header_after'				=> 'add_header_quicklinks',
 		);
 	}
 
@@ -60,7 +61,6 @@ class listener implements EventSubscriberInterface
 		$this->template->assign_vars(array(
 			'THANKS_LIST'		=> ($thanks_list != '') ? $thanks_list : false,
 			'S_THANKS_LIST'		=> (isset($this->config['thanks_top_number']) && $thanks_list != '') ? true : false,
-			'U_THANKS_LIST'		=> append_sid("{$this->phpbb_root_path}thankslist"),
 			'L_TOP_THANKS_LIST'	=> isset($this->config['thanks_top_number']) ? sprintf($this->user->lang['REPUT_TOPLIST'], (int) $this->config['thanks_top_number']) : false,
 		));
 	}
@@ -183,5 +183,15 @@ class listener implements EventSubscriberInterface
 			'lang_set' => 'thanks_mod',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
+	}
+
+	public function add_header_quicklinks()
+	{
+		$this->template->assign_vars(array(
+			'U_THANKS_LIST'		=> append_sid("{$this->phpbb_root_path}thankslist"),
+			'U_REPUT_TOPLIST'	=> append_sid("{$this->phpbb_root_path}toplist"),
+			'S_DISPLAY_THANKSLIST'	=> $this->auth->acl_get('u_viewthanks'),
+			'S_DISPLAY_TOPLIST'		=> $this->auth->acl_get('u_viewtoplist'),
+		));
 	}
 }

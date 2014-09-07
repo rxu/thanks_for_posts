@@ -119,5 +119,5 @@ $lang = array_merge($lang, array(
 	'THANKS_CUSTOM0_FUNCTION'	=> 'Обновление данных в таблице _thanks',
 	'THANKS_CUSTOM1_FUNCTION'	=> 'Проверка удаления модуля',
 	'THANKS_CUSTOM2_FUNCTION'	=> 'Проверка обновления кеша',
-	'TOPLIST'					=> 'Топлист',
+	'TOPLIST'					=> 'Топлист сообщений',
 ));
