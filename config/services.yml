@@ -39,8 +39,8 @@ services:
             - @cache.driver
             - %core.root_path%
             - %core.php_ext%
-            - @controller.helper
-            - @service_container
+            - @pagination
+            - @profilefields.manager
             - @request
     gfksx.ThanksForPosts.controller.toplist:
         class: gfksx\ThanksForPosts\controller\toplist
@@ -53,8 +53,7 @@ services:
             - @cache.driver
             - %core.root_path%
             - %core.php_ext%
-            - @controller.helper
-            - @service_container
+            - @pagination
             - @gfksx.ThanksForPosts.helper
             - @request
     gfksx.ThanksForPosts.notification.type.thanks:

@@ -13,18 +13,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class thankslist
 {
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\controller\helper $helper, $phpbb_container, \phpbb\request\request_interface $request)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request)
 	{
 		$this->config = $config;
 		$this->db = $db;
 		$this->auth = $auth;
 		$this->template = $template;
-				$this->user = $user;
+		$this->user = $user;
 		$this->cache = $cache;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
-		$this->helper = $helper;
-		$this->phpbb_container = $phpbb_container;
+		$this->pagination = $pagination;
+		$this->profilefields_manager = $profilefields_manager;
 		$this->request = $request;
 	}
 
@@ -60,7 +60,7 @@ class thankslist
 
 		switch ($mode)
 		{
-				case 'givens':
+			case 'givens':
 				$per_page = $this->config['posts_per_page'];
 				$total_match_count = 0;
 				$page_title = $this->user->lang['SEARCH'];
@@ -186,19 +186,18 @@ class thankslist
 				{
 					$l_search_matches = $this->user->lang('FOUND_SEARCH_MATCHES', $total_match_count);
 				}
-				$pagination = $this->phpbb_container->get('pagination');
-				$pagination->generate_template_pagination($u_search, 'pagination', 'start', $total_match_count, $per_page, $start);
+				$this->pagination->generate_template_pagination($u_search, 'pagination', 'start', $total_match_count, $per_page, $start);
 				$this->template->assign_vars(array(
 				//	'PAGINATION'		=> generate_pagination($u_search, $total_match_count, $per_page, $start),
-					'PAGE_NUMBER'		=> $pagination->on_page($total_match_count, $per_page, $start),
+					'PAGE_NUMBER'		=> $this->pagination->on_page($total_match_count, $per_page, $start),
 					'TOTAL_MATCHES'		=> $total_match_count,
 					'SEARCH_MATCHES'	=> $l_search_matches,
 					'U_THANKS'			=> append_sid("{$this->phpbb_root_path}thankslist"),
 				));
 
-				break;
+			break;
 
-				default:
+			default:
 				$page_title = $this->user->lang['THANKS_USER'];
 				$template_html = 'thankslist_body.html';
 
@@ -379,15 +378,14 @@ class thankslist
 					// Load custom profile fields
 					if ($this->config['load_cpf_memberlist'])
 					{
-						$cp = $this->phpbb_container->get('profilefields.manager');
-						$cp_row = $cp->generate_profile_fields_template_headlines('field_show_on_ml');
+						$cp_row = $this->profilefields_manager->generate_profile_fields_template_headlines('field_show_on_ml');
 						foreach ($cp_row as $profile_field)
 						{
 							$this->template->assign_block_vars('custom_fields', $profile_field);
 						}
 
 						// Grab all profile fields from users in id cache for later use - similar to the poster cache
-						$profile_fields_cache = $cp->grab_profile_fields_data($user_list);
+						$profile_fields_cache = $this->profilefields_manager->grab_profile_fields_data($user_list);
 
 						// Filter the fields we don't want to show
 						foreach ($profile_fields_cache as $user_id => $user_profile_fields)
@@ -416,7 +414,7 @@ class thankslist
 						$cp_row = array();
 						if ($this->config['load_cpf_memberlist'])
 						{
-							$cp_row = $cp->generate_profile_fields_template_data($profile_fields_cache[$user_id], false);
+							$cp_row = isset($profile_fields_cache[$user_id]) ? $this->profilefields_manager->generate_profile_fields_template_data($profile_fields_cache[$user_id], false) : array();
 						}
 
 						$memberrow = array_merge(phpbb_show_profile($row), array(
@@ -463,10 +461,9 @@ class thankslist
 					// www.phpBB-SEO.com SEO TOOLKIT BEGIN
 					$seo_sep = strpos($sort_url, '?') === false ? '?' : '&amp;';
 					// www.phpBB-SEO.com SEO TOOLKIT END
-					$pagination = $this->phpbb_container->get('pagination');
-					$pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $total_users, $this->config['topics_per_page'], $start);
+					$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $total_users, $this->config['topics_per_page'], $start);
 					$this->template->assign_vars(array(
-						'PAGE_NUMBER'			=> $pagination->on_page($total_users, $this->config['topics_per_page'], $start),
+						'PAGE_NUMBER'			=> $this->pagination->on_page($total_users, $this->config['topics_per_page'], $start),
 		//				'PAGINATION'			=> generate_pagination($pagination_url, $total_users, $this->config['topics_per_page'], $start),
 						'U_SORT_POSTS'			=> $sort_url . $seo_sep . 'sk=d&amp;sd=' . (($sort_key == 'd' && $sort_dir == 'a') ? 'd' : 'a'),
 						'U_SORT_USERNAME'		=> $sort_url . $seo_sep . 'sk=a&amp;sd=' . (($sort_key == 'a' && $sort_dir == 'a') ? 'd' : 'a'),
@@ -479,7 +476,7 @@ class thankslist
 						'U_SORT_ACTIVE'			=> ($this->auth->acl_get('u_viewonline')) ? $sort_url . $seo_sep . 'sk=l&amp;sd=' . (($sort_key == 'l' && $sort_dir == 'a') ? 'd' : 'a') : '',
 					));
 				}
-				break;
+			break;
 		}
 
 		// Output the page

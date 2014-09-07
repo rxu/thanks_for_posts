@@ -53,8 +53,8 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 			array('config.add', array('thanks_number_digits', 2)),
 			array('config.add', array('thanks_number_row_reput', 5)),
 			array('config.add', array('thanks_reput_graphic', 1)),
-			array('config.add', array('thanks_reput_image', 'images/rating/reput_star_gold.gif')),
-			array('config.add', array('thanks_reput_image_back', 'images/rating/reput_star_back.gif')),
+			array('config.add', array('thanks_reput_image', 'ext/gfksx/ThanksForPosts/images/rating/reput_star_gold.gif')),
+			array('config.add', array('thanks_reput_image_back', 'ext/gfksx/ThanksForPosts/images/rating/reput_star_back.gif')),
 			array('config.add', array('thanks_time_view', 1)),
 			array('config.add', array('thanks_top_number', 0)),
 

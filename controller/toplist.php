@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class toplist
 {
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\controller\helper $helper, $phpbb_container, $gfksx_helper, \phpbb\request\request_interface $request)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, $gfksx_helper, \phpbb\request\request_interface $request)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -23,8 +23,7 @@ class toplist
 		$this->cache = $cache;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
-		$this->helper = $helper;
-		$this->phpbb_container = $phpbb_container;
+		$this->pagination = $pagination;
 		$this->gfksx_helper = $gfksx_helper;
 		$this->request = $request;
 	}
@@ -325,12 +324,11 @@ class toplist
 				trigger_error('RATING_VIEW_TOPLIST_NO');
 			}
 
-			$pagination = $this->phpbb_container->get('pagination');
-			$pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $total_match_count, $this->config['topics_per_page'], $start);
+			$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $total_match_count, $this->config['topics_per_page'], $start);
 
 			// Output the page
 			$this->template->assign_vars(array(
-				'PAGE_NUMBER'				=> $pagination->on_page($total_match_count, $this->config['posts_per_page'], $start),
+				'PAGE_NUMBER'				=> $this->pagination->on_page($total_match_count, $this->config['posts_per_page'], $start),
 				'PAGE_TITLE'				=> $page_title,
 				'S_THANKS_FORUM_REPUT_VIEW' => isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view'] : false,
 				'S_THANKS_TOPIC_REPUT_VIEW' => isset($this->config['thanks_topic_reput_view']) ? $this->config['thanks_topic_reput_view'] : false,
