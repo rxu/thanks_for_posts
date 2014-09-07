@@ -75,7 +75,7 @@ class v_2_0_1 extends \phpbb\db\migration\migration
 			$this->db->sql_query($sql_update);
 
 			$sql_update = 'UPDATE ' . USER_NOTIFICATIONS_TABLE . "
-				SET item_type = '" . $this->db->sql_escape($sql_ary['notification_type_name']) . "'
+				SET item_type = '" . $this->db->sql_escape($sql['notification_type_name']) . "'
 				WHERE item_type = '" . $notification_type_name[1] . "'";
 			$this->db->sql_query($sql_update);
 		}
