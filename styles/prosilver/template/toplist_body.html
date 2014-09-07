@@ -3,12 +3,14 @@
 
 	<div class="panel">
 		<div class="inner"><span class="corners-top"><span></span></span>
-			<ul class="linklist">
-				<li class="rightside pagination">
-					<!-- IF PAGINATION --><a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <span>{PAGINATION}</span><!-- ELSE -->{PAGE_NUMBER}<!-- ENDIF -->
-				</li>
-			</ul>
-			<span class="corners-bottom"><span></span></span></div>
+			<div class="pagination">
+				<!-- IF .pagination -->
+					<!-- INCLUDE pagination.html -->
+				<!-- ELSE -->
+					{PAGE_NUMBER}
+				<!-- ENDIF -->
+			</div>
+		<span class="corners-bottom"><span></span></span></div>
 	</div>
 <!-- IF S_THANKS_POST_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_FORUM_RATING -->	
 <h3 class="solo"><a href="{U_SEARCH_POST}" class="forumtitle">{L_RATING_TOP_POST}</a></h3>
@@ -109,9 +111,13 @@
 	</div>
 <hr />
 <!-- ENDIF -->
-<ul class="linklist">
-	<li class="rightside pagination"><!-- IF PAGINATION --><a href="#" onclick="jumpto(); return false;" title="{L_JUMP_TO_PAGE}">{PAGE_NUMBER}</a> &bull; <span>{PAGINATION}</span><!-- ELSE -->{PAGE_NUMBER}<!-- ENDIF --></li>
-</ul>
-
-	<!-- INCLUDE jumpbox.html -->
-	<!-- INCLUDE overall_footer.html -->
+	<div class="pagination">
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			{PAGE_NUMBER}
+		<!-- ENDIF -->
+	</div>
+<div class="clear"></div>
+<!-- INCLUDE jumpbox.html -->
+<!-- INCLUDE overall_footer.html -->
