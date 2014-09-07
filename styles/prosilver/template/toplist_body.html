@@ -61,7 +61,7 @@
 				<tbody>
 		<!-- BEGIN toptopicrow -->
 				<tr class="<!-- IF toptopicrow.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
-					<td class="icon {toptopicrow.TOPIC_IMG_STYLE}" style="background-repeat: no-repeat; background-position: 10px 50%;"></td>
+					<td class="icon {toptopicrow.TOPIC_IMG_STYLE}" style="background-repeat: no-repeat; background-position: 10px 50%; width: 35px;"></td>
 					<td><a href="{toptopicrow.U_VIEW_TOPIC}" class="forumtitle">{toptopicrow.TOPIC_TITLE}</a></td>
 					<td>{toptopicrow.TOPIC_THANKS}</td>
 					<td>{toptopicrow.TOPIC_AUTHOR}</td>
@@ -86,15 +86,17 @@
 			<table class="table1" cellspacing="1">
 				<thead>
 				<tr>
+					<th class="topictitle">&nbsp;</th>
 					<th class="topictitle">{L_RATING_FORUM}</th>
-					<th class="rating">{L_RECEIVED}</th>
+					<th class="name">{L_RECEIVED}</th>
 					<th class="rating">{L_REPUT}</th>
 				</tr>
 				</thead>
 				<tbody>
 		<!-- BEGIN topforumrow -->
 				<tr class="<!-- IF topforumrow.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
-					<td style="background-image: url({topforumrow.FORUM_FOLDER_IMG_SRC}); background-repeat: no-repeat; background-position: 2px center; padding-left: 35px;"><a href="{topforumrow.U_VIEW_FORUM}" class="forumtitle">{topforumrow.FORUM_NAME}</a></td>
+					<td class="icon {topforumrow.FORUM_IMG_STYLE}" style="background-repeat: no-repeat; background-position: 10px 50%; width: 35px;"></td>
+					<td><a href="{topforumrow.U_VIEW_FORUM}" class="forumtitle">{topforumrow.FORUM_NAME}</a></td>
 					<td>{topforumrow.FORUM_THANKS}</td>
 					<td><span style="display: block;">{L_REPUT}:{topforumrow.FORUM_REPUT}
 						<!-- IF topforumrow.S_THANKS_REPUT_GRAPHIC -->
