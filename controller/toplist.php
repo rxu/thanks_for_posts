@@ -46,7 +46,7 @@ class toplist
 		$words = array();
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : true;
-		$pagination_url = append_sid("{$this->phpbb_root_path}toplist.$this->php_ext",'mode=' . $mode);
+		$pagination_url = append_sid("{$this->phpbb_root_path}toplist",'mode=' . $mode);
 
 		if (!$this->auth->acl_gets('u_viewtoplist'))
 		{
@@ -123,7 +123,7 @@ class toplist
 
 				$sql = $this->db->sql_build_query('SELECT',$sql_p_array);
 				$result = $this->db->sql_query_limit($sql, $end, $start);
-				$u_search_post = append_sid("{$this->phpbb_root_path}toplist.$this->php_ext", "mode=post");
+				$u_search_post = append_sid("{$this->phpbb_root_path}toplist", "mode=post");
 				if (!$row = $this->db->sql_fetchrow($result))
 				{
 					trigger_error('RATING_VIEW_TOPLIST_NO');
@@ -234,7 +234,7 @@ class toplist
 
 				$sql = $this->db->sql_build_query('SELECT',$sql_t_array);
 				$result = $this->db->sql_query_limit($sql, $end, $start);
-				$u_search_topic = append_sid("{$this->phpbb_root_path}toplist.$this->php_ext", "mode=topic");
+				$u_search_topic = append_sid("{$this->phpbb_root_path}toplist", "mode=topic");
 				if (!$row = $this->db->sql_fetchrow($result))
 				{
 					trigger_error('RATING_VIEW_TOPLIST_NO');
@@ -287,7 +287,7 @@ class toplist
 
 				$sql = $this->db->sql_build_query('SELECT',$sql_f_array);
 				$result = $this->db->sql_query_limit($sql, $end, $start);
-				$u_search_forum = append_sid("{$this->phpbb_root_path}toplist.$this->php_ext", "mode=forum");
+				$u_search_forum = append_sid("{$this->phpbb_root_path}toplist", "mode=forum");
 				if (!$row = $this->db->sql_fetchrow($result))
 				{
 					trigger_error('RATING_VIEW_TOPLIST_NO');
