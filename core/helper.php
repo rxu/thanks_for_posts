@@ -18,7 +18,7 @@ class helper
 	protected $max_forum_thanks;
 	protected $poster_list_count;
 
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\notification\manager $notification_manager, $phpbb_root_path, $php_ext, $table_prefix)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\notification\manager $notification_manager, $phpbb_root_path, $php_ext, $table_prefix, $thanks_table, $users_table, $posts_table, $notifications_table)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -31,7 +31,10 @@ class helper
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
-		define('THANKS_TABLE', $this->table_prefix . 'thanks');
+		$this->thanks_table = $thanks_table;
+		$this->users_table = $users_table;
+		$this->posts_table = $posts_table;
+		$this->notifications_table = $notifications_table;
 	}
 
 	// Output thanks list
@@ -120,7 +123,7 @@ class helper
 					'forum_id'	=> (int) $row['forum_id'],
 					'thanks_time'	=> time(),
 				);
-				$sql = 'INSERT INTO ' . THANKS_TABLE . ' ' . $this->db->sql_build_array('INSERT', $thanks_data);
+				$sql = 'INSERT INTO ' . $this->thanks_table . ' ' . $this->db->sql_build_array('INSERT', $thanks_data);
 				$this->db->sql_query($sql);
 
 				$lang_act = 'GIVE';
@@ -187,7 +190,7 @@ class helper
 
 				if (!empty($field_act))
 				{
-					$sql = "DELETE FROM " . THANKS_TABLE . '
+					$sql = "DELETE FROM " . $this->thanks_table . '
 						WHERE ' . $field_act . ' = ' . (int) $object_id;
 					$result = $this->db->sql_query($sql);
 
@@ -269,7 +272,7 @@ class helper
 		{
 			if ($this->user->data['user_type'] != USER_IGNORE && !empty($to_id) && $this->auth->acl_get('f_thanks', $forum_id))
 			{
-				$sql = "DELETE FROM " . THANKS_TABLE . '
+				$sql = "DELETE FROM " . $this->thanks_table . '
 					WHERE post_id ='. (int) $post_id ." AND user_id = " . (int) $this->user->data['user_id'];
 				$this->db->sql_query($sql);
 				$result = $this->db->sql_affectedrows($sql);
@@ -370,7 +373,7 @@ class helper
 		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 
 		$sql = 'SELECT poster_id, COUNT(*) AS poster_receive_count
-			FROM ' . THANKS_TABLE . '
+			FROM ' . $this->thanks_table . '
 			WHERE poster_id = ' . (int) $user_id. ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
 			GROUP BY poster_id';
 		$result = $this->db->sql_query($sql);
@@ -379,7 +382,7 @@ class helper
 
 		$sql_array = array(
 			'SELECT'	=> 't.*, u.username, u.user_colour',
-			'FROM'		=> array(THANKS_TABLE => 't', USERS_TABLE => 'u'),
+			'FROM'		=> array($this->thanks_table => 't', $this->users_table => 'u'),
 		);
 		$sql_array['WHERE'] = 't.poster_id =' . (int) $user_id .' AND ';
 		$sql_array['WHERE'] .= 'u.user_id = t.user_id AND ';
@@ -446,7 +449,7 @@ class helper
 		unset ($value);
 	//===
 		$sql = 'SELECT user_id, COUNT(*) AS poster_give_count
-			FROM ' . THANKS_TABLE . "
+			FROM ' . $this->thanks_table . "
 			WHERE user_id = " . (int) $user_id.  ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
 			GROUP BY user_id';
 		$result = $this->db->sql_query($sql);
@@ -455,7 +458,7 @@ class helper
 
 		$sql_array = array(
 			'SELECT'	=> 't.*, u.username, u.user_colour',
-			'FROM'		=> array(THANKS_TABLE => 't', USERS_TABLE => 'u'),
+			'FROM'		=> array($this->thanks_table => 't', $this->users_table => 'u'),
 		);
 		$sql_array['WHERE'] = 't.user_id =' . (int) $user_id . ' AND ';
 		$sql_array['WHERE'] .= 'u.user_id = t.poster_id AND ';
@@ -583,7 +586,7 @@ class helper
 	//refresh counts if post delete
 	public function delete_post_thanks($post_ids)
 	{
-		$sql = 'DELETE FROM ' . THANKS_TABLE . '
+		$sql = 'DELETE FROM ' . $this->thanks_table . '
 				WHERE ' . $this->db->sql_in_set('post_id', $post_ids);
 		$this->db->sql_query($sql);
 	}
@@ -597,7 +600,7 @@ class helper
 		if (isset($this->config['thanks_post_reput_view']) ? $this->config['thanks_post_reput_view'] : false)
 		{
 			$sql = 'SELECT MAX(tally) AS max_post_thanks
-				FROM (SELECT post_id, COUNT(*) AS tally FROM ' . THANKS_TABLE . ' GROUP BY post_id) t';
+				FROM (SELECT post_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY post_id) t';
 			$result = $this->db->sql_query($sql);
 			$this->max_post_thanks = (int) $this->db->sql_fetchfield('max_post_thanks');
 			$this->db->sql_freeresult($result);
@@ -612,7 +615,7 @@ class helper
 		{
 			$sql_array = array(
 				'SELECT'	=> 't.*, u.username, u.username_clean, u.user_colour',
-				'FROM'		=> array(THANKS_TABLE => 't', USERS_TABLE => 'u'),
+				'FROM'		=> array($this->thanks_table => 't', $this->users_table => 'u'),
 			);
 			$sql_array['WHERE'] = 'u.user_id = t.user_id AND ' . $this->db->sql_in_set('t.post_id', $post_list);
 			$sql = $this->db->sql_build_query('SELECT', $sql_array);
@@ -636,7 +639,7 @@ class helper
 		//array thanks_count for all poster on viewtopic page
 		if(isset($this->config['thanks_counters_view']) ? $this->config['thanks_counters_view'] : false)
 		{
-			$sql = 'SELECT DISTINCT poster_id FROM '. POSTS_TABLE . ' WHERE ' . $this->db->sql_in_set('post_id', $post_list);
+			$sql = 'SELECT DISTINCT poster_id FROM '. $this->posts_table . ' WHERE ' . $this->db->sql_in_set('post_id', $post_list);
 			$result = $this->db->sql_query($sql);
 			while ($row = $this->db->sql_fetchrow($result))
 			{
@@ -648,7 +651,7 @@ class helper
 			$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 			$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : false;
 
-			$sql = 'SELECT *, COUNT(poster_id) AS poster_count FROM ' . THANKS_TABLE . '
+			$sql = 'SELECT *, COUNT(poster_id) AS poster_count FROM ' . $this->thanks_table . '
 				WHERE ' . $this->db->sql_in_set('poster_id', $poster_list) . '
 					AND ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . '
 				GROUP BY poster_id';
@@ -659,7 +662,7 @@ class helper
 			}
 			$this->db->sql_freeresult($result);
 
-			$sql = 'SELECT *, COUNT(user_id) AS user_count FROM ' . THANKS_TABLE . '
+			$sql = 'SELECT *, COUNT(user_id) AS user_count FROM ' . $this->thanks_table . '
 				WHERE ' . $this->db->sql_in_set('user_id', $poster_list) . '
 					AND ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . '
 				GROUP BY user_id';
@@ -695,7 +698,7 @@ class helper
 		if (isset($this->config['thanks_topic_reput_view']) ? $this->config['thanks_topic_reput_view'] : false)
 		{
 			$sql = 'SELECT topic_id, COUNT(*) AS topic_thanks
-				FROM ' . THANKS_TABLE . "
+				FROM ' . $this->thanks_table . "
 				WHERE " . $this->db->sql_in_set('topic_id', $topic_list) . '
 				GROUP BY topic_id';
 			$result = $this->db->sql_query($sql);
@@ -714,7 +717,7 @@ class helper
 		if (isset($this->config['thanks_topic_reput_view']) ? $this->config['thanks_topic_reput_view'] : false)
 		{
 			$sql = 'SELECT MAX(tally) AS max_topic_thanks
-				FROM (SELECT topic_id, COUNT(*) AS tally FROM ' . THANKS_TABLE . ' GROUP BY topic_id) t';
+				FROM (SELECT topic_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY topic_id) t';
 			$result = $this->db->sql_query($sql);
 			$this->max_topic_thanks = (int) $this->db->sql_fetchfield('max_topic_thanks');
 			$this->db->sql_freeresult($result);
@@ -726,7 +729,7 @@ class helper
 	public function get_max_post_thanks()
 	{
 		$sql = 'SELECT MAX(tally) AS max_post_thanks
-			FROM (SELECT post_id, COUNT(*) AS tally FROM ' . THANKS_TABLE . ' GROUP BY post_id) t';
+			FROM (SELECT post_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY post_id) t';
 		$result = $this->db->sql_query($sql);
 		$this->max_post_thanks = (int) $this->db->sql_fetchfield('max_post_thanks');
 		$this->db->sql_freeresult($result);
@@ -737,8 +740,8 @@ class helper
 	{
 		$thanks_list = '';
 		$sql = 'SELECT t.poster_id, COUNT(t.user_id) AS tally, u.user_id, u.username, u.user_colour
-			FROM ' . USERS_TABLE . ' u 
-			LEFT JOIN ' . THANKS_TABLE . ' t ON (u.user_id = t.poster_id)
+			FROM ' . $this->users_table . ' u 
+			LEFT JOIN ' . $this->thanks_table . ' t ON (u.user_id = t.poster_id)
 			WHERE ' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0
 			GROUP BY t.poster_id 
 			ORDER BY tally DESC';
@@ -775,7 +778,7 @@ class helper
 			if ($forum_thanks_rating = $this->cache->get('_forum_thanks_rating'))
 			{
 				$sql = 'SELECT forum_id, COUNT(*) AS forum_thanks
-					FROM ' . THANKS_TABLE . "
+					FROM ' . $this->thanks_table . "
 					WHERE " . $this->db->sql_in_set('forum_id', $forum_thanks_rating) . '
 					GROUP BY forum_id';
 				$result = $this->db->sql_query($sql);
@@ -795,7 +798,7 @@ class helper
 		if (isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view'] : false)
 		{
 			$sql = 'SELECT MAX(tally) AS max_forum_thanks
-				FROM (SELECT forum_id, COUNT(*) AS tally FROM ' . THANKS_TABLE . ' GROUP BY forum_id) t 
+				FROM (SELECT forum_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY forum_id) t 
 				WHERE forum_id <> 0';
 			$result = $this->db->sql_query($sql);
 			$this->max_forum_thanks = (int) $this->db->sql_fetchfield('max_forum_thanks');
@@ -820,7 +823,7 @@ class helper
 	public function notification_exists($thanks_data, $notification_type_name)
 	{
 		$notification_type_id = $this->notification_manager->get_notification_type_id($notification_type_name);
-		$sql = 'SELECT notification_id FROM ' . NOTIFICATIONS_TABLE . '
+		$sql = 'SELECT notification_id FROM ' . $this->notifications_table . '
 			WHERE notification_type_id = ' . (int) $notification_type_id . '
 				AND item_id = ' . (int) $thanks_data['post_id'];
 		$result = $this->db->sql_query($sql);
@@ -838,7 +841,7 @@ class helper
 		}
 		$sql_array = array(
 			'SELECT'	=> 'p.post_id, p.poster_id, p.topic_id, p.forum_id, p.post_subject',
-			'FROM'		=> array (POSTS_TABLE => 'p'),
+			'FROM'		=> array ($this->posts_table => 'p'),
 			'WHERE'		=> 'p.post_id =' . (int) $post_id);
 		$sql = $this->db->sql_build_query('SELECT', $sql_array);
 		$result = $this->db->sql_query($sql);

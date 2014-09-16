@@ -1,3 +1,6 @@
+imports:
+    - { resource: tables.yml }
+
 services:
     gfksx.ThanksForPosts.listener:
         class: gfksx\ThanksForPosts\event\listener
@@ -28,6 +31,10 @@ services:
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
+            - %tables.thanks%
+            - %tables.users%
+            - %tables.posts%
+            - %tables.notifications%
     gfksx.ThanksForPosts.controller.thankslist:
         class: gfksx\ThanksForPosts\controller\thankslist
         arguments:
