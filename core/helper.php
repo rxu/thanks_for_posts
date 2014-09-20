@@ -808,7 +808,7 @@ class helper
 	}
 
 	// Add notifications
-	public function add_notification($notification_data, $notification_type_name = 'thanks')
+	public function add_notification($notification_data, $notification_type_name = 'gfksx.ThanksForPosts.notification.type.thanks')
 	{
 		if ($this->notification_exists($notification_data, $notification_type_name))
 		{
