@@ -833,6 +833,15 @@ class helper
 		return ($item_id) ?: false;
 	}
 
+	public function notification_markread($item_ids)
+	{
+		// Mark post notifications read for this user in this topic
+		$this->notification_manager->mark_notifications_read(array(
+			'gfksx.ThanksForPosts.notification.type.thanks',
+			'gfksx.ThanksForPosts.notification.type.thanks_remove',
+		), $item_ids, $this->user->data['user_id']);
+	}
+
 	public function get_post_info($post_id = false)
 	{
 		if (!$post_id)

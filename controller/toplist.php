@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class toplist
 {
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, $gfksx_helper, \phpbb\request\request_interface $request)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, $gfksx_helper, \phpbb\request\request_interface $request, $thanks_table, $users_table, $posts_table)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -26,6 +26,9 @@ class toplist
 		$this->pagination = $pagination;
 		$this->gfksx_helper = $gfksx_helper;
 		$this->request = $request;
+		$this->thanks_table = $thanks_table;
+		$this->users_table = $users_table;
+		$this->posts_table = $posts_table;
 	}
 
 	public function main()
@@ -65,7 +68,7 @@ class toplist
 		{
 				case 'post':
 				$sql = 'SELECT COUNT(DISTINCT post_id) as total_post_count
-					FROM ' . THANKS_TABLE .'
+					FROM ' . $this->thanks_table .'
 					WHERE ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true);
 				$result = $this->db->sql_query($sql);
 				$total_match_count = (int) $this->db->sql_fetchfield('total_post_count');
@@ -76,7 +79,7 @@ class toplist
 
 				case 'topic':
 				$sql = 'SELECT COUNT(DISTINCT topic_id) as total_topic_count
-					FROM ' . THANKS_TABLE .'
+					FROM ' . $this->thanks_table .'
 					WHERE ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true);
 				$result = $this->db->sql_query($sql);
 				$total_match_count = (int) $this->db->sql_fetchfield('total_topic_count');
@@ -87,7 +90,7 @@ class toplist
 
 				case 'forum':
 				$sql = 'SELECT COUNT(DISTINCT forum_id) as total_forum_count
-					FROM ' . THANKS_TABLE .'
+					FROM ' . $this->thanks_table .'
 					WHERE ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true);
 				$result = $this->db->sql_query($sql);
 				$total_match_count = (int) $this->db->sql_fetchfield('total_forum_count');
@@ -106,15 +109,15 @@ class toplist
 			{
 				$end = ($full_post_rating) ?  $this->config['topics_per_page'] : $end_row_rating;
 
-				$sql_p_array['FROM']	= array(THANKS_TABLE => 't');
+				$sql_p_array['FROM']	= array($this->thanks_table => 't');
 				$sql_p_array['SELECT'] = 'u.user_id, u.username, u.user_colour, p.post_subject, p.post_id, p.post_time, p.poster_id, p.post_username, p.topic_id, p.forum_id, p.post_text, p.bbcode_uid, p.bbcode_bitfield, p.post_attachment';
 				$sql_p_array['SELECT'] .= ', t.post_id, COUNT(*) AS post_thanks';
 				$sql_p_array['LEFT_JOIN'][] = array(
-					'FROM'	=> array (POSTS_TABLE => 'p'),
+					'FROM'	=> array ($this->posts_table => 'p'),
 					'ON'	=> 't.post_id = p.post_id',
 					);
 				$sql_p_array['LEFT_JOIN'][] = array(
-					'FROM'	=> array(USERS_TABLE => 'u'),
+					'FROM'	=> array($this->users_table => 'u'),
 					'ON'	=> 'p.poster_id = u.user_id'
 				);
 				$sql_p_array['GROUP_BY'] = 't.post_id';
@@ -217,7 +220,7 @@ class toplist
 			{
 				$end = ($full_topic_rating) ?  $this->config['topics_per_page'] : $end_row_rating;
 
-				$sql_t_array['FROM']	= array(THANKS_TABLE => 'f');
+				$sql_t_array['FROM']	= array($this->thanks_table => 'f');
 				$sql_t_array['SELECT'] = 'u.user_id, u.username, u.user_colour, t.topic_title, t.topic_id, t.topic_time, t.topic_poster, t.topic_first_poster_name, t.topic_first_poster_colour, t.forum_id, t.topic_type, t.topic_status, t.poll_start';
 				$sql_t_array['SELECT'] .= ', f.topic_id, COUNT(*) AS topic_thanks';
 				$sql_t_array['LEFT_JOIN'][] = array(
@@ -225,7 +228,7 @@ class toplist
 					'ON'	=> 'f.topic_id = t.topic_id',
 					);
 				$sql_t_array['LEFT_JOIN'][] = array(
-					'FROM'	=> array(USERS_TABLE => 'u'),
+					'FROM'	=> array($this->users_table => 'u'),
 					'ON'	=> 't.topic_poster = u.user_id'
 				);
 				$sql_t_array['GROUP_BY'] = 'f.topic_id';
@@ -274,7 +277,7 @@ class toplist
 			{
 				$end = ($full_forum_rating) ?  $this->config['topics_per_page'] : $end_row_rating;
 
-				$sql_f_array['FROM']	= array(THANKS_TABLE => 't');
+				$sql_f_array['FROM']	= array($this->thanks_table => 't');
 				$sql_f_array['SELECT'] = 'f.forum_name, f.forum_id';
 				$sql_f_array['SELECT'] .= ', t.forum_id, COUNT(*) AS forum_thanks';
 				$sql_f_array['LEFT_JOIN'][] = array(

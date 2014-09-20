@@ -49,6 +49,8 @@ services:
             - @pagination
             - @profilefields.manager
             - @request
+            - %tables.thanks%
+            - %tables.users%
     gfksx.ThanksForPosts.controller.toplist:
         class: gfksx\ThanksForPosts\controller\toplist
         arguments:
@@ -63,6 +65,9 @@ services:
             - @pagination
             - @gfksx.ThanksForPosts.helper
             - @request
+            - %tables.thanks%
+            - %tables.users%
+            - %tables.posts%
     gfksx.ThanksForPosts.notification.type.thanks:
         class: gfksx\ThanksForPosts\notification\thanks
         scope: prototype # scope MUST be prototype for this to work!

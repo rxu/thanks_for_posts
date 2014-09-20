@@ -43,6 +43,7 @@ class listener implements EventSubscriberInterface
 			'core.display_forums_add_template_data'	=> 'forumlist_modify_template_vars',
 			'core.user_setup'						=> 'load_language_on_setup',
 			'core.page_header_after'				=> 'add_header_quicklinks',
+			'core.viewtopic_modify_page_title'		=> 'markread',
 		);
 	}
 
@@ -185,7 +186,7 @@ class listener implements EventSubscriberInterface
 		$event['lang_set_ext'] = $lang_set_ext;
 	}
 
-	public function add_header_quicklinks()
+	public function add_header_quicklinks($event)
 	{
 		$this->template->assign_vars(array(
 			'U_THANKS_LIST'		=> append_sid("{$this->phpbb_root_path}thankslist"),
@@ -193,5 +194,11 @@ class listener implements EventSubscriberInterface
 			'S_DISPLAY_THANKSLIST'	=> $this->auth->acl_get('u_viewthanks'),
 			'S_DISPLAY_TOPLIST'		=> $this->auth->acl_get('u_viewtoplist'),
 		));
+	}
+
+	public function markread($event)
+	{
+		$post_list = $event['post_list'];
+		$this->helper->notification_markread($post_list);
 	}
 }

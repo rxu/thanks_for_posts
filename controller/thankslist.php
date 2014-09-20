@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class thankslist
 {
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, $thanks_table, $users_table)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -26,6 +26,8 @@ class thankslist
 		$this->pagination = $pagination;
 		$this->profilefields_manager = $profilefields_manager;
 		$this->request = $request;
+		$this->thanks_table = $thanks_table;
+		$this->users_table = $users_table;
 	}
 
 	public function main($mode, $author_id, $give)
@@ -72,7 +74,7 @@ class thankslist
 					$u_search = append_sid("{$this->phpbb_root_path}thankslist/givens/$author_id/true");
 
 					$sql = 'SELECT COUNT(user_id) AS total_match_count
-						FROM ' . THANKS_TABLE . '  
+						FROM ' . $this->thanks_table . '
 						WHERE (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0) AND user_id = '.$author_id;
 					$where = 'user_id';
 					break;
@@ -81,7 +83,7 @@ class thankslist
 					$u_search = append_sid("{$this->phpbb_root_path}thankslist/givens/$author_id/false");
 
 					$sql = 'SELECT COUNT(DISTINCT post_id) as total_match_count
-						FROM ' . THANKS_TABLE . '
+						FROM ' . $this->thanks_table . '
 						WHERE (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0) AND poster_id = '.$author_id;
 					$where = 'poster_id';
 					break;
@@ -100,11 +102,11 @@ class thankslist
 
 					$sql_array = array(
 						'SELECT'	=> 'u.username, u.user_colour, p.poster_id, p.post_id, p.topic_id, p.forum_id, p.post_time, p.post_subject, p.post_text, p.post_username, p.bbcode_bitfield, p.bbcode_uid, p.post_attachment, p.enable_bbcode, p. enable_smilies, p.enable_magic_url',
-						'FROM'		=> array (THANKS_TABLE => 't'),
+						'FROM'		=> array ($this->thanks_table => 't'),
 						'WHERE'		=> '('. $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0) AND t.' . $where . "= $author_id"
 					);
 					$sql_array['LEFT_JOIN'][] = array(
-						'FROM'	=> array(USERS_TABLE => 'u'),
+						'FROM'	=> array($this->users_table => 'u'),
 						'ON'	=> 't.poster_id = u.user_id'
 					);
 					$sql_array['LEFT_JOIN'][] = array(
@@ -203,7 +205,7 @@ class thankslist
 
 				// Grab relevant data thanks
 				$sql = 'SELECT user_id, COUNT(user_id) AS tally
-					FROM ' . THANKS_TABLE . '  
+					FROM ' . $this->thanks_table . '
 					WHERE ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0
 					GROUP BY user_id';
 				$result = $this->db->sql_query($sql);
@@ -214,7 +216,7 @@ class thankslist
 				$this->db->sql_freeresult($result);
 
 				$sql = 'SELECT poster_id, COUNT(user_id) AS tally
-					FROM ' . THANKS_TABLE . ' 
+					FROM ' . $this->thanks_table . '
 					WHERE ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0
 					GROUP BY poster_id';
 				$result = $this->db->sql_query($sql);
@@ -282,7 +284,7 @@ class thankslist
 
 				// Grab relevant data
 				$sql = 'SELECT DISTINCT poster_id
-					FROM ' . THANKS_TABLE;
+					FROM ' . $this->thanks_table;
 				$result = $this->db->sql_query($sql);
 
 				while ($row = $this->db->sql_fetchrow($result))
@@ -291,7 +293,7 @@ class thankslist
 				}
 
 				$sql = 'SELECT DISTINCT user_id
-					FROM ' . THANKS_TABLE;
+					FROM ' . $this->thanks_table;
 				$result = $this->db->sql_query($sql);
 
 				while ($row = $this->db->sql_fetchrow($result))
@@ -324,7 +326,7 @@ class thankslist
 
 				$sql_array = array(
 					'SELECT'	=> 'u.user_id, u.username, u.user_posts, u.user_colour, u.user_rank, u.user_inactive_reason, u.user_type, u.username_clean, u.user_regdate, u.user_lastvisit',
-					'FROM'		=> array(USERS_TABLE => 'u'),
+					'FROM'		=> array($this->users_table => 'u'),
 					'ORDER_BY'	=> $order_by,
 				);
 
@@ -341,10 +343,10 @@ class thankslist
 
 				if ($sortparam)
 				{
-					$sql_array['FROM']	= array(THANKS_TABLE => 't');
+					$sql_array['FROM']	= array($this->thanks_table => 't');
 					$sql_array['SELECT'].= ', count(t.'.$sortparam.'_id) as count_thanks';
 					$sql_array['LEFT_JOIN'][] = array(
-							'FROM'	=> array(USERS_TABLE => 'u'),
+							'FROM'	=> array($this->users_table => 'u'),
 							'ON'	=> 't.'.$sortparam.'_id = u.user_id'
 						);
 					$sql_array['GROUP_BY'] = 't.'.$sortparam.'_id';
