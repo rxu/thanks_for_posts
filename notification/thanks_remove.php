@@ -27,7 +27,7 @@ class thanks_remove extends thanks
 	*/
 	public function get_type()
 	{
-		return 'gfksx.ThanksForPosts.notification.type.thanks_remove';
+		return 'gfksx.thanksforposts.notification.type.thanks_remove';
 	}
 
 	/**

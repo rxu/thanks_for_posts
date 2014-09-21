@@ -57,11 +57,11 @@ class v_2_0_1 extends \phpbb\db\migration\migration
 	{
 		// New notification_type_name and re-enable
 		$sql_ary[] = array(
-			'notification_type_name'	=> 'gfksx.ThanksForPosts.notification.type.thanks',
+			'notification_type_name'	=> 'gfksx.thanksforposts.notification.type.thanks',
 			'notification_type_enabled'	=> 1,
 		);
 		$sql_ary[] = array(
-			'notification_type_name'	=> 'gfksx.ThanksForPosts.notification.type.thanks_remove',
+			'notification_type_name'	=> 'gfksx.thanksforposts.notification.type.thanks_remove',
 			'notification_type_enabled'	=> 1,
 		);
 

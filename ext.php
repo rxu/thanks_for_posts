@@ -39,8 +39,8 @@ class ext extends \phpbb\extension\base
 
 				// Enable notifications
 				$phpbb_notifications = $this->container->get('notification_manager');
-				$phpbb_notifications->enable_notifications('gfksx.ThanksForPosts.notification.type.thanks');
-				$phpbb_notifications->enable_notifications('gfksx.ThanksForPosts.notification.type.thanks_remove');
+				$phpbb_notifications->enable_notifications('gfksx.thanksforposts.notification.type.thanks');
+				$phpbb_notifications->enable_notifications('gfksx.thanksforposts.notification.type.thanks_remove');
 				return 'notifications';
 
 			break;
@@ -69,8 +69,8 @@ class ext extends \phpbb\extension\base
 
 				// Disable notifications
 				$phpbb_notifications = $this->container->get('notification_manager');
-				$phpbb_notifications->disable_notifications('gfksx.ThanksForPosts.notification.type.thanks');
-				$phpbb_notifications->disable_notifications('gfksx.ThanksForPosts.notification.type.thanks_thanks');
+				$phpbb_notifications->disable_notifications('gfksx.thanksforposts.notification.type.thanks');
+				$phpbb_notifications->disable_notifications('gfksx.thanksforposts.notification.type.thanks_thanks');
 				return 'notifications';
 
 			break;
@@ -99,8 +99,8 @@ class ext extends \phpbb\extension\base
 
 				// Purge notifications
 				$phpbb_notifications = $this->container->get('notification_manager');
-				$phpbb_notifications->purge_notifications('gfksx.ThanksForPosts.notification.type.thanks');
-				$phpbb_notifications->purge_notifications('gfksx.ThanksForPosts.notification.type.thanks_remove');
+				$phpbb_notifications->purge_notifications('gfksx.thanksforposts.notification.type.thanks');
+				$phpbb_notifications->purge_notifications('gfksx.thanksforposts.notification.type.thanks_remove');
 				return 'notifications';
 
 			break;

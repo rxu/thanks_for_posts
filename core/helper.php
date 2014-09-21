@@ -808,7 +808,7 @@ class helper
 	}
 
 	// Add notifications
-	public function add_notification($notification_data, $notification_type_name = 'gfksx.ThanksForPosts.notification.type.thanks')
+	public function add_notification($notification_data, $notification_type_name = 'gfksx.thanksforposts.notification.type.thanks')
 	{
 		if ($this->notification_exists($notification_data, $notification_type_name))
 		{
@@ -837,8 +837,8 @@ class helper
 	{
 		// Mark post notifications read for this user in this topic
 		$this->notification_manager->mark_notifications_read(array(
-			'gfksx.ThanksForPosts.notification.type.thanks',
-			'gfksx.ThanksForPosts.notification.type.thanks_remove',
+			'gfksx.thanksforposts.notification.type.thanks',
+			'gfksx.thanksforposts.notification.type.thanks_remove',
 		), $item_ids, $this->user->data['user_id']);
 	}
 
