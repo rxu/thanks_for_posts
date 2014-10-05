@@ -44,6 +44,7 @@ class listener implements EventSubscriberInterface
 			'core.user_setup'						=> 'load_language_on_setup',
 			'core.page_header_after'				=> 'add_header_quicklinks',
 			'core.viewtopic_modify_page_title'		=> 'markread',
+			'core.viewtopic_assign_template_vars_before'	=> 'viewtopic_check_f_thanks_auth',
 		);
 	}
 
@@ -137,10 +138,6 @@ class listener implements EventSubscriberInterface
 		$forum_id = (int) $row['forum_id'];
 		$poster_id = (int) $row['user_id'];
 
-		$postrow = array_merge($postrow, array(
-			'S_FORUM_THANKS'	=> ($this->auth->acl_get('f_thanks', $forum_id)) ? true : false,
-		));
-
 		$this->helper->output_thanks($poster_id, $postrow, $row, $topic_data, $forum_id);
 
 		$event['post_row'] = $postrow;
@@ -200,5 +197,13 @@ class listener implements EventSubscriberInterface
 	{
 		$post_list = $event['post_list'];
 		$this->helper->notification_markread($post_list);
+	}
+
+	public function viewtopic_check_f_thanks_auth($event)
+	{
+		$forum_id = (int) $event['forum_id'];
+		$this->template->assign_vars(array(
+			'S_FORUM_THANKS'	=> (bool) ($this->auth->acl_get('f_thanks', $forum_id)),
+		));
 	}
 }
