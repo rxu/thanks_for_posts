@@ -290,7 +290,7 @@ class helper
 						'lang_act'	=> $lang_act,
 						'post_subject'	=> $row['post_subject'],
 					);
-					$this->add_notification($thanks_data, 'thanks_remove');
+					$this->add_notification($thanks_data, 'gfksx.thanksforposts.notification.type.thanks_remove');
 
 					if (isset($this->config['thanks_info_page']) && $this->config['thanks_info_page'])
 					{
