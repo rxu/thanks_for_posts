@@ -251,9 +251,10 @@ class thanks extends \phpbb\notification\type\base
 	public function create_insert_array($thanks_data, $pre_create_data = array())
 	{
 		$thankers = (isset($thanks_data['thankers'])) ? $thanks_data['thankers'] : array();
-		$thankers = array_merge($thankers,
-			array(array('user_id' => $thanks_data['user_id'],)
-		));
+		$thankers = array_merge(
+			array(array('user_id' => $thanks_data['user_id'])),
+			$thankers
+		);
 		$this->set_data('thankers', $thankers);
 
 		$this->set_data('post_id', $thanks_data['post_id']);
