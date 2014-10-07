@@ -39,7 +39,7 @@ class listener implements EventSubscriberInterface
 			'core.viewforum_modify_topicrow'		=> 'viewforum_output_topics_reput',
 			'core.viewtopic_get_post_data'			=> array('viewtopic_handle_thanks', -2), // Set lower priority for the case another ext want to change $post_list first
 			'core.viewtopic_modify_post_row'		=> 'viewtopic_modify_postrow',
-			'core.display_forums_modify_forum_rows'	=> 'forumlist_display_rating',
+			'core.display_forums_after'				=> 'forumlist_display_rating',
 			'core.display_forums_add_template_data'	=> 'forumlist_modify_template_vars',
 			'core.user_setup'						=> 'load_language_on_setup',
 			'core.page_header_after'				=> 'add_header_quicklinks',
