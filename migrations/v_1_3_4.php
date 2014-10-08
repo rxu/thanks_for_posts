@@ -56,12 +56,6 @@ class v_1_3_4 extends \phpbb\db\migration\migration
 				array('config.update', array('thanks_for_posts_version', '1.3.4')),
 			)),
 
-			// Remove phpBB 3.0 Thanks for posts MOD config entry
-			array('if', array(
-				(isset($this->config['thanks_mod_version'])),
-				array('config.remove', array('thanks_mod_version')),
-			)),
-
 			// Add permissions sets
 			array('permission.permission_set', array('ROLE_FORUM_FULL', 'f_thanks', 'role', true)),
 			array('permission.permission_set', array('ROLE_FORUM_POLLS', 'f_thanks', 'role', true)),

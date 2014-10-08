@@ -60,12 +60,6 @@ class v_1_2_5 extends \phpbb\db\migration\migration
 			// Current version
 			array('config.add', array('thanks_for_posts_version', '1.2.5')),
 
-			// Remove phpBB 3.0 Thanks for posts MOD config entry
-			array('if', array(
-				(isset($this->config['thanks_mod_version'])),
-				array('config.remove', array('thanks_mod_version')),
-			)),
-
 			// Add permissions
 			array('permission.add', array('f_thanks', false)),
 			array('permission.add', array('u_viewthanks', true)),

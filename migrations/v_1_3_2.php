@@ -47,12 +47,6 @@ class v_1_3_2 extends \phpbb\db\migration\migration
 				(isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.3.2', '<')),
 				array('config.update', array('thanks_for_posts_version', '1.3.2')),
 			)),
-
-			// Remove phpBB 3.0 Thanks for posts MOD config entry
-			array('if', array(
-				(isset($this->config['thanks_mod_version'])),
-				array('config.remove', array('thanks_mod_version')),
-			)),
 		);
 	}
 }

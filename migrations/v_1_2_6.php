@@ -47,12 +47,6 @@ class v_1_2_6 extends \phpbb\db\migration\migration
 				array('config.update', array('thanks_for_posts_version', '1.2.6')),
 			)),
 
-			// Remove phpBB 3.0 Thanks for posts MOD config entry
-			array('if', array(
-				(isset($this->config['thanks_mod_version'])),
-				array('config.remove', array('thanks_mod_version')),
-			)),
-
 			// Remove ACP module
 			array('module.remove', array('acp', 'ACP_MESSAGES', 'ACP_THANKS')),
 		);

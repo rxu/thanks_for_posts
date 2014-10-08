@@ -37,20 +37,12 @@ class v_1_3_3 extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return array(
-			// Add configs
-			array('config.add', array('thanks_notice_on', 0)),
 
 			// Current version
 			array('config.add', array('thanks_for_posts_version', '1.3.3')),
 			array('if', array(
 				(isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.3.3', '<')),
 				array('config.update', array('thanks_for_posts_version', '1.3.3')),
-			)),
-
-			// Remove phpBB 3.0 Thanks for posts MOD config entry
-			array('if', array(
-				(isset($this->config['thanks_mod_version'])),
-				array('config.remove', array('thanks_mod_version')),
 			)),
 
 			// Add permissions sets
