@@ -55,13 +55,22 @@ class v_2_0_0 extends \phpbb\db\migration\migration
 						'module_mode'		=> 'thanks',
 						'module_auth'		=> 'acl_a_board',
 				))),
+		);
+		if (isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.2.8', '>='))
+		{
+			$remove_modules = array_merge(
+				$remove_modules,
 				array('module.remove', array('acp', 'ACP_THANKS', array(
 						'module_basename'	=> 'thanks_reput',
 						'module_langname'	=> 'ACP_THANKS_REPUT_SETTINGS',
 						'module_mode'		=> 'thanks',
 						'module_auth'		=> 'acl_a_board',
-				))),
-				array('module.remove', array('acp', 'ACP_CAT_DOT_MODS', 'ACP_THANKS')),
+				)))
+			);
+		}
+		$remove_modules = array_merge(
+			$remove_modules,
+			array('module.remove', array('acp', 'ACP_CAT_DOT_MODS', 'ACP_THANKS'))
 		);
 
 		// Add ACP modules
@@ -108,6 +117,7 @@ class v_2_0_0 extends \phpbb\db\migration\migration
 			)),
 		);
 
-		return (isset($this->config['thanks_mod_version'])) ? array_merge($remove_modules, $add_modules, $update_config) : array_merge($add_modules, $update_config);
+		return (isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.2.7', '>=')) ?
+			array_merge($remove_modules, $add_modules, $update_config) : array_merge($add_modules, $update_config);
 	}
 }
