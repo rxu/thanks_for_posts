@@ -2,7 +2,7 @@
 // <![CDATA[
 function getElement(iElementId)
 {
-   if (document.all) 
+   if (document.all)
    {
       return document.all[iElementId];
    }
@@ -27,7 +27,7 @@ function toggleElement(oElement)
 </script>
 <!-- IF THANKS_PROFILELIST_VIEW -->
 <div class="panel bg1">
-	<div class="inner"><span class="corners-top"><span></span></span>
+	<div class="inner">
 	<h3>{L_GRATITUDES}</h3>
 		<!-- IF  S_MOD_THANKS and POSTER_GIVE_COUNT --><ul class="profile-icons"><li class="delete-icon"><a href="{U_CLEAR_LIST_THANKS_GIVE}" title="{L_CLEAR_LIST_THANKS}"><span>{L_CLEAR_LIST_THANKS}</span></a></li></ul><!-- ENDIF -->
 		<dl>
@@ -39,10 +39,10 @@ function toggleElement(oElement)
 			<!-- ENDIF -->
 			</dd>
 		</dl>
-	<span class="corners-bottom"><span></span></span></div>
+	</div>
 </div>
 <div class="panel bg2">
-	<div class="inner"><span class="corners-top"><span></span></span>
+	<div class="inner">
 		<!-- IF  S_MOD_THANKS and POSTER_RECEIVE_COUNT --><ul class="profile-icons"><li class="delete-icon"><a href="{U_CLEAR_LIST_THANKS_RECEIVE}" title="{L_CLEAR_LIST_THANKS}"><span>{L_CLEAR_LIST_THANKS}</span></a></li></ul><!-- ENDIF -->
 		<dl>
 			<dt><strong>{L_RECEIVED}:</strong> {POSTER_RECEIVE_COUNT} {L_THANKS}</dt>
@@ -52,7 +52,7 @@ function toggleElement(oElement)
 			<div id="show_thanked" style="display: none;">{THANKED}</div>
 			<!-- ENDIF -->
 			</dd>
-		</dl>		
-	<span class="corners-bottom"><span></span></span></div>
+		</dl>
+	</div>
 </div>
 <!-- ENDIF -->

@@ -1,21 +1,19 @@
 <!-- INCLUDE overall_header.html -->
+
 <h2 class="solo">{L_TOPLIST}</h2>
 
-	<div class="panel">
-		<div class="inner"><span class="corners-top"><span></span></span>
-			<div class="pagination">
-				<!-- IF .pagination -->
-					<!-- INCLUDE pagination.html -->
-				<!-- ELSE -->
-					{PAGE_NUMBER}
-				<!-- ENDIF -->
-			</div>
-		<span class="corners-bottom"><span></span></span></div>
+<!-- IF .pagination -->
+<div class="action-bar top">
+	<div class="pagination">
+		<!-- INCLUDE pagination.html -->
 	</div>
-<!-- IF S_THANKS_POST_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_FORUM_RATING -->	
+</div>
+<!-- ENDIF -->
+
+<!-- IF S_THANKS_POST_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_FORUM_RATING -->
 <h3 class="solo"><a href="{U_SEARCH_POST}" class="forumtitle">{L_RATING_TOP_POST}</a></h3>
 	<div class="forumbg forumbg-table">
-		<div class="inner"><span class="corners-top"><span></span></span>
+		<div class="inner">
 
 			<table class="table1" cellspacing="1">
 				<thead>
@@ -41,14 +39,13 @@
 		<!-- END toppostrow -->
 				</tbody>
 			</table>
-		<span class="corners-bottom"><span></span></span></div>
+		</div>
 	</div>
-<hr />
 <!-- ENDIF -->
-<!-- IF S_THANKS_TOPIC_REPUT_VIEW and not S_FULL_POST_RATING and not S_FULL_FORUM_RATING -->	
+<!-- IF S_THANKS_TOPIC_REPUT_VIEW and not S_FULL_POST_RATING and not S_FULL_FORUM_RATING -->
 <h3 class="solo"><a href="{U_SEARCH_TOPIC}" class="forumtitle">{L_RATING_TOP_TOPIC}</a></h3>
 	<div class="forumbg forumbg-table">
-		<div class="inner"><span class="corners-top"><span></span></span>
+		<div class="inner">
 
 			<table class="table1" cellspacing="1">
 				<thead>
@@ -76,14 +73,13 @@
 		<!-- END toptopicrow -->
 				</tbody>
 			</table>
-		<span class="corners-bottom"><span></span></span></div>
+		</div>
 	</div>
-<hr />
 <!-- ENDIF -->
 <!-- IF S_THANKS_FORUM_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_POST_RATING -->
 <h3 class="solo"><a href="{U_SEARCH_FORUM}" class="forumtitle">{L_RATING_TOP_FORUM}</a></h3>
 	<div class="forumbg forumbg-table">
-		<div class="inner"><span class="corners-top"><span></span></span>
+		<div class="inner">
 
 			<table class="table1" cellspacing="1">
 				<thead>
@@ -109,17 +105,18 @@
 		<!-- END topforumrow -->
 				</tbody>
 			</table>
-		<span class="corners-bottom"><span></span></span></div>
+		</div>
 	</div>
-<hr />
 <!-- ENDIF -->
+
+<!-- IF .pagination -->
+<div class="action-bar bottom">
 	<div class="pagination">
-		<!-- IF .pagination -->
-			<!-- INCLUDE pagination.html -->
-		<!-- ELSE -->
-			{PAGE_NUMBER}
-		<!-- ENDIF -->
+		<!-- INCLUDE pagination.html -->
 	</div>
-<div class="clear"></div>
+</div>
+<!-- ENDIF -->
+
 <!-- INCLUDE jumpbox.html -->
+
 <!-- INCLUDE overall_footer.html -->

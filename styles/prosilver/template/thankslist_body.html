@@ -1,23 +1,22 @@
 <!-- INCLUDE overall_header.html -->
+
 <h2 class="solo">{PAGE_TITLE}</h2>
 
-	<div class="panel">
-		<div class="inner"><span class="corners-top"><span></span></span>
-			<!-- IF .pagination or TOTAL_USERS -->
-				<div class="pagination">
-					{TOTAL_USERS} &bull;
-					<!-- IF .pagination -->
-						<!-- INCLUDE pagination.html -->
-					<!-- ELSE -->
-						{PAGE_NUMBER}
-					<!-- ENDIF -->
-				</div>
+<!-- IF .pagination or TOTAL_USERS -->
+	<div class="action-bar top">
+		<div class="pagination">
+			{TOTAL_USERS}
+			<!-- IF .pagination -->
+				<!-- INCLUDE pagination.html -->
+			<!-- ELSE -->
+				 &bull; {PAGE_NUMBER}
 			<!-- ENDIF -->
-			<span class="corners-bottom"><span></span></span></div>
+		</div>
 	</div>
-		
+<!-- ENDIF -->
+
 	<div class="forumbg forumbg-table">
-		<div class="inner"><span class="corners-top"><span></span></span>
+		<div class="inner">
 
 			<table class="table1" cellspacing="1">
 				<thead>
@@ -49,20 +48,22 @@
 		<!-- END memberrow -->
 				</tbody>
 			</table>
-		<span class="corners-bottom"><span></span></span></div>
+		</div>
 	</div>
-<hr />
 
 <!-- IF .pagination or TOTAL_USERS -->
-	<div class="pagination">
-		{TOTAL_USERS} &bull;
-		<!-- IF .pagination -->
-			<!-- INCLUDE pagination.html -->
-		<!-- ELSE -->
-			{PAGE_NUMBER}
-		<!-- ENDIF -->
+	<div class="action-bar bottom">
+		<div class="pagination">
+			{TOTAL_USERS}
+			<!-- IF .pagination -->
+				<!-- INCLUDE pagination.html -->
+			<!-- ELSE -->
+				 &bull; {PAGE_NUMBER}
+			<!-- ENDIF -->
+		</div>
 	</div>
 <!-- ENDIF -->
-<div class="clear"></div>
-	<!-- INCLUDE jumpbox.html -->
-	<!-- INCLUDE overall_footer.html -->
+
+<!-- INCLUDE jumpbox.html -->
+
+<!-- INCLUDE overall_footer.html -->
