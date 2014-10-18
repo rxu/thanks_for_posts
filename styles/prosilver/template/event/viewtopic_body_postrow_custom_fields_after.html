@@ -1,4 +1,4 @@
 <!-- IF not postrow.S_POST_ANONYMOUS and postrow.THANKS_COUNTERS_VIEW -->
-	<span id='user_give{postrow.POSTER_ID}'><!-- IF postrow.POSTER_GIVE_COUNT --><dd><strong>{L_GIVEN}:</strong> <a href="{postrow.POSTER_GIVE_COUNT_LINK}">{postrow.POSTER_GIVE_COUNT}</a></dd><!-- ENDIF --></span>
-	<span id='poster_receive{postrow.POSTER_ID}'><!-- IF postrow.POSTER_RECEIVE_COUNT --><dd><strong>{L_RECEIVED}:</strong> <a href="{postrow.POSTER_RECEIVE_COUNT_LINK}">{postrow.POSTER_RECEIVE_COUNT}</a></dd><!-- ENDIF --></span>
+    <dd data-user-give-id="{postrow.POSTER_ID}"><!-- IF postrow.POSTER_GIVE_COUNT --><b>{L_GIVEN}:</b> <a href="{postrow.POSTER_GIVE_COUNT_LINK}">{postrow.POSTER_GIVE_COUNT}</a><!-- ENDIF --></dd>
+    <dd data-user-receive-id="{postrow.POSTER_ID}"><!-- IF postrow.POSTER_RECEIVE_COUNT --><b>{L_RECEIVED}:</b> <a href="{postrow.POSTER_RECEIVE_COUNT_LINK}">{postrow.POSTER_RECEIVE_COUNT}</a><!-- ENDIF --></dd>
 <!-- ENDIF -->
