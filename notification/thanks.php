@@ -229,12 +229,14 @@ class thanks extends \phpbb\notification\type\base
 	*/
 	public function get_email_template_variables()
 	{
-		$user_data = $this->user_loader->get_user($this->get_data('poster_id'));
+		$username = $this->user_loader->get_username($this->get_data('poster_id'), 'username');
 
 		return array(
-				'THANKS_SUBG'	=> htmlspecialchars_decode($this->user->lang['GRATITUDES']),
+				'THANKS_SUBG'	=> htmlspecialchars_decode($this->user->lang['THANKS_PM_SUBJECT_'. $this->get_data('lang_act')]),
 				'USERNAME'		=> htmlspecialchars_decode($this->user->data['username']),
+				'POST_SUBJECT'	=> htmlspecialchars_decode(censor_text($this->get_data('post_subject'))),
 				'POST_THANKS'	=> htmlspecialchars_decode($this->user->lang['THANKS_PM_MES_'. $this->get_data('lang_act')]),
+				'POSTER_NAME'	=> htmlspecialchars_decode($username),
 				'U_POST_THANKS'	=> generate_board_url() . '/viewtopic.' . $this->php_ext . "?p={$this->item_id}#p{$this->item_id}",
 		);
 	}
@@ -260,6 +262,7 @@ class thanks extends \phpbb\notification\type\base
 		$this->set_data('post_id', $thanks_data['post_id']);
 		$this->set_data('lang_act', $thanks_data['lang_act']);
 		$this->set_data('post_subject', $thanks_data['post_subject']);
+		$this->set_data('poster_id', $thanks_data['poster_id']);
 
 		return parent::create_insert_array($thanks_data, $pre_create_data);
 	}
