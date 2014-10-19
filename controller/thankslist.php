@@ -151,12 +151,19 @@ class thankslist
 								$row['post_text'] = $text_only_message;
 								$row['display_text_only'] = true;
 							}
-							$rowset[] = $row;
 							unset($text_only_message);
-							$flags = (($row['enable_bbcode']) ? OPTION_FLAG_BBCODE : 0) + (($row['enable_smilies']) ? OPTION_FLAG_SMILIES : 0) + (($row['enable_magic_url']) ? OPTION_FLAG_LINKS : 0);
-							$row['post_text'] =	generate_text_for_display($row['post_text'], $row['bbcode_uid'], $row['bbcode_bitfield'], $flags);
 
-							$forum_id = $row['forum_id'];
+							if ($row['display_text_only'])
+							{
+								// limit the message length to return_chars value
+								$row['post_text'] = get_context($row['post_text'], array(), $return_chars);
+								$row['post_text'] = bbcode_nl2br($row['post_text']);
+							}
+							else
+							{
+								$flags = (($row['enable_bbcode']) ? OPTION_FLAG_BBCODE : 0) + (($row['enable_smilies']) ? OPTION_FLAG_SMILIES : 0) + (($row['enable_magic_url']) ? OPTION_FLAG_LINKS : 0);
+								$row['post_text'] =	generate_text_for_display($row['post_text'], $row['bbcode_uid'], $row['bbcode_bitfield'], $flags);
+							}
 
 							$this->template->assign_block_vars('searchresults', array (
 								'POST_AUTHOR_FULL'		=> get_username_string('full', $row['poster_id'], $row['username'], $row['user_colour'], $row['post_username']),
