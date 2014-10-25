@@ -332,7 +332,8 @@ class thankslist
 				}
 
 				$sql_array = array(
-					'SELECT'	=> 'u.user_id, u.username, u.user_posts, u.user_colour, u.user_rank, u.user_inactive_reason, u.user_type, u.username_clean, u.user_regdate, u.user_lastvisit',
+				//	'SELECT'	=> 'u.user_id, u.username, u.user_posts, u.user_colour, u.user_rank, u.user_inactive_reason, u.user_type, u.username_clean, u.user_regdate, u.user_lastvisit',
+					'SELECT'	=> 'u.*',
 					'FROM'		=> array($this->users_table => 'u'),
 					'ORDER_BY'	=> $order_by,
 				);
@@ -374,10 +375,26 @@ class thankslist
 				}
 				else
 				{
+					$sql = 'SELECT session_user_id, MAX(session_time) AS session_time
+						FROM ' . SESSIONS_TABLE . '
+						WHERE session_time >= ' . (time() - $this->config['session_length']) . '
+							AND ' . $this->db->sql_in_set('session_user_id', $where) . '
+						GROUP BY session_user_id';
+					$result_sessions = $this->db->sql_query($sql);
+
+					$session_times = array();
+					while ($session = $this->db->sql_fetchrow($result_sessions))
+					{
+						$session_times[$session['session_user_id']] = $session['session_time'];
+					}
+					$this->db->sql_freeresult($result_sessions);
+
 					$user_list = array();
 					$id_cache = array();
 					do
 					{
+						$row['session_time'] = (!empty($session_times[$session['user_id']])) ? $session_times[$session['user_id']] : 0;
+						$row['last_visit'] = (!empty($session['session_time'])) ? $session['session_time'] : $session['user_lastvisit'];
 						$user_list[] = (int) $row['user_id'];
 						$id_cache[$row['user_id']] = $row;
 					}
