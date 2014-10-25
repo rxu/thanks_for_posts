@@ -27,6 +27,11 @@ class acp_thanks_refresh_module
 		$end_thanks = $del_thanks = $all_thanks = $all_posts_number = $all_users_thanks = $all_posts_thanks = $end_posts_thanks = $end_users_thanks = $thanks_update = '';
 		$del_uthanks = $del_nofirst_thanks = $del_selfthanks = 0;
 
+		if (!defined('THANKS_TABLE'))
+		{
+			define('THANKS_TABLE', $table_prefix . 'thanks');
+		}
+
 		// check mode
 
 		$refresh = $request->variable('refresh', false);
@@ -37,11 +42,6 @@ class acp_thanks_refresh_module
 			$cache->destroy('_all_thanks');
 			$cache->destroy('_all_posts');
 			$cache->destroy('_all_posts_number');
-
-			if (!defined('THANKS_TABLE'))
-			{
-				define('THANKS_TABLE', $table_prefix . 'thanks');
-			}
 
 			// count all posts, thanks, users
 			$sql = 'SELECT DISTINCT post_id
