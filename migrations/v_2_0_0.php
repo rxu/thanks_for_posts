@@ -60,17 +60,21 @@ class v_2_0_0 extends \phpbb\db\migration\migration
 		{
 			$remove_modules = array_merge(
 				$remove_modules,
-				array('module.remove', array('acp', 'ACP_THANKS', array(
-						'module_basename'	=> 'thanks_reput',
-						'module_langname'	=> 'ACP_THANKS_REPUT_SETTINGS',
-						'module_mode'		=> 'thanks',
-						'module_auth'		=> 'acl_a_board',
-				)))
+				array(
+					array('module.remove', array('acp', 'ACP_THANKS', array(
+							'module_basename'	=> 'thanks_reput',
+							'module_langname'	=> 'ACP_THANKS_REPUT_SETTINGS',
+							'module_mode'		=> 'thanks',
+							'module_auth'		=> 'acl_a_board',
+					))),
+				)
 			);
 		}
 		$remove_modules = array_merge(
 			$remove_modules,
-			array('module.remove', array('acp', 'ACP_CAT_DOT_MODS', 'ACP_THANKS'))
+			array(
+				array('module.remove', array('acp', 'ACP_CAT_DOT_MODS', 'ACP_THANKS')),
+			)
 		);
 
 		// Add ACP modules
