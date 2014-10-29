@@ -1,9 +1,10 @@
 <?php
 /**
 *
-* @author Sergeiy Varzaev (Палыч)  phpbbguru.net varzaev@mail.ru
-* @version $Id: acp_thanks_truncate.php,v 135 2012-10-10 10:02:51 Палыч $
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* Thanks For Posts extension for the phpBB Forum Software package.
+*
+* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
@@ -21,13 +22,5 @@ class acp_thanks_truncate_info
 				'thanks'			=> array('title' => 'ACP_THANKS_TRUNCATE', 'auth' => 'ext_gfksx/ThanksForPosts && acl_a_board', 'cat' => array('ACP_THANKS')),
 			),
 		);
-	}
-
-	function install()
-	{
-	}
-
-	function uninstall()
-	{
 	}
 }

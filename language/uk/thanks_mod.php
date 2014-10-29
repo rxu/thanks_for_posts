@@ -1,11 +1,10 @@
 <?php
 /**
 *
-* thanks_mod [Ukrainian]
+* Thanks For Posts extension for the phpBB Forum Software package.
 *
-* @author: Oleksii Fryschyn (Sherlock)
-* @version $Id: thanks.php,v 135 2012-10-10 10:02:51 Палыч $ 
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
@@ -100,7 +99,7 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Подяка за повідомлення',
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Подяка за повідомлення скасована',
 	'THANKS_USER'				=> 'Лист подяк',
-// Блок установки
+
 	'THANKS_INSTALLED'			=> 'Подяка за повідомлення',
 	'THANKS_INSTALLED_EXPLAIN' 	=> '<strong>УВАГА!<br />Рекомендується запускати дану установку тільки після виконання інструкції по внесенню змін в код файлів конференції (або виконання встановлення за допомогою AutoMod)!<br />Також наполегливо рекомендується включити опцію Відображати всі результати (нижче)!</strong>',
 	'THANKS_CUSTOM0_FUNCTION'	=> 'Оновлення даних у таблиці _thanks',

@@ -1,11 +1,10 @@
 <?php
 /**
 *
-* thanks_mod[Russian]
+* Thanks For Posts extension for the phpBB Forum Software package.
 *
-* @author Sergeiy Varzaev (Палыч)  phpbbguru.net varzaev@mail.ru
-* @version $Id: thanks.php,v 135 2012-10-10 10:02:51 Палыч $ 
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
@@ -113,7 +112,7 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Благодарность за сообщение',
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Благодарность за сообщение отменена',
 	'THANKS_USER'				=> 'Лист благодарностей',
-// Блок установки
+
 	'THANKS_INSTALLED'			=> 'Благодарность за сообщение',
 	'THANKS_INSTALLED_EXPLAIN' 	=> '<strong>ВНИМАНИЕ!<br />Рекомендуется запускать данную установку только после выполнения инструкции по внесению изменений в код файлов конференции (или выполнения установки с помощью AutoMod)!<br />Также настоятельно рекомендуется включить опцию Отображать все результаты (ниже)!</strong>',
 	'THANKS_CUSTOM0_FUNCTION'	=> 'Обновление данных в таблице _thanks',

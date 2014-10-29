@@ -1,9 +1,10 @@
 <?php
 /**
 *
-* @author Sergeiy Varzaev (Палыч)  phpbbguru.net varzaev@mail.ru
-* @version $Id: thankslist.php,v 135 2012-10-10 10:02:51 Палыч $
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* Thanks For Posts extension for the phpBB Forum Software package.
+*
+* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
@@ -13,7 +14,68 @@ use Symfony\Component\HttpFoundation\Response;
 
 class thankslist
 {
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, $thanks_table, $users_table)
+	/** @var \phpbb\config\config */
+	protected $config;
+
+	/** @var \phpbb\db\driver\driver_interface */
+	protected $db;
+
+	/** @var \phpbb\auth\auth */
+	protected $auth;
+
+	/** @var \phpbb\template\template */
+	protected $template;
+
+	/** @var \phpbb\user */
+	protected $user;
+
+	/** @var \phpbb\cache\driver\driver_interface */
+	protected $cache;
+
+	/** @var \phpbb\pagination */
+	protected $pagination;
+
+	/** @var \phpbb\profilefields\manager */
+	protected $profilefields_manager;
+
+	/** @var \phpbb\request\request_interface */
+	protected $request;
+
+	/** @var rxu\PostsMerging\core\helper */
+	protected $helper;
+
+	/** @var string THANKS_TABLE */
+	protected $thanks_table;
+
+	/** @var string USERS_TABLE */
+	protected $users_table;
+
+	/** @var string phpbb_root_path */
+	protected $phpbb_root_path;
+
+	/** @var string phpEx */
+	protected $php_ext;
+
+	/**
+	* Constructor
+	*
+	* @param \phpbb\config\config                 $config                Config object
+	* @param \phpbb\db\driver\driver_interface    $db                    DBAL object
+	* @param \phpbb\auth\auth                     $auth                  Auth object
+	* @param \phpbb\template\template             $template              Template object
+	* @param \phpbb\user                          $user                  User object
+	* @param \phpbb\cache\driver\driver_interface $cache                 Cache driver object
+	* @param \phpbb\pagination                    $pagination            Pagination object
+	* @param \phpbb\profilefields\manager         $profilefields_manager Profile fields manager object
+	* @param \phpbb\request\request_interface     $request               Request object
+	* @param string                               $thanks_table          THANKS_TABLE
+	* @param string                               $users_table           USERS_TABLE
+	* @param string                               $phpbb_root_path       phpbb_root_path
+	* @param string                               $php_ext               phpEx
+	* @return gfksx\ThanksForPosts\controller\thankslist
+	* @access public
+	*/
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, $thanks_table, $users_table, $phpbb_root_path, $php_ext)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -197,7 +259,6 @@ class thankslist
 				}
 				$this->pagination->generate_template_pagination($u_search, 'pagination', 'start', $total_match_count, $per_page, $start);
 				$this->template->assign_vars(array(
-				//	'PAGINATION'		=> generate_pagination($u_search, $total_match_count, $per_page, $start),
 					'PAGE_NUMBER'		=> $this->pagination->on_page($total_match_count, $per_page, $start),
 					'TOTAL_MATCHES'		=> $total_match_count,
 					'SEARCH_MATCHES'	=> $l_search_matches,
@@ -332,7 +393,6 @@ class thankslist
 				}
 
 				$sql_array = array(
-				//	'SELECT'	=> 'u.user_id, u.username, u.user_posts, u.user_colour, u.user_rank, u.user_inactive_reason, u.user_type, u.username_clean, u.user_regdate, u.user_lastvisit',
 					'SELECT'	=> 'u.*',
 					'FROM'		=> array($this->users_table => 'u'),
 					'ORDER_BY'	=> $order_by,
@@ -461,10 +521,7 @@ class thankslist
 							'U_SEARCH_USER_GIVENS'	=> ($this->auth->acl_get('u_search')) ? append_sid("{$this->phpbb_root_path}thankslist/givens/$user_id/true") : '',
 							'U_SEARCH_USER_RECEIVED'=> ($this->auth->acl_get('u_search')) ? append_sid("{$this->phpbb_root_path}thankslist/givens/$user_id/false") : '',
 							'L_VIEWING_PROFILE'		=> sprintf($this->user->lang['VIEWING_PROFILE'], $row['username']),
-						//	'LOCATION'				=> ($row['user_from']) ? $row['user_from'] : '',
-						//	'U_WWW'					=> (!empty($row['user_website'])) ? $row['user_website'] : '',
 							'VISITED'				=> (empty($last_visit)) ? ' - ' : $this->user->format_date($last_visit),
-							//'S_CUSTOM_FIELDS'		=> (isset($profile_fields['row']) && sizeof($profile_fields['row'])) ? true : false,
 							'S_CUSTOM_FIELDS'		=> (isset($cp_row['row']) && sizeof($cp_row['row'])) ? true : false,
 						));
 
@@ -490,15 +547,12 @@ class thankslist
 					$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $total_users, $this->config['topics_per_page'], $start);
 					$this->template->assign_vars(array(
 						'PAGE_NUMBER'			=> $this->pagination->on_page($total_users, $this->config['topics_per_page'], $start),
-		//				'PAGINATION'			=> generate_pagination($pagination_url, $total_users, $this->config['topics_per_page'], $start),
 						'U_SORT_POSTS'			=> $sort_url . $seo_sep . 'sk=d&amp;sd=' . (($sort_key == 'd' && $sort_dir == 'a') ? 'd' : 'a'),
 						'U_SORT_USERNAME'		=> $sort_url . $seo_sep . 'sk=a&amp;sd=' . (($sort_key == 'a' && $sort_dir == 'a') ? 'd' : 'a'),
 						'U_SORT_FROM'			=> $sort_url . $seo_sep . 'sk=b&amp;sd=' . (($sort_key == 'b' && $sort_dir == 'a') ? 'd' : 'a'),
 						'U_SORT_JOINED'			=> $sort_url . $seo_sep . 'sk=c&amp;sd=' . (($sort_key == 'c' && $sort_dir == 'a') ? 'd' : 'a'),
 						'U_SORT_THANKS_R'		=> $sort_url . $seo_sep . 'sk=e&amp;sd=' . (($sort_key == 'e' && $sort_dir == 'd') ? 'a' : 'd'),
-		//				'U_SORT_THANKS_RT'		=> $sort_url . $seo_sep . 'sk=e&amp;sd=' . (($sort_key == 'e' && $sort_dir == 'd') ? 'a' : 'd') . '&amp;top=' . $config['thanks_top_number'],
 						'U_SORT_THANKS_G'		=> $sort_url . $seo_sep . 'sk=f&amp;sd=' . (($sort_key == 'f' && $sort_dir == 'd') ? 'a' : 'd'),
-		//				'U_SORT_THANKS_GT'		=> $sort_url . $seo_sep . 'sk=f&amp;sd=' . (($sort_key == 'f' && $sort_dir == 'd') ? 'a' : 'd') . '&amp;top=' . $config['thanks_top_number'],
 						'U_SORT_ACTIVE'			=> ($this->auth->acl_get('u_viewonline')) ? $sort_url . $seo_sep . 'sk=l&amp;sd=' . (($sort_key == 'l' && $sort_dir == 'a') ? 'd' : 'a') : '',
 					));
 				}
@@ -515,7 +569,8 @@ class thankslist
 		page_header($page_title);
 
 		$this->template->set_filenames(array(
-			'body' => $template_html));
+			'body' => $template_html)
+		);
 
 		make_jumpbox(append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext"));
 		page_footer();

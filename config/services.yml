@@ -44,13 +44,13 @@ services:
             - @template
             - @user
             - @cache.driver
-            - %core.root_path%
-            - %core.php_ext%
             - @pagination
             - @profilefields.manager
             - @request
             - %tables.thanks%
             - %tables.users%
+            - %core.root_path%
+            - %core.php_ext%
     gfksx.ThanksForPosts.controller.toplist:
         class: gfksx\ThanksForPosts\controller\toplist
         arguments:

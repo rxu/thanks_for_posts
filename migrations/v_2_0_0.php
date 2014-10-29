@@ -1,9 +1,10 @@
 <?php
 /**
 *
-* @package ThanksForPosts
-* @copyright (c) 2014 gfksx
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* Thanks For Posts extension for the phpBB Forum Software package.
+*
+* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 

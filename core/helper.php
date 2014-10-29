@@ -1,9 +1,10 @@
 <?php
-/** 
+/**
 *
-* @author Sergeiy Varzaev (Палыч)  phpbbguru.net varzaev@mail.ru
-* @version $Id: functions_thanks.php,v 135 2012-10-10 10:02:51 Палыч $
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+* Thanks For Posts extension for the phpBB Forum Software package.
+*
+* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
@@ -11,13 +12,90 @@ namespace gfksx\ThanksForPosts\core;
 
 class helper
 {
+	/** @var array thankers */
 	protected $thankers = array();
+
+	/** @var array forum_thanks */
 	protected $forum_thanks = array();
+
+	/** @var int max_post_thanks */
 	protected $max_post_thanks;
+
+	/** @var int max_topic_thanks */
 	protected $max_topic_thanks;
+
+	/** @var int max_forum_thanks */
 	protected $max_forum_thanks;
+
+	/** @var int poster_list_count */
 	protected $poster_list_count;
 
+	/** @var \phpbb\config\config */
+	protected $config;
+
+	/** @var \phpbb\db\driver\driver_interface */
+	protected $db;
+
+	/** @var \phpbb\auth\auth */
+	protected $auth;
+
+	/** @var \phpbb\template\template */
+	protected $template;
+
+	/** @var \phpbb\user */
+	protected $user;
+
+	/** @var \phpbb\cache\driver\driver_interface */
+	protected $cache;
+
+	/** @var \phpbb\request\request_interface */
+	protected $request;
+
+	/** @var \phpbb\notification\manager */
+	protected $notification_manager;
+
+	/** @var string phpbb_root_path */
+	protected $phpbb_root_path;
+
+	/** @var string phpEx */
+	protected $php_ext;
+
+	/** @var string table_prefix */
+	protected $table_prefix;
+
+	/** @var string THANKS_TABLE */
+	protected $thanks_table;
+
+	/** @var string USERS_TABLE */
+	protected $users_table;
+
+	/** @var string POSTS_TABLE */
+	protected $posts_table;
+
+	/** @var string NOTIFICATIONS_TABLE */
+	protected $notifications_table;
+
+	/**
+	* Constructor
+	*
+	* @param \phpbb\config\config                 $config                Config object
+	* @param \phpbb\db\driver\driver_interface    $db                    DBAL object
+	* @param \phpbb\auth\auth                     $auth                  User object
+	* @param \phpbb\template\template             $template              Template object
+	* @param \phpbb\user                          $user                  User object
+	* @param \phpbb\cache\driver\driver_interface $cache                 Cache driver object
+	* @param \phpbb\request\request_interface     $request               Request object
+	* @param \phpbb\notification\manager          $notification_manager  Notification manager object
+	* @param string                               $phpbb_root_path       phpbb_root_path
+	* @param string                               $php_ext               phpEx
+	* @param string                               $table_prefix          Tables prefix
+	* @param string                               $thanks_table          THANKS_TABLE
+	* @param string                               $users_table           USERS_TABLE
+	* @param string                               $posts_table           POSTS_TABLE
+	* @param string                               $notifications_table   NOTIFICATIONS_TABLE
+	* @return gfksx\ThanksForPosts\controller\thankslist
+	* @access public
+	*/
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\notification\manager $notification_manager, $phpbb_root_path, $php_ext, $table_prefix, $thanks_table, $users_table, $posts_table, $notifications_table)
 	{
 		$this->config = $config;

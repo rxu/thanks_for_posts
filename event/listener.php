@@ -1,11 +1,12 @@
 <?php
 /**
- *
- * @package ThanksForPosts
- * @copyright (c) 2014 Sergeiy Varzaev (Палыч)  phpbbguru.net varzaev@mail.ru
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* Thanks For Posts extension for the phpBB Forum Software package.
+*
+* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
+*
+*/
 
 namespace gfksx\ThanksForPosts\event;
 
@@ -16,6 +17,52 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class listener implements EventSubscriberInterface
 {
+	/** @var \phpbb\config\config */
+	protected $config;
+
+	/** @var \phpbb\db\driver\driver_interface */
+	protected $db;
+
+	/** @var \phpbb\auth\auth */
+	protected $auth;
+
+	/** @var \phpbb\template\template */
+	protected $template;
+
+	/** @var \phpbb\user */
+	protected $user;
+
+	/** @var \phpbb\cache\driver\driver_interface */
+	protected $cache;
+
+	/** @var \phpbb\request\request_interface */
+	protected $request;
+
+	/** @var string phpbb_root_path */
+	protected $phpbb_root_path;
+
+	/** @var string phpEx */
+	protected $php_ext;
+
+	/** @var gfksx\ThanksForPosts\core\helper */
+	protected $helper;
+
+	/**
+	* Constructor
+	*
+	* @param \phpbb\config\config                 $config                Config object
+	* @param \phpbb\db\driver\driver_interface    $db                    DBAL object
+	* @param \phpbb\auth\auth                     $auth                  Auth object
+	* @param \phpbb\template\template             $template              Template object
+	* @param \phpbb\user                          $user                  User object
+	* @param \phpbb\cache\driver\driver_interface $cache                 Cache driver object
+	* @param \phpbb\request\request_interface     $request               Request object
+	* @param string                               $phpbb_root_path       phpbb_root_path
+	* @param string                               $php_ext               phpEx
+	* @param rxu\PostsMerging\core\helper         $helper                The extension helper object
+	* @return \rxu\ThanksForPosts\event\listener
+	* @access public
+	*/
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, $phpbb_root_path, $php_ext, $helper)
 	{
 		$this->config = $config;
@@ -37,7 +84,8 @@ class listener implements EventSubscriberInterface
 			'core.memberlist_view_profile'			=> 'memberlist_viewprofile',
 			'core.delete_posts_in_transaction'		=> 'delete_post_thanks',
 			'core.viewforum_modify_topicrow'		=> 'viewforum_output_topics_reput',
-			'core.viewtopic_get_post_data'			=> array('viewtopic_handle_thanks', -2), // Set lower priority for the case another ext want to change $post_list first
+			// Set lower priority for the case another ext want to change $post_list first
+			'core.viewtopic_get_post_data'			=> array('viewtopic_handle_thanks', -2),
 			'core.viewtopic_modify_post_row'		=> 'viewtopic_modify_postrow',
 			'core.display_forums_after'				=> 'forumlist_display_rating',
 			'core.display_forums_add_template_data'	=> 'forumlist_modify_template_vars',
@@ -50,8 +98,6 @@ class listener implements EventSubscriberInterface
 
 	public function get_thanks_list($event)
 	{
-		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
-
 		// Generate thankslist if required ...
 		$thanks_list = '';
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));

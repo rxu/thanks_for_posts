@@ -1,9 +1,10 @@
 <?php
 /**
 *
-* @author Sergeiy Varzaev (Палыч)  phpbbguru.net varzaev@mail.ru
-* @version $Id: acp_thanks_refresh.php,v 135 2012-10-10 10:02:51 Палыч $
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* Thanks For Posts extension for the phpBB Forum Software package.
+*
+* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
@@ -88,7 +89,7 @@ class acp_thanks_refresh_module
 				'L_WARNING' => sprintf($user->lang['WARNING']),
 			));
 		}
-//update
+		//update
 		if ($refresh)
 		{
 			// check mode
@@ -100,7 +101,7 @@ class acp_thanks_refresh_module
 				$all_posts_number = $cache->get('_all_posts_number');
 				$all_posts_thanks = $cache->get('_all_posts_thanks');
 
-		// update delete posts
+				// update delete posts
 				if(!empty($all_posts))
 				{
 					$sql = 'DELETE FROM ' . THANKS_TABLE ."
@@ -110,7 +111,7 @@ class acp_thanks_refresh_module
 					$db->sql_freeresult($result);
 				}
 					$end_thanks = $all_thanks - $del_thanks;
-		// update delete users
+				// update delete users
 				$sql = 'SELECT t.post_id
 					FROM ' . THANKS_TABLE . ' t 
 					LEFT JOIN ' . POSTS_TABLE . ' p ON (t.post_id = p.post_id)
@@ -131,7 +132,7 @@ class acp_thanks_refresh_module
 					$result = $db->sql_query($sql);
 					$db->sql_freeresult($result);
 				}
-		//update move posts /topics /forums and change posters
+				//update move posts /topics /forums and change posters
 				$sql = 'SELECT p.post_id
 					FROM ' . POSTS_TABLE . ' p 
 					LEFT JOIN ' . THANKS_TABLE . ' t ON (p.post_id = t.post_id)
@@ -166,7 +167,7 @@ class acp_thanks_refresh_module
 
 				$end_thanks = $end_thanks - $del_uthanks;
 				$del_thanks = $del_thanks + $del_uthanks;
-		// delete thanks only first post
+				// delete thanks only first post
 				if (isset($config['thanks_only_first_post']) ? $config['thanks_only_first_post'] : false)
 				{
 					$sql = 'SELECT topic_first_post_id 
@@ -189,7 +190,7 @@ class acp_thanks_refresh_module
 						$del_thanks = $del_thanks + $del_nofirst_thanks;
 					}
 				}
-		// delete thanks global announce
+				// delete thanks global announce
 				if (isset($config['thanks_global_post']) ? !$config['thanks_global_post'] : false)
 				{
 					$sql = 'SELECT topic_id 
@@ -213,7 +214,7 @@ class acp_thanks_refresh_module
 						$del_thanks = $del_thanks + $del_global_thanks;
 					}
 				}
-		// delete selfthanks
+				// delete selfthanks
 				$sql = 'DELETE FROM ' . THANKS_TABLE .'
 					WHERE poster_id = user_id';
 				$result = $db->sql_query($sql);

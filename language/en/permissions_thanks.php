@@ -1,11 +1,10 @@
 <?php
 /**
 *
-* mod_thanks [English]
+* Thanks For Posts extension for the phpBB Forum Software package.
 *
-* @author Sergeiy Varzaev (Палыч)  phpbbguru.net varzaev@mail.ru
-* @version $Id: info_acp_thanks.php 135 2012-10-10 10:02:51 Палыч $
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
