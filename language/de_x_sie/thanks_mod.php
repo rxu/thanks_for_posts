@@ -46,8 +46,8 @@ $lang = array_merge($lang, array(
 
 	'DISABLE_REMOVE_THANKS'		=> 'Das Löschen von Danksagungen wurde vom Administrator deaktiviert.',
 
-	'GIVEN'						=> 'Has&nbsp;thanked', // TODO
-	'GLOBAL_INCORRECT_THANKS'	=> 'You cannot give thanks for a Global Announcement that has no reference to a particular forum.', // TODO
+	'GIVEN'						=> 'Hat sich bedankt',
+	'GLOBAL_INCORRECT_THANKS'	=> 'Sie können sich nicht für eine globale Ankündigung bedanken, wenn diese nicht in einem Forum zu finden ist.',
 	'GRATITUDES'				=> 'Liste der Danksagungen',
 
 	'INCORRECT_THANKS'			=> 'Ungültige Danksagung',
@@ -72,7 +72,7 @@ $lang = array_merge($lang, array(
 	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Jemand hat sich für Ihren Beitrag bedankt.',
 	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Jemand hat seine Danksagung für Ihren Beitrag entfernt.',
 
-	'RECEIVED'					=> 'Been&nbsp;thanked', // TODO
+	'RECEIVED'					=> 'Danksagung erhalten',
 	'REMOVE_THANKS'				=> 'Danksagung entfernen: ',
 	'REMOVE_THANKS_CONFIRM'		=> 'Möchten Sie wirklich Ihre Danksagung entfernen?',
 	'REMOVE_THANKS_SHORT'		=> 'Danksagung entfernen',
@@ -91,7 +91,7 @@ $lang = array_merge($lang, array(
 
 	'THANK'						=> 'Mal',
 	'THANK_FROM'				=> 'von',
-	'THANK_TEXT_1'				=> 'Diese Benutzer bedankten sich beim Autor',
+	'THANK_TEXT_1'				=> 'Folgende Benutzer bedankten sich beim Autor',
 	'THANK_TEXT_2'				=> ' für den Beitrag: ',
 	'THANK_TEXT_2PL'			=> ' für den Beitrag (Insgesamt %d):',
 	'THANK_POST'				=> 'Bedanken Sie sich beim Autor des Beitrags: ',
