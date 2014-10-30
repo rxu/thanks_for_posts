@@ -109,11 +109,10 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Danksagung für den Beitrag',
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Danksagung entfernt für den Beitrag',
 	'THANKS_USER'				=> 'Liste der Danksagungen',
-	// TODO
-	'THANKS_INSTALLED'			=> 'Thanks for the post',
-	'THANKS_INSTALLED_EXPLAIN'  => '<strong>CAUTION!<br />You are strongly advised to only run this installation after following the instruction on code changes to the files (or perform the installation using AutoMod)! <br />It is also strongly recommended to select Yes to Display Full Results (below)!</strong>',
-	'THANKS_CUSTOM0_FUNCTION'	=> 'Update values for the _thanks table',
-	'THANKS_CUSTOM1_FUNCTION'	=> 'Check remove module',
-	'THANKS_CUSTOM2_FUNCTION'	=> 'Check refrech cache',
-	'TOPLIST'					=> 'Posts toplist',
+	'THANKS_INSTALLED'			=> 'Thanks for the post', // Not used
+	'THANKS_INSTALLED_EXPLAIN'  => '<strong>CAUTION!<br />You are strongly advised to only run this installation after following the instruction on code changes to the files (or perform the installation using AutoMod)! <br />It is also strongly recommended to select Yes to Display Full Results (below)!</strong>', // Not used
+	'THANKS_CUSTOM0_FUNCTION'	=> 'Update values for the _thanks table', // Not used
+	'THANKS_CUSTOM1_FUNCTION'	=> 'Check remove module', // Not used
+	'THANKS_CUSTOM2_FUNCTION'	=> 'Check refrech cache', // Not used
+	'TOPLIST'					=> 'Beitragstopliste',
 ));
