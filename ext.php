@@ -71,7 +71,7 @@ class ext extends \phpbb\extension\base
 				// Disable notifications
 				$phpbb_notifications = $this->container->get('notification_manager');
 				$phpbb_notifications->disable_notifications('gfksx.thanksforposts.notification.type.thanks');
-				$phpbb_notifications->disable_notifications('gfksx.thanksforposts.notification.type.thanks_thanks');
+				$phpbb_notifications->disable_notifications('gfksx.thanksforposts.notification.type.thanks_remove');
 				return 'notifications';
 
 			break;
