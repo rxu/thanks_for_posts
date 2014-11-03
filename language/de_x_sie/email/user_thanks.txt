@@ -1,0 +1,10 @@
+Subject: {THANKS_SUBG} — "{POST_SUBJECT}"
+
+Guten Tag {POSTER_NAME},
+
+Sie erhalten diese Benachrichtigung, weil sich {USERNAME} für den Beitrag "{POST_SUBJECT}" auf "{SITENAME}" bedankt hat.
+
+Wenn Sie sich den Beitrag ansehen wollen, klicken Sie auf folgenden Link:
+{U_POST_THANKS}
+
+{EMAIL_SIG}
