@@ -1,4 +1,4 @@
-﻿Subject: {THANKS_SUBG} — "{POST_SUBJECT}"
+Subject: {THANKS_SUBG} — "{POST_SUBJECT}"
 
 Hallo {POSTER_NAME},
 
