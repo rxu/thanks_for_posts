@@ -56,10 +56,23 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Перейти в тему',
 
 	'FOR_MESSAGE'				=> ' за повідомлення',
-	'FURTHER_THANKS'     	    => ' і ще один',
-	'FURTHER_THANKS_PL'         => ' і ще %d',
+	'FURTHER_THANKS'			=> ' і ще один',
+	'FURTHER_THANKS_PL'			=> ' і ще %d',
 
 	'NO_VIEW_USERS_THANKS'		=> 'У вас немає доступу до перегляду списку подяк.',
+
+	'NOTIFICATION_TYPE_THANKS'	=> 'Вам подякували за повідомлення',
+
+	'NOTIFICATION_THANKS_GIVE'	=> array(
+		1 => '<strong>Отримана подяка</strong> від користувача %1$s за повідомлення:',
+		2 => '<strong>Отримані подяки</strong> від користувачів %1$s за повідомлення:',
+	),
+	'NOTIFICATION_THANKS_REMOVE'=> array(
+		1 => '<strong>Вилучена подяка</strong> від користувача %1$s за повідомлення:',
+		2 => '<strong>Вилучені подяки</strong> від користувачів %1$s за повідомлення:',
+	),
+	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Вам подякували за повідомлення',
+	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Вилучено подяку за ваше повідомлення',
 
 	'RECEIVED'					=> 'Подякували',
 	'REMOVE_THANKS'				=> 'Скасувати подяку автору: ',
