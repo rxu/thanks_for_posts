@@ -80,20 +80,38 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 
 	public function update_thanks_table()
 	{
+		$posts_list = array();
+
 		if (!defined('THANKS_TABLE'))
 		{
 			define('THANKS_TABLE', $this->table_prefix . 'thanks');
 		}
-		$sql = 'UPDATE '. THANKS_TABLE . '
-			SET forum_id = (SELECT forum_id 
-			FROM '. POSTS_TABLE . '
-			WHERE post_id = ' . THANKS_TABLE . '.post_id)';
-		$this->db->sql_query($sql);
+		$sql = 'SELECT tt.post_id
+			FROM ' . THANKS_TABLE . ' tt, ' . POSTS_TABLE . ' p
+			WHERE tt.post_id = p.post_id';
+		$result = $this->db->sql_query($sql);
 
-		$sql = 'UPDATE '. THANKS_TABLE . '
-			SET topic_id = (SELECT topic_id
-			FROM '. POSTS_TABLE . '
-			WHERE post_id = ' . THANKS_TABLE . '.post_id)';
-		$this->db->sql_query($sql);
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$posts_list[] = (int) $row['post_id'];
+		}
+		$this->db->sql_freeresult($result);
+
+		if (!empty($posts_list))
+		{
+			$sql = 'UPDATE '. THANKS_TABLE . '
+				SET forum_id = (SELECT forum_id 
+				FROM '. POSTS_TABLE . '
+				WHERE post_id = ' . THANKS_TABLE . '.post_id
+					AND ' . $this->db->sql_in_set('post_id', $posts_list) . ')';
+			$this->db->sql_query($sql);
+
+			$sql = 'UPDATE '. THANKS_TABLE . '
+				SET topic_id = (SELECT topic_id
+				FROM '. POSTS_TABLE . '
+				WHERE post_id = ' . THANKS_TABLE . '.post_id
+					AND ' . $this->db->sql_in_set('post_id', $posts_list) . ')';
+			$this->db->sql_query($sql);
+		}
 	}
 }
