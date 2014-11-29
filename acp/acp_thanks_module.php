@@ -40,7 +40,6 @@ class acp_thanks_module
 			'remove_thanks'				=> array('lang' => 'REMOVE_THANKS', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_only_first_post'	=> array('lang' => 'THANKS_ONLY_FIRST_POST', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_global_post'		=> array('lang' => 'THANKS_GLOBAL_POST', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_notice_on'			=> array('lang' => 'THANKS_NOTICE_ON', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_info_page'			=> array('lang' => 'THANKS_INFO_PAGE', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_postlist_view'		=> array('lang' => 'THANKS_POSTLIST_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_number_post'		=> array('lang' => 'THANKS_NUMBER_POST', 'validate' => 'int:1:250', 'type' => 'text:4:6', 'explain' => true),
