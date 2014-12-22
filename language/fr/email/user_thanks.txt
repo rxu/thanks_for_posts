@@ -1,0 +1,10 @@
+Sujet : {THANKS_SUBG} — "{POST_SUBJECT}"
+
+Bonjour {POSTER_NAME},
+
+Vous recevez cette notification puisque {USERNAME} {POST_THANKS} "{POST_SUBJECT}" sur "{SITENAME}".
+
+Si vous souhaitez voir le message, cliquez sur le lien suivant :
+{U_POST_THANKS}
+
+{EMAIL_SIG}
