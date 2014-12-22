@@ -6,6 +6,8 @@
 * @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
 * @license GNU General Public License, version 2 (GPL-2.0)
 *
+* French translation by Galixte (http://www.galixte.com)
+*
 */
 
 /**
@@ -34,8 +36,8 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
-	'ACL_F_THANKS' 						=> 'Can thank for posts',
-	'ACL_M_THANKS' 						=> 'Can clear the thanks list',
-	'ACL_U_VIEWTHANKS' 					=> 'Can view list of all thanks',
-	'ACL_U_VIEWTOPLIST'					=> 'Can view toplist',
+	'ACL_F_THANKS' 						=> 'Peut remercier des messages',
+	'ACL_M_THANKS' 						=> 'Peut effacer la liste des remerciements',
+	'ACL_U_VIEWTHANKS' 					=> 'Peut voir la liste de tous les remerciements',
+	'ACL_U_VIEWTOPLIST'					=> 'Peut voir la liste du Top du classement',
 ));
