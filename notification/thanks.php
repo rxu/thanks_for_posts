@@ -96,7 +96,8 @@ class thanks extends \phpbb\notification\type\base
 	*/
 	public function get_avatar()
 	{
-		return $this->user_loader->get_avatar($this->get_data('user_id'));
+		$thankers = $this->get_data('thankers');
+		return (sizeof($thankers) == 1) ? $this->user_loader->get_avatar($thankers[0]['user_id']) : '';
 	}
 
 	/**
