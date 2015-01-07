@@ -17,6 +17,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class listener implements EventSubscriberInterface
 {
+	/** @var array topic_thanks */
+	protected $topic_thanks;
+
+	/** @var int max_topic_thanks */
+	protected $max_topic_thanks;
+
 	/** @var \phpbb\config\config */
 	protected $config;
 
@@ -75,6 +81,8 @@ class listener implements EventSubscriberInterface
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->helper = $helper;
+		$this->topic_thanks = array();
+		$this->max_topic_thanks = 0;
 	}
 
 	static public function getSubscribedEvents()
@@ -84,6 +92,7 @@ class listener implements EventSubscriberInterface
 			'core.memberlist_view_profile'			=> 'memberlist_viewprofile',
 			'core.delete_posts_in_transaction'		=> 'delete_post_thanks',
 			'core.viewforum_modify_topicrow'		=> 'viewforum_output_topics_reput',
+			'core.viewforum_modify_topics_data'		=> 'viewforum_get_topics_reput',
 			// Set lower priority for the case another ext want to change $post_list first
 			'core.viewtopic_get_post_data'			=> array('viewtopic_handle_thanks', -2),
 			'core.viewtopic_modify_post_row'		=> 'viewtopic_modify_postrow',
@@ -138,20 +147,25 @@ class listener implements EventSubscriberInterface
 		$this->helper->delete_post_thanks($post_ids);
 	}
 
+	public function viewforum_get_topics_reput($event)
+	{
+		$topic_list = $event['topic_list'];
+		if (!empty($topic_list))
+		{
+			$this->topic_thanks = $this->helper->get_thanks_topic_number($topic_list);
+			$this->max_topic_thanks = $this->helper->get_max_topic_thanks();
+		}
+	}
+
 	public function viewforum_output_topics_reput($event)
 	{
-		$topic_list = array();
-		$topic_thanks = array();
-		$max_topic_thanks = 0;
-		$topic_id = $event['topic_row']['TOPIC_ID'];
-		if ($max_topic_thanks = $this->helper->get_max_topic_thanks() && !empty($topic_list))
+		$topic_row = $event['topic_row'];
+		$topic_id = $topic_row['TOPIC_ID'];
+		if ($this->max_topic_thanks && !empty($this->topic_thanks))
 		{
-			$topic_thanks = $this->helper->get_thanks_topic_number($topic_list);
+			$topic_row = array_merge($topic_row, $this->helper->get_thanks_topic_reput($topic_id, $this->max_topic_thanks, $this->topic_thanks));
 		}
-		if (!empty($topic_thanks))
-		{
-			$this->helper->get_thanks_topic_reput($topic_id, $max_topic_thanks, $topic_thanks);
-		}
+		$event['topic_row'] = $topic_row;
 	}
 
 	public function viewtopic_handle_thanks($event)
