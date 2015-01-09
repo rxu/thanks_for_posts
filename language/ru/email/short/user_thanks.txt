@@ -1,0 +1,10 @@
+Subject: {THANKS_SUBG} — «{POST_SUBJECT}»
+
+Здравствуйте, {POSTER_NAME}!
+
+Вы получили это уведомление потому, что пользователь {USERNAME} {POST_THANKS} «{POST_SUBJECT}» на конференции «{SITENAME}».
+
+Если вы хотите просмотреть данное сообщение, перейдите по следующей ссылке:
+{U_POST_THANKS}
+
+{EMAIL_SIG}
