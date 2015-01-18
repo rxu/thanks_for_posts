@@ -64,7 +64,7 @@ $lang = array_merge($lang, array(
 	'IMG_THANKPOSTS'					=> 'To thank for the post',
 	'IMG_REMOVETHANKS'					=> 'Cancel thanks',
 
-	'LOG_CONFIG_THANKS'					=> 'Updated configuration of Thanks for post MOD',
+	'LOG_CONFIG_THANKS'					=> 'Updated configuration of Thanks for post Extension',
 
 	'REFRESH'							=> 'Refresh',
 	'REMOVE_THANKS'						=> 'Remove thanks',
