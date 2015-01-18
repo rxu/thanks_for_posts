@@ -63,13 +63,13 @@ $lang = array_merge($lang, array(
 
 	'IMG_THANKPOSTS'					=> 'Para agradecer por mensaje',
 	'IMG_REMOVETHANKS'					=> 'Para retirar agradecimiento',
-	
+
 	'LOG_CONFIG_THANKS'					=> 'Configuración de Thanks for Post actualizada',
 
 	'REFRESH'							=> 'Refrescar',
 	'REMOVE_THANKS'						=> 'Eliminar gracias',
 	'REMOVE_THANKS_EXPLAIN'				=> 'Si los usuarios pueden eliminar gracias',
-	
+
 	'STEPR'								=> ' - ejecutado el paso , %s',
 
 	'THANKS_COUNTERS_VIEW'				=> 'Contadores de agradecimiento',
@@ -79,7 +79,7 @@ $lang = array_merge($lang, array(
 	'THANKS_FORUM_REPUT_VIEW_COLUMN_EXPLAIN' => 'Si está activada, la calificación de los foros se mostrará en  columnas en la lista de foros. <br /> Nota: esta opción sólo es efectiva para prosilver y si la opción anterior está activada.',
 	'THANKS_GLOBAL_POST'				=> 'Agradecimiento en Anuncio Global',
 	'THANKS_GLOBAL_POST_EXPLAIN'		=> 'Si está activado, el AGradecimiento en Anuncio Globar estará activado.',
-    'THANKS_FORUM_REPUT_VIEW_EXPLAIN'	=> 'Si está activado, se mostrará la calificación en la lista de foros',
+	'THANKS_FORUM_REPUT_VIEW_EXPLAIN'	=> 'Si está activado, se mostrará la calificación en la lista de foros',
 	'THANKS_INFO_PAGE'					=> 'Imformación',
 	'THANKS_INFO_PAGE_EXPLAIN'			=> 'Si se activa, después de la emisión y cancelación de gracias muestra mensajes de información',
 	'THANKS_NOTICE_ON'					=> 'Avisos disponibles',
@@ -115,7 +115,7 @@ $lang = array_merge($lang, array(
 	'THANKS_REPUT_IMAGE_NOEXIST'		=> 'La imagen grafica a escala no existe',
 	'THANKS_REPUT_IMAGE_BACK'			=> 'La imagen de fondo de la barra',
 	'THANKS_REPUT_IMAGE_BACK_EXPLAIN'	=> 'La ruta de acceso relativa a la raíz del phpBB de  una imagen de fondo, elegida para la escala gráfica.',
-    'THANKS_REPUT_IMAGE_BACK_NOEXIST'	=> 'La image de fondo a escala grafica no existe',
+	'THANKS_REPUT_IMAGE_BACK_NOEXIST'	=> 'La image de fondo a escala grafica no existe',
 	'THANKS_REPUT_LEVEL'				=> 'Número de imágenes en una escala gráfica',
 	'THANKS_REPUT_LEVEL_EXPLAIN'		=> 'El número máximo de imágenes que corresponde a 100% del valor de la escala de calificación en el gráfico',
 	'THANKS_TIME_VIEW'					=> 'Fecha de las gracias',
@@ -126,7 +126,7 @@ $lang = array_merge($lang, array(
 	'THANKS_TOPIC_REPUT_VIEW_COLUMN'	=> 'Mostrar valocación de tema en una columna',
 	'THANKS_TOPIC_REPUT_VIEW_COLUMN_EXPLAIN' => 'Si está activada, la calificación de los tema se mostrará en una columna. <br /> Nota: esta opción sólo será efectiva para prosilver y si la opción anterior está activada.',
 	'THANKS_TOPIC_REPUT_VIEW_EXPLAIN'	=> 'Si se incluye, se mostrará la calificación para el tema durante la visualización de un foro ',
-	'TRUNCATE'							=> 'Limpiar',	
+	'TRUNCATE'							=> 'Limpiar',
 	'TRUNCATE_THANKS'					=> 'Limpiar la lista de gracias',
 	'TRUNCATE_THANKS_EXPLAIN'			=> 'Este procedimiento limpia los conadores de gracias (elimina todos las gracias publicadas). <br /> La acción no es reversible!',
 	'TRUNCATE_THANKS_MSG'				=> 'Contadores de gracias limpiados.',

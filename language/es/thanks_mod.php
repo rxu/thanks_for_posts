@@ -47,18 +47,18 @@ $lang = array_merge($lang, array(
 	'DISABLE_REMOVE_THANKS'		=> 'Borrar gracias esta desactivado por el administrador',
 
 	'GIVEN'						=> 'Agradecido ',
-    'GLOBAL_INCORRECT_THANKS'	=> 'No se puede dar gracias al Anuncio global que no tiene ninguna relación con el foro en particular.',
+	'GLOBAL_INCORRECT_THANKS'	=> 'No se puede dar gracias al Anuncio global que no tiene ninguna relación con el foro en particular.',
 	'GRATITUDES'				=> 'Gratitudes',
-	
+
 	'INCORRECT_THANKS'			=> 'Gracias no validas',
-	
+
 	'JUMP_TO_FORUM'				=> 'Ir al foro',
 	'JUMP_TO_TOPIC'				=> 'Ir al tema',
 
 	'FOR_MESSAGE'				=> ' por mensaje',
 	'FURTHER_THANKS'     	    => ' y otro usario',
 	'FURTHER_THANKS_PL'         => ' y d% usuarios más',
-	
+
 	'NO_VIEW_USERS_THANKS'		=> 'No está autorizado para ver la lista de gracias.',
 
 	'NOTIFICATION_THANKS_GIVE'	=> array(
