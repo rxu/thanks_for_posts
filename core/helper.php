@@ -119,16 +119,14 @@ class helper
 	public function get_thanks($post_id)
 	{
 		$view = $this->request->variable('view', '');
-		$return = '';
+		$further_thanks_text = $return = '';
 		$user_list = array();
-		$count = 0;
+		$further_thanks = $count = 0;
 		$maxcount = (isset($this->config['thanks_number_post']) ? $this->config['thanks_number_post'] : false);
-		$further_thanks = 0;
-		$further_thanks_text = '';
 
-		foreach($this->thankers as $key => $value)
+		foreach($this->thankers as $thanker)
 		{
-			if ($this->thankers[$key]['post_id'] == $post_id)
+			if ($thanker['post_id'] == $post_id)
 			{
 				if ($count >= $maxcount)
 				{
@@ -136,28 +134,16 @@ class helper
 				}
 				else
 				{
-				$user_list[$this->thankers[$key]['username_clean']] = array(
-					'thanks_time' => $this->thankers[$key]['thanks_time'],
-					'username' => $this->thankers[$key]['username'],
-					'user_id' => $this->thankers[$key]['user_id'],
-					'user_colour' => $this->thankers[$key]['user_colour'],
-					);
+					$user_list[] = get_username_string('full', $thanker['user_id'], $thanker['username'], $thanker['user_colour']) .
+						(($this->config['thanks_time_view'] && $thanker['thanks_time']) ? ' (' . $this->user->format_date($thanker['thanks_time'], false, ($view == 'print') ? true : false) . ')' : '');
+					$count++;
 				}
-
-				$count++;
 			}
 		}
-		array_multisort($user_list, SORT_DESC);
-		$comma = '';
-		foreach($user_list as $key => $value)
+
+		if (!empty($user_list))
 		{
-			$return .= $comma;
-			$return .= get_username_string('full', $value['user_id'], $value['username'], $value['user_colour']);
-			if (isset($this->config['thanks_time_view']) ? $this->config['thanks_time_view'] : false)
-			{
-				$return .= ($value['thanks_time']) ? ' ('.$this->user->format_date($value['thanks_time'], false, ($view == 'print') ? true : false) . ')' : '';
-			}
-			$comma = ' &bull; ';
+			$return = implode($user_list, ' &bull; ');
 		}
 
 		if ($further_thanks > 0)
@@ -172,9 +158,9 @@ class helper
 	public function get_thanks_number($post_id)
 	{
 		$i = 0;
-		foreach($this->thankers as $key => $value)
+		foreach($this->thankers as $thanker)
 		{
-			if ($this->thankers[$key]['post_id'] == $post_id)
+			if ($thanker['post_id'] == $post_id)
 			{
 				$i++;
 			}
@@ -191,7 +177,7 @@ class helper
 		$row = $this->get_post_info($post_id);
 		if ($this->user->data['user_type'] != USER_IGNORE && !empty($to_id))
 		{
-			if ($row['poster_id'] != $user_id && $row['poster_id'] == $to_id && !$this->already_thanked($post_id, $user_id, $this->thankers) && ($this->auth->acl_get('f_thanks', $row['forum_id']) || (!$row['forum_id'] && (isset($this->config['thanks_global_post']) ? $this->config['thanks_global_post'] : false))) && $from_id == $user_id)
+			if ($row['poster_id'] != $user_id && $row['poster_id'] == $to_id && !$this->already_thanked($post_id, $user_id) && ($this->auth->acl_get('f_thanks', $row['forum_id']) || (!$row['forum_id'] && (isset($this->config['thanks_global_post']) ? $this->config['thanks_global_post'] : false))) && $from_id == $user_id)
 			{
 				$thanks_data = array(
 					'user_id'	=> (int) $this->user->data['user_id'],
@@ -398,7 +384,7 @@ class helper
 	public function get_thanks_text($post_id)
 	{
 		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
-		if ($this->already_thanked($post_id, $this->user->data['user_id'], $this->thankers))
+		if ($this->already_thanked($post_id, $this->user->data['user_id']))
 		{
 			return array(
 				'THANK_ALT'		=> $this->user->lang['REMOVE_THANKS'],
@@ -416,7 +402,7 @@ class helper
 	// change the variable sent via the link to avoid odd errors
 	public function get_thanks_link($post_id)
 	{
-		if ($this->already_thanked($post_id, $this->user->data['user_id'], $this->thankers))
+		if ($this->already_thanked($post_id, $this->user->data['user_id']))
 		{
 			return 'rthanks';
 		}
@@ -427,9 +413,9 @@ class helper
 	public function already_thanked($post_id, $user_id)
 	{
 		$thanked = false;
-		foreach((array) $this->thankers as $key => $value)
+		foreach($this->thankers as $thanker)
 		{
-			if ($this->thankers[$key]['post_id'] == $post_id && $this->thankers[$key]['user_id'] == $user_id)
+			if ($thanker['post_id'] == $post_id && $thanker['user_id'] == $user_id)
 			{
 				$thanked = true;
 			}
@@ -694,14 +680,14 @@ class helper
 			$sql_array = array(
 				'SELECT'	=> 't.*, u.username, u.username_clean, u.user_colour',
 				'FROM'		=> array($this->thanks_table => 't', $this->users_table => 'u'),
+				'WHERE'		=> 'u.user_id = t.user_id AND ' . $this->db->sql_in_set('t.post_id', $post_list),
+				'ORDER_BY'	=> 't.thanks_time ASC',
 			);
-			$sql_array['WHERE'] = 'u.user_id = t.user_id AND ' . $this->db->sql_in_set('t.post_id', $post_list);
 			$sql = $this->db->sql_build_query('SELECT', $sql_array);
 			$result = $this->db->sql_query($sql);
-			$j = 0;
 			while ($row = $this->db->sql_fetchrow($result))
 			{
-				$this->thankers[$j] = array(
+				$this->thankers[] = array(
 					'user_id' 			=> $row['user_id'],
 					'poster_id' 		=> $row['poster_id'],
 					'post_id' 			=> $row['post_id'],
@@ -710,10 +696,10 @@ class helper
 					'username_clean'	=> $row['username_clean'],
 					'user_colour'		=> $row['user_colour'],
 				);
-				$j++;
 			}
 			$this->db->sql_freeresult($result);
 		}
+
 		//array thanks_count for all poster on viewtopic page
 		if(isset($this->config['thanks_counters_view']) ? $this->config['thanks_counters_view'] : false)
 		{
@@ -773,7 +759,7 @@ class helper
 	public function get_thanks_topic_number($topic_list)
 	{
 		$topic_thanks = array();
-		if (isset($this->config['thanks_topic_reput_view']) ? $this->config['thanks_topic_reput_view'] : false)
+		if ($this->config['thanks_topic_reput_view'])
 		{
 			$sql = 'SELECT topic_id, COUNT(*) AS topic_thanks
 				FROM ' . $this->thanks_table . "
@@ -792,7 +778,7 @@ class helper
 	// max topic thanks
 	public function get_max_topic_thanks()
 	{
-		if (isset($this->config['thanks_topic_reput_view']) ? $this->config['thanks_topic_reput_view'] : false)
+		if ($this->config['thanks_topic_reput_view'])
 		{
 			$sql = 'SELECT MAX(tally) AS max_topic_thanks
 				FROM (SELECT topic_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY topic_id) t';
@@ -813,6 +799,7 @@ class helper
 		$this->db->sql_freeresult($result);
 		return $this->max_post_thanks;
 	}
+
 	// Generate thankslist if required ...
 	public function get_toplist_index($ex_fid_ary)
 	{
@@ -823,7 +810,7 @@ class helper
 			WHERE ' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0
 			GROUP BY t.poster_id 
 			ORDER BY tally DESC';
-		$result = $this->db->sql_query_limit($sql, (isset($this->config['thanks_top_number']) ? $this->config['thanks_top_number'] : false), 0);
+		$result = $this->db->sql_query_limit($sql, (int) $this->config['thanks_top_number']);
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -851,7 +838,7 @@ class helper
 	// forum thanks number
 	public function get_thanks_forum_number()
 	{
-		if (isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view'] : false)
+		if ($this->config['thanks_forum_reput_view'])
 		{
 			if ($forum_thanks_rating = $this->cache->get('_forum_thanks_rating'))
 			{
@@ -873,7 +860,7 @@ class helper
 	// max forum thanks
 	public function get_max_forum_thanks()
 	{
-		if (isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view'] : false)
+		if ($this->config['thanks_forum_reput_view'])
 		{
 			$sql = 'SELECT MAX(tally) AS max_forum_thanks
 				FROM (SELECT forum_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY forum_id) t 
