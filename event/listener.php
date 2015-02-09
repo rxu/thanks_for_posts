@@ -228,7 +228,7 @@ class listener implements EventSubscriberInterface
 		));
 		if (isset($this->config['thanks_forum_reput_view']) && $this->config['thanks_forum_reput_view'])
 		{
-			$this->helper->get_thanks_forum_reput($row['forum_id']);
+			$forum_row = array_merge($forum_row, $this->helper->get_thanks_forum_reput($row['forum_id']));
 		}
 		$event['forum_row'] = $forum_row;
 	}
@@ -250,6 +250,8 @@ class listener implements EventSubscriberInterface
 			'U_REPUT_TOPLIST'	=> append_sid("{$this->phpbb_root_path}toplist"),
 			'S_DISPLAY_THANKSLIST'	=> $this->auth->acl_get('u_viewthanks'),
 			'S_DISPLAY_TOPLIST'		=> $this->auth->acl_get('u_viewtoplist'),
+			'MINI_THANKS_IMG'		=> $this->user->img('icon_mini_thanks', $this->user->lang['GRATITUDES']),
+			'MINI_TOPLIST_IMG'		=> $this->user->img('icon_mini_toplist', $this->user->lang['TOPLIST']),
 		));
 	}
 

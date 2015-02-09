@@ -823,7 +823,7 @@ class helper
 	// forum reput
 	public function get_thanks_forum_reput($forum_id)
 	{
-		$this->template->assign_block_vars('forumrow.reput', array(
+		return array(
 			'FORUM_REPUT'				=> (isset($this->forum_thanks[$forum_id])) ? round($this->forum_thanks[$forum_id] / ($this->max_forum_thanks / 100), ($this->config['thanks_number_digits'])) . '%' : '',
 			'S_THANKS_FORUM_REPUT_VIEW'	=> isset($this->config['thanks_forum_reput_view']) ? (bool) $this->config['thanks_forum_reput_view'] : false,
 			'S_THANKS_REPUT_GRAPHIC'	=> isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
@@ -832,7 +832,7 @@ class helper
 			'THANKS_REPUT_GRAPHIC_WIDTH'=> isset($this->config['thanks_reput_level']) ? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']) : false) : false,
 			'THANKS_REPUT_IMAGE'		=> (isset($this->config['thanks_reput_image'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
 			'THANKS_REPUT_IMAGE_BACK'	=> (isset($this->config['thanks_reput_image_back'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
-		));
+		);
 	}
 
 	// forum thanks number
