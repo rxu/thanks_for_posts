@@ -25,34 +25,46 @@ function toggleElement(oElement)
 }
 // ]]>
 </script>
-<!-- IF THANKS_PROFILELIST_VIEW -->
+<!-- IF THANKS_PROFILELIST_VIEW and (POSTER_GIVE_COUNT or POSTER_RECEIVE_COUNT) -->
 <div class="panel bg1">
 	<div class="inner">
 	<h3>{L_GRATITUDES}</h3>
-		<!-- IF  S_MOD_THANKS and POSTER_GIVE_COUNT --><ul class="profile-icons"><li class="delete-icon"><a href="{U_CLEAR_LIST_THANKS_GIVE}" title="{L_CLEAR_LIST_THANKS}"><span>{L_CLEAR_LIST_THANKS}</span></a></li></ul><!-- ENDIF -->
-		<dl>
-			<dt><strong>{L_GIVEN}:</strong> {POSTER_GIVE_COUNT} {L_THANKS}</dt>
-			<dd>
-			<!-- IF POSTER_GIVE_COUNT -->
-			<a href="#" onclick="toggleElement( getElement('show_thanks')); return false;">{L_THANKS_LIST}</a>
-			<div id="show_thanks" style="display: none;">{THANKS}</div>
+		<!-- IF POSTER_GIVE_COUNT -->
+		<div class="column1">
+			<!-- IF S_MOD_THANKS -->
+			<ul class="post-buttons" style="float:left">
+				<li>
+					<a href="{U_CLEAR_LIST_THANKS_GIVE}" title="{L_CLEAR_LIST_THANKS}" class="button icon-button delete-icon" style="float:left"><span>{L_CLEAR_LIST_THANKS}</span></a>
+				</li>
+			</ul>
 			<!-- ENDIF -->
-			</dd>
-		</dl>
-	</div>
-</div>
-<div class="panel bg2">
-	<div class="inner">
-		<!-- IF  S_MOD_THANKS and POSTER_RECEIVE_COUNT --><ul class="profile-icons"><li class="delete-icon"><a href="{U_CLEAR_LIST_THANKS_RECEIVE}" title="{L_CLEAR_LIST_THANKS}"><span>{L_CLEAR_LIST_THANKS}</span></a></li></ul><!-- ENDIF -->
-		<dl>
-			<dt><strong>{L_RECEIVED}:</strong> {POSTER_RECEIVE_COUNT} {L_THANKS}</dt>
-			<dd>
-			<!-- IF POSTER_RECEIVE_COUNT -->
-			<a href="#" onclick="toggleElement( getElement('show_thanked')); return false;">{L_THANKS_LIST}</a>
-			<div id="show_thanked" style="display: none;">{THANKED}</div>
+			<dl>
+				<dt><strong>{L_GIVEN}:</strong> {POSTER_GIVE_COUNT}</dt>
+				<dd>
+					<a href="#" onclick="toggleElement( getElement('show_thanks')); return false;">{L_THANKS_LIST}</a>
+					<div id="show_thanks" style="display: none;">{THANKS}</div>
+				</dd>
+			</dl>
+		</div>
+		<!-- ENDIF -->
+		<!-- IF POSTER_RECEIVE_COUNT -->
+		<div class="<!-- IF not POSTER_GIVE_COUNT -->column1<!-- ELSE -->column2<!-- ENDIF -->">
+			<!-- IF S_MOD_THANKS -->
+			<ul class="post-buttons" style="float:left">
+				<li>
+					<a href="{U_CLEAR_LIST_THANKS_RECEIVE}" title="{L_CLEAR_LIST_THANKS}" class="button icon-button delete-icon" style="float:left"><span>{L_CLEAR_LIST_THANKS}</span></a>
+				</li>
+			</ul>
 			<!-- ENDIF -->
-			</dd>
-		</dl>
+			<dl>
+				<dt><strong>{L_RECEIVED}:</strong> {POSTER_RECEIVE_COUNT}</dt>
+				<dd>
+					<a href="#" onclick="toggleElement( getElement('show_thanked')); return false;">{L_THANKS_LIST}</a>
+					<div id="show_thanked" style="display: none;">{THANKED}</div>
+				</dd>
+			</dl>
+		</div>
+		<!-- ENDIF -->
 	</div>
 </div>
 <!-- ENDIF -->
