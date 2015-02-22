@@ -12,6 +12,7 @@ services:
             - @user
             - @cache.driver
             - @request
+            - @path_helper
             - %core.root_path%
             - %core.php_ext%
             - @gfksx.ThanksForPosts.helper
@@ -28,6 +29,7 @@ services:
             - @cache.driver
             - @request
             - @notification_manager
+            - @path_helper
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%

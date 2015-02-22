@@ -54,6 +54,9 @@ class helper
 	/** @var \phpbb\notification\manager */
 	protected $notification_manager;
 
+	/** @var \phpbb\path_helper */
+	protected $phpbb_path_helper;
+
 	/** @var string phpbb_root_path */
 	protected $phpbb_root_path;
 
@@ -96,7 +99,7 @@ class helper
 	* @return gfksx\ThanksForPosts\controller\thankslist
 	* @access public
 	*/
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\notification\manager $notification_manager, $phpbb_root_path, $php_ext, $table_prefix, $thanks_table, $users_table, $posts_table, $notifications_table)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\notification\manager $notification_manager, \phpbb\path_helper $phpbb_path_helper, $phpbb_root_path, $php_ext, $table_prefix, $thanks_table, $users_table, $posts_table, $notifications_table)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -106,6 +109,7 @@ class helper
 		$this->cache = $cache;
 		$this->request = $request;
 		$this->notification_manager = $notification_manager;
+		$this->phpbb_path_helper = $phpbb_path_helper;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
@@ -611,6 +615,13 @@ class helper
 			$already_thanked = $this->already_thanked($row['post_id'], $this->user->data['user_id']);
 			$l_poster_receive_count = (isset($this->poster_list_count[$poster_id]['R']) && $this->poster_list_count[$poster_id]['R']) ? $this->user->lang('THANKS', (int) $this->poster_list_count[$poster_id]['R']) : '';
 			$l_poster_give_count = (isset($this->poster_list_count[$poster_id]['G']) && $this->poster_list_count[$poster_id]['G']) ? $this->user->lang('THANKS', (int) $this->poster_list_count[$poster_id]['G']) : '';
+
+			// Correctly form URLs
+			$receive_count_url = 'app.' . $this->php_ext . "/thankslist/givens/{$poster_id}/false";
+			$u_receive_count_url = $this->phpbb_path_helper->get_valid_page($receive_count_url, $this->config['enable_mod_rewrite']);
+			$give_count_url = 'app.' . $this->php_ext . "/thankslist/givens/{$poster_id}/true";
+			$u_give_count_url = $this->phpbb_path_helper->get_valid_page($give_count_url, $this->config['enable_mod_rewrite']);
+
 			$postrow = array_merge($postrow, $thanks_text, array(
 				'COND'						=> ($already_thanked) ? true : false,
 				'THANKS'					=> $this->get_thanks($row['post_id']),
@@ -621,8 +632,8 @@ class helper
 				'THANKS_FROM'				=> $this->user->lang['THANK_FROM'],
 				'POSTER_RECEIVE_COUNT'		=> $l_poster_receive_count,
 				'POSTER_GIVE_COUNT'			=> $l_poster_give_count,
-				'POSTER_RECEIVE_COUNT_LINK'	=> append_sid("{$this->phpbb_root_path}thankslist/givens/{$poster_id}/false"),
-				'POSTER_GIVE_COUNT_LINK'	=> append_sid("{$this->phpbb_root_path}thankslist/givens/{$poster_id}/true"),
+				'POSTER_RECEIVE_COUNT_LINK'	=> append_sid($u_receive_count_url),
+				'POSTER_GIVE_COUNT_LINK'	=> append_sid($u_give_count_url),
 				'S_IS_OWN_POST'				=> ($this->user->data['user_id'] == $poster_id) ? true : false,
 				'S_POST_ANONYMOUS'			=> ($poster_id == ANONYMOUS) ? true : false,
 				'THANK_IMG' 				=> ($already_thanked) ? $this->user->img('removethanks', $this->user->lang['REMOVE_THANKS']. get_username_string('username', $poster_id, $row['username'], $row['user_colour'], $row['post_username'])) : $this->user->img('thankposts', $this->user->lang['THANK_POST']. get_username_string('username', $poster_id, $row['username'], $row['user_colour'], $row['post_username'])),
