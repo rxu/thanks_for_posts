@@ -251,7 +251,7 @@ class listener implements EventSubscriberInterface
 	{
 		$thankslist_url = 'app.' . $this->php_ext . '/thankslist';
 		$u_thankslist = $this->phpbb_path_helper->get_valid_page($thankslist_url, $this->config['enable_mod_rewrite']);
-		$toplist_url = 'app.' . $this->php_ext . '/thankslist';
+		$toplist_url = 'app.' . $this->php_ext . '/toplist';
 		$u_toplist = $this->phpbb_path_helper->get_valid_page($toplist_url, $this->config['enable_mod_rewrite']);
 		$this->template->assign_vars(array(
 			'U_THANKS_LIST'		=> append_sid($u_thankslist),
