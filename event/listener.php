@@ -106,6 +106,8 @@ class listener implements EventSubscriberInterface
 			'core.page_header_after'				=> 'add_header_quicklinks',
 			'core.viewtopic_modify_page_title'		=> 'markread',
 			'core.viewtopic_assign_template_vars_before'	=> 'viewtopic_check_f_thanks_auth',
+			'paybas.recenttopics.modify_tpl_ary'	=> 'recenttopics_output_topics_reput',
+			'paybas.recenttopics.modify_topics_list'=> 'recenttopics_get_topics_reput',
 		);
 	}
 
@@ -275,5 +277,26 @@ class listener implements EventSubscriberInterface
 		$this->template->assign_vars(array(
 			'S_FORUM_THANKS'	=> (bool) ($this->auth->acl_get('f_thanks', $forum_id)),
 		));
+	}
+
+	public function recenttopics_output_topics_reput($event)
+	{
+		$topic_row = $event['tpl_ary'];
+		$topic_id = $topic_row['TOPIC_ID'];
+		if ($this->max_topic_thanks && !empty($this->topic_thanks))
+		{
+			$topic_row = array_merge($topic_row, $this->helper->get_thanks_topic_reput($topic_id, $this->max_topic_thanks, $this->topic_thanks));
+		}
+		$event['tpl_ary'] = $topic_row;
+	}
+
+	public function recenttopics_get_topics_reput($event)
+	{
+		$topic_list = $event['topic_list'];
+		if (!empty($topic_list))
+		{
+			$this->topic_thanks = $this->helper->get_thanks_topic_number($topic_list);
+			$this->max_topic_thanks = $this->helper->get_max_topic_thanks();
+		}
 	}
 }
