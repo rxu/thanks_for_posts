@@ -14,7 +14,7 @@ class v_1_2_5 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return (isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '2.0.0', '>='))
+		return (isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.2.5', '>='))
 				|| (isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.2.5', '>='));
 	}
 
