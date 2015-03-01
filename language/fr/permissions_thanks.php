@@ -39,5 +39,5 @@ $lang = array_merge($lang, array(
 	'ACL_F_THANKS' 						=> 'Peut remercier des messages',
 	'ACL_M_THANKS' 						=> 'Peut effacer la liste des remerciements',
 	'ACL_U_VIEWTHANKS' 					=> 'Peut voir la liste de tous les remerciements',
-	'ACL_U_VIEWTOPLIST'					=> 'Peut voir la liste du Top du classement',
+	'ACL_U_VIEWTOPLIST'					=> 'Peut voir le Top du classement',
 ));
