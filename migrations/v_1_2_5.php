@@ -12,6 +12,9 @@ namespace gfksx\ThanksForPosts\migrations;
 
 class v_1_2_5 extends \phpbb\db\migration\migration
 {
+	protected $thanks_table_exists;
+	protected $poster_id_field_exists;
+
 	public function effectively_installed()
 	{
 		return (isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.2.5', '>='))
@@ -20,18 +23,12 @@ class v_1_2_5 extends \phpbb\db\migration\migration
 
 	static public function depends_on()
 	{
-		return array('\phpbb\db\migration\data\v310\dev');
+		return array('\gfksx\ThanksForPosts\migrations\v_0_4_0');
 	}
 
 	public function update_schema()
 	{
-		$thanks_table_exists = $this->db_tools->sql_table_exists($this->table_prefix . 'thanks');
-
-		// If the thanks table exists but 'poster_id' column doesn't, most likely this is an upgrade
-		// from the 3.0 'Thank Post Mod 0.4.0' https://www.phpbb.com/community/viewtopic.php?f=434&t=543797
-		// by Geoffreak http://www.phpbb.com/phpBB/profile.php?mode=viewprofile&un=Geoffreak
-		// which is the one 'Thanks for posts MOD' by Палыч was initially based on
-		if (!$thanks_table_exists)
+		if (!$this->db_tools->sql_table_exists($this->table_prefix . 'thanks'))
 		{
 			return array(
 				'add_tables' => array(
@@ -46,19 +43,9 @@ class v_1_2_5 extends \phpbb\db\migration\migration
 				),
 			);
 		}
-		else if (!$this->db_tools->sql_column_exists($this->table_prefix . 'thanks', 'poster_id'))
-		{
-			return array(
-				'add_columns' => array(
-					$this->table_prefix . 'thanks' => array(
-						'poster_id'		=> array('UINT', 0),
-					),
-				),
-				'add_primary_keys' => array(
-					$this->table_prefix . 'thanks' => array('post_id', 'user_id'),
-				),
-			);
-		}
+
+		return array(
+		);
 	}
 
 	public function revert_schema()
