@@ -80,12 +80,9 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 
 	public function update_thanks_table()
 	{
-		if (!defined('THANKS_TABLE'))
-		{
-			define('THANKS_TABLE', $this->table_prefix . 'thanks');
-		}
+		$thanks_table = $this->table_prefix . 'thanks';
 
-		$sql = 'UPDATE '. THANKS_TABLE . ' t
+		$sql = 'UPDATE '. $thanks_table . ' t
 			LEFT JOIN ' . POSTS_TABLE . ' p ON  t.post_id = p.post_id
 			SET t.forum_id = p.forum_id, t.topic_id = p.topic_id
 			WHERE t.post_id = p.post_id';

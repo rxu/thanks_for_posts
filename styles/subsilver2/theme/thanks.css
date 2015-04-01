@@ -2,21 +2,25 @@
 ---------------------------------------- */
 .imageset.icon_mini_thanks {
 	background-image: url("./images/icon_mini_thanks.gif");
+	background-repeat: no-repeat;
 	padding-left: 12px;
 	padding-top: 13px;
 }
 .imageset.icon_mini_toplist {
 	background-image: url("./images/icon_mini_toplist.gif");
+	background-repeat: no-repeat;
 	padding-left: 15px;
 	padding-top: 14px;
 }
 .imageset.removethanks {
 	background-image: url("./images/removethanks.gif");
+	background-repeat: no-repeat;
 	padding-left: 20px;
 	padding-top: 20px;
 }
 .imageset.thankposts {
 	background-image: url("./images/thankposts.gif");
+	background-repeat: no-repeat;
 	padding-left: 20px;
 	padding-top: 20px;
 }

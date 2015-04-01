@@ -58,8 +58,8 @@ dl.thanks dt {
 
 /* Icon images
 ---------------------------------------- */
-.icon-thanks			{ background-image: url("./images/icon_thanks.gif") }
-.icon-thanks_toplist	{ background-image: url("./images/icon_thanks_toplist.gif") }
+.icon-thanks			{ background-image: url("./images/icon_thanks.gif"); background-repeat: no-repeat; }
+.icon-thanks_toplist	{ background-image: url("./images/icon_thanks_toplist.gif"); background-repeat: no-repeat; }
 
 
 /* Profile & navigation icons */
