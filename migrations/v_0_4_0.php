@@ -58,7 +58,7 @@ class v_0_4_0 extends \phpbb\db\migration\migration
 	}
 
 	public function update_data()
-	{	
+	{
 		return array(
 			array('custom', array(array($this, 'update_poster_id_data'))),
 		);
