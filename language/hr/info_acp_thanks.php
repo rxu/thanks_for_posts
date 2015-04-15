@@ -124,5 +124,5 @@ $lang = array_merge($lang, array(
 	'TRUNCATE_THANKS_CONFIRM'			=> 'Da li zaista želiš obrisati brojače zahvala?',
 	'TRUNCATE_NO_THANKS'				=> 'Operacija poništena',
 	'ALLOW_THANKS_PM_ON'				=> 'Obavijesti me u PP ako mi netko zahvali na postu',
-	'ALLOW_THANKS_EMAIL_ON'				=> ''Obavijesti me na e-mail ako mi netko zahvali na postu',
+	'ALLOW_THANKS_EMAIL_ON'				=> 'Obavijesti me na e-mail ako mi netko zahvali na postu',
 ));
