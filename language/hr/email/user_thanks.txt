@@ -1,10 +1,10 @@
-Subject: {THANKS_SUBG} — "{POST_SUBJECT}"
+Predmet: {THANKS_SUBG} — "{POST_SUBJECT}"
 
-Hello {POSTER_NAME},
+Pozdrav {POSTER_NAME},
 
-You are receiving this notification because {USERNAME} {POST_THANKS} "{POST_SUBJECT}" at "{SITENAME}".
+Primili ste ovu poruku jer je {USERNAME} {POST_THANKS} "{POST_SUBJECT}" na "{SITENAME}".
 
-If you want to view the post, click the following link:
+Ako želite vidjeti ovaj post, kliknite na slijedeću poveznicu:
 {U_POST_THANKS}
 
 {EMAIL_SIG}
