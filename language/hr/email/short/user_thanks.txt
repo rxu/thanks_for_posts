@@ -1,0 +1,10 @@
+Predmet: {THANKS_SUBG} — "{POST_SUBJECT}"
+
+Pozdrav {POSTER_NAME},
+
+Primili ste ovu poruku jer je {USERNAME} {POST_THANKS} "{POST_SUBJECT}" na "{SITENAME}".
+
+Ako želite vidjeti ovaj post, kliknite na slijedeću poveznicu:
+{U_POST_THANKS}
+
+{EMAIL_SIG}
