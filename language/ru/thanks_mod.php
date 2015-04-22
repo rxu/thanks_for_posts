@@ -89,7 +89,7 @@ $lang = array_merge($lang, array(
 	'RATING_TOP_POST'			=> 'Рейтинг сообщений',
 	'RATING_TOP_TOPIC'			=> 'Рейтинг тем',
 	'RATING_TOPIC'				=> 'Тема',
-	'RETURN_POST'				=> 'Вернуться к сообщению',
+//	'RETURN_POST'				=> 'Вернуться к сообщению',
 
 	'THANK'						=> 'раз.',
 	'THANK_POST'				=> 'Поблагодарить за сообщение автора: ',

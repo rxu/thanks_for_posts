@@ -87,7 +87,7 @@ $lang = array_merge($lang, array(
 	'RATING_TOP_POST'			=> 'Rating posts',
 	'RATING_TOP_TOPIC'			=> 'Rating topics',
 	'RATING_TOPIC'				=> 'Topic',
-	'RETURN_POST'				=> 'Return',
+//	'RETURN_POST'				=> 'Return',
 
 	'THANK'						=> 'time',
 	'THANK_FROM'				=> 'from',
