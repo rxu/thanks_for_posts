@@ -44,8 +44,8 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\request\request_interface */
 	protected $request;
 
-	/** @var \phpbb\path_helper */
-	protected $phpbb_path_helper;
+	/** @var phpbb\controller\helper */
+	protected $controller_helper;
 
 	/** @var string phpbb_root_path */
 	protected $phpbb_root_path;
@@ -72,7 +72,7 @@ class listener implements EventSubscriberInterface
 	* @return \rxu\ThanksForPosts\event\listener
 	* @access public
 	*/
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\path_helper $phpbb_path_helper, $phpbb_root_path, $php_ext, $helper)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $phpbb_root_path, $php_ext, $helper)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -81,7 +81,7 @@ class listener implements EventSubscriberInterface
 		$this->user = $user;
 		$this->cache = $cache;
 		$this->request = $request;
-		$this->phpbb_path_helper = $phpbb_path_helper;
+		$this->controller_helper = $controller_helper;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->helper = $helper;
@@ -251,13 +251,11 @@ class listener implements EventSubscriberInterface
 
 	public function add_header_quicklinks($event)
 	{
-		$thankslist_url = 'app.' . $this->php_ext . '/thankslist';
-		$u_thankslist = $this->phpbb_path_helper->get_valid_page($thankslist_url, $this->config['enable_mod_rewrite']);
-		$toplist_url = 'app.' . $this->php_ext . '/toplist';
-		$u_toplist = $this->phpbb_path_helper->get_valid_page($toplist_url, $this->config['enable_mod_rewrite']);
+		$u_thankslist = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('tslash' => ''));
+		$u_toplist = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller', array('tslash' => ''));
 		$this->template->assign_vars(array(
-			'U_THANKS_LIST'		=> append_sid($u_thankslist),
-			'U_REPUT_TOPLIST'	=> append_sid($u_toplist),
+			'U_THANKS_LIST'		=> $u_thankslist,
+			'U_REPUT_TOPLIST'	=> $u_toplist,
 			'S_DISPLAY_THANKSLIST'	=> $this->auth->acl_get('u_viewthanks'),
 			'S_DISPLAY_TOPLIST'		=> $this->auth->acl_get('u_viewtoplist'),
 			'MINI_THANKS_IMG'		=> $this->user->img('icon_mini_thanks', $this->user->lang['GRATITUDES']),

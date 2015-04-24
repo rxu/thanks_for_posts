@@ -13,7 +13,73 @@ use Symfony\Component\HttpFoundation\Response;
 
 class toplist
 {
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, $gfksx_helper, \phpbb\request\request_interface $request, $thanks_table, $users_table, $posts_table)
+	/** @var \phpbb\config\config */
+	protected $config;
+
+	/** @var \phpbb\db\driver\driver_interface */
+	protected $db;
+
+	/** @var \phpbb\auth\auth */
+	protected $auth;
+
+	/** @var \phpbb\template\template */
+	protected $template;
+
+	/** @var \phpbb\user */
+	protected $user;
+
+	/** @var \phpbb\cache\driver\driver_interface */
+	protected $cache;
+
+	/** @var string phpbb_root_path */
+	protected $phpbb_root_path;
+
+	/** @var string phpEx */
+	protected $php_ext;
+
+	/** @var \phpbb\pagination */
+	protected $pagination;
+
+	/** @var gfksx\ThanksForPosts\core\helper */
+	protected $gfksx_helper;
+
+	/** @var \phpbb\request\request_interface */
+	protected $request;
+
+	/** @var phpbb\controller\helper */
+	protected $controller_helper;
+
+	/** @var string THANKS_TABLE */
+	protected $thanks_table;
+
+	/** @var string USERS_TABLE */
+	protected $users_table;
+
+	/** @var string POSTS_TABLE */
+	protected $posts_table;
+
+	/**
+	* Constructor
+	*
+	* @param \phpbb\config\config                 $config                Config object
+	* @param \phpbb\db\driver\driver_interface    $db                    DBAL object
+	* @param \phpbb\auth\auth                     $auth                  Auth object
+	* @param \phpbb\template\template             $template              Template object
+	* @param \phpbb\user                          $user                  User object
+	* @param \phpbb\cache\driver\driver_interface $cache                 Cache driver object
+	* @param string                               $phpbb_root_path       phpbb_root_path
+	* @param string                               $php_ext               phpEx
+	* @param \phpbb\pagination                    $pagination            Pagination object
+	* @param \gfksx\ThanksForPosts\core\helper    $gfksx_helper          Helper object
+	* @param \phpbb\request\request_interface     $request               Request object
+	* @param \phpbb\controller\helper             $controller_helper     Controller helper object
+	* @param string                               $thanks_table          THANKS_TABLE
+	* @param string                               $users_table           USERS_TABLE
+	* @param string                               $posts_table           POSTS_TABLE
+	* @return gfksx\ThanksForPosts\controller\thankslist
+	* @access public
+	*/
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \gfksx\ThanksForPosts\core\helper $gfksx_helper, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $posts_table)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -26,6 +92,7 @@ class toplist
 		$this->pagination = $pagination;
 		$this->gfksx_helper = $gfksx_helper;
 		$this->request = $request;
+		$this->controller_helper = $controller_helper;
 		$this->thanks_table = $thanks_table;
 		$this->users_table = $users_table;
 		$this->posts_table = $posts_table;
