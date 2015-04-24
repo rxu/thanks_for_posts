@@ -48,7 +48,7 @@ $lang = array_merge($lang, array(
 
 	'DISABLE_REMOVE_THANKS'		=> 'La suppression des remerciements a été désactivée par l’administrateur',
 
-	'GIVEN'						=> 'A remercié ',
+	'GIVEN'						=> 'A remercié',
 	'GLOBAL_INCORRECT_THANKS'	=> 'Vous ne pouvez pas remercier une annonce globale qui n’est pas liée à un forum en particulier.',
 	'GRATITUDES'				=> 'Liste des remerciements',
 
@@ -74,7 +74,7 @@ $lang = array_merge($lang, array(
 	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Quelqu’un vous a remercié pour votre message',
 	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Quelqu’un a retiré son remerciement pour votre message',
 
-	'RECEIVED'					=> 'A été remercié ',
+	'RECEIVED'					=> 'A été remercié',
 	'REMOVE_THANKS'				=> 'Retirer vos remerciements à l’auteur : ',
 	'REMOVE_THANKS_CONFIRM'		=> 'Êtes-vous sûr(e) de vouloir retirer vos remerciements à l’auteur pour son message ?',
 	'REMOVE_THANKS_SHORT'		=> 'Remerciement(s) retiré(s)',
