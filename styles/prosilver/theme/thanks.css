@@ -89,3 +89,7 @@ dl.thanks dt {
 	background-repeat: repeat-x;
 }
 
+.thanks-profile-posts a
+{
+	font-weight: normal;
+}
