@@ -34,7 +34,7 @@ function toggleElement(oElement)
 		<td class="row1" align="left" valign="top" nowrap="nowrap">
 		<!-- IF POSTER_GIVE_COUNT -->
 			<!-- IF S_MOD_THANKS --><a href="{U_CLEAR_LIST_THANKS_GIVE}">{DELETE_IMG}</a>&nbsp;<!-- ENDIF -->
-			<span class="gen">{L_GIVEN}: <b>{POSTER_GIVE_COUNT}</b></span>
+			<span class="gen">{L_GIVEN}{L_COLON} <b>{POSTER_GIVE_COUNT}</b></span>
 			<br />
 			<a href="javascript: toggleElement( getElement('show_thanks'));">{L_THANKS_LIST}</a>
 			<div id="show_thanks" style="display: none;">{THANKS}</div>
@@ -43,7 +43,7 @@ function toggleElement(oElement)
 		<td class="row1" align="left" valign="top" nowrap="nowrap">
 		<!-- IF POSTER_RECEIVE_COUNT -->
 			<!-- IF S_MOD_THANKS --><a href="{U_CLEAR_LIST_THANKS_RECEIVE}">{DELETE_IMG}</a>&nbsp;<!-- ENDIF -->
-			<span class="gen">{L_RECEIVED}: <b>{POSTER_RECEIVE_COUNT}</b></span>
+			<span class="gen">{L_RECEIVED}{L_COLON} <b>{POSTER_RECEIVE_COUNT}</b></span>
 			<br />
 			<a href="javascript: toggleElement( getElement('show_thanked'));">{L_THANKS_LIST}</a>
 			<div id="show_thanked" style="display: none;">{THANKED}</div>
