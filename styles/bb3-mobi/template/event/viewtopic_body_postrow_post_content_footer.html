@@ -1,0 +1,6 @@
+<!-- IF postrow.THANKS and postrow.THANKS_POSTLIST_VIEW and not postrow.S_POST_ANONYMOUS and not S_IS_BOT -->
+<div id='list_thanks{postrow.POST_ID}' class="panel">
+	<!-- IF postrow.S_MOD_THANKS -->[<a href="{postrow.U_CLEAR_LIST_THANKS_POST}" title="{L_CLEAR_LIST_THANKS}">x</a>]<!-- ENDIF -->
+	{L_RECEIVED}{L_COLON}<hr />{postrow.THANKS}
+</div>
+<!-- ENDIF -->

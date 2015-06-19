@@ -1,0 +1,56 @@
+<script type="text/JavaScript">
+// <![CDATA[
+function getElement(iElementId)
+{
+   if (document.all)
+   {
+      return document.all[iElementId];
+   }
+   if (document.getElementById)
+   {
+      return document.getElementById(iElementId);
+   }
+}
+
+function toggleElement(oElement)
+{
+   if (oElement.style.display == "none")
+   {
+      oElement.style.display = "";
+   }
+   else
+   {
+      oElement.style.display = "none";
+   }
+}
+// ]]>
+</script>
+<!-- IF THANKS_PROFILELIST_VIEW and (POSTER_GIVE_COUNT or POSTER_RECEIVE_COUNT) -->
+<div class="panel">
+<div class="inner">
+	<h3>{L_GRATITUDES}</h3>
+	<!-- IF POSTER_GIVE_COUNT -->
+	<div class="post bg1">
+		<!-- IF S_MOD_THANKS -->
+		<a href="{U_CLEAR_LIST_THANKS_GIVE}" title="{L_CLEAR_LIST_THANKS}" class="button" style="float:right">x</a>
+		<!-- ENDIF -->
+		<p>{L_GIVEN}{L_COLON} {POSTER_GIVE_COUNT}<br />
+			<a href="#" onclick="toggleElement( getElement('show_thanks')); return false;">{L_THANKS_LIST}</a>
+			<div id="show_thanks" style="display: none;">{THANKS}</div>
+		</p>
+	</div>
+	<!-- ENDIF -->
+	<!-- IF POSTER_RECEIVE_COUNT -->
+	<div class="post <!-- IF not POSTER_GIVE_COUNT -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
+		<!-- IF S_MOD_THANKS -->
+		<a href="{U_CLEAR_LIST_THANKS_RECEIVE}" title="{L_CLEAR_LIST_THANKS}" class="button" style="float:right">x</a>
+		<!-- ENDIF -->
+		<p>{L_RECEIVED}{L_COLON} {POSTER_RECEIVE_COUNT}<br />
+			<a href="#" onclick="toggleElement( getElement('show_thanked')); return false;">{L_THANKS_LIST}</a>
+			<div id="show_thanked" style="display: none;">{THANKED}</div>
+		</p>
+	</div>
+	<!-- ENDIF -->
+</div>
+</div>
+<!-- ENDIF -->

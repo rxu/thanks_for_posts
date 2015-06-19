@@ -1,0 +1,6 @@
+{% if topicrow %}
+    {% set rating = topicrow %}
+{% elseif recent_topics %}
+    {% set rating = recent_topics %}
+{% endif %}
+{% include 'topicrow_rating_body.html' %}

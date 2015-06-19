@@ -1,0 +1,5 @@
+<!-- IF  not postrow.S_FIRST_POST_ONLY or postrow.S_ONLY_TOPICSTART -->
+	<!-- IF not postrow.S_GLOBAL_POST_THANKS and not postrow.S_POST_ANONYMOUS and S_FORUM_THANKS and S_USER_LOGGED_IN and not postrow.S_IS_OWN_POST and (not postrow.S_ALREADY_THANKED or postrow.S_REMOVE_THANKS) -->
+	<a id='lnk_thanks_post{postrow.POST_ID}' href="{postrow.THANKS_LINK}" title="{postrow.THANK_ALT}{postrow.POST_AUTHOR}" class="button"><span><!-- IF postrow.S_ALREADY_THANKED -->-<!-- ELSE -->+<!-- ENDIF -->1</span></a>
+	<!-- ENDIF -->
+<!-- ENDIF -->

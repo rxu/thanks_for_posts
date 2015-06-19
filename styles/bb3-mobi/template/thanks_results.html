@@ -1,0 +1,72 @@
+<!-- INCLUDE overall_header.html -->
+
+<h2>{SEARCH_MATCHES}</h2>
+
+<p><a class="arrow-{S_CONTENT_FLOW_BEGIN}" href="{U_THANKS}" title="{L_THANKS_BACK}">{L_THANKS_BACK}</a></p>
+
+<!-- IF .pagination or SEARCH_MATCHES -->
+	<div class="action-bar top">
+		<div class="pagination">
+			{SEARCH_MATCHES}
+			<!-- IF .pagination -->
+				<!-- INCLUDE pagination.html -->
+			<!-- ELSE -->
+			 &bull; {PAGE_NUMBER}
+			<!-- ENDIF -->
+		</div>
+	</div>
+<!-- ENDIF -->
+
+	<!-- BEGIN searchresults -->
+		<!-- EVENT search_results_post_before -->
+		<div class="search post <!-- IF searchresults.S_ROW_COUNT is odd -->bg1<!-- ELSE -->bg2<!-- ENDIF --><!-- IF searchresults.S_POST_REPORTED --> reported<!-- ENDIF -->">
+			<div class="inner">
+
+		<dl class="postprofile">
+			<!-- EVENT search_results_postprofile_before -->
+			<dt class="author">{L_POST_BY_AUTHOR} {searchresults.POST_AUTHOR_FULL}</dt>
+			<dd class="search-result-date">{searchresults.POST_DATE}</dd>
+			<!-- IF searchresults.FORUM_ID -->
+				<dd><a href="{searchresults.U_VIEW_FORUM}">{L_JUMP_TO_FORUM}</a></dd>
+				<dd><a href="{searchresults.U_VIEW_TOPIC}">{L_JUMP_TO_TOPIC}</a></dd>
+			<!-- ELSE -->
+				<dd><a href="{searchresults.U_VIEW_TOPIC}">{L_JUMP_TO_TOPIC}</a></dd>
+			<!-- ENDIF -->
+			<!-- EVENT search_results_postprofile_after -->
+		</dl>
+
+		<div class="postbody">
+			<h3><a href="{searchresults.U_VIEW_POST}">{searchresults.POST_SUBJECT}</a></h3>
+			<div class="content">{searchresults.MESSAGE}</div>
+		</div>
+
+		<ul class="searchresults">
+			<li><a href="{searchresults.U_VIEW_POST}" class="arrow-{S_CONTENT_FLOW_END}">{L_JUMP_TO_POST}</a></li>
+		</ul>
+			</div>
+		</div>
+		<!-- EVENT search_results_post_after -->
+	<!-- BEGINELSE -->
+		<div class="panel">
+			<div class="inner">
+			<strong>{L_NO_SEARCH_RESULTS}</strong>
+			</div>
+		</div>
+	<!-- END searchresults -->
+
+<!-- IF .pagination or SEARCH_MATCHES -->
+<div class="action-bar bottom">
+	<div class="pagination">
+		{SEARCH_MATCHES}
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+		&bull; {PAGE_NUMBER}
+		<!-- ENDIF -->
+	</div>
+</div>
+<!-- ENDIF -->
+
+<!-- INCLUDE jumpbox.html -->
+
+<!-- INCLUDE overall_footer.html -->
