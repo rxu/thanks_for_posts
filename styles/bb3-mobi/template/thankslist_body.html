@@ -1,0 +1,36 @@
+<!-- INCLUDE overall_header.html -->
+<h2 class="solo">{PAGE_TITLE}</h2>
+
+<!-- IF TOTAL_USERS --><p class="mark-read">{TOTAL_USERS}</p><!-- ENDIF -->
+<div class="forumbg">
+<table class="table1" cellspacing="1" width="100%">
+	<thead>
+	<tr>
+		<th class="header"><!-- IF S_THANKS --><a href="{U_SORT_THANKS_G}">{L_GIVEN}</a><!-- ELSE -->{L_GIVEN}<!-- ENDIF --></th>
+		<th class="header" colspan="2"><!-- IF S_THANKS --><a href="{U_SORT_THANKS_R}">{L_RECEIVED}</a><!-- ELSE -->{L_RECEIVED}<!-- ENDIF --></th>
+	</tr>
+	</thead>
+	<tbody>
+<!-- BEGIN memberrow -->
+	<tr class="row <!-- IF memberrow.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
+		<td><!-- IF S_IN_SEARCH_POPUP and not S_SELECT_SINGLE --><input type="checkbox" name="user" value="{memberrow.USERNAME}" /> <!-- ENDIF --><b>{memberrow.USERNAME_FULL}</b><!-- IF memberrow.RANK_TITLE --> <i>[{memberrow.RANK_TITLE}]</i><!-- ENDIF --></td>
+		<td class="posts"><!-- IF memberrow.GIVENS --><a href="{memberrow.U_SEARCH_USER_GIVENS}" title="{L_SEARCH_USER_POSTS}">{memberrow.GIVENS}</a><!-- ELSE -->{memberrow.GIVENS}<!-- ENDIF --> </td>
+		<td class="posts"><!-- IF memberrow.RECEIVED --><a href="{memberrow.U_SEARCH_USER_RECEIVED}" title="{L_SEARCH_USER_POSTS}">{memberrow.RECEIVED}</a><!-- ELSE -->{memberrow.RECEIVED}<!-- ENDIF --></td>
+	</tr>
+<!-- BEGINELSE -->
+	<tr class="bg1">
+		<td colspan="3">{L_NO_MEMBERS}</td>
+	</tr>
+<!-- END memberrow -->
+	</tbody>
+</table>
+</div>
+<!-- IF .pagination -->
+<div class="action-bar">
+	<div class="rightside pagination">
+	<!-- INCLUDE pagination.html -->
+	</div>
+</div>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->

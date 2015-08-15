@@ -1,0 +1,8 @@
+<!-- IF rating.S_THANKS_TOPIC_REPUT_VIEW and rating.TOPIC_REPUT and not S_IS_BOT and not rating.S_THANKS_TOPIC_REPUT_VIEW_COLUMN -->
+	<span style="display: block;">
+	<!-- IF rating.S_THANKS_REPUT_GRAPHIC -->
+	<span style="display: block; float: left; width: {rating.THANKS_REPUT_GRAPHIC_WIDTH}; height: {rating.THANKS_REPUT_HEIGHT}; background: url({rating.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {rating.THANKS_REPUT_HEIGHT}; width: {rating.TOPIC_REPUT}; background: url({rating.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;"></span></span>&nbsp;
+	<!-- ENDIF -->
+	{L_REPUT}:&nbsp;{rating.TOPIC_REPUT}
+	</span>
+<!-- ENDIF -->

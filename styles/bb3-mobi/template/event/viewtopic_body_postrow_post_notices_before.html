@@ -1,0 +1,8 @@
+<!-- IF postrow.S_THANKS_POST_REPUT_VIEW and postrow.POST_REPUT and not postrow.S_POST_ANONYMOUS and not S_IS_BOT -->
+<div id='div_post_reput{postrow.POST_ID}'>
+	<div class="rightside">{L_REPUT}{L_COLON}&nbsp;{postrow.POST_REPUT}</div>
+	<!-- IF postrow.S_THANKS_REPUT_GRAPHIC -->
+	<div style="width: {postrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {postrow.THANKS_REPUT_HEIGHT};" class="thanks_reput_image_back"><div style="height: {postrow.THANKS_REPUT_HEIGHT}; width: {postrow.POST_REPUT};" class="thanks_reput_image"></div></div>&nbsp;
+	<!-- ENDIF -->
+</div>
+<!-- ENDIF -->
