@@ -725,7 +725,7 @@ class helper
 			$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 			$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : false;
 
-			$sql = 'SELECT *, COUNT(poster_id) AS poster_count FROM ' . $this->thanks_table . '
+			$sql = 'SELECT poster_id, COUNT(poster_id) AS poster_count FROM ' . $this->thanks_table . '
 				WHERE ' . $this->db->sql_in_set('poster_id', $poster_list) . '
 					AND ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . '
 				GROUP BY poster_id';
@@ -736,7 +736,7 @@ class helper
 			}
 			$this->db->sql_freeresult($result);
 
-			$sql = 'SELECT *, COUNT(user_id) AS user_count FROM ' . $this->thanks_table . '
+			$sql = 'SELECT user_id, COUNT(user_id) AS user_count FROM ' . $this->thanks_table . '
 				WHERE ' . $this->db->sql_in_set('user_id', $poster_list) . '
 					AND ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . '
 				GROUP BY user_id';
