@@ -332,6 +332,22 @@ class helper
 			'rthanks'	=> $post_id,
 			)
 		);
+		
+		/**
+		* This event allows to interrupt before a thanks is deleted
+		*
+		* @event ThanksForPosts.delete_thanks_before
+		* @var	int		post_id		The post id
+		* @var	int		forum_id	The forum id
+		* @since 2.0.3
+		*/
+		global $phpbb_dispatcher;
+		$vars = array(
+			'post_id',
+			'forum_id',
+		);
+		extract($phpbb_dispatcher->trigger_event('ThanksForPosts.delete_thanks_before', compact($vars)));
+		
 		if (isset($this->config['remove_thanks']) ? !$this->config['remove_thanks'] : true)
 		{
 			trigger_error($this->user->lang['DISABLE_REMOVE_THANKS'] . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">', '</a>'));
