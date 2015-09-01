@@ -57,6 +57,9 @@ class helper
 	/** @var phpbb\controller\helper */
 	protected $controller_helper;
 
+	/** @var \phpbb\event\dispatcher_interface */
+	protected $phpbb_dispatcher;
+
 	/** @var string phpbb_root_path */
 	protected $phpbb_root_path;
 
@@ -90,6 +93,7 @@ class helper
 	* @param \phpbb\request\request_interface     $request               Request object
 	* @param \phpbb\request\request_interface     $request               Request object
 	* @param \phpbb\controller\helper             $controller_helper     Controller helper object
+	* @param \phpbb\event\dispatcher_interface    $phpbb_dispatcher      Event dispatcher object
 	* @param string                               $phpbb_root_path       phpbb_root_path
 	* @param string                               $php_ext               phpEx
 	* @param string                               $table_prefix          Tables prefix
@@ -100,7 +104,7 @@ class helper
 	* @return gfksx\ThanksForPosts\controller\thankslist
 	* @access public
 	*/
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\notification\manager $notification_manager, \phpbb\controller\helper $controller_helper, $phpbb_root_path, $php_ext, $table_prefix, $thanks_table, $users_table, $posts_table, $notifications_table)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\notification\manager $notification_manager, \phpbb\controller\helper $controller_helper, \phpbb\event\dispatcher_interface $phpbb_dispatcher, $phpbb_root_path, $php_ext, $table_prefix, $thanks_table, $users_table, $posts_table, $notifications_table)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -111,6 +115,7 @@ class helper
 		$this->request = $request;
 		$this->notification_manager = $notification_manager;
 		$this->controller_helper = $controller_helper;
+		$this->phpbb_dispatcher = $phpbb_dispatcher;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->table_prefix = $table_prefix;
@@ -332,22 +337,21 @@ class helper
 			'rthanks'	=> $post_id,
 			)
 		);
-		
+
 		/**
 		* This event allows to interrupt before a thanks is deleted
 		*
-		* @event ThanksForPosts.delete_thanks_before
+		* @event gfksx.thanksforposts.delete_thanks_before
 		* @var	int		post_id		The post id
 		* @var	int		forum_id	The forum id
 		* @since 2.0.3
 		*/
-		global $phpbb_dispatcher;
 		$vars = array(
 			'post_id',
 			'forum_id',
 		);
-		extract($phpbb_dispatcher->trigger_event('ThanksForPosts.delete_thanks_before', compact($vars)));
-		
+		extract($this->phpbb_dispatcher->trigger_event('gfksx.thanksforposts.delete_thanks_before', compact($vars)));
+
 		if (isset($this->config['remove_thanks']) ? !$this->config['remove_thanks'] : true)
 		{
 			trigger_error($this->user->lang['DISABLE_REMOVE_THANKS'] . '<br /><br />' . $this->user->lang('RETURN_POST', '<a href="' . append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id") . '">', '</a>'));
