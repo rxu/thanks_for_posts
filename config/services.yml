@@ -30,6 +30,7 @@ services:
             - @request
             - @notification_manager
             - @controller.helper
+            - @dispatcher
             - %core.root_path%
             - %core.php_ext%
             - %core.table_prefix%
