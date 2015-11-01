@@ -205,7 +205,7 @@ class thankslist
 								$bbcode_bitfield = $bbcode_bitfield | base64_decode($row['bbcode_bitfield']);
 
 								// Does this post have an attachment? If so, add it to the list
-								if ($row['post_attachment'] && $config['allow_attachments'])
+								if ($row['post_attachment'] && $this->config['allow_attachments'])
 								{
 									$attach_list[$row['forum_id']][] = $row['post_id'];
 								}
