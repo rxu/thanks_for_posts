@@ -4,7 +4,7 @@
 
 <h1>{L_TITLE}</h1>
 <p>{L_TITLE_EXPLAIN}</p>
-<p>{L_ACP_THANKS_MOD_VER}{THANKS_MOD_VERSION}</p>
+<p>{L_ACP_THANKS_MOD_VER}{L_COLON}&nbsp;{THANKS_MOD_VERSION}</p>
 <!-- IF S_ERROR -->
 	<div class="errorbox">
 		<h3>{L_WARNING}</h3>
@@ -23,7 +23,7 @@
 			<legend>{options.LEGEND}</legend>
 	<!-- ELSE -->
 		<dl>
-			<dt><label for="{options.KEY}">{options.TITLE}:</label><!-- IF options.S_EXPLAIN --><br /><span>{options.TITLE_EXPLAIN}</span><!-- ENDIF --></dt>
+			<dt><label for="{options.KEY}">{options.TITLE}{L_COLON}</label><!-- IF options.S_EXPLAIN --><br /><span>{options.TITLE_EXPLAIN}</span><!-- ENDIF --></dt>
 			<dd>{options.CONTENT}</dd>
 		</dl>
 
