@@ -1,12 +1,11 @@
 <?php
 /**
 *
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
+* Thanks for posts extension for the phpBB Forum Software package.
 * French translation by Galixte (http://www.galixte.com)
+*
+* @copyright (c) 2015 rxu
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
@@ -34,10 +33,14 @@ if (empty($lang) || !is_array($lang))
 // You do not need this where single placeholders are used, e.g. 'Message %d' is fine
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
+//
+// Some characters you may want to copy&paste:
+// ’ « » “ ” …
+//
 
 $lang = array_merge($lang, array(
-	'ACL_F_THANKS' 						=> 'Peut remercier des messages',
-	'ACL_M_THANKS' 						=> 'Peut effacer la liste des remerciements',
-	'ACL_U_VIEWTHANKS' 					=> 'Peut voir la liste des remerciements',
-	'ACL_U_VIEWTOPLIST'					=> 'Peut voir le Top du classement',
+	'ACL_F_THANKS' 						=> 'Peut remercier les messages.',
+	'ACL_M_THANKS' 						=> 'Peut purger la liste des remerciements.',
+	'ACL_U_VIEWTHANKS' 					=> 'Peut voir la liste des remerciements.',
+	'ACL_U_VIEWTOPLIST'					=> 'Peut voir le Top du classement des remerciements.',
 ));

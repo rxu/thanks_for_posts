@@ -46,7 +46,7 @@ class acp_thanks_module
 			'thanks_time_view'			=> array('lang' => 'THANKS_TIME_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_counters_view'		=> array('lang' => 'THANKS_COUNTERS_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_profilelist_view'	=> array('lang' => 'THANKS_PROFILELIST_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_number'				=> array('lang' => 'THANKS_NUMBER', 'validate' => 'int:1',	'type' => 'text:4:4', 'explain' => false),
+			'thanks_number'				=> array('lang' => 'THANKS_NUMBER', 'validate' => 'int:1',	'type' => 'text:4:4', 'explain' => true),
 			'thanks_top_number'			=> array('lang' => 'THANKS_TOP_NUMBER', 'validate' => 'int:0', 'type' => 'text:4:6', 'explain' => true),
 			)
 		);

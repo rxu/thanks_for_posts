@@ -1,12 +1,11 @@
 <?php
 /**
 *
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
+* Thanks for posts extension for the phpBB Forum Software package.
 * French translation by Galixte (http://www.galixte.com)
+*
+* @copyright (c) 2015 rxu
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
@@ -36,23 +35,23 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'CLEAR_LIST_THANKS'			=> 'Vider la liste des remerciements',
-	'CLEAR_LIST_THANKS_CONFIRM'	=> 'Voulez-vous vraiment effacer la liste des remerciements de l’utilisateur ?',
-	'CLEAR_LIST_THANKS_GIVE'	=> 'La liste des remerciements de l’utilisateur a été effacée.',
-	'CLEAR_LIST_THANKS_POST'	=> 'La liste de remerciements dans le message a été effacée.',
-	'CLEAR_LIST_THANKS_RECEIVE'	=> 'La liste des merci obtenus par l’utilisateur a été effacée.',
+	'CLEAR_LIST_THANKS'			=> 'Purger la liste des remerciements',
+	'CLEAR_LIST_THANKS_CONFIRM'	=> 'Confirmer la purge de la liste des remerciements.',
+	'CLEAR_LIST_THANKS_GIVE'	=> 'La liste des remerciements de cet utilisateur a été purgée.',
+	'CLEAR_LIST_THANKS_POST'	=> 'La liste des remerciements pour ce message a été purgée.',
+	'CLEAR_LIST_THANKS_RECEIVE'	=> 'La liste des remerciements reçus par cet utilisateur a été purgée.',
 
-	'DISABLE_REMOVE_THANKS'		=> 'La suppression des remerciements a été désactivée par l’administrateur',
+	'DISABLE_REMOVE_THANKS'		=> 'La suppression des remerciements a été désactivée par l’administrateur.',
 
 	'GIVEN'						=> 'A remercié',
-	'GLOBAL_INCORRECT_THANKS'	=> 'Vous ne pouvez pas remercier une annonce globale qui n’est pas liée à un forum en particulier.',
+	'GLOBAL_INCORRECT_THANKS'	=> 'Il n’est pas autoriser de remercier une annonce globale qui n’est pas rattachée à un forum en particulier.',
 	'GRATITUDES'				=> 'Liste des remerciements',
 
-	'INCORRECT_THANKS'			=> 'Remerciement invalide',
+	'INCORRECT_THANKS'			=> 'Ce remerciement est invalide.',
 
 	'JUMP_TO_FORUM'				=> 'Aller au forum',
 	'JUMP_TO_TOPIC'				=> 'Aller au sujet',
@@ -64,25 +63,25 @@ $lang = array_merge($lang, array(
 	'NO_VIEW_USERS_THANKS'		=> 'Vous n’êtes pas autorisé à voir la liste des remerciements.',
 
 	'NOTIFICATION_THANKS_GIVE'	=> array(
-		1 => '<strong>Remerciement reçu</strong> de %1$s pour le message :',
-		2 => '<strong>Remerciements reçus</strong> de %1$s pour le message :',
+		1 => '<strong>Remerciement reçu</strong> de %1$s pour le message :',
+		2 => '<strong>Remerciements reçus</strong> de %1$s pour le message :',
 	),
 	'NOTIFICATION_THANKS_REMOVE'=> array(
-		1 => '<strong>Remerciement retiré</strong> de %1$s pour le message :',
-		2 => '<strong>Remerciements retirés</strong> de %1$s pour le message :',
+		1 => '<strong>Remerciement retiré</strong> de %1$s pour le message : ',
+		2 => '<strong>Remerciements retirés</strong> de %1$s pour le message : ',
 	),
-	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Quelqu’un vous a remercié pour votre message',
-	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Quelqu’un a retiré son remerciement pour votre message',
+	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Quelqu’un vous a remercié pour votre message.',
+	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Quelqu’un a retiré son remerciement pour votre message.',
 
 	'RECEIVED'					=> 'A été remercié',
-	'REMOVE_THANKS'				=> 'Retirer vos remerciements à l’auteur : ',
-	'REMOVE_THANKS_CONFIRM'		=> 'Êtes-vous sûr(e) de vouloir retirer vos remerciements à l’auteur pour son message ?',
-	'REMOVE_THANKS_SHORT'		=> 'Remerciement(s) retiré(s)',
+	'REMOVE_THANKS'				=> 'Supprimer son remerciement pour l’auteur de ce message : ',
+	'REMOVE_THANKS_CONFIRM'		=> 'Confirmer la suppression de son remerciement pour l’auteur de ce message.',
+	'REMOVE_THANKS_SHORT'		=> 'Supprimer son remerciement',
 	'REPUT'						=> 'Classement',
-	'REPUT_TOPLIST'				=> 'Top %d des remerciements',
-	'RETING_LOGIN_EXPLAIN'		=> 'Vous n’êtes pas autorisé à voir le Top du classement.',
-	'RATING_NO_VIEW_TOPLIST'	=> 'Vous n’êtes pas autorisé à voir le Top du classement.',
-	'RATING_VIEW_TOPLIST_NO'	=> 'La liste du Top du classement est vide ou désactivée par l’administrateur.',
+	'REPUT_TOPLIST'				=> 'Top %d du classement des remerciements',
+	'RETING_LOGIN_EXPLAIN'		=> 'Vous n’êtes pas autorisé à voir le Top du classement des remerciements.',
+	'RATING_NO_VIEW_TOPLIST'	=> 'Vous n’êtes pas autorisé à voir le Top du classement des remerciements.',
+	'RATING_VIEW_TOPLIST_NO'	=> 'La liste du Top du classement des remerciements est vide ou désactivée par l’administrateur.',
 	'RATING_FORUM'				=> 'Forum',
 	'RATING_POST'				=> 'Message',
 	'RATING_TOP_FORUM'			=> 'Classement des forums',
@@ -94,28 +93,28 @@ $lang = array_merge($lang, array(
 	'THANK'						=> 'Heure',
 	'THANK_FROM'				=> 'de',
 	'THANK_TEXT_1'				=> 'Ces utilisateurs ont remercié l’auteur ',
-	'THANK_TEXT_2'				=> ' pour son message : ',
-	'THANK_TEXT_2PL'			=> ' pour son message (total %d) :',
-	'THANK_POST'				=> 'Remercier pour ce message l’auteur : ',
-	'THANK_POST_SHORT'			=> 'Remerciements',
+	'THANK_TEXT_2'				=> ' pour son message : ',
+	'THANK_TEXT_2PL'			=> ' pour son message (%d au total) : ',
+	'THANK_POST'				=> 'Remercier l’auteur de ce message : ',
+	'THANK_POST_SHORT'			=> 'Remercier',
 	'THANKS'					=> array(
 		1	=> '%d fois',
 		2	=> '%d fois',
 	),
 	'THANKS_BACK'				=> 'Retour',
-	'THANKS_INFO_GIVE'			=> 'Vous venez de remercier l’auteur pour son message.',
-	'THANKS_INFO_REMOVE'		=> 'Vous venez de retirer vos remerciements à l’auteur pour son message.',
-	'THANKS_LIST'				=> 'Voir / Fermer la liste',
+	'THANKS_INFO_GIVE'			=> 'Vous venez de remercier l’auteur de ce message.',
+	'THANKS_INFO_REMOVE'		=> 'Vous venez de supprimer votre remerciement pour l’auteur de ce message.',
+	'THANKS_LIST'				=> 'Afficher / Masquer la liste',
 	'THANKS_PM_MES_GIVE'		=> 'vous a remercié pour le message',
-	'THANKS_PM_MES_REMOVE'		=> 'a retiré son remerciement pour le message',
+	'THANKS_PM_MES_REMOVE'		=> 'a supprimé son remerciement pour le message',
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Remerciement pour le message',
-	'THANKS_PM_SUBJECT_REMOVE'	=> 'Remerciement retiré pour le message',
+	'THANKS_PM_SUBJECT_REMOVE'	=> 'Remerciement supprimé pour le message',
 	'THANKS_USER'				=> 'Liste des remerciements',
 
 	'THANKS_INSTALLED'			=> 'Remerciements pour le message',
-	'THANKS_INSTALLED_EXPLAIN'  => '<strong>ATTENTION !<br />Il est fortement conseillé de lancer l’installation après avoir suivi l’instruction sur les changements du code dans les fichiers (ou d’effectuer l’installation à l’aide d’AutoMod) ! <br />Il est également fortement recommandé de sélectionner Oui pour afficher les résultats complets (ci-dessous) !</strong>',
-	'THANKS_CUSTOM0_FUNCTION'	=> 'Mettre à jour les valeurs de la table de la basse de données : _thanks',
-	'THANKS_CUSTOM1_FUNCTION'	=> 'Vérifier que l’extension est retirée',
+	'THANKS_INSTALLED_EXPLAIN'  => '<strong>Merci de noter :<br />Il est fortement recommandé de démarrer l’installation après avoir suivi l’instruction sur les modifications du code dans les fichiers (ou d’effectuer l’installation à l’aide de l’outil « AutoMod ») ! <br />Il est également fortement recommandé de sélectionner « Oui » pour afficher les résultats complets (ci-dessous) !</strong>',
+	'THANKS_CUSTOM0_FUNCTION'	=> 'Mettre à jour les valeurs de la table de la basse de données : _thanks',
+	'THANKS_CUSTOM1_FUNCTION'	=> 'Vérifier que l’extension a été retirée',
 	'THANKS_CUSTOM2_FUNCTION'	=> 'Vérifier la mise à jour du cache',
-	'TOPLIST'					=> 'Top du classement des messages',
+	'TOPLIST'					=> 'Top du classement des remerciements',
 ));
