@@ -46,7 +46,7 @@ $lang = array_merge($lang, array(
 
 	'DISABLE_REMOVE_THANKS'		=> 'L\'administrador ha desactivat l\'opció de retirar els agraïments',
 
-	'GIVEN'						=> 'Gràcies&nbsp;rebudes',
+	'GIVEN'						=> 'Gràcies&nbsp;donades',
 	'GLOBAL_INCORRECT_THANKS'	=> 'No pots agrair un Anunci Global que no fa referència a cap fòrum en particular.',
 	'GRATITUDES'				=> 'Llista d\'agraïments',
 
@@ -72,7 +72,7 @@ $lang = array_merge($lang, array(
 	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Algú ha agraït un missatge teu',
 	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Algú ha cancel·lat un agraïment en un missatge teu',
 
-	'RECEIVED'					=> 'Gràcies&nbsp;donades',
+	'RECEIVED'					=> 'Gràcies&nbsp;rebudes',
 	'REMOVE_THANKS'				=> 'Cancel·la el teu agraïment: ',
 	'REMOVE_THANKS_CONFIRM'		=> 'Estàs segur de cancel·lar el teu agraïment?',
 	'REMOVE_THANKS_SHORT'		=> 'Cancel·la agraïment',
