@@ -3,8 +3,7 @@
     "type": "phpbb-extension",
     "description": "Adds the ability to thank the author (thanks to cancel), and use the rating system posts/topics/forums based on the issued of thanks.",
     "homepage": "http://www.phpbbguru.net",
-    "version": "2.0.2",
-    "time": "2015-01-02",
+    "version": "2.0.3-dev",
     "license": "GPL-2.0",
     "authors": [
         {
@@ -27,7 +26,7 @@
    "extra": {
         "display-name": "Thanks for posts",
         "soft-require": {
-           "phpbb/phpbb": ">=3.1.4-RC1"
+           "phpbb/phpbb": ">=3.1.4-RC1,<3.3.0@dev"
         }
     }
 }

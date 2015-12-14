@@ -45,6 +45,14 @@ class thanks extends \phpbb\notification\type\base
 		'group'	=> 'NOTIFICATION_GROUP_MISCELLANEOUS',
 	);
 
+	/** @var \phpbb\user_loader */
+	protected $user_loader;
+
+	public function set_user_loader(\phpbb\user_loader $user_loader)
+	{
+		$this->user_loader = $user_loader;
+	}
+
 	/**
 	* Is available
 	*/
@@ -126,14 +134,14 @@ class thanks extends \phpbb\notification\type\base
 
 		if ($trimmed_thankers_cnt > 20)
 		{
-			$usernames[] = $this->user->lang('NOTIFICATION_MANY_OTHERS');
+			$usernames[] = $this->language->lang('NOTIFICATION_MANY_OTHERS');
 		}
 		else if ($trimmed_thankers_cnt)
 		{
-			$usernames[] = $this->user->lang('NOTIFICATION_X_OTHERS', $trimmed_thankers_cnt);
+			$usernames[] = $this->language->lang('NOTIFICATION_X_OTHERS', $trimmed_thankers_cnt);
 		}
 
-		return $this->user->lang(
+		return $this->language->lang(
 			$this->language_key,
 			phpbb_generate_string_list($usernames, $this->user),
 			$thankers_cnt
@@ -198,7 +206,7 @@ class thanks extends \phpbb\notification\type\base
 	*/
 	public function get_reference()
 	{
-		return $this->user->lang(
+		return $this->language->lang(
 			'NOTIFICATION_REFERENCE',
 			censor_text($this->get_data('post_subject'))
 		);
@@ -230,10 +238,10 @@ class thanks extends \phpbb\notification\type\base
 		$username = $this->user_loader->get_username($this->get_data('poster_id'), 'username');
 
 		return array(
-				'THANKS_SUBG'	=> htmlspecialchars_decode($this->user->lang['THANKS_PM_SUBJECT_'. $this->get_data('lang_act')]),
+				'THANKS_SUBG'	=> htmlspecialchars_decode($this->language->lang('THANKS_PM_SUBJECT_'. $this->get_data('lang_act'))),
 				'USERNAME'		=> htmlspecialchars_decode($this->user->data['username']),
 				'POST_SUBJECT'	=> htmlspecialchars_decode(censor_text($this->get_data('post_subject'))),
-				'POST_THANKS'	=> htmlspecialchars_decode($this->user->lang['THANKS_PM_MES_'. $this->get_data('lang_act')]),
+				'POST_THANKS'	=> htmlspecialchars_decode($this->language->lang('THANKS_PM_MES_'. $this->get_data('lang_act'))),
 				'POSTER_NAME'	=> htmlspecialchars_decode($username),
 				'U_POST_THANKS'	=> generate_board_url() . '/viewtopic.' . $this->php_ext . "?p={$this->item_id}#p{$this->item_id}",
 		);

@@ -65,18 +65,15 @@ dl.thanks dt {
 /* Profile & navigation icons */
 .thanks-icon:before
 {
-     background-position: -3px -1px;
-     background-image: url("./images/icons_button_likes.png");
+  content: '\f087';
+  font-size: 14px;
 }
-.thanks-icon:hover:before{ background-position: -3px -19px; }
 
 .removethanks-icon:before
 {
-	background-position: -18px -2px;
-    background-image: url("./images/icons_button_likes.png");
-
+  content: '\f088';
+  font-size: 14px;
 }
-.removethanks-icon:hover:before	{background-position: -18px -20px; }
 
 .thanks_reput_image_back
 {
