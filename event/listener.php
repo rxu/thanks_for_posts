@@ -108,6 +108,7 @@ class listener implements EventSubscriberInterface
 			'core.viewtopic_assign_template_vars_before'	=> 'viewtopic_check_f_thanks_auth',
 			'paybas.recenttopics.modify_tpl_ary'	=> 'recenttopics_output_topics_reput',
 			'paybas.recenttopics.modify_topics_list'=> 'recenttopics_get_topics_reput',
+			'core.permissions'						=> 'add_permission',
 		);
 	}
 
@@ -296,5 +297,15 @@ class listener implements EventSubscriberInterface
 			$this->topic_thanks = $this->helper->get_thanks_topic_number($topic_list);
 			$this->max_topic_thanks = $this->helper->get_max_topic_thanks();
 		}
+	}
+
+	public function add_permission($event)
+	{
+		$permissions = $event['permissions'];
+		$permissions['f_thanks'] = array('lang' => 'ACL_F_THANKS', 'cat' => 'misc');
+		$permissions['m_thanks'] = array('lang' => 'ACL_M_THANKS', 'cat' => 'misc');
+		$permissions['u_viewthanks'] = array('lang' => 'ACL_U_VIEWTHANKS', 'cat' => 'misc');
+		$permissions['u_viewtoplist'] = array('lang' => 'ACL_U_VIEWTOPLIST', 'cat' => 'misc');
+		$event['permissions'] = $permissions;
 	}
 }
