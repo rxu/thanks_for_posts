@@ -79,6 +79,7 @@ services:
         parent: notification.type.base
         calls:
             - [set_user_loader, [@user_loader]]
+            - [set_notifications_table, [%tables.notifications%]]
         tags:
             - { name: notification.type }
     gfksx.ThanksForPosts.notification.type.thanks_remove:

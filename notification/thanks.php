@@ -45,8 +45,16 @@ class thanks extends \phpbb\notification\type\base
 		'group'	=> 'NOTIFICATION_GROUP_MISCELLANEOUS',
 	);
 
+	/** @var string */
+	protected $notifications_table;
+
 	/** @var \phpbb\user_loader */
 	protected $user_loader;
+
+	public function set_notifications_table($notifications_table)
+	{
+		$this->notifications_table = $notifications_table;
+	}
 
 	public function set_user_loader(\phpbb\user_loader $user_loader)
 	{
@@ -270,7 +278,7 @@ class thanks extends \phpbb\notification\type\base
 		$this->set_data('post_subject', $thanks_data['post_subject']);
 		$this->set_data('poster_id', $thanks_data['poster_id']);
 
-		return parent::create_insert_array($thanks_data, $pre_create_data);
+		parent::create_insert_array($thanks_data, $pre_create_data);
 	}
 
 	/**
@@ -292,6 +300,8 @@ class thanks extends \phpbb\notification\type\base
 			$data = unserialize($row['notification_data']);
 			$thanks_data['thankers'] = (!empty($data['thankers'])) ? $data['thankers'] : array();
 		}
-		return $this->create_insert_array($thanks_data);
+
+		$this->create_insert_array($thanks_data);
+		return $this->get_insert_array();
 	}
 }
