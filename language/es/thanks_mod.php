@@ -38,19 +38,19 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'CLEAR_LIST_THANKS'			=> 'Limpiar lista de gracias',
-	'CLEAR_LIST_THANKS_CONFIRM'	=> '¿De verdad quieren limpiar la lista gracias a un usuario?',
-	'CLEAR_LIST_THANKS_GIVE'	=> 'La lista de gracias ha sido limpiada.',
-	'CLEAR_LIST_THANKS_POST'	=> 'La lista de gracias en los mensajes ha sido borrada',
-	'CLEAR_LIST_THANKS_RECEIVE'	=> 'La lista de gracias recibidas por un usuario ,ha sido borrada.',
+	'CLEAR_LIST_THANKS'			=> 'Limpiar lista de agradecimientos',
+	'CLEAR_LIST_THANKS_CONFIRM'	=> '¿De verdad quieren limpiar la lista agradecimientos del usuario?',
+	'CLEAR_LIST_THANKS_GIVE'	=> 'La lista de agradecimiento ha sido limpiada.',
+	'CLEAR_LIST_THANKS_POST'	=> 'La lista de agradecimiento en los mensajes ha sido borrada',
+	'CLEAR_LIST_THANKS_RECEIVE'	=> 'La lista de agradecimientos recibidos por un usuario, ha sido borrada.',
 
-	'DISABLE_REMOVE_THANKS'		=> 'Borrar gracias esta desactivado por el administrador',
+	'DISABLE_REMOVE_THANKS'		=> 'Borrar agradecimientos esta desactivado por el Administrador',
 
 	'GIVEN'						=> 'Agradecido ',
 	'GLOBAL_INCORRECT_THANKS'	=> 'No se puede dar gracias al Anuncio global que no tiene ninguna relación con el foro en particular.',
-	'GRATITUDES'				=> 'Gratitudes',
+	'GRATITUDES'				=> 'Agradecimientos',
 
-	'INCORRECT_THANKS'			=> 'Gracias no validas',
+	'INCORRECT_THANKS'			=> 'Agradecimientos no validas',
 
 	'JUMP_TO_FORUM'				=> 'Ir al foro',
 	'JUMP_TO_TOPIC'				=> 'Ir al tema',
@@ -59,7 +59,7 @@ $lang = array_merge($lang, array(
 	'FURTHER_THANKS'     	    => ' y otro usario',
 	'FURTHER_THANKS_PL'         => ' y d% usuarios más',
 
-	'NO_VIEW_USERS_THANKS'		=> 'No está autorizado para ver la lista de gracias.',
+	'NO_VIEW_USERS_THANKS'		=> 'No está autorizado para ver la lista de agradecimientos.',
 
 	'NOTIFICATION_THANKS_GIVE'	=> array(
 		1 => '<strong>Agradecimiento recibido</strong> de %1$s por el mensaje:',
@@ -70,13 +70,13 @@ $lang = array_merge($lang, array(
 		2 => '<strong>Agradecimientos eliminados</strong> de %1$s por el mensaje:',
 	),
 	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Alguien le dio las gracias por su mensaje',
-	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Alguien elimino el agradecimientos por su mensaje',
+	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Alguien elimino el agradecimiento por su mensaje',
 
 	'RECEIVED'					=> 'Agradecimiento recibido',
 	'REMOVE_THANKS'				=> 'Eliminar su agradecimiento: ',
 	'REMOVE_THANKS_CONFIRM'		=> '¿Está seguro que desea eliminar su agradecimiento?',
 	'REMOVE_THANKS_SHORT'		=> 'Eliminar agradecimiento',
-	'REPUT'						=> 'Valoreción',
+	'REPUT'						=> 'Valoración',
 	'REPUT_TOPLIST'				=> 'Lista TOP de agradecimientos — %d',
 	'RETING_LOGIN_EXPLAIN'		=> 'No está autorizado para ver la Lista TOP.',
 	'RATING_NO_VIEW_TOPLIST'	=> 'No está autorizado para ver la Lista TOP.',
@@ -105,15 +105,15 @@ $lang = array_merge($lang, array(
 	'THANKS_INFO_REMOVE'		=> 'Acaba de eliminar el agradecimiento.',
 	'THANKS_LIST'				=> 'Ver/Cerrar lista',
 	'THANKS_PM_MES_GIVE'		=> 'Gracias por el mensaje',
-	'THANKS_PM_MES_REMOVE'		=> 'Eliminar gracias',
+	'THANKS_PM_MES_REMOVE'		=> 'Eliminar agradecimiento',
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Gracias por el mensaje',
-	'THANKS_PM_SUBJECT_REMOVE'	=> 'Eliminar gracias',
-	'THANKS_USER'				=> 'Lista de gracias',
+	'THANKS_PM_SUBJECT_REMOVE'	=> 'Eliminar agradecimiento',
+	'THANKS_USER'				=> 'Lista de agradecimientos',
 
 	'THANKS_INSTALLED'			=> 'Gracias por el Mensaje',
-	'THANKS_INSTALLED_EXPLAIN'  => '<strong>¡Precaución!<br />Recomendamos ejecutar el instalador despues de hacer los cambios de codigo en los archivos indicados en el install_thanks_mod.xml(o instalar co automod)< /br>Tambien recomedamos Seleccionar "Si" para mostrar resultados completos</strong>',
+	'THANKS_INSTALLED_EXPLAIN'  => '<strong>¡Precaución!<br />Recomendamos ejecutar el instalador despues de hacer los cambios de codigo en los archivos indicados en el install_thanks_mod.xml (o instalar con AutoMOD)<br />Tambien recomedamos Seleccionar "Si" para mostrar resultados completos</strong>',
 	'THANKS_CUSTOM_FUNCTION'	=> 'Actualizando los valores de la tabla _thanks',
 	'THANKS_CUSTOM1_FUNCTION'	=> 'Comprobar módulo retirado',
-	'THANKS_CUSTOM2_FUNCTION'	=> 'Comprobar el refresco de cache',
+	'THANKS_CUSTOM2_FUNCTION'	=> 'Comprobar el refresco de caché',
 	'TOPLIST'					=> 'Lista TOP de mensajes',
 ));
