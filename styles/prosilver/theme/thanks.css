@@ -56,6 +56,10 @@ dl.thanks dt {
 	background-position: 5px 95%;		/* Position of topic icon */
 }
 
+table.table1 .posts.wfix {
+    width: 25%;
+}
+
 /* Icon images
 ---------------------------------------- */
 .icon-thanks			{ background-image: url("./images/icon_thanks.gif"); background-repeat: no-repeat; }
