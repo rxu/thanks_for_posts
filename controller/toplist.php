@@ -124,7 +124,7 @@ class toplist
 			{
 				trigger_error('RATING_NO_VIEW_TOPLIST');
 			}
-			login_box('', ((isset($this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)])) ? $this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)] : $this->user->lang['RETING_LOGIN_EXPLAIN']));
+			login_box('', ((isset($this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)])) ? $this->user->lang['LOGIN_EXPLAIN_' . strtoupper($mode)] : $this->user->lang['RATING_LOGIN_EXPLAIN']));
 		}
 		$notoplist = true;
 		$start	= $this->request->variable('start', 0);
