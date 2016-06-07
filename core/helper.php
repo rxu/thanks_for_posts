@@ -134,7 +134,7 @@ class helper
 		$further_thanks = $count = 0;
 		$maxcount = (isset($this->config['thanks_number_post']) ? $this->config['thanks_number_post'] : false);
 
-		foreach($this->thankers as $thanker)
+		foreach ($this->thankers as $thanker)
 		{
 			if ($thanker['post_id'] == $post_id)
 			{
@@ -168,7 +168,7 @@ class helper
 	public function get_thanks_number($post_id)
 	{
 		$i = 0;
-		foreach($this->thankers as $thanker)
+		foreach ($this->thankers as $thanker)
 		{
 			if ($thanker['post_id'] == $post_id)
 			{
@@ -438,7 +438,7 @@ class helper
 	public function already_thanked($post_id, $user_id)
 	{
 		$thanked = false;
-		foreach($this->thankers as $thanker)
+		foreach ($this->thankers as $thanker)
 		{
 			if ($thanker['post_id'] == $post_id && $thanker['user_id'] == $user_id)
 			{
@@ -494,7 +494,7 @@ class helper
 		$user_list = array();
 		$post_list = array ();
 		$i=0;
-		foreach($thankers_member as $key => $value)
+		foreach ($thankers_member as $key => $value)
 		{
 			if ($thankers_member[$key]['poster_id'] == $user_id)
 			{
@@ -511,7 +511,7 @@ class helper
 		$collim = ($poster_limit > $poster_receive_count)? ceil($poster_receive_count/4) : ceil($poster_limit/4);
 		$thanked .= '<span style="float: left;">';
 		$i = $j = 0;
-		foreach($user_list as $value)
+		foreach ($user_list as $value)
 		{
 			$i++;
 			if ($i <= $poster_limit)
@@ -568,7 +568,7 @@ class helper
 		$this->db->sql_freeresult($result);
 
 		$i=0;
-		foreach($thankered_member as $key => $value)
+		foreach ($thankered_member as $key => $value)
 		{
 			if ($thankered_member[$key]['user_id'] == $user_id)
 			{
@@ -585,7 +585,7 @@ class helper
 		$collim = ($poster_limit > $poster_give_count)? ceil($poster_give_count/4) : ceil($poster_limit/4);
 		$thanks .= '<span style="float: left;">';
 		$i = $j = 0;
-		foreach($post_list as $value)
+		foreach ($post_list as $value)
 		{
 			$i++;
 			if ($i <= $poster_limit)
@@ -731,7 +731,7 @@ class helper
 		}
 
 		//array thanks_count for all poster on viewtopic page
-		if(isset($this->config['thanks_counters_view']) ? $this->config['thanks_counters_view'] : false)
+		if (isset($this->config['thanks_counters_view']) ? $this->config['thanks_counters_view'] : false)
 		{
 			$sql = 'SELECT DISTINCT poster_id FROM '. $this->posts_table . ' WHERE ' . $this->db->sql_in_set('post_id', $post_list);
 			$result = $this->db->sql_query($sql);
@@ -745,7 +745,7 @@ class helper
 			$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 			$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : false;
 
-			$sql = 'SELECT *, COUNT(poster_id) AS poster_count FROM ' . $this->thanks_table . '
+			$sql = 'SELECT poster_id, COUNT(poster_id) AS poster_count FROM ' . $this->thanks_table . '
 				WHERE ' . $this->db->sql_in_set('poster_id', $poster_list) . '
 					AND ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . '
 				GROUP BY poster_id';
@@ -756,7 +756,7 @@ class helper
 			}
 			$this->db->sql_freeresult($result);
 
-			$sql = 'SELECT *, COUNT(user_id) AS user_count FROM ' . $this->thanks_table . '
+			$sql = 'SELECT user_id, COUNT(user_id) AS user_count FROM ' . $this->thanks_table . '
 				WHERE ' . $this->db->sql_in_set('user_id', $poster_list) . '
 					AND ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . '
 				GROUP BY user_id';

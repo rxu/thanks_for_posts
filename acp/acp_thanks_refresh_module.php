@@ -98,7 +98,7 @@ class acp_thanks_refresh_module
 				$all_posts_thanks = $cache->get('_all_posts_thanks');
 
 				// update delete posts
-				if(!empty($all_posts))
+				if (!empty($all_posts))
 				{
 					$sql = 'DELETE FROM ' . $thanks_table ."
 						WHERE " . $db->sql_in_set('post_id', $all_posts, false);
@@ -120,7 +120,7 @@ class acp_thanks_refresh_module
 				}
 				$db->sql_freeresult($result);
 
-				if(!empty($posts_delete_us))
+				if (!empty($posts_delete_us))
 				{
 					$del_uthanks = count($posts_delete_us);
 					$sql = 'DELETE FROM ' . $thanks_table ."
@@ -175,7 +175,7 @@ class acp_thanks_refresh_module
 					}
 					$db->sql_freeresult($result);
 
-					if(!empty($all_first_posts))
+					if (!empty($all_first_posts))
 					{
 						$sql = 'DELETE FROM ' . $thanks_table ."
 							WHERE " . $db->sql_in_set('post_id', $all_first_posts, true);
@@ -199,7 +199,7 @@ class acp_thanks_refresh_module
 					}
 					$db->sql_freeresult($result);
 
-					if(!empty($all_global_posts))
+					if (!empty($all_global_posts))
 					{
 						$sql = 'DELETE FROM ' . $thanks_table ."
 							WHERE " . $db->sql_in_set('topic_id', $all_global_posts, false);
