@@ -117,7 +117,7 @@ class thankslist
 		$top = $this->request->variable('top', 0);
 		$start = $this->request->variable('start', 0);
 		$submit = (isset($_POST['submit'])) ? true : false;
-		$default_key = 'a';
+		$default_key = 'e';
 		$sort_key = $this->request->variable('sk', $default_key);
 		$sort_dir = $this->request->variable('sd', 'd');
 		$topic_id = $this->request->variable('t', 0);
