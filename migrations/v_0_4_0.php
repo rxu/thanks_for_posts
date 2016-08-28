@@ -21,7 +21,7 @@ class v_0_4_0 extends \phpbb\db\migration\migration
 		$this->poster_id_field_exists = ($this->thanks_table_exists) ? $this->db_tools->sql_column_exists($this->table_prefix . 'thanks', 'poster_id') : false;
 
 		return (isset($this->config['thanks_for_posts_version']) || isset($this->config['thanks_mod_version'])
-			|| ($thanks_table_exists && $poster_id_field_exists));
+			|| ($this->thanks_table_exists && $this->poster_id_field_exists));
 	}
 
 	static public function depends_on()
