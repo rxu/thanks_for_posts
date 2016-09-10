@@ -28,6 +28,11 @@
         "display-name": "Thanks for posts",
         "soft-require": {
            "phpbb/phpbb": ">=3.1.4-RC1"
+        },
+        "version-check": {
+            "host":      "cdn.rawgit.com",
+            "directory": "/rxu/thanks_for_posts/master",
+            "filename":  "versions.json"
         }
     }
 }

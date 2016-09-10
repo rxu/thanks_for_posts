@@ -1,0 +1,20 @@
+{
+	"stable": {
+		"2.0.2": {
+			"current": "2.0.2",
+			"announcement": "https://www.phpbb.com/community/viewtopic.php?f=456&t=2259046",
+			"download": "https://github.com/rxu/thanks_for_posts/archive/master.zip",
+			"eol": null,
+			"security": false
+		}
+	},
+	"unstable": {
+		"2.0.2": {
+			"current": "2.0.2",
+			"announcement": "https://www.phpbb.com/community/viewtopic.php?f=456&t=2259046",
+			"download": "https://github.com/rxu/thanks_for_posts/archive/master.zip",
+			"eol": null, 
+			"security": false
+		}
+	}
+}
