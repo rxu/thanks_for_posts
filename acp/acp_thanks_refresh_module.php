@@ -25,8 +25,8 @@ class acp_thanks_refresh_module
 		$this->page_title = 'ACP_THANKS_REFRESH';
 
 		$posts_delete_us = $all_posts = array();
-		$end_thanks = $del_thanks = $all_thanks = $all_posts_number = $all_users_thanks = $all_posts_thanks = $end_posts_thanks = $end_users_thanks = $thanks_update = '';
-		$del_uthanks = $del_nofirst_thanks = $del_selfthanks = 0;
+		$del_thanks = $end_thanks = $del_uthanks = $end_posts_thanks = $end_users_thanks = $thanks_update = 0;
+		$del_nofirst_thanks = $del_selfthanks = $all_users_thanks = $all_thanks = $all_posts_number = $all_posts_thanks = 0;
 
 		$thanks_table = $phpbb_container->getParameter('tables.thanks');
 
@@ -91,11 +91,11 @@ class acp_thanks_refresh_module
 			// check mode
 			if (confirm_box(true))
 			{
-				$all_users_thanks = $cache->get('_all_users_thanks');
-				$all_thanks = $cache->get('_all_thanks');
+				$all_users_thanks = (int) $cache->get('_all_users_thanks');
+				$all_thanks = (int) $cache->get('_all_thanks');
 				$all_posts = $cache->get('_all_posts');
-				$all_posts_number = $cache->get('_all_posts_number');
-				$all_posts_thanks = $cache->get('_all_posts_thanks');
+				$all_posts_number = (int) $cache->get('_all_posts_number');
+				$all_posts_thanks = (int) $cache->get('_all_posts_thanks');
 
 				// update delete posts
 				if (!empty($all_posts))
@@ -103,10 +103,11 @@ class acp_thanks_refresh_module
 					$sql = 'DELETE FROM ' . $thanks_table ."
 						WHERE " . $db->sql_in_set('post_id', $all_posts, false);
 					$result = $db->sql_query($sql);
-					$del_thanks = $db->sql_affectedrows($result);
+					$del_thanks = (int) $db->sql_affectedrows($result);
 					$db->sql_freeresult($result);
-				}
 					$end_thanks = $all_thanks - $del_thanks;
+				}
+
 				// update delete users
 				$sql = 'SELECT t.post_id
 					FROM ' . $thanks_table . ' t 
