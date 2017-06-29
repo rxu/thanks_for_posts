@@ -1,19 +1,19 @@
-<!-- INCLUDE overall_header.html -->
+{% include 'overall_header.html' %}
 
-<h2 class="solo">{PAGE_TITLE}</h2>
+<h2 class="solo">{{ PAGE_TITLE }}</h2>
 
-<!-- IF .pagination or TOTAL_USERS -->
+{% if pagination or TOTAL_USERS %}
 	<div class="action-bar top">
 		<div class="pagination">
 			{TOTAL_USERS}
-			<!-- IF .pagination -->
-				<!-- INCLUDE pagination.html -->
-			<!-- ELSE -->
-				 &bull; {PAGE_NUMBER}
-			<!-- ENDIF -->
+			{% if pagination %}
+				{% include 'pagination.html' %}
+			{% else %}
+				 &bull; {{ PAGE_NUMBER }}
+			{% endif %}
 		</div>
 	</div>
-<!-- ENDIF -->
+{% endif %}
 
 	<div class="forumbg forumbg-table">
 		<div class="inner">
@@ -21,49 +21,49 @@
 			<table class="table1" cellspacing="1">
 				<thead>
 				<tr>
-					<th class="name" data-dfn="{L_RANK}{L_COMMA_SEPARATOR}{L_USERNAME}"><!-- IF S_THANKS --><span class="rank-img"><a href="{U_SORT_RANK}">{L_RANK}</a></span><a href="{U_SORT_USERNAME}">{L_USERNAME}</a><!-- ENDIF --></th>
-					<th class="posts"><!-- IF S_THANKS --><a href="{U_SORT_POSTS}">{L_POSTS}</a><!-- ELSE -->{L_POSTS}<!-- ENDIF --></th>
-					<th class="posts"><!-- IF S_THANKS --><a href="{U_SORT_THANKS_G}">{L_GIVEN}</a><!-- ELSE -->{L_GIVEN}<!-- ENDIF --></th>
-					<th class="posts"><!-- IF S_THANKS --><a href="{U_SORT_THANKS_R}">{L_RECEIVED}</a><!-- ELSE -->{L_RECEIVED}<!-- ENDIF --></th>
-					<th class="info"><!-- BEGIN custom_fields --><!-- IF not custom_fields.S_FIRST_ROW -->{L_COMMA_SEPARATOR} <!-- ENDIF -->{custom_fields.PROFILE_FIELD_NAME}<!-- END custom_fields --></th>
-					<th class="joined"><!-- IF S_THANKS --><a href="{U_SORT_JOINED}">{L_JOINED}</a><!-- ELSE -->{L_JOINED}<!-- ENDIF --></th>
-					<th class="active"><!-- IF S_THANKS --><a href="{U_SORT_ACTIVE}">{L_LAST_ACTIVE}</a><!-- ELSE -->{L_LAST_ACTIVE}<!-- ENDIF --></th>
+					<th class="name" data-dfn="{{ lang('RANK') }}{{ lang('COMMA_SEPARATOR') }}{{ lang('USERNAME') }}">{% if S_THANKS %}<span class="rank-img"><a href="{{ U_SORT_RANK }}">{{ lang('RANK') }}</a></span><a href="{{ U_SORT_USERNAME }}">{{ lang('USERNAME') }}</a>{% endif %}</th>
+					<th class="posts">{% if S_THANKS %}<a href="{{ U_SORT_POSTS }}">{{ lang('POSTS') }}</a>{% else %}{{ lang('POSTS') }}{% endif %}</th>
+					<th class="posts">{% if S_THANKS %}<a href="{{ U_SORT_THANKS_G }}">{{ lang('GIVEN') }}</a>{% else %}{{ lang('GIVEN') }}{% endif %}</th>
+					<th class="posts">{% if S_THANKS %}<a href="{{ U_SORT_THANKS_R }}">{{ lang('RECEIVED') }}</a>{% else %}{{ lang('RECEIVED') }}{% endif %}</th>
+					<th class="info">{% for cfield in loops.custom_fields %}{% if not cfield.S_FIRST_ROW %}{{ lang('COMMA_SEPARATOR') }} {% endif %}{{ cfield.PROFILE_FIELD_NAME }}{% endfor %}</th>
+					<th class="joined">{% if S_THANKS %}<a href="{{ U_SORT_JOINED }}">{{ lang('JOINED') }}</a>{% else %}{{ lang('JOINED') }}{% endif %}</th>
+					<th class="active">{% if S_THANKS %}<a href="{{ U_SORT_ACTIVE }}">{{ lang('LAST_ACTIVE') }}</a>{% else %}{{ lang('LAST_ACTIVE') }}{% endif %}</th>
 				</tr>
 				</thead>
 				<tbody>
-		<!-- BEGIN memberrow -->
-				<tr class="<!-- IF memberrow.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
-					<td><!-- IF memberrow.RANK_IMG --><span class="rank-img">{memberrow.RANK_IMG}</span><!-- ELSE --><span class="rank-img">{memberrow.RANK_TITLE}</span><!-- ENDIF --><!-- IF S_IN_SEARCH_POPUP and not S_SELECT_SINGLE --><input type="checkbox" name="user" value="{memberrow.USERNAME}" /> <!-- ENDIF -->{memberrow.USERNAME_FULL}</td>
-					<td class="posts"><!-- IF memberrow.POSTS --><a href="{memberrow.U_SEARCH_USER}" title="{L_SEARCH_USER_POSTS}">{memberrow.POSTS}</a><!-- ELSE -->{memberrow.POSTS}<!-- ENDIF --></td>
-					<td class="posts"><!-- IF memberrow.GIVENS --><a href="{memberrow.U_SEARCH_USER_GIVENS}" title="{L_SEARCH_USER_POSTS}">{memberrow.GIVENS}</a><!-- ELSE -->{memberrow.GIVENS}<!-- ENDIF --> </td>
-					<td class="posts"><!-- IF memberrow.RECEIVED --><a href="{memberrow.U_SEARCH_USER_RECEIVED}" title="{L_SEARCH_USER_POSTS}">{memberrow.RECEIVED}</a><!-- ELSE -->{memberrow.RECEIVED}<!-- ENDIF --></td>
-					<td class="info"><!-- BEGIN custom_fields --><div>{memberrow.custom_fields.PROFILE_FIELD_VALUE}</div><!-- BEGINELSE -->&nbsp;<!-- END custom_fields --></td>
-					<td>{memberrow.JOINED}</td>
-					<td>{memberrow.VISITED}&nbsp;</td>
+		{% for memrow in loops.memberrow %}
+				<tr class="{% if memrow.S_ROW_COUNT is even %}bg1{% else %}bg2{% endif %}">
+					<td>{% if memrow.RANK_IMG %}<span class="rank-img">{{ memrow.RANK_IMG }}</span>{% else %}<span class="rank-img">{{ memrow.RANK_TITLE }}</span>{% endif %}{% if S_IN_SEARCH_POPUP and not S_SELECT_SINGLE %}<input type="checkbox" name="user" value="{{ memrow.USERNAME }}" /> {% endif %}{{ memrow.USERNAME_FULL }}</td>
+					<td class="posts">{% if memrow.POSTS %}<a href="{{ memrow.U_SEARCH_USER }}" title="{{ lang('SEARCH_USER_POSTS') }}">{{ memrow.POSTS }}</a>{% else %}{{ memrow.POSTS }}{% endif %}</td>
+					<td class="posts">{% if memrow.GIVENS %}<a href="{{ memrow.U_SEARCH_USER_GIVENS }}" title="{{ lang('SEARCH_USER_POSTS') }}">{{ memrow.GIVENS }}</a>{% else %}{{ memrow.GIVENS }}{% endif %} </td>
+					<td class="posts">{% if memrow.RECEIVED %}<a href="{{ memrow.U_SEARCH_USER_RECEIVED }}" title="{{ lang('SEARCH_USER_POSTS') }}">{{ memrow.RECEIVED }}</a>{% else %}{{ memrow.RECEIVED }}{% endif %}</td>
+					<td class="info">{% for cfield in loops.custom_fields %}<div>{{ memrow.cfield.PROFILE_FIELD_VALUE }}</div>{% else %}&nbsp;{% endfor %}</td>
+					<td>{{ memrow.JOINED }}</td>
+					<td>{{ memrow.VISITED }}&nbsp;</td>
 				</tr>
-		<!-- BEGINELSE -->
+		{% else %}
 				<tr class="bg1">
-					<td colspan="<!-- IF S_VIEWONLINE -->8<!-- ELSE -->7<!-- ENDIF -->">{L_NO_MEMBERS}</td>
+					<td colspan="{% if S_VIEWONLINE %}8{% else %}7{% endif %}">{{ lang('NO_MEMBERS') }}</td>
 				</tr>
-		<!-- END memberrow -->
+		{% endfor %}
 				</tbody>
 			</table>
 		</div>
 	</div>
 
-<!-- IF .pagination or TOTAL_USERS -->
+{% if pagination or TOTAL_USERS %}
 	<div class="action-bar bottom">
 		<div class="pagination">
-			{TOTAL_USERS}
-			<!-- IF .pagination -->
-				<!-- INCLUDE pagination.html -->
-			<!-- ELSE -->
-				 &bull; {PAGE_NUMBER}
-			<!-- ENDIF -->
+			{{ TOTAL_USERS }}
+			{% if pagination %}
+				{% include 'pagination.html' %}
+			{% else %}
+				 &bull; {{ PAGE_NUMBER }}
+			{% endif %}
 		</div>
 	</div>
-<!-- ENDIF -->
+{% endif %}
 
-<!-- INCLUDE jumpbox.html -->
+[% include 'jumpbox.html' %}
 
-<!-- INCLUDE overall_footer.html -->
+{% include 'overall_footer.html' %}
