@@ -30,7 +30,7 @@
 					<td><a href="{{ tprow.POST_ID }}" class="post">{{ tprow.MINI_POST_IMG }}{{ tprow.POST_DATE }}&nbsp;{{ tprow.POST_SUBJECT }}</a><br />{{ tprow.MESSAGE }}</td>
 					<td>{{ tprow.POST_THANKS }}</td>
 					<td>{{ tprow.POST_AUTHOR }}</td>
-					<td><span style="display: block;">{{ lang('REPUT') }}{{ lang('COLON') }}&nbsp;{{ tprow.POST_REPUT }}
+					<td><span style="display: block;">{{ lang('REPUT') ~ lang('COLON') }}&nbsp;{{ tprow.POST_REPUT }}
 						{% if tprow.S_THANKS_REPUT_GRAPHIC %}
 						<span style="display: block; width: {{ tprow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ tprow.THANKS_REPUT_HEIGHT }}; background: url({{ tprow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ tprow.THANKS_REPUT_HEIGHT }}; width: {{ tprow.POST_REPUT }}; background: url({{ tprow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
 						{% endif %}
@@ -64,7 +64,7 @@
 					<td><a href="{ttrow.U_VIEW_TOPIC}" class="forumtitle">{ttrow.TOPIC_TITLE}</a></td>
 					<td>{{ ttrow.TOPIC_THANKS }}</td>
 					<td>{{ ttrow.TOPIC_AUTHOR }}</td>
-					<td><span style="display: block;">{{ lang('REPUT') }}{{ lang('COLON') }}&nbsp;{{ ttrow.TOPIC_REPUT }}
+					<td><span style="display: block;">{{ lang('REPUT') ~ lang('COLON') }}&nbsp;{{ ttrow.TOPIC_REPUT }}
 						{% if ttrow.S_THANKS_REPUT_GRAPHIC %}
 						<span style="display: block; width: {{ ttrow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ ttrow.THANKS_REPUT_HEIGHT }}; background: url({{ ttrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ ttrow.THANKS_REPUT_HEIGHT }}; width: {{ ttrow.TOPIC_REPUT }}; background: url({{ ttrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
 						{% endif %}
@@ -96,7 +96,7 @@
 					<td class="icon {{ tfrow.FORUM_IMG_STYLE }}" style="background-repeat: no-repeat; background-position: 10px 50%; width: 35px;"></td>
 					<td><a href="{{ tfrow.U_VIEW_FORUM }}" class="forumtitle">{{ tfrow.FORUM_NAME }}</a></td>
 					<td>{{ tfrow.FORUM_THANKS }}</td>
-					<td><span style="display: block;">{{ lang('REPUT') }}{{ lang('COLON') }}&nbsp;{{ tfrow.FORUM_REPUT }}
+					<td><span style="display: block;">{{ lang('REPUT') ~ lang('COLON') }}&nbsp;{{ tfrow.FORUM_REPUT }}
 						{% if tfrow.S_THANKS_REPUT_GRAPHIC %}
 						<span style="display: block; width: {{ tfrow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ tfrow.THANKS_REPUT_HEIGHT }}; background: url({{ tfrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ tfrow.THANKS_REPUT_HEIGHT }}; width: {{ tfrow.FORUM_REPUT }}; background: url({{ tfrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
 						{% endif %}
