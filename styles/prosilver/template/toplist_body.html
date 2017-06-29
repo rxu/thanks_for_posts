@@ -1,83 +1,49 @@
-<!-- INCLUDE overall_header.html -->
+{% include 'overall_header.html' %}
 
-<h2 class="solo">{L_TOPLIST}</h2>
+<h2 class="solo">{{ lang('TOPLIST') }}</h2>
 
-<!-- IF .pagination -->
+{% if pagination %}
 <div class="action-bar top">
 	<div class="pagination">
-		<!-- INCLUDE pagination.html -->
+		{% include 'pagination.html' %}
 	</div>
 </div>
-<!-- ENDIF -->
+{% endif %}
 
-<!-- IF S_THANKS_POST_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_FORUM_RATING -->
-<h3 class="solo"><a href="{U_SEARCH_POST}" class="forumtitle">{L_RATING_TOP_POST}</a></h3>
+{% if S_THANKS_POST_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_FORUM_RATING %}
+<h3 class="solo"><a href="{{ U_SEARCH_POST }}" class="forumtitle">{{ lang('RATING_TOP_POST') }}</a></h3>
 	<div class="forumbg forumbg-table">
 		<div class="inner">
 
 			<table class="table1" cellspacing="1">
 				<thead>
 				<tr>
-					<th class="topictitle">{L_RATING_POST}</th>
-					<th class="rating">{L_RECEIVED}</th>
-					<th class="name">{L_AUTHOR}</th>
-					<th class="rating">{L_REPUT}</th>
+					<th class="topictitle">{{ lang('RATING_POST') }}</th>
+					<th class="rating">{{ lang('RECEIVED') }}</th>
+					<th class="name">{{ lang('AUTHOR') }}</th>
+					<th class="rating">{{ lang('REPUT') }}</th>
 				</tr>
 				</thead>
 				<tbody>
-		<!-- BEGIN toppostrow -->
-				<tr class="<!-- IF toppostrow.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
-					<td><a href="{toppostrow.POST_ID}" class="post">{toppostrow.MINI_POST_IMG}{toppostrow.POST_DATE}&nbsp;{toppostrow.POST_SUBJECT}</a><br />{toppostrow.MESSAGE}</td>
-					<td>{toppostrow.POST_THANKS}</td>
-					<td>{toppostrow.POST_AUTHOR}</td>
-					<td><span style="display: block;">{L_REPUT}{L_COLON}&nbsp;{toppostrow.POST_REPUT}
-						<!-- IF toppostrow.S_THANKS_REPUT_GRAPHIC -->
-						<span style="display: block; width: {toppostrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {toppostrow.THANKS_REPUT_HEIGHT}; background: url({toppostrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {toppostrow.THANKS_REPUT_HEIGHT}; width: {toppostrow.POST_REPUT}; background: url({toppostrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;">&nbsp;</span></span>
-						<!-- ENDIF -->
+		{% for tprow in loops.toppostrow %}
+				<tr class="{% if tprow.S_ROW_COUNT is even %}bg1{% else %}bg2{% endif %}">
+					<td><a href="{{ tprow.POST_ID }}" class="post">{{ tprow.MINI_POST_IMG }}{{ tprow.POST_DATE }}&nbsp;{{ tprow.POST_SUBJECT }}</a><br />{{ tprow.MESSAGE }}</td>
+					<td>{{ tprow.POST_THANKS }}</td>
+					<td>{{ tprow.POST_AUTHOR }}</td>
+					<td><span style="display: block;">{{ lang('REPUT') }}{{ lang('COLON') }}&nbsp;{{ tprow.POST_REPUT }}
+						{% if tprow.S_THANKS_REPUT_GRAPHIC %}
+						<span style="display: block; width: {{ tprow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ tprow.THANKS_REPUT_HEIGHT }}; background: url({{ tprow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ tprow.THANKS_REPUT_HEIGHT }}; width: {{ tprow.POST_REPUT }}; background: url({{ tprow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
+						{% endif %}
 					</span></td>
 				</tr>
-		<!-- END toppostrow -->
+		{% endfor %}
 				</tbody>
 			</table>
 		</div>
 	</div>
-<!-- ENDIF -->
-<!-- IF S_THANKS_TOPIC_REPUT_VIEW and not S_FULL_POST_RATING and not S_FULL_FORUM_RATING -->
-<h3 class="solo"><a href="{U_SEARCH_TOPIC}" class="forumtitle">{L_RATING_TOP_TOPIC}</a></h3>
-	<div class="forumbg forumbg-table">
-		<div class="inner">
-
-			<table class="table1" cellspacing="1">
-				<thead>
-				<tr>
-					<th class="topictitle">&nbsp;</th>
-					<th class="topictitle">{L_RATING_TOPIC}</th>
-					<th class="name">{L_RECEIVED}</th>
-					<th class="name">{L_AUTHOR}</th>
-					<th class="rating">{L_REPUT}</th>
-				</tr>
-				</thead>
-				<tbody>
-		<!-- BEGIN toptopicrow -->
-				<tr class="<!-- IF toptopicrow.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
-					<td class="icon {toptopicrow.TOPIC_IMG_STYLE}" style="background-repeat: no-repeat; background-position: 10px 50%; width: 35px;"></td>
-					<td><a href="{toptopicrow.U_VIEW_TOPIC}" class="forumtitle">{toptopicrow.TOPIC_TITLE}</a></td>
-					<td>{toptopicrow.TOPIC_THANKS}</td>
-					<td>{toptopicrow.TOPIC_AUTHOR}</td>
-					<td><span style="display: block;">{L_REPUT}{L_COLON}&nbsp;{toptopicrow.TOPIC_REPUT}
-						<!-- IF toptopicrow.S_THANKS_REPUT_GRAPHIC -->
-						<span style="display: block; width: {toptopicrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {toptopicrow.THANKS_REPUT_HEIGHT}; background: url({toptopicrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {toptopicrow.THANKS_REPUT_HEIGHT}; width: {toptopicrow.TOPIC_REPUT}; background: url({toptopicrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;">&nbsp;</span></span>
-						<!-- ENDIF -->
-					</span></td>
-				</tr>
-		<!-- END toptopicrow -->
-				</tbody>
-			</table>
-		</div>
-	</div>
-<!-- ENDIF -->
-<!-- IF S_THANKS_FORUM_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_POST_RATING -->
-<h3 class="solo"><a href="{U_SEARCH_FORUM}" class="forumtitle">{L_RATING_TOP_FORUM}</a></h3>
+{% endif %}
+{% if S_THANKS_TOPIC_REPUT_VIEW and not S_FULL_POST_RATING and not S_FULL_FORUM_RATING %}
+<h3 class="solo"><a href="{{ U_SEARCH_TOPIC }}" class="forumtitle">{{ lang('RATING_TOP_TOPIC') }}</a></h3>
 	<div class="forumbg forumbg-table">
 		<div class="inner">
 
@@ -85,38 +51,72 @@
 				<thead>
 				<tr>
 					<th class="topictitle">&nbsp;</th>
-					<th class="topictitle">{L_RATING_FORUM}</th>
-					<th class="name">{L_RECEIVED}</th>
-					<th class="rating">{L_REPUT}</th>
+					<th class="topictitle">{{ lang('RATING_TOPIC') }}</th>
+					<th class="name">{{ lang('RECEIVED') }}</th>
+					<th class="name">{{ lang('AUTHOR') }}</th>
+					<th class="rating">{{ lang('REPUT') }}</th>
 				</tr>
 				</thead>
 				<tbody>
-		<!-- BEGIN topforumrow -->
-				<tr class="<!-- IF topforumrow.S_ROW_COUNT is even -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
-					<td class="icon {topforumrow.FORUM_IMG_STYLE}" style="background-repeat: no-repeat; background-position: 10px 50%; width: 35px;"></td>
-					<td><a href="{topforumrow.U_VIEW_FORUM}" class="forumtitle">{topforumrow.FORUM_NAME}</a></td>
-					<td>{topforumrow.FORUM_THANKS}</td>
-					<td><span style="display: block;">{L_REPUT}{L_COLON}&nbsp;{topforumrow.FORUM_REPUT}
-						<!-- IF topforumrow.S_THANKS_REPUT_GRAPHIC -->
-						<span style="display: block; width: {topforumrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {topforumrow.THANKS_REPUT_HEIGHT}; background: url({topforumrow.THANKS_REPUT_IMAGE_BACK}); background-repeat: repeat-x;"><span style="display: block; height: {topforumrow.THANKS_REPUT_HEIGHT}; width: {topforumrow.FORUM_REPUT}; background: url({topforumrow.THANKS_REPUT_IMAGE}); background-repeat: repeat-x;">&nbsp;</span></span>
-						<!-- ENDIF -->
+		{% for ttrow in loops.toptopicrow %}
+				<tr class="{% if ttrow.S_ROW_COUNT is even %}bg1{% else %}bg2{% endif %}">
+					<td class="icon {ttrow.TOPIC_IMG_STYLE}" style="background-repeat: no-repeat; background-position: 10px 50%; width: 35px;"></td>
+					<td><a href="{ttrow.U_VIEW_TOPIC}" class="forumtitle">{ttrow.TOPIC_TITLE}</a></td>
+					<td>{{ ttrow.TOPIC_THANKS }}</td>
+					<td>{{ ttrow.TOPIC_AUTHOR }}</td>
+					<td><span style="display: block;">{{ lang('REPUT') }}{{ lang('COLON') }}&nbsp;{{ ttrow.TOPIC_REPUT }}
+						{% if ttrow.S_THANKS_REPUT_GRAPHIC %}
+						<span style="display: block; width: {{ ttrow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ ttrow.THANKS_REPUT_HEIGHT }}; background: url({{ ttrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ ttrow.THANKS_REPUT_HEIGHT }}; width: {{ ttrow.TOPIC_REPUT }}; background: url({{ ttrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
+						{% endif %}
 					</span></td>
 				</tr>
-		<!-- END topforumrow -->
+		{% endfor %}
 				</tbody>
 			</table>
 		</div>
 	</div>
-<!-- ENDIF -->
+{% endif %}
+{% if S_THANKS_FORUM_REPUT_VIEW and not S_FULL_TOPIC_RATING and not S_FULL_POST_RATING %}
+<h3 class="solo"><a href="{{ U_SEARCH_FORUM }}" class="forumtitle">{{ lang('RATING_TOP_FORUM') }}</a></h3>
+	<div class="forumbg forumbg-table">
+		<div class="inner">
 
-<!-- IF .pagination -->
+			<table class="table1" cellspacing="1">
+				<thead>
+				<tr>
+					<th class="topictitle">&nbsp;</th>
+					<th class="topictitle">{{ lang('RATING_FORUM') }}</th>
+					<th class="name">{{ lang('RECEIVED') }}</th>
+					<th class="rating">{{ lang('REPUT') }}</th>
+				</tr>
+				</thead>
+				<tbody>
+		{% for tfrow in loops.topforumrow %}
+				<tr class="{% if tfrow.S_ROW_COUNT is even %}bg1{% else %}bg2{% endif %}">
+					<td class="icon {{ tfrow.FORUM_IMG_STYLE }}" style="background-repeat: no-repeat; background-position: 10px 50%; width: 35px;"></td>
+					<td><a href="{{ tfrow.U_VIEW_FORUM }}" class="forumtitle">{{ tfrow.FORUM_NAME }}</a></td>
+					<td>{{ tfrow.FORUM_THANKS }}</td>
+					<td><span style="display: block;">{{ lang('REPUT') }}{{ lang('COLON') }}&nbsp;{{ tfrow.FORUM_REPUT }}
+						{% if tfrow.S_THANKS_REPUT_GRAPHIC %}
+						<span style="display: block; width: {{ tfrow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ tfrow.THANKS_REPUT_HEIGHT }}; background: url({{ tfrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ tfrow.THANKS_REPUT_HEIGHT }}; width: {{ tfrow.FORUM_REPUT }}; background: url({{ tfrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
+						{% endif %}
+					</span></td>
+				</tr>
+		{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endif %}
+
+{% if pagination %}
 <div class="action-bar bottom">
 	<div class="pagination">
-		<!-- INCLUDE pagination.html -->
+		{% include 'pagination.html' %}
 	</div>
 </div>
-<!-- ENDIF -->
+{% endif %}
 
-<!-- INCLUDE jumpbox.html -->
+{% include 'jumpbox.html' %}
 
-<!-- INCLUDE overall_footer.html -->
+{% include 'overall_footer.html' %}
