@@ -21,7 +21,7 @@
 			<table class="table1" cellspacing="1">
 				<thead>
 				<tr>
-					<th class="name" data-dfn="{{ lang('RANK') }}{{ lang('COMMA_SEPARATOR') }}{{ lang('USERNAME') }}">{% if S_THANKS %}<span class="rank-img"><a href="{{ U_SORT_RANK }}">{{ lang('RANK') }}</a></span><a href="{{ U_SORT_USERNAME }}">{{ lang('USERNAME') }}</a>{% endif %}</th>
+					<th class="name" data-dfn="{{ lang('RANK') ~ lang('OMMA_SEPARATOR') ~ lang('USERNAME') }}">{% if S_THANKS %}<span class="rank-img"><a href="{{ U_SORT_RANK }}">{{ lang('RANK') }}</a></span><a href="{{ U_SORT_USERNAME }}">{{ lang('USERNAME') }}</a>{% endif %}</th>
 					<th class="posts">{% if S_THANKS %}<a href="{{ U_SORT_POSTS }}">{{ lang('POSTS') }}</a>{% else %}{{ lang('POSTS') }}{% endif %}</th>
 					<th class="posts">{% if S_THANKS %}<a href="{{ U_SORT_THANKS_G }}">{{ lang('GIVEN') }}</a>{% else %}{{ lang('GIVEN') }}{% endif %}</th>
 					<th class="posts">{% if S_THANKS %}<a href="{{ U_SORT_THANKS_R }}">{{ lang('RECEIVED') }}</a>{% else %}{{ lang('RECEIVED') }}{% endif %}</th>
