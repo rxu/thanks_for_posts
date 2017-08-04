@@ -1,2 +1,2 @@
-<!-- IF S_DISPLAY_TOPLIST --><li class="small-icon icon-thanks_toplist"><a href="{U_REPUT_TOPLIST}"  role="menuitem">{L_TOPLIST}</a></li><!-- ENDIF -->
-<!-- IF S_DISPLAY_THANKSLIST --><li class="small-icon icon-thanks"><a href="{U_THANKS_LIST}"  role="menuitem">{L_GRATITUDES}</a></li><!-- ENDIF -->
+{% if S_DISPLAY_TOPLIST %}<li class="small-icon icon-thanks_toplist"><a href="{{ U_REPUT_TOPLIST }}"  role="menuitem">{{ lang('TOPLIST') }}</a></li>{% endif %}
+{% if S_DISPLAY_THANKSLIST %}<li class="small-icon icon-thanks"><a href="{{ U_THANKS_LIST }}"  role="menuitem">{{ lang('GRATITUDES') }}</a></li>{% endif %}
