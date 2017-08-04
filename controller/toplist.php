@@ -264,7 +264,7 @@ class toplist
 					$this->template->assign_block_vars('toppostrow', array(
 						'MESSAGE'					=> $this->auth->acl_get('f_read', $row['forum_id']) ? $row['post_text'] : ((!empty($row['forum_id'])) ? $this->user->lang['SORRY_AUTH_READ'] : $row['post_text']),
 						'POST_DATE'					=> !empty($row['post_time']) ? $this->user->format_date($row['post_time']) : '',
-						'MINI_POST_IMG'				=> $this->user->img('icon_post_target', 'POST'),
+						'MINI_POST_IMG'				=> phpbb_version_compare(PHPBB_VERSION, '3.2.0', '<') ? $this->user->img('icon_post_target', 'POST') : '',
 						'POST_ID'					=> $post_url,
 						'POST_SUBJECT'				=> $this->auth->acl_get('f_read', $row['forum_id']) ? $row['post_subject'] : ((!empty($row['forum_id'])) ? '' : $row['post_subject']),
 						'POST_AUTHOR'				=> get_username_string('full', $row['poster_id'], $row['username'], $row['user_colour'], $row['post_username']),
@@ -402,6 +402,7 @@ class toplist
 		$this->template->assign_vars(array(
 			'PAGE_NUMBER'				=> $this->pagination->on_page($total_match_count, $this->config['posts_per_page'], $start),
 			'PAGE_TITLE'				=> $page_title,
+			'PHPBB_VERSION'				=> phpbb_version_compare(PHPBB_VERSION, '3.2.0', '>=') ? '3.2' : '3.1',
 			'S_THANKS_FORUM_REPUT_VIEW' => isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view'] : false,
 			'S_THANKS_TOPIC_REPUT_VIEW' => isset($this->config['thanks_topic_reput_view']) ? $this->config['thanks_topic_reput_view'] : false,
 			'S_THANKS_POST_REPUT_VIEW'	=> isset($this->config['thanks_post_reput_view']) ? $this->config['thanks_post_reput_view'] : false,
