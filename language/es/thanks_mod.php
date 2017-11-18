@@ -42,13 +42,13 @@ $lang = array_merge($lang, array(
 	'CLEAR_LIST_THANKS_CONFIRM'	=> '¿De verdad quieren limpiar la lista gracias a un usuario?',
 	'CLEAR_LIST_THANKS_GIVE'	=> 'La lista de gracias ha sido limpiada.',
 	'CLEAR_LIST_THANKS_POST'	=> 'La lista de gracias en los mensajes ha sido borrada',
-	'CLEAR_LIST_THANKS_RECEIVE'	=> 'La lista de gracias recibidas por un usuario ,ha sido borrada.',
+	'CLEAR_LIST_THANKS_RECEIVE'	=> 'La lista de gracias recibidas por un usuario ha sido borrada.',
 
-	'DISABLE_REMOVE_THANKS'		=> 'Borrar gracias esta desactivado por el administrador',
+	'DISABLE_REMOVE_THANKS'		=> 'Borrar gracias esta desactivado por el Administrador',
 
 	'GIVEN'						=> 'Agradecido ',
 	'GLOBAL_INCORRECT_THANKS'	=> 'No se puede dar gracias al Anuncio global que no tiene ninguna relación con el foro en particular.',
-	'GRATITUDES'				=> 'Gratitudes',
+	'GRATITUDES'				=> 'Agradecimientos',
 
 	'INCORRECT_THANKS'			=> 'Gracias no validas',
 
@@ -76,7 +76,7 @@ $lang = array_merge($lang, array(
 	'REMOVE_THANKS'				=> 'Eliminar su agradecimiento: ',
 	'REMOVE_THANKS_CONFIRM'		=> '¿Está seguro que desea eliminar su agradecimiento?',
 	'REMOVE_THANKS_SHORT'		=> 'Eliminar agradecimiento',
-	'REPUT'						=> 'Valoreción',
+	'REPUT'						=> 'Valoración',
 	'REPUT_TOPLIST'				=> 'Lista TOP de agradecimientos — %d',
 	'RATING_LOGIN_EXPLAIN'		=> 'No está autorizado para ver la Lista TOP.',
 	'RATING_NO_VIEW_TOPLIST'	=> 'No está autorizado para ver la Lista TOP.',
