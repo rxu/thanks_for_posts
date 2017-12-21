@@ -75,7 +75,7 @@ services:
             - %tables.posts%
     gfksx.ThanksForPosts.notification.type.thanks:
         class: gfksx\ThanksForPosts\notification\thanks
-        scope: prototype
+        shared: false
         parent: notification.type.base
         calls:
             - [set_user_loader, [@user_loader]]
@@ -84,7 +84,7 @@ services:
             - { name: notification.type }
     gfksx.ThanksForPosts.notification.type.thanks_remove:
         class: gfksx\ThanksForPosts\notification\thanks_remove
-        scope: prototype
+        shared: false
         parent: gfksx.ThanksForPosts.notification.type.thanks
         tags:
             - { name: notification.type }

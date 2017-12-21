@@ -287,7 +287,7 @@ class toplist
 		{
 			$end = ($full_topic_rating) ?  $this->config['topics_per_page'] : $end_row_rating;
 
-			$sql_t_array['FROM']	= array($this->thanks_table => 'f');
+			$sql_t_array['FROM'] = array($this->thanks_table => 'f');
 			$sql_t_array['SELECT'] = 'u.user_id, u.username, u.user_colour, t.topic_title, t.topic_id, t.topic_time, t.topic_poster, t.topic_first_poster_name, t.topic_first_poster_colour, t.forum_id, t.topic_type, t.topic_status, t.poll_start';
 			$sql_t_array['SELECT'] .= ', f.topic_id, COUNT(*) AS topic_thanks';
 			$sql_t_array['LEFT_JOIN'][] = array(
@@ -344,7 +344,7 @@ class toplist
 		{
 			$end = ($full_forum_rating) ?  $this->config['topics_per_page'] : $end_row_rating;
 
-			$sql_f_array['FROM']	= array($this->thanks_table => 't');
+			$sql_f_array['FROM'] = array($this->thanks_table => 't');
 			$sql_f_array['SELECT'] = 'f.forum_name, f.forum_id';
 			$sql_f_array['SELECT'] .= ', t.forum_id, COUNT(*) AS forum_thanks';
 			$sql_f_array['LEFT_JOIN'][] = array(
