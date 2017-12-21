@@ -56,6 +56,11 @@ before_install:
   - sudo cp phpbb-ext-acme-demo/phpunit.xml.dist ./
   - sudo cp phpbb-ext-acme-demo/travis/prepare-phpbb.sh travis
   - sudo rm -rf phpbb-ext-acme-demo
+ # Temporary hack to address EPV failure
+ # https://www.phpbb.com/community/viewtopic.php?f=461&t=2430651&start=15#p14881401
+ # https://github.com/composer/composer/issues/6859#issuecomment-353738377
+  - composer self-update 1.5.2 --rollback
+ # end temporary hack
 
 install:
   - travis/prepare-phpbb.sh $EXTNAME $PHPBB_BRANCH

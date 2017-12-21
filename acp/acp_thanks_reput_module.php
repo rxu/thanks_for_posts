@@ -23,7 +23,7 @@ class acp_thanks_reput_module
 		global $request, $user, $template, $config, $phpbb_root_path, $phpbb_container;
 
 		$action	= $request->variable('action', '');
-		$submit = (isset($_POST['submit'])) ? true : false;
+		$submit = $request->is_set_post('submit');
 
 		$form_key = 'acp_thanks_reput';
 		add_form_key($form_key);
@@ -39,7 +39,6 @@ class acp_thanks_reput_module
 			'legend'					=> 'GENERAL_OPTIONS',
 			'thanks_post_reput_view'	=> array('lang' => 'THANKS_POST_REPUT_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_topic_reput_view'	=> array('lang' => 'THANKS_TOPIC_REPUT_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_topic_reput_view_column' => array('lang' => 'THANKS_TOPIC_REPUT_VIEW_COLUMN', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_forum_reput_view'	=> array('lang' => 'THANKS_FORUM_REPUT_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_forum_reput_view_column' => array('lang' => 'THANKS_FORUM_REPUT_VIEW_COLUMN', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_number_digits'		=> array('lang' => 'THANKS_NUMBER_DIGITS', 'validate' => 'int:0',	'type' => 'text:4:4', 'explain' => true),
@@ -60,7 +59,7 @@ class acp_thanks_reput_module
 		}
 
 		$this->new_config = $config;
-		$cfg_array = (isset($_REQUEST['config'])) ? utf8_normalize_nfc($request->variable('config', array('' => ''), true)) : $this->new_config;
+		$cfg_array = ($request->is_set('config')) ? utf8_normalize_nfc($request->variable('config', array('' => ''), true)) : $this->new_config;
 		$error = array();
 
 		// We validate the complete config if whished

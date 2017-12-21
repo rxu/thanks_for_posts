@@ -116,7 +116,7 @@ class thankslist
 		}
 		$top = $this->request->variable('top', 0);
 		$start = $this->request->variable('start', 0);
-		$submit = (isset($_POST['submit'])) ? true : false;
+		$submit = $this->request->is_set_post('submit');
 		$default_key = 'a';
 		$sort_key = $this->request->variable('sk', $default_key);
 		$sort_dir = $this->request->variable('sd', 'd');
@@ -335,7 +335,7 @@ class thankslist
 				);
 				foreach ($check_params as $key => $call)
 				{
-					if (!isset($_REQUEST[$key]))
+					if (!$this->request->is_set($key))
 					{
 						continue;
 					}
