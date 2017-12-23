@@ -512,7 +512,6 @@ class thankslist
 							'GIVENS'				=> (!isset($givens[$user_id])) ? 0 : $givens[$user_id],
 							'RECEIVED'				=> (!isset($reseved[$user_id])) ? 0 : $reseved[$user_id],
 							'JOINED'				=> $this->user->format_date($row['user_regdate']),
-							'VISITED'				=> (empty($last_visit)) ? ' - ' : $this->user->format_date($last_visit),
 							'POSTS'					=> ($row['user_posts']) ? $row['user_posts'] : 0,
 							'USERNAME_FULL'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 							'USERNAME'				=> get_username_string('username', $row['user_id'], $row['username'], $row['user_colour']),
