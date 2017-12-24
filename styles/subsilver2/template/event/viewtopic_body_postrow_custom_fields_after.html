@@ -1,4 +1,4 @@
-<!-- IF not postrow.S_POST_ANONYMOUS and postrow.THANKS_COUNTERS_VIEW -->
-	<!-- IF postrow.POSTER_GIVE_COUNT --><br /><b>{L_GIVEN}{L_COLON}</b> <a href="{postrow.POSTER_GIVE_COUNT_LINK}">{postrow.POSTER_GIVE_COUNT}</a><!-- ENDIF -->
-	<!-- IF postrow.POSTER_RECEIVE_COUNT --><br /><b>{L_RECEIVED}{L_COLON}</b> <a href="{postrow.POSTER_RECEIVE_COUNT_LINK}">{postrow.POSTER_RECEIVE_COUNT}</a><!-- ENDIF -->
-<!-- ENDIF -->
+{% if not postrow.S_POST_ANONYMOUS and postrow.THANKS_COUNTERS_VIEW %}
+	{% if postrow.POSTER_GIVE_COUNT %}<br /><b>{{ lang('GIVEN') }}{{ lang('COLON') }}</b> <a href="{{ postrow.POSTER_GIVE_COUNT_LINK }}">{{ postrow.POSTER_GIVE_COUNT }}</a>{% endif %}
+	{% if postrow.POSTER_RECEIVE_COUNT %}<br /><b>{{ lang('RECEIVED') }}{{ lang('COLON') }}</b> <a href="{{ postrow.POSTER_RECEIVE_COUNT_LINK }}">{{ postrow.POSTER_RECEIVE_COUNT }}</a>{% endif %}
+{% endif %}

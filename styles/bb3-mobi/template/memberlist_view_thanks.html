@@ -25,32 +25,32 @@ function toggleElement(oElement)
 }
 // ]]>
 </script>
-<!-- IF THANKS_PROFILELIST_VIEW and (POSTER_GIVE_COUNT or POSTER_RECEIVE_COUNT) -->
+{% if THANKS_PROFILELIST_VIEW and (POSTER_GIVE_COUNT or POSTER_RECEIVE_COUNT) %}
 <div class="panel">
 <div class="inner">
-	<h3>{L_GRATITUDES}</h3>
-	<!-- IF POSTER_GIVE_COUNT -->
+	<h3>{{ lang('GRATITUDES') }}</h3>
+	{% if POSTER_GIVE_COUNT %}
 	<div class="post bg1">
-		<!-- IF S_MOD_THANKS -->
-		<a href="{U_CLEAR_LIST_THANKS_GIVE}" title="{L_CLEAR_LIST_THANKS}" class="button" style="float:right">x</a>
-		<!-- ENDIF -->
-		<p>{L_GIVEN}{L_COLON} {POSTER_GIVE_COUNT}<br />
-			<a href="#" onclick="toggleElement( getElement('show_thanks')); return false;">{L_THANKS_LIST}</a>
-			<div id="show_thanks" style="display: none;">{THANKS}</div>
+		{% if S_MOD_THANKS %}
+		<a href="{{ U_CLEAR_LIST_THANKS_GIVE }}" title="{{ lang('CLEAR_LIST_THANKS') }}" class="button" style="float:right">x</a>
+		{% endif %}
+		<p>{{ lang('GIVEN') }}{{ lang('COLON') }} {{ POSTER_GIVE_COUNT }}<br />
+			<a href="#" onclick="toggleElement( getElement('show_thanks')); return false;">{{ lang('THANKS_LIST') }}</a>
+			<div id="show_thanks" style="display: none;">{{ THANKS }}</div>
 		</p>
 	</div>
-	<!-- ENDIF -->
-	<!-- IF POSTER_RECEIVE_COUNT -->
-	<div class="post <!-- IF not POSTER_GIVE_COUNT -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
-		<!-- IF S_MOD_THANKS -->
-		<a href="{U_CLEAR_LIST_THANKS_RECEIVE}" title="{L_CLEAR_LIST_THANKS}" class="button" style="float:right">x</a>
-		<!-- ENDIF -->
-		<p>{L_RECEIVED}{L_COLON} {POSTER_RECEIVE_COUNT}<br />
-			<a href="#" onclick="toggleElement( getElement('show_thanked')); return false;">{L_THANKS_LIST}</a>
-			<div id="show_thanked" style="display: none;">{THANKED}</div>
+	{% endif %}
+	{% if POSTER_RECEIVE_COUNT %}
+	<div class="post {% if not POSTER_GIVE_COUNT %}bg1{% else %}bg2{% endif %}">
+		{% if S_MOD_THANKS %}
+		<a href="{{ U_CLEAR_LIST_THANKS_RECEIVE }}" title="{{ lang('CLEAR_LIST_THANKS') }}" class="button" style="float:right">x</a>
+		{% endif %}
+		<p>{{ lang('RECEIVED') }}{{ lang('COLON') }} {{ POSTER_RECEIVE_COUNT }}<br />
+			<a href="#" onclick="toggleElement( getElement('show_thanked')); return false;">{{ lang('THANKS_LIST') }}</a>
+			<div id="show_thanked" style="display: none;">{{ THANKED }}</div>
 		</p>
 	</div>
-	<!-- ENDIF -->
+	{% endif %}
 </div>
 </div>
-<!-- ENDIF -->
+{% endif %}

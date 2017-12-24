@@ -25,30 +25,30 @@ function toggleElement(oElement)
 }
 // ]]>
 </script>
-<!-- IF THANKS_PROFILELIST_VIEW and (POSTER_GIVE_COUNT or POSTER_RECEIVE_COUNT) -->
+{% if THANKS_PROFILELIST_VIEW and (POSTER_GIVE_COUNT or POSTER_RECEIVE_COUNT) %}
 <table class="tablebg" width="100%" cellspacing="1">
 	<tr>
-		<th colspan="2" nowrap="nowrap">{L_GRATITUDES}</th>
+		<th colspan="2" nowrap="nowrap">{{ lang('GRATITUDES') }}</th>
 	</tr>
 	<tr>
 		<td class="row1" align="left" valign="top" nowrap="nowrap">
-		<!-- IF POSTER_GIVE_COUNT -->
-			<!-- IF S_MOD_THANKS --><a href="{U_CLEAR_LIST_THANKS_GIVE}">{DELETE_IMG}</a>&nbsp;<!-- ENDIF -->
-			<span class="gen">{L_GIVEN}{L_COLON} <b>{POSTER_GIVE_COUNT}</b></span>
+		{% if POSTER_GIVE_COUNT %}
+			{% if S_MOD_THANKS %}<a href="{{ U_CLEAR_LIST_THANKS_GIVE }}">{{ DELETE_IMG }}</a>&nbsp;{% endif %}
+			<span class="gen">{{ lang('GIVEN') }}{{ lang('COLON') }} <b>{{ POSTER_GIVE_COUNT }}</b></span>
 			<br />
-			<a href="javascript: toggleElement( getElement('show_thanks'));">{L_THANKS_LIST}</a>
-			<div id="show_thanks" style="display: none;">{THANKS}</div>
-		<!-- ENDIF -->
+			<a href="javascript: toggleElement( getElement('show_thanks'));">{{ lang('THANKS_LIST') }}</a>
+			<div id="show_thanks" style="display: none;">{{ THANKS }}</div>
+		{% endif %}
 		</td>
 		<td class="row1" align="left" valign="top" nowrap="nowrap">
-		<!-- IF POSTER_RECEIVE_COUNT -->
-			<!-- IF S_MOD_THANKS --><a href="{U_CLEAR_LIST_THANKS_RECEIVE}">{DELETE_IMG}</a>&nbsp;<!-- ENDIF -->
-			<span class="gen">{L_RECEIVED}{L_COLON} <b>{POSTER_RECEIVE_COUNT}</b></span>
+		{% if POSTER_RECEIVE_COUNT %}
+			{% if S_MOD_THANKS %}<a href="{{ U_CLEAR_LIST_THANKS_RECEIVE }}">{{ DELETE_IMG }}</a>&nbsp;{% endif %}
+			<span class="gen">{{ lang('RECEIVED') }}{{ lang('COLON') }} <b>{{ POSTER_RECEIVE_COUNT }}</b></span>
 			<br />
-			<a href="javascript: toggleElement( getElement('show_thanked'));">{L_THANKS_LIST}</a>
-			<div id="show_thanked" style="display: none;">{THANKED}</div>
-		<!-- ENDIF -->
+			<a href="javascript: toggleElement( getElement('show_thanked'));">{{ lang('THANKS_LIST') }}</a>
+			<div id="show_thanked" style="display: none;">{{ THANKED }}</div>
+		{% endif %}
 		</td>
 	</tr>
 </table>
-<!-- ENDIF -->
+{% endif %}

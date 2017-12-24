@@ -25,50 +25,50 @@ function toggleElement(oElement)
 }
 // ]]>
 </script>
-<!-- IF THANKS_PROFILELIST_VIEW and (POSTER_GIVE_COUNT or POSTER_RECEIVE_COUNT) -->
+{% if THANKS_PROFILELIST_VIEW and (POSTER_GIVE_COUNT or POSTER_RECEIVE_COUNT) %}
 <div class="panel bg1">
 	<div class="inner">
-	<h3>{L_GRATITUDES}</h3>
-		<!-- IF POSTER_GIVE_COUNT -->
+	<h3>{{ lang('GRATITUDES') }}</h3>
+		{% if POSTER_GIVE_COUNT %}
 		<div class="column1">
-			<!-- IF S_MOD_THANKS -->
+			{% if S_MOD_THANKS %}
 			<ul class="post-buttons" style="float:left">
 				<li>
-					<a href="{U_CLEAR_LIST_THANKS_GIVE}" title="{L_CLEAR_LIST_THANKS}" class="button button-icon-only" style="float:left">
-						<i class="icon fa-times fa-fw" aria-hidden="true"></i><span class="sr-only">{L_CLEAR_LIST_THANKS}</span>
+					<a href="{{ U_CLEAR_LIST_THANKS_GIVE }}" title="{{ lang('CLEAR_LIST_THANKS') }}" class="button button-icon-only" style="float:left">
+						<i class="icon fa-times fa-fw" aria-hidden="true"></i><span class="sr-only">{{ lang('CLEAR_LIST_THANKS') }}</span>
 					</a>
 				</li>
 			</ul>
-			<!-- ENDIF -->
+			{% endif %}
 			<dl>
-				<dt>{L_GIVEN}{L_COLON} {POSTER_GIVE_COUNT}</dt>
+				<dt>{{ lang('GIVEN') }}{{ lang('COLON') }} {{ POSTER_GIVE_COUNT }}</dt>
 				<dd>
-					<a href="#" onclick="toggleElement( getElement('show_thanks')); return false;">{L_THANKS_LIST}</a>
-					<div id="show_thanks" style="display: none;">{THANKS}</div>
+					<a href="#" onclick="toggleElement( getElement('show_thanks')); return false;">{{ lang('THANKS_LIST') }}</a>
+					<div id="show_thanks" style="display: none;">{{ THANKS }}</div>
 				</dd>
 			</dl>
 		</div>
-		<!-- ENDIF -->
-		<!-- IF POSTER_RECEIVE_COUNT -->
-		<div class="<!-- IF not POSTER_GIVE_COUNT -->column1<!-- ELSE -->column2<!-- ENDIF -->">
-			<!-- IF S_MOD_THANKS -->
+		{% endif %}
+		{% if POSTER_RECEIVE_COUNT %}
+		<div class="{% if not POSTER_GIVE_COUNT %}column1{% else %}column2{% endif %}">
+			{% if S_MOD_THANKS %}
 			<ul class="post-buttons" style="float:left">
 				<li>
-					<a href="{U_CLEAR_LIST_THANKS_RECEIVE}" title="{L_CLEAR_LIST_THANKS}" class="button button-icon-only" style="float:left">
-						<i class="icon fa-times fa-fw" aria-hidden="true"></i><span class="sr-only">{L_CLEAR_LIST_THANKS}</span>
+					<a href="{{ U_CLEAR_LIST_THANKS_RECEIVE }}" title="{{ lang('CLEAR_LIST_THANKS') }}" class="button button-icon-only" style="float:left">
+						<i class="icon fa-times fa-fw" aria-hidden="true"></i><span class="sr-only">{{ lang('CLEAR_LIST_THANKS') }}</span>
 					</a>
 				</li>
 			</ul>
-			<!-- ENDIF -->
+			{% endif %}
 			<dl>
-				<dt>{L_RECEIVED}{L_COLON} {POSTER_RECEIVE_COUNT}</dt>
+				<dt>{{ lang('RECEIVED') }}{{ lang('COLON') }} {{ POSTER_RECEIVE_COUNT }}</dt>
 				<dd>
-					<a href="#" onclick="toggleElement( getElement('show_thanked')); return false;">{L_THANKS_LIST}</a>
-					<div id="show_thanked" style="display: none;">{THANKED}</div>
+					<a href="#" onclick="toggleElement( getElement('show_thanked')); return false;">{{ lang('THANKS_LIST') }}</a>
+					<div id="show_thanked" style="display: none;">{{ THANKED }}</div>
 				</dd>
 			</dl>
 		</div>
-		<!-- ENDIF -->
+		{% endif %}
 	</div>
 </div>
-<!-- ENDIF -->
+{% endif %}
