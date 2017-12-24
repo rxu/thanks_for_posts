@@ -229,10 +229,6 @@ class listener implements EventSubscriberInterface
 	{
 		$forum_row = $event['forum_row'];
 		$row = $event['row'];
-		$forum_row = array_merge($forum_row, array(
-			'S_THANKS_FORUM_REPUT_VIEW_COLUMN' => isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view_column'] : false,
-			'THANKS_REPUT_GRAPHIC_WIDTH'=> isset($this->config['thanks_reput_level'])? (isset($this->config['thanks_reput_height']) ? sprintf('%dpx', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']) : false) : false,
-		));
 		if (isset($this->config['thanks_forum_reput_view']) && $this->config['thanks_forum_reput_view'])
 		{
 			$forum_row = array_merge($forum_row, $this->helper->get_thanks_forum_reput($row['forum_id']));

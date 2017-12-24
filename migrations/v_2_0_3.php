@@ -40,6 +40,7 @@ class v_2_0_3 extends \phpbb\db\migration\migration
 	{
 		return array(
 			array('config.remove', array('thanks_topic_reput_view_column')),
+			array('config.remove', array('thanks_forum_reput_view_column')),
 
 			// Current version
 			array('config.update', array('thanks_for_posts_version', '2.0.3')),
