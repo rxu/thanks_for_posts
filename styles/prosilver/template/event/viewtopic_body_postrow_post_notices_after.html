@@ -1,34 +1,34 @@
-<div id='list_thanks{postrow.POST_ID}'>
-<!-- IF postrow.THANKS and postrow.THANKS_POSTLIST_VIEW and not postrow.S_POST_ANONYMOUS and not S_IS_BOT -->
+<div id='list_thanks{{ postrow.POST_ID }}'>
+{% if postrow.THANKS and postrow.THANKS_POSTLIST_VIEW and not postrow.S_POST_ANONYMOUS and not S_IS_BOT %}
 	<div class="notice">
 		<dl>
-			<!-- IF postrow.S_MOD_THANKS -->
+			{% if postrow.S_MOD_THANKS %}
 			<ul class="post-buttons" style="float: left; position: static;">
 				<li>
-					<a id='clear_list_thanks{postrow.POST_ID}' href="{postrow.U_CLEAR_LIST_THANKS_POST}" title="{L_CLEAR_LIST_THANKS}"  class="button button-icon-only" style="float:left">
-						<i class="icon fa-times fa-fw" aria-hidden="true"></i><span class="sr-only">{L_CLEAR_LIST_THANKS}</span>
+					<a id='clear_list_thanks{{ postrow.POST_ID }}' href="{{ postrow.U_CLEAR_LIST_THANKS_POST }}" title="{{ lang('CLEAR_LIST_THANKS')}}"  class="button button-icon-only" style="float:left">
+						<i class="icon fa-times fa-fw" aria-hidden="true"></i><span class="sr-only">{{ lang('CLEAR_LIST_THANKS')}}</span>
 					</a>
 				</li>
 			</ul>
-			<!-- ENDIF -->
+			{% endif %}
 
-			<dt>{postrow.THANK_TEXT}{postrow.POST_AUTHOR_FULL}{postrow.THANK_TEXT_2}</dt>
-			<dd>{postrow.THANKS}</dd>
+			<dt>{{ postrow.THANK_TEXT }}{{ postrow.POST_AUTHOR_FULL }}{{ postrow.THANK_TEXT_2 }}</dt>
+			<dd>{{ postrow.THANKS }}</dd>
 		</dl>
 	</div>
-<!-- ENDIF -->
+{% endif %}
 </div>
-<div id='div_post_reput{postrow.POST_ID}'>
-<!-- IF postrow.S_THANKS_POST_REPUT_VIEW and postrow.POST_REPUT and not postrow.S_POST_ANONYMOUS and not S_IS_BOT -->
+<div id='div_post_reput{{ postrow.POST_ID }}'>
+{% if postrow.S_THANKS_POST_REPUT_VIEW and postrow.POST_REPUT and not postrow.S_POST_ANONYMOUS and not S_IS_BOT %}
 	<div class="notice">
 		<dl>
-			<dt class="small"><strong>{L_REPUT}{L_COLON}</strong>&nbsp;{postrow.POST_REPUT}</dt>
+			<dt class="small"><strong>{{ lang('REPUT') ~ lang('COLON')}}</strong>&nbsp;{{ postrow.POST_REPUT }}</dt>
 			<dd>
-			<!-- IF postrow.S_THANKS_REPUT_GRAPHIC -->
-			<div style="width: {postrow.THANKS_REPUT_GRAPHIC_WIDTH}; height: {postrow.THANKS_REPUT_HEIGHT};" class="thanks_reput_image_back"><div style="height: {postrow.THANKS_REPUT_HEIGHT}; width: {postrow.POST_REPUT};" class="thanks_reput_image"></div></div>&nbsp;
-			<!-- ENDIF -->
+			{% if postrow.S_THANKS_REPUT_GRAPHIC %}
+			<div style="width: {{ postrow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ postrow.THANKS_REPUT_HEIGHT }};" class="thanks_reput_image_back"><div style="height: {{ postrow.THANKS_REPUT_HEIGHT }}; width: {{ postrow.POST_REPUT }};" class="thanks_reput_image"></div></div>&nbsp;
+			{% endif %}
 			</dd>
 		</dl>
 	</div>
-<!-- ENDIF -->
+{% endif %}
 </div>
