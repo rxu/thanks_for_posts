@@ -40,7 +40,6 @@ class acp_thanks_reput_module
 			'thanks_post_reput_view'	=> array('lang' => 'THANKS_POST_REPUT_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_topic_reput_view'	=> array('lang' => 'THANKS_TOPIC_REPUT_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_forum_reput_view'	=> array('lang' => 'THANKS_FORUM_REPUT_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
-			'thanks_forum_reput_view_column' => array('lang' => 'THANKS_FORUM_REPUT_VIEW_COLUMN', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true),
 			'thanks_number_digits'		=> array('lang' => 'THANKS_NUMBER_DIGITS', 'validate' => 'int:0',	'type' => 'text:4:4', 'explain' => true),
 			'thanks_number_row_reput'	=> array('lang' => 'THANKS_NUMBER_ROW_REPUT', 'validate' => 'int:0', 'type' => 'text:4:6', 'explain' => true),
 			'legend1'					=> 'GRAPHIC_OPTIONS',

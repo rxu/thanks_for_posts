@@ -17,6 +17,9 @@
             "role": "Converting to extension"
         }
     ],
+    "require": {
+        "php": ">=5.4.0"
+    },
    "extra": {
         "display-name": "Thanks for posts",
         "soft-require": {

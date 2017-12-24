@@ -1,5 +1,5 @@
-<!-- IF  not postrow.S_FIRST_POST_ONLY or postrow.S_ONLY_TOPICSTART -->
-	<!-- IF not postrow.S_GLOBAL_POST_THANKS and not postrow.S_POST_ANONYMOUS and S_FORUM_THANKS and S_USER_LOGGED_IN and not postrow.S_IS_OWN_POST and (not postrow.S_ALREADY_THANKED or postrow.S_REMOVE_THANKS) -->
-		<a href="{postrow.THANKS_LINK}" title="{postrow.THANK_ALT}{postrow.POST_AUTHOR}">{postrow.THANK_IMG}</a>
-	<!-- ENDIF -->
-<!-- ENDIF -->
+{% if  not postrow.S_FIRST_POST_ONLY or postrow.S_ONLY_TOPICSTART %}
+	{% if not postrow.S_GLOBAL_POST_THANKS and not postrow.S_POST_ANONYMOUS and S_FORUM_THANKS and S_USER_LOGGED_IN and not postrow.S_IS_OWN_POST and (not postrow.S_ALREADY_THANKED or postrow.S_REMOVE_THANKS) %}
+		<a href="{{ postrow.THANKS_LINK }}" title="{{ postrow.THANK_ALT }}{{ postrow.POST_AUTHOR }}">{{ postrow.THANK_IMG }}</a>
+	{% endif %}
+{% endif %}

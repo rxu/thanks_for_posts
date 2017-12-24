@@ -5,74 +5,74 @@ services:
     gfksx.ThanksForPosts.listener:
         class: gfksx\ThanksForPosts\event\listener
         arguments:
-            - @config
-            - @dbal.conn
-            - @auth
-            - @template
-            - @user
-            - @cache.driver
-            - @request
-            - @controller.helper
-            - %core.root_path%
-            - %core.php_ext%
-            - @gfksx.ThanksForPosts.helper
+            - '@config'
+            - '@dbal.conn'
+            - '@auth'
+            - '@template'
+            - '@user'
+            - '@cache.driver'
+            - '@request'
+            - '@controller.helper'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '@gfksx.ThanksForPosts.helper'
         tags:
             - { name: event.listener }
     gfksx.ThanksForPosts.helper:
         class: gfksx\ThanksForPosts\core\helper
         arguments:
-            - @config
-            - @dbal.conn
-            - @auth
-            - @template
-            - @user
-            - @cache.driver
-            - @request
-            - @notification_manager
-            - @controller.helper
-            - @dispatcher
-            - %core.root_path%
-            - %core.php_ext%
-            - %core.table_prefix%
-            - %tables.thanks%
-            - %tables.users%
-            - %tables.posts%
-            - %tables.notifications%
+            - '@config'
+            - '@dbal.conn'
+            - '@auth'
+            - '@template'
+            - '@user'
+            - '@cache.driver'
+            - '@request'
+            - '@notification_manager'
+            - '@controller.helper'
+            - '@dispatcher'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '%core.table_prefix%'
+            - '%tables.thanks%'
+            - '%tables.users%'
+            - '%tables.posts%'
+            - '%tables.notifications%'
     gfksx.ThanksForPosts.controller.thankslist:
         class: gfksx\ThanksForPosts\controller\thankslist
         arguments:
-            - @config
-            - @dbal.conn
-            - @auth
-            - @template
-            - @user
-            - @cache.driver
-            - @pagination
-            - @profilefields.manager
-            - @request
-            - @controller.helper
-            - %tables.thanks%
-            - %tables.users%
-            - %core.root_path%
-            - %core.php_ext%
+            - '@config'
+            - '@dbal.conn'
+            - '@auth'
+            - '@template'
+            - '@user'
+            - '@cache.driver'
+            - '@pagination'
+            - '@profilefields.manager'
+            - '@request'
+            - '@controller.helper'
+            - '%tables.thanks%'
+            - '%tables.users%'
+            - '%core.root_path%'
+            - '%core.php_ext%'
     gfksx.ThanksForPosts.controller.toplist:
         class: gfksx\ThanksForPosts\controller\toplist
         arguments:
-            - @config
-            - @dbal.conn
-            - @auth
-            - @template
-            - @user
-            - @cache.driver
-            - %core.root_path%
-            - %core.php_ext%
-            - @pagination
-            - @gfksx.ThanksForPosts.helper
-            - @request
-            - @controller.helper
-            - %tables.thanks%
-            - %tables.users%
-            - %tables.posts%
+            - '@config'
+            - '@dbal.conn'
+            - '@auth'
+            - '@template'
+            - '@user'
+            - '@cache.driver'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '@pagination'
+            - '@gfksx.ThanksForPosts.helper'
+            - '@request'
+            - '@controller.helper'
+            - '%tables.thanks%'
+            - '%tables.users%'
+            - '%tables.posts%'
     gfksx.ThanksForPosts.notification.type.thanks:
         class: gfksx\ThanksForPosts\notification\thanks
         shared: false
