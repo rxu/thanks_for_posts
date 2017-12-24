@@ -139,7 +139,7 @@ class thankslist
 
 					$sql = 'SELECT COUNT(user_id) AS total_match_count
 						FROM ' . $this->thanks_table . '
-						WHERE (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0) AND user_id = '.(int)$author_id;
+						WHERE (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0) AND user_id = '.(int) $author_id;
 					$where = 'user_id';
 					break;
 
@@ -148,7 +148,7 @@ class thankslist
 
 					$sql = 'SELECT COUNT(DISTINCT post_id) as total_match_count
 						FROM ' . $this->thanks_table . '
-						WHERE (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0) AND poster_id = '.(int)$author_id;
+						WHERE (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0) AND poster_id = '.(int) $author_id;
 					$where = 'poster_id';
 					break;
 				}
