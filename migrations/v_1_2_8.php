@@ -86,6 +86,23 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 			LEFT JOIN ' . POSTS_TABLE . ' p ON  t.post_id = p.post_id
 			SET t.forum_id = p.forum_id, t.topic_id = p.topic_id
 			WHERE t.post_id = p.post_id';
+
+		if ($this->db_tools->sql_layer == 'postgres')
+		{
+			$sql = 'UPDATE '. $thanks_table . ' t
+				SET forum_id = p.forum_id, topic_id = p.topic_id 
+				FROM ' . POSTS_TABLE . ' p
+				WHERE t.post_id = p.post_id';
+		}
+		else if ($this->db_tools->sql_layer == 'sqlite3')
+		{
+			$sql = 'UPDATE '. $thanks_table . '
+				SET
+					forum_id = (SELECT p.forum_id FROM ' . POSTS_TABLE . ' p, ' . $thanks_table . ' t WHERE t.post_id = p.post_id),
+					topic_id = (SELECT p.topic_id FROM ' . POSTS_TABLE . ' p, ' . $thanks_table . ' t WHERE t.post_id = p.post_id)
+				WHERE EXISTS (SELECT p.* FROM ' . POSTS_TABLE . ' p, ' . $thanks_table . ' t WHERE t.post_id = p.post_id)';
+		}
+
 		$this->db->sql_query($sql);
 	}
 }
