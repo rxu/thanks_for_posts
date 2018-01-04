@@ -73,18 +73,18 @@ services:
             - '%tables.thanks%'
             - '%tables.users%'
             - '%tables.posts%'
-    gfksx.ThanksForPosts.notification.type.thanks:
+    gfksx.thanksforposts.notification.type.thanks:
         class: gfksx\ThanksForPosts\notification\thanks
         shared: false
         parent: notification.type.base
         calls:
-            - [set_user_loader, [@user_loader]]
-            - [set_notifications_table, [%tables.notifications%]]
+            - [set_user_loader, ['@user_loader']]
+            - [set_notifications_table, ['%tables.notifications%']]
         tags:
             - { name: notification.type }
-    gfksx.ThanksForPosts.notification.type.thanks_remove:
+    gfksx.thanksforposts.notification.type.thanks_remove:
         class: gfksx\ThanksForPosts\notification\thanks_remove
         shared: false
-        parent: gfksx.ThanksForPosts.notification.type.thanks
+        parent: gfksx.thanksforposts.notification.type.thanks
         tags:
             - { name: notification.type }
