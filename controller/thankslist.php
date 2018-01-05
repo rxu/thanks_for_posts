@@ -135,7 +135,7 @@ class thankslist
 				switch ($give)
 				{
 					case 'true':
-					$u_search = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $author_id, 'give' => 'true', 'tslash' => ''));
+					$u_search = $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $author_id, 'give' => 'true', 'tslash' => ''));
 
 					$sql = 'SELECT COUNT(user_id) AS total_match_count
 						FROM ' . $this->thanks_table . '
@@ -144,7 +144,7 @@ class thankslist
 					break;
 
 					case 'false':
-					$u_search = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $author_id, 'give' => 'false', 'tslash' => ''));
+					$u_search = $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $author_id, 'give' => 'false', 'tslash' => ''));
 
 					$sql = 'SELECT COUNT(DISTINCT post_id) as total_match_count
 						FROM ' . $this->thanks_table . '
@@ -264,7 +264,7 @@ class thankslist
 					'PAGE_NUMBER'		=> $this->pagination->on_page($total_match_count, $per_page, $start),
 					'TOTAL_MATCHES'		=> $total_match_count,
 					'SEARCH_MATCHES'	=> $l_search_matches,
-					'U_THANKS'			=> $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('tslash' => '')),
+					'U_THANKS'			=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller', array('tslash' => '')),
 				));
 
 			break;
@@ -336,7 +336,7 @@ class thankslist
 						$sort_params[] = $param;
 					}
 				}
-				$pagination_url = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array_merge($params, array('tslash' => '')));
+				$pagination_url = $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller', array_merge($params, array('tslash' => '')));
 
 				// Grab relevant data
 				$sql = 'SELECT DISTINCT poster_id
@@ -494,8 +494,8 @@ class thankslist
 							'ROW_NUMBER'			=> $row_number + ($start + 1),
 							'GIVENS'				=> (!isset($givens[$user_id])) ? 0 : $givens[$user_id],
 							'RECEIVED'				=> (!isset($reseved[$user_id])) ? 0 : $reseved[$user_id],
-							'U_SEARCH_USER_GIVENS'	=> ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'true', 'tslash' => '')) : '',
-							'U_SEARCH_USER_RECEIVED'=> ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'false', 'tslash' => '')) : ''
+							'U_SEARCH_USER_GIVENS'	=> ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'true', 'tslash' => '')) : '',
+							'U_SEARCH_USER_RECEIVED'=> ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $user_id, 'give' => 'false', 'tslash' => '')) : ''
 						));
 
 						if (isset($cp_row['row']) && sizeof($cp_row['row']))
@@ -517,13 +517,13 @@ class thankslist
 					$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $total_users, $this->config['topics_per_page'], $start);
 					$this->template->assign_vars(array(
 						'PAGE_NUMBER'			=> $this->pagination->on_page($total_users, $this->config['topics_per_page'], $start),
-						'U_SORT_POSTS'			=> $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'd', 'sd' => (($sort_key == 'd' && $sort_dir == 'a') ? 'd' : 'a'), 'tslash' => '')),
-						'U_SORT_USERNAME'		=> $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'a', 'sd' => (($sort_key == 'a' && $sort_dir == 'a') ? 'd' : 'a'), 'tslash' => '')),
-						'U_SORT_FROM'			=> $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'b', 'sd' => (($sort_key == 'b' && $sort_dir == 'a') ? 'd' : 'a'), 'tslash' => '')),
-						'U_SORT_JOINED'			=> $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'c', 'sd' => (($sort_key == 'c' && $sort_dir == 'a') ? 'd' : 'a'), 'tslash' => '')),
-						'U_SORT_THANKS_R'		=> $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'e', 'sd' => (($sort_key == 'e' && $sort_dir == 'd') ? 'a' : 'd'), 'tslash' => '')),
-						'U_SORT_THANKS_G'		=> $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'f', 'sd' => (($sort_key == 'f' && $sort_dir == 'd') ? 'a' : 'd'), 'tslash' => '')),
-						'U_SORT_ACTIVE'			=> ($this->auth->acl_get('u_viewonline')) ? $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('mode' => $mode, 'sk' => 'l', 'sd' => (($sort_key == 'l' && $sort_dir == 'a') ? 'd' : 'a'), 'tslash' => '')) : '',
+						'U_SORT_POSTS'			=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller', array('mode' => $mode, 'sk' => 'd', 'sd' => (($sort_key == 'd' && $sort_dir == 'a') ? 'd' : 'a'), 'tslash' => '')),
+						'U_SORT_USERNAME'		=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller', array('mode' => $mode, 'sk' => 'a', 'sd' => (($sort_key == 'a' && $sort_dir == 'a') ? 'd' : 'a'), 'tslash' => '')),
+						'U_SORT_FROM'			=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller', array('mode' => $mode, 'sk' => 'b', 'sd' => (($sort_key == 'b' && $sort_dir == 'a') ? 'd' : 'a'), 'tslash' => '')),
+						'U_SORT_JOINED'			=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller', array('mode' => $mode, 'sk' => 'c', 'sd' => (($sort_key == 'c' && $sort_dir == 'a') ? 'd' : 'a'), 'tslash' => '')),
+						'U_SORT_THANKS_R'		=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller', array('mode' => $mode, 'sk' => 'e', 'sd' => (($sort_key == 'e' && $sort_dir == 'd') ? 'a' : 'd'), 'tslash' => '')),
+						'U_SORT_THANKS_G'		=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller', array('mode' => $mode, 'sk' => 'f', 'sd' => (($sort_key == 'f' && $sort_dir == 'd') ? 'a' : 'd'), 'tslash' => '')),
+						'U_SORT_ACTIVE'			=> ($this->auth->acl_get('u_viewonline')) ? $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller', array('mode' => $mode, 'sk' => 'l', 'sd' => (($sort_key == 'l' && $sort_dir == 'a') ? 'd' : 'a'), 'tslash' => '')) : '',
 						'S_VIEWONLINE'		=> $this->auth->acl_get('u_viewonline')
 					));
 				}
@@ -533,7 +533,7 @@ class thankslist
 		// Output the page
 		$this->template->assign_vars(array(
 			'TOTAL_USERS'		=> $this->user->lang('LIST_USERS', $total_users),
-			'U_THANKS'			=> $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('tslash' => '')),
+			'U_THANKS'			=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller', array('tslash' => '')),
 			'S_THANKS'			=> $sthanks,
 		));
 

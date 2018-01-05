@@ -248,8 +248,8 @@ class listener implements EventSubscriberInterface
 
 	public function add_header_quicklinks($event)
 	{
-		$u_thankslist = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller', array('tslash' => ''));
-		$u_toplist = $this->controller_helper->route('gfksx_ThanksForPosts_toplist_controller', array('tslash' => ''));
+		$u_thankslist = $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller', array('tslash' => ''));
+		$u_toplist = $this->controller_helper->route('gfksx_thanksforposts_toplist_controller', array('tslash' => ''));
 		$this->template->assign_vars(array(
 			'U_THANKS_LIST'		=> $u_thankslist,
 			'U_REPUT_TOPLIST'	=> $u_toplist,

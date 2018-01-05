@@ -2,7 +2,7 @@ imports:
     - { resource: tables.yml }
 
 services:
-    gfksx.ThanksForPosts.listener:
+    gfksx.thanksforposts.listener:
         class: gfksx\ThanksForPosts\event\listener
         arguments:
             - '@config'
@@ -15,10 +15,10 @@ services:
             - '@controller.helper'
             - '%core.root_path%'
             - '%core.php_ext%'
-            - '@gfksx.ThanksForPosts.helper'
+            - '@gfksx.thanksforposts.helper'
         tags:
             - { name: event.listener }
-    gfksx.ThanksForPosts.helper:
+    gfksx.thanksforposts.helper:
         class: gfksx\ThanksForPosts\core\helper
         arguments:
             - '@config'
@@ -38,7 +38,7 @@ services:
             - '%tables.users%'
             - '%tables.posts%'
             - '%tables.notifications%'
-    gfksx.ThanksForPosts.controller.thankslist:
+    gfksx.thanksforposts.controller.thankslist:
         class: gfksx\ThanksForPosts\controller\thankslist
         arguments:
             - '@config'
@@ -55,7 +55,7 @@ services:
             - '%tables.users%'
             - '%core.root_path%'
             - '%core.php_ext%'
-    gfksx.ThanksForPosts.controller.toplist:
+    gfksx.thanksforposts.controller.toplist:
         class: gfksx\ThanksForPosts\controller\toplist
         arguments:
             - '@config'
@@ -67,7 +67,7 @@ services:
             - '%core.root_path%'
             - '%core.php_ext%'
             - '@pagination'
-            - '@gfksx.ThanksForPosts.helper'
+            - '@gfksx.thanksforposts.helper'
             - '@request'
             - '@controller.helper'
             - '%tables.thanks%'

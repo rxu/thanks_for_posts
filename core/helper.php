@@ -638,8 +638,8 @@ class helper
 			$l_poster_give_count = (isset($this->poster_list_count[$poster_id]['G']) && $this->poster_list_count[$poster_id]['G']) ? $this->user->lang('THANKS', (int) $this->poster_list_count[$poster_id]['G']) : '';
 
 			// Correctly form URLs
-			$u_receive_count_url = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false', 'tslash' => ''));
-			$u_give_count_url = $this->controller_helper->route('gfksx_ThanksForPosts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true', 'tslash' => ''));
+			$u_receive_count_url = $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false', 'tslash' => ''));
+			$u_give_count_url = $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', array('mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true', 'tslash' => ''));
 
 			$postrow = array_merge($postrow, $thanks_text, array(
 				'COND'						=> ($already_thanked) ? true : false,
