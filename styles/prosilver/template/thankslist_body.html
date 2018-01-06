@@ -2,7 +2,7 @@
 
 <h2 class="solo">{{ PAGE_TITLE }}</h2>
 
-{% if loops.pagination|length or TOTAL_USERS %}
+{% if loops.pagination|length or TOTAL_USERS > 0 %}
 	<div class="action-bar top">
 		<div class="pagination">
 			{{ TOTAL_USERS }}
@@ -51,7 +51,7 @@
 		</div>
 	</div>
 
-{% if loops.pagination|length or TOTAL_USERS %}
+{% if loops.pagination|length or TOTAL_USERS > 0 %}
 	<div class="action-bar bottom">
 		<div class="pagination">
 			{{ TOTAL_USERS }}

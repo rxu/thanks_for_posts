@@ -1,7 +1,7 @@
 {% INCLUDE 'overall_header.html' %}
 <h2 class="solo">{{ PAGE_TITLE }}</h2>
 
-{% if TOTAL_USERS %}<p class="mark-read">{{ TOTAL_USERS }}</p>{% endif %}
+{% if TOTAL_USERS > 0 %}<p class="mark-read">{{ TOTAL_USERS }}</p>{% endif %}
 <div class="forumbg">
 <table class="table1" cellspacing="1" width="100%">
 	<thead>
