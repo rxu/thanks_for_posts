@@ -187,7 +187,7 @@ class toplist
 				'FROM'	=> array($this->users_table => 'u'),
 				'ON'	=> 'p.poster_id = u.user_id'
 			);
-			$sql_p_array['GROUP_BY'] = 't.post_id';
+			$sql_p_array['GROUP_BY'] = 't.post_id, u.user_id, p.post_subject, p.post_id';
 			$sql_p_array['ORDER_BY'] = 'post_thanks DESC';
 			$sql_p_array['WHERE'] = $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true);
 
@@ -298,7 +298,7 @@ class toplist
 				'FROM'	=> array($this->users_table => 'u'),
 				'ON'	=> 't.topic_poster = u.user_id'
 			);
-			$sql_t_array['GROUP_BY'] = 'f.topic_id';
+			$sql_t_array['GROUP_BY'] = 'f.topic_id, u.user_id, t.topic_title, t.topic_id';
 			$sql_t_array['ORDER_BY'] = 'topic_thanks DESC';
 			$sql_t_array['WHERE'] = $this->db->sql_in_set('f.forum_id', $ex_fid_ary, true);
 
@@ -351,7 +351,7 @@ class toplist
 				'FROM'	=> array (FORUMS_TABLE => 'f'),
 				'ON'	=> 't.forum_id = f.forum_id',
 				);
-			$sql_f_array['GROUP_BY'] = 't.forum_id';
+			$sql_f_array['GROUP_BY'] = 't.forum_id, f.forum_name, f.forum_id';
 			$sql_f_array['ORDER_BY'] = 'forum_thanks DESC';
 			$sql_f_array['WHERE'] = $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true);
 
