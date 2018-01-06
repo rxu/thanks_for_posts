@@ -23,7 +23,7 @@
    "extra": {
         "display-name": "Thanks for posts",
         "soft-require": {
-           "phpbb/phpbb": ">=3.1.4-RC1,<3.3.0@dev"
+           "phpbb/phpbb": ">=3.2.0"
         }
     }
 }

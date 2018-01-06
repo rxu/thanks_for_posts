@@ -53,12 +53,6 @@ class v_0_4_0 extends \phpbb\db\migration\migration
 		);
 	}
 
-	public function revert_schema()
-	{
-		return array(
-		);
-	}
-
 	public function update_data()
 	{
 		if ($this->thanks_table_exists)

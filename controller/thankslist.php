@@ -10,8 +10,6 @@
 
 namespace gfksx\ThanksForPosts\controller;
 
-use Symfony\Component\HttpFoundation\Response;
-
 class thankslist
 {
 	/** @var \phpbb\config\config */
@@ -41,7 +39,7 @@ class thankslist
 	/** @var \phpbb\request\request_interface */
 	protected $request;
 
-	/** @var phpbb\controller\helper */
+	/** @var \phpbb\controller\helper */
 	protected $controller_helper;
 
 	/** @var string THANKS_TABLE */
@@ -73,7 +71,6 @@ class thankslist
 	* @param string                               $users_table           USERS_TABLE
 	* @param string                               $phpbb_root_path       phpbb_root_path
 	* @param string                               $php_ext               phpEx
-	* @return gfksx\ThanksForPosts\controller\thankslist
 	* @access public
 	*/
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\pagination $pagination, \phpbb\profilefields\manager $profilefields_manager, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $phpbb_root_path, $php_ext)
@@ -116,7 +113,6 @@ class thankslist
 		}
 		$top = $this->request->variable('top', 0);
 		$start = $this->request->variable('start', 0);
-		$submit = $this->request->is_set_post('submit');
 		$default_key = 'a';
 		$sort_key = $this->request->variable('sk', $default_key);
 		$sort_dir = $this->request->variable('sd', 'd');
@@ -537,14 +533,9 @@ class thankslist
 			'S_THANKS'			=> $sthanks,
 		));
 
-		page_header($page_title);
-
-		$this->template->set_filenames(array(
-			'body' => $template_html)
-		);
-
 		make_jumpbox(append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext"));
-		page_footer();
-		return new Response($this->template->return_display('body'), 200);
+
+		// Send all data to the template file
+		return $this->controller_helper->render($template_html, $page_title);
 	}
 }

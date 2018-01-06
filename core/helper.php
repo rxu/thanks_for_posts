@@ -54,7 +54,7 @@ class helper
 	/** @var \phpbb\notification\manager */
 	protected $notification_manager;
 
-	/** @var phpbb\controller\helper */
+	/** @var \phpbb\controller\helper */
 	protected $controller_helper;
 
 	/** @var \phpbb\event\dispatcher_interface */
@@ -101,7 +101,6 @@ class helper
 	* @param string                               $users_table           USERS_TABLE
 	* @param string                               $posts_table           POSTS_TABLE
 	* @param string                               $notifications_table   NOTIFICATIONS_TABLE
-	* @return gfksx\ThanksForPosts\controller\thankslist
 	* @access public
 	*/
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\notification\manager $notification_manager, \phpbb\controller\helper $controller_helper, \phpbb\event\dispatcher_interface $phpbb_dispatcher, $phpbb_root_path, $php_ext, $table_prefix, $thanks_table, $users_table, $posts_table, $notifications_table)
@@ -181,7 +180,6 @@ class helper
 	// add a user to the thanks list
 	public function insert_thanks($post_id, $user_id, $forum_id)
 	{
-		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		$to_id = $this->request->variable('to_id', 0);
 		$from_id = $this->request->variable('from_id', 0);
 		$row = $this->get_post_info($post_id);
@@ -216,7 +214,7 @@ class helper
 				}
 				else
 				{
-					redirect (append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id));
+					redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id));
 				}
 			}
 			else if (!$row['forum_id'] && (isset($this->config['thanks_global_post']) ? !$this->config['thanks_global_post'] : true))
@@ -234,11 +232,9 @@ class helper
 	// clear list user's thanks
 	public function clear_list_thanks($object_id, $list_thanks = '')
 	{
-		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
-
 		// confirm
 		$s_hidden_fields = build_hidden_fields(array(
-			'list_thanks'		=> $list_thanks,
+				'list_thanks'		=> $list_thanks,
 			)
 		);
 		$lang_act = $field_act = '';
@@ -287,11 +283,11 @@ class helper
 						{
 							if ($list_thanks === 'post')
 							{
-								redirect (append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id));
+								redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id));
 							}
 							else
 							{
-								redirect (append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $object_id));
+								redirect(append_sid("{$this->phpbb_root_path}memberlist.$this->php_ext", 'mode=viewprofile&amp;u=' . $object_id));
 							}
 						}
 					}
@@ -314,7 +310,7 @@ class helper
 			confirm_box(false, 'CLEAR_LIST_THANKS', $s_hidden_fields);
 			if ($list_thanks === 'post')
 			{
-				redirect (append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $object_id . '#p' . $object_id));
+				redirect(append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $object_id . '#p' . $object_id));
 			}
 			else
 			{

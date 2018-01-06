@@ -38,12 +38,6 @@ class v_1_3_4 extends \phpbb\db\migration\migration
 		);
 	}
 
-	public function revert_schema()
-	{
-		return array(
-		);
-	}
-
 	public function update_data()
 	{
 		return array(

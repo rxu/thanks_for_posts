@@ -9,8 +9,6 @@
 
 namespace gfksx\ThanksForPosts\controller;
 
-use Symfony\Component\HttpFoundation\Response;
-
 class toplist
 {
 	/** @var \phpbb\config\config */
@@ -40,13 +38,13 @@ class toplist
 	/** @var \phpbb\pagination */
 	protected $pagination;
 
-	/** @var gfksx\ThanksForPosts\core\helper */
+	/** @var \gfksx\ThanksForPosts\core\helper */
 	protected $gfksx_helper;
 
 	/** @var \phpbb\request\request_interface */
 	protected $request;
 
-	/** @var phpbb\controller\helper */
+	/** @var \phpbb\controller\helper */
 	protected $controller_helper;
 
 	/** @var string THANKS_TABLE */
@@ -76,7 +74,6 @@ class toplist
 	* @param string                               $thanks_table          THANKS_TABLE
 	* @param string                               $users_table           USERS_TABLE
 	* @param string                               $posts_table           POSTS_TABLE
-	* @return gfksx\ThanksForPosts\controller\thankslist
 	* @access public
 	*/
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \gfksx\ThanksForPosts\core\helper $gfksx_helper, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $posts_table)
@@ -110,13 +107,12 @@ class toplist
 		$full_post_rating = $full_topic_rating = $full_forum_rating = false;
 		$u_search_post = $u_search_topic = $u_search_forum = '';
 		$total_match_count = 0;
-		//$page_title = $this->user->lang['REPUT_TOPLIST'];
 		$topic_id = $this->request->variable('t', 0);
 		$return_chars = $this->request->variable('ch', ($topic_id) ? -1 : 300);
 		$words = array();
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : true;
-		$pagination_url = append_sid("{$this->phpbb_root_path}toplist",'mode=' . $mode);
+		$pagination_url = $this->controller_helper->route('gfksx_thanksforposts_toplist_controller', array('mode' => $mode, 'tslash' => ''));
 
 		if (!$this->auth->acl_gets('u_viewtoplist'))
 		{
@@ -167,10 +163,12 @@ class toplist
 				break;
 
 				default:
-				$page_title = $this->user->lang['REPUT_TOPLIST'];
 				$total_match_count = 0;
+				break;
 		}
+
 		$page_title = sprintf($this->user->lang['REPUT_TOPLIST'], $total_match_count);
+
 		//post rating
 		if (!$full_forum_rating && !$full_topic_rating && $this->config['thanks_post_reput_view'])
 		{
@@ -193,7 +191,9 @@ class toplist
 
 			$sql = $this->db->sql_build_query('SELECT',$sql_p_array);
 			$result = $this->db->sql_query_limit($sql, $end, $start);
-			$u_search_post = append_sid("{$this->phpbb_root_path}toplist", "mode=post");
+
+			$u_search_post = $this->controller_helper->route('gfksx_thanksforposts_toplist_controller', array('mode' => 'post', 'tslash' => ''));
+
 			if (!$row = $this->db->sql_fetchrow($result))
 			{
 				trigger_error('RATING_VIEW_TOPLIST_NO');
@@ -304,7 +304,7 @@ class toplist
 
 			$sql = $this->db->sql_build_query('SELECT',$sql_t_array);
 			$result = $this->db->sql_query_limit($sql, $end, $start);
-			$u_search_topic = append_sid("{$this->phpbb_root_path}toplist", "mode=topic");
+			$u_search_topic = $this->controller_helper->route('gfksx_thanksforposts_toplist_controller', array('mode' => 'topic', 'tslash' => ''));
 			if (!$row = $this->db->sql_fetchrow($result))
 			{
 				trigger_error('RATING_VIEW_TOPLIST_NO');
@@ -357,7 +357,8 @@ class toplist
 
 			$sql = $this->db->sql_build_query('SELECT',$sql_f_array);
 			$result = $this->db->sql_query_limit($sql, $end, $start);
-			$u_search_forum = append_sid("{$this->phpbb_root_path}toplist", "mode=forum");
+			$u_search_forum = $this->controller_helper->route('gfksx_thanksforposts_toplist_controller', array('mode' => 'forum', 'tslash' => ''));
+
 			if (!$row = $this->db->sql_fetchrow($result))
 			{
 				trigger_error('RATING_VIEW_TOPLIST_NO');
@@ -414,12 +415,9 @@ class toplist
 			'U_SEARCH_FORUM'			=> $u_search_forum,
 		));
 
-		page_header($page_title);
-		$this->template->set_filenames(array(
-			'body' => 'toplist_body.html'));
-
 		make_jumpbox(append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext"));
-		page_footer();
-		return new Response($this->template->return_display('body'), 200);
+
+		// Send all data to the template file
+		return $this->controller_helper->render('toplist_body.html', $page_title);
 	}
 }

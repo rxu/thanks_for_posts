@@ -44,7 +44,7 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\request\request_interface */
 	protected $request;
 
-	/** @var phpbb\controller\helper */
+	/** @var \phpbb\controller\helper */
 	protected $controller_helper;
 
 	/** @var string phpbb_root_path */
@@ -53,7 +53,7 @@ class listener implements EventSubscriberInterface
 	/** @var string phpEx */
 	protected $php_ext;
 
-	/** @var gfksx\ThanksForPosts\core\helper */
+	/** @var \gfksx\ThanksForPosts\core\helper */
 	protected $helper;
 
 	/**
@@ -69,7 +69,6 @@ class listener implements EventSubscriberInterface
 	* @param string                               $phpbb_root_path       phpbb_root_path
 	* @param string                               $php_ext               phpEx
 	* @param rxu\PostsMerging\core\helper         $helper                The extension helper object
-	* @return \rxu\ThanksForPosts\event\listener
 	* @access public
 	*/
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $phpbb_root_path, $php_ext, $helper)
@@ -137,7 +136,6 @@ class listener implements EventSubscriberInterface
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : false;
 
-		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
 		if ($this->request->is_set('list_thanks'))
 		{
 			$this->helper->clear_list_thanks($user_id, $this->request->variable('list_thanks', ''));

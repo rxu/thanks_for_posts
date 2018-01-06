@@ -22,18 +22,6 @@ class v_2_0_0 extends \phpbb\db\migration\migration
 			return array('\gfksx\ThanksForPosts\migrations\v_1_3_4');
 	}
 
-	public function update_schema()
-	{
-		return 	array(
-		);
-	}
-
-	public function revert_schema()
-	{
-		return array(
-		);
-	}
-
 	public function update_data()
 	{
 		// Remove phpBB 3.0 Thanks for posts ACP modules

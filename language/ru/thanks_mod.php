@@ -61,8 +61,6 @@ $lang = array_merge($lang, array(
 
 	'NO_VIEW_USERS_THANKS'		=> 'У вас нет доступа к просмотру списка благодарностей.',
 
-	'NOTIFICATION_TYPE_THANKS'	=> 'Вас поблагодарили за сообщение',
-
 	'NOTIFICATION_THANKS_GIVE'	=> array(
 		1 => '<strong>Получена благодарность</strong> от пользователя %1$s за сообщение:',
 		2 => '<strong>Получены благодарности</strong> от пользователей %1$s за сообщение:',
