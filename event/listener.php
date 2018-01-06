@@ -254,7 +254,7 @@ class listener implements EventSubscriberInterface
 			'U_THANKS_LIST'		=> $u_thankslist,
 			'U_REPUT_TOPLIST'	=> $u_toplist,
 			'S_DISPLAY_THANKSLIST'	=> $this->auth->acl_get('u_viewthanks'),
-			'S_DISPLAY_TOPLIST'		=> $this->auth->acl_get('u_viewtoplist'),
+			'S_DISPLAY_TOPLIST'		=> $this->auth->acl_get('u_viewtoplist') && ($this->config['thanks_post_reput_view'] || $this->config['thanks_topic_reput_view'] || $this->config['thanks_forum_reput_view']),
 			'MINI_THANKS_IMG'		=> $this->user->img('icon_mini_thanks', $this->user->lang['GRATITUDES']),
 			'MINI_TOPLIST_IMG'		=> $this->user->img('icon_mini_toplist', $this->user->lang['TOPLIST']),
 		));
