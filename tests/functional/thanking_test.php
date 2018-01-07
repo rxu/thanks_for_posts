@@ -15,6 +15,25 @@ namespace gfksx\ThanksForPosts\tests\functional;
  */
 class thanking_test extends \phpbb_functional_test_case
 {
+	public function test_toplist_on_index()
+	{
+		$this->login();
+		$this->admin_login();
+
+		$crawler = self::request('GET', "adm/index.php?sid={$this->sid}&i=-gfksx-ThanksForPosts-acp-acp_thanks_module&mode=thanks");
+		$form = $crawler->selectButton('Submit')->form();
+		$values = $form->getValues();
+		// Specify the number of users to show in the toplist on index page
+		$values['config[thanks_top_number]'] = 5;
+		$form->setValues($values);
+		$crawler = self::submit($form);
+		$this->assertContains($this->lang('CONFIG_UPDATED'), $crawler->filter('.successbox')->text());
+
+		// Now test toplist on index exists
+		$crawler = self::request('GET', "index.php?sid={$this->sid}");
+		$this->assertContains('Thanks Toplist — 5', $crawler->filter('div[class="stat-block thanks-list"]')->text());
+	}
+
 	public function test_thanking()
 	{
 		// user1 account, its post and a thank should have been created in controller_test.php
@@ -28,7 +47,7 @@ class thanking_test extends \phpbb_functional_test_case
 		$post = $this->db->sql_fetchrow($result);
 		$this->db->sql_freeresult($result);
 
-		// Now test thanks button exist
+		// Now test thanks button exists
 		$crawler = self::request('GET', "viewtopic.php?f=2&t={$post['topic_id']}&sid={$this->sid}&p={$post['post_id']}#p{$post['post_id']}");
 		$thanks_button_title = $crawler->filter('a[id="lnk_thanks_post' . $post['post_id'] . '"]')->attr('title');
 		$thanks_link = str_replace('./', '', html_entity_decode($crawler->filter('a[id="lnk_thanks_post' . $post['post_id'] . '"]')->attr('href')));

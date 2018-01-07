@@ -833,7 +833,7 @@ class helper
 			FROM ' . $this->users_table . ' u 
 			LEFT JOIN ' . $this->thanks_table . ' t ON (u.user_id = t.poster_id)
 			WHERE ' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0
-			GROUP BY t.poster_id 
+			GROUP BY t.poster_id, u.user_id
 			ORDER BY tally DESC';
 		$result = $this->db->sql_query_limit($sql, (int) $this->config['thanks_top_number']);
 
