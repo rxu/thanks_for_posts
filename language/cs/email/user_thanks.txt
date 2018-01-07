@@ -1,0 +1,10 @@
+Předmět: {THANKS_SUBG} — "{POST_SUBJECT}"
+
+Dobrý den {POSTER_NAME},
+
+Obdrželi jste toto upozornění, protože {USERNAME} {POST_THANKS} "{POST_SUBJECT}" na stránce "{SITENAME}".
+
+Chcete-li příspěvěk zobrazit, klikněte na následující odkaz:
+{U_POST_THANKS}
+
+{EMAIL_SIG}
