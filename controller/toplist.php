@@ -272,8 +272,8 @@ class toplist
 						'POST_THANKS'				=> $row['post_thanks'],
 						'S_THANKS_POST_REPUT_VIEW' 	=> isset($this->config['thanks_post_reput_view']) ? $this->config['thanks_post_reput_view'] : false,
 						'S_THANKS_REPUT_GRAPHIC' 	=> isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-						'THANKS_REPUT_HEIGHT'		=> sprintf('%dpx', $this->config['thanks_reput_height']),
-						'THANKS_REPUT_GRAPHIC_WIDTH' 	=> sprintf('%dpx', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']),
+						'THANKS_REPUT_HEIGHT'		=> sprintf('%d', $this->config['thanks_reput_height']),
+						'THANKS_REPUT_GRAPHIC_WIDTH' 	=> sprintf('%d', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']),
 						'THANKS_REPUT_IMAGE' 		=> isset($this->config['thanks_reput_image']) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
 						'THANKS_REPUT_IMAGE_BACK'	=> isset($this->config['thanks_reput_image_back']) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
 					));
@@ -329,8 +329,8 @@ class toplist
 						'TOPIC_REPUT'				=> round($row['topic_thanks'] / ($max_topic_thanks / 100), $this->config['thanks_number_digits']) . '%',
 						'S_THANKS_TOPIC_REPUT_VIEW' => isset($this->config['thanks_topic_reput_view']) ? $this->config['thanks_topic_reput_view'] : false,
 						'S_THANKS_REPUT_GRAPHIC' 	=> isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-						'THANKS_REPUT_HEIGHT'		=> sprintf('%dpx', $this->config['thanks_reput_height']),
-						'THANKS_REPUT_GRAPHIC_WIDTH'=> sprintf('%dpx', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']),
+						'THANKS_REPUT_HEIGHT'		=> sprintf('%d', $this->config['thanks_reput_height']),
+						'THANKS_REPUT_GRAPHIC_WIDTH'=> sprintf('%d', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']),
 						'THANKS_REPUT_IMAGE' 		=> (isset($this->config['thanks_reput_image'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
 						'THANKS_REPUT_IMAGE_BACK'	=> (isset($this->config['thanks_reput_image_back'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
 					));
@@ -381,8 +381,8 @@ class toplist
 							'FORUM_REPUT'				=> round($row['forum_thanks'] / ($max_forum_thanks / 100), $this->config['thanks_number_digits']) . '%',
 							'S_THANKS_FORUM_REPUT_VIEW' => isset($this->config['thanks_forum_reput_view']) ? $this->config['thanks_forum_reput_view'] : false,
 							'S_THANKS_REPUT_GRAPHIC' 	=> isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
-							'THANKS_REPUT_HEIGHT'		=> sprintf('%dpx', $this->config['thanks_reput_height']),
-							'THANKS_REPUT_GRAPHIC_WIDTH'=> sprintf('%dpx', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']),
+							'THANKS_REPUT_HEIGHT'		=> sprintf('%d', $this->config['thanks_reput_height']),
+							'THANKS_REPUT_GRAPHIC_WIDTH'=> sprintf('%d', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']),
 							'THANKS_REPUT_IMAGE' 		=> (isset($this->config['thanks_reput_image'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
 							'THANKS_REPUT_IMAGE_BACK'	=> (isset($this->config['thanks_reput_image_back'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
 						));

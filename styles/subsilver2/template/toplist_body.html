@@ -23,7 +23,7 @@
 			<tr class="{% if toppostrow.S_ROW_COUNT is even %}row2{% else %}row1{% endif %}">
 				<td><span style="display: block;">{{ lang('REPUT') }}{{ lang('COLON') }}&nbsp;{{ toppostrow.POST_REPUT }}
 					{% if toppostrow.S_THANKS_REPUT_GRAPHIC %}
-					<span style="display: block; width: {{ toppostrow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ toppostrow.THANKS_REPUT_HEIGHT }}; background: URL({{ toppostrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ toppostrow.THANKS_REPUT_HEIGHT }}; width: {{ toppostrow.POST_REPUT }}; background: URL({{ toppostrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
+					<span style="display: block; width: {{ toppostrow.THANKS_REPUT_GRAPHIC_WIDTH }}px; height: {{ toppostrow.THANKS_REPUT_HEIGHT }}px; background: URL({{ toppostrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ toppostrow.THANKS_REPUT_HEIGHT }}px; width: {{ toppostrow.POST_REPUT }}; background: URL({{ toppostrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
 					{% endif %}
 				</span></td>
 				<td align="center" valign="middle" width="15%">{{ toppostrow.POST_THANKS }}</td>
@@ -55,7 +55,7 @@
 			<tr class="{% if toptopicrow.S_ROW_COUNT is even %}row2{% else %}row1{% endif %}">
 				<td><span style="display: block;">{{ lang('REPUT') }}{{ lang('COLON') }}&nbsp;{{ toptopicrow.TOPIC_REPUT }}
 					{% if toptopicrow.S_THANKS_REPUT_GRAPHIC %}
-					<span style="display: block; width: {{ toptopicrow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ toptopicrow.THANKS_REPUT_HEIGHT }}; background: URL({{ toptopicrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ toptopicrow.THANKS_REPUT_HEIGHT }}; width: {{ toptopicrow.TOPIC_REPUT }}; background: URL({{ toptopicrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
+					<span style="display: block; width: {{ toptopicrow.THANKS_REPUT_GRAPHIC_WIDTH }}px; height: {{ toptopicrow.THANKS_REPUT_HEIGHT }}px; background: URL({{ toptopicrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ toptopicrow.THANKS_REPUT_HEIGHT }}px; width: {{ toptopicrow.TOPIC_REPUT }}; background: URL({{ toptopicrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
 					{% endif %}
 				</span></td>
 				<td align="center" valign="middle" width="15%">{{ toptopicrow.TOPIC_THANKS }}</td>
@@ -86,7 +86,7 @@
 			<tr class="{% if topforumrow.S_ROW_COUNT is even %}row2{% else %}row1{% endif %}">
 				<td><span style="display: block;">{{ lang('REPUT') }}{{ lang('COLON') }}&nbsp;{{ topforumrow.FORUM_REPUT }}
 					{% if topforumrow.S_THANKS_REPUT_GRAPHIC %}
-					<span style="display: block; width: {{ topforumrow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ topforumrow.THANKS_REPUT_HEIGHT }}; background: URL({{ topforumrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ topforumrow.THANKS_REPUT_HEIGHT }}; width: {{ topforumrow.FORUM_REPUT }}; background: URL({{ topforumrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
+					<span style="display: block; width: {{ topforumrow.THANKS_REPUT_GRAPHIC_WIDTH }}px; height: {{ topforumrow.THANKS_REPUT_HEIGHT }}px; background: URL({{ topforumrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ topforumrow.THANKS_REPUT_HEIGHT }}px; width: {{ topforumrow.FORUM_REPUT }}; background: URL({{ topforumrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
 					{% endif %}
 				</span></td>
 				<td align="center" valign="middle" width="15%">{{ topforumrow.FORUM_THANKS }}</td>

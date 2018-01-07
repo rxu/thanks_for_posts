@@ -12,7 +12,7 @@
 		<tr class="postbody" align="left">
 			<td>
 			{% if postrow.S_THANKS_REPUT_GRAPHIC %}
-			<div style="float: left; width: {{ postrow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ postrow.THANKS_REPUT_HEIGHT }}; background: URL({{ postrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><div style="height: {{ postrow.THANKS_REPUT_HEIGHT }}; width: {{ postrow.POST_REPUT }}; background: URL({{ postrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;"></div></div>&nbsp;
+			<div style="float: left; width: {{ postrow.THANKS_REPUT_GRAPHIC_WIDTH }}px; height: {{ postrow.THANKS_REPUT_HEIGHT }}px; background: URL({{ postrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><div style="height: {{ postrow.THANKS_REPUT_HEIGHT }}px; width: {{ postrow.POST_REPUT }}; background: URL({{ postrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;"></div></div>&nbsp;
 			{% endif %}
 			<strong>{{ lang('REPUT') }}{{ lang('COLON') }}</strong>&nbsp;{{ postrow.POST_REPUT }}
 			</td>

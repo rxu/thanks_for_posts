@@ -13,7 +13,7 @@
 		<div class="content">{{ toppostrow.MESSAGE }}</div>
 		<span style="float: right">{{ lang('REPUT') }}{{ lang('COLON') }} {{ toppostrow.POST_REPUT }}</span>
 		{% if toppostrow.S_THANKS_REPUT_GRAPHIC %}
-		<span style="display: block; width: {{ toppostrow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ toppostrow.THANKS_REPUT_HEIGHT }}; background: url({{ toppostrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ toppostrow.THANKS_REPUT_HEIGHT }}; width: {{ toppostrow.POST_REPUT }}; background: url({{ toppostrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
+		<span style="display: block; width: {{ toppostrow.THANKS_REPUT_GRAPHIC_WIDTH }}px; height: {{ toppostrow.THANKS_REPUT_HEIGHT }}px; background: url({{ toppostrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ toppostrow.THANKS_REPUT_HEIGHT }}px; width: {{ toppostrow.POST_REPUT }}; background: url({{ toppostrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
 		{% endif %}
 	</div>
 {% endfor %}
@@ -35,7 +35,7 @@
 		<td>{{ toptopicrow.TOPIC_THANKS }}</td>
 		<td><span style="display: block;">{{ lang('REPUT') }}:{{ toptopicrow.TOPIC_REPUT }}
 			{% if toptopicrow.S_THANKS_REPUT_GRAPHIC %}
-			<span style="display: block; width: {{ toptopicrow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ toptopicrow.THANKS_REPUT_HEIGHT }}; background: url({{ toptopicrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ toptopicrow.THANKS_REPUT_HEIGHT }}; width: {{ toptopicrow.TOPIC_REPUT }}; background: url({{ toptopicrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
+			<span style="display: block; width: {{ toptopicrow.THANKS_REPUT_GRAPHIC_WIDTH }}px; height: {{ toptopicrow.THANKS_REPUT_HEIGHT }}px; background: url({{ toptopicrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ toptopicrow.THANKS_REPUT_HEIGHT }}px; width: {{ toptopicrow.TOPIC_REPUT }}; background: url({{ toptopicrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
 			{% endif %}
 		</span></td>
 	</tr>
@@ -60,7 +60,7 @@
 		<td>{{ topforumrow.FORUM_THANKS }}</td>
 		<td><span style="display: block;">{{ lang('REPUT') }}:{{ topforumrow.FORUM_REPUT }}
 			{% if topforumrow.S_THANKS_REPUT_GRAPHIC %}
-			<span style="display: block; width: {{ topforumrow.THANKS_REPUT_GRAPHIC_WIDTH }}; height: {{ topforumrow.THANKS_REPUT_HEIGHT }}; background: url({{ topforumrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ topforumrow.THANKS_REPUT_HEIGHT }}; width: {{ topforumrow.FORUM_REPUT }}; background: url({{ topforumrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
+			<span style="display: block; width: {{ topforumrow.THANKS_REPUT_GRAPHIC_WIDTH }}px; height: {{ topforumrow.THANKS_REPUT_HEIGHT }}px; background: url({{ topforumrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ topforumrow.THANKS_REPUT_HEIGHT }}px; width: {{ topforumrow.FORUM_REPUT }}; background: url({{ topforumrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
 			{% endif %}
 		</span></td>
 	</tr>
