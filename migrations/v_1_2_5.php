@@ -26,35 +26,6 @@ class v_1_2_5 extends \phpbb\db\migration\migration
 		return array('\gfksx\ThanksForPosts\migrations\v_0_4_0');
 	}
 
-	public function update_schema()
-	{
-		if (!$this->db_tools->sql_table_exists($this->table_prefix . 'thanks'))
-		{
-			return array(
-				'add_tables' => array(
-					$this->table_prefix . 'thanks' => array(
-						'COLUMNS'		=> array(
-							'post_id'		=> array('UINT', 0),
-							'poster_id'		=> array('UINT', 0),
-							'user_id'		=> array('UINT', 0),
-						),
-						'PRIMARY_KEY'	=> array('post_id', 'user_id'),
-					),
-				),
-			);
-		}
-
-		return array(
-		);
-	}
-
-	public function revert_schema()
-	{
-		return array(
-			'drop_tables'	=> array($this->table_prefix . 'thanks'),
-		);
-	}
-
 	public function update_data()
 	{
 		return array(
