@@ -274,8 +274,8 @@ class toplist
 						'S_THANKS_REPUT_GRAPHIC' 	=> isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
 						'THANKS_REPUT_HEIGHT'		=> sprintf('%d', $this->config['thanks_reput_height']),
 						'THANKS_REPUT_GRAPHIC_WIDTH' 	=> sprintf('%d', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']),
-						'THANKS_REPUT_IMAGE' 		=> isset($this->config['thanks_reput_image']) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
-						'THANKS_REPUT_IMAGE_BACK'	=> isset($this->config['thanks_reput_image_back']) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
+						'THANKS_REPUT_IMAGE' 		=> isset($this->config['thanks_reput_image']) ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
+						'THANKS_REPUT_IMAGE_BACK'	=> isset($this->config['thanks_reput_image_back']) ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
 					));
 				}
 				while ($row = $this->db->sql_fetchrow($result));
@@ -331,8 +331,8 @@ class toplist
 						'S_THANKS_REPUT_GRAPHIC' 	=> isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
 						'THANKS_REPUT_HEIGHT'		=> sprintf('%d', $this->config['thanks_reput_height']),
 						'THANKS_REPUT_GRAPHIC_WIDTH'=> sprintf('%d', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']),
-						'THANKS_REPUT_IMAGE' 		=> (isset($this->config['thanks_reput_image'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
-						'THANKS_REPUT_IMAGE_BACK'	=> (isset($this->config['thanks_reput_image_back'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
+						'THANKS_REPUT_IMAGE' 		=> (isset($this->config['thanks_reput_image'])) ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
+						'THANKS_REPUT_IMAGE_BACK'	=> (isset($this->config['thanks_reput_image_back'])) ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
 					));
 				}
 				while ($row = $this->db->sql_fetchrow($result));
@@ -383,8 +383,8 @@ class toplist
 							'S_THANKS_REPUT_GRAPHIC' 	=> isset($this->config['thanks_reput_graphic']) ? $this->config['thanks_reput_graphic'] : false,
 							'THANKS_REPUT_HEIGHT'		=> sprintf('%d', $this->config['thanks_reput_height']),
 							'THANKS_REPUT_GRAPHIC_WIDTH'=> sprintf('%d', $this->config['thanks_reput_level']*$this->config['thanks_reput_height']),
-							'THANKS_REPUT_IMAGE' 		=> (isset($this->config['thanks_reput_image'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image'] : '',
-							'THANKS_REPUT_IMAGE_BACK'	=> (isset($this->config['thanks_reput_image_back'])) ? $this->phpbb_root_path . $this->config['thanks_reput_image_back'] : '',
+							'THANKS_REPUT_IMAGE' 		=> (isset($this->config['thanks_reput_image'])) ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
+							'THANKS_REPUT_IMAGE_BACK'	=> (isset($this->config['thanks_reput_image_back'])) ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
 						));
 					}
 				}
