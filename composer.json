@@ -1,9 +1,9 @@
 {
     "name": "gfksx/thanksforposts",
     "type": "phpbb-extension",
-    "description": "Adds the ability to thank the author and to use per posts/topics/forum rating system s based on the count of thanks.",
+    "description": "Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.",
     "homepage": "http://www.phpbbguru.net",
-    "version": "2.0.3",
+    "version": "2.0.4",
     "license": "GPL-2.0",
     "authors": [
         {
