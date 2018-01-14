@@ -8,7 +8,7 @@
 *
 */
 
-namespace gfksx\ThanksForPosts\controller;
+namespace gfksx\thanksforposts\controller;
 
 class thankslist
 {
@@ -94,7 +94,7 @@ class thankslist
 	public function main($mode, $author_id, $give)
 	{
 		$this->user->add_lang(array('memberlist', 'groups', 'search'));
-		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
+		$this->user->add_lang_ext('gfksx/thanksforposts', 'thanks_mod');
 
 		// Grab data
 		$row_number	= $total_users = 0;

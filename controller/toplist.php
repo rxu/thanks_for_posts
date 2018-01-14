@@ -7,7 +7,7 @@
 *
 */
 
-namespace gfksx\ThanksForPosts\controller;
+namespace gfksx\thanksforposts\controller;
 
 class toplist
 {
@@ -38,7 +38,7 @@ class toplist
 	/** @var \phpbb\pagination */
 	protected $pagination;
 
-	/** @var \gfksx\ThanksForPosts\core\helper */
+	/** @var \gfksx\thanksforposts\core\helper */
 	protected $gfksx_helper;
 
 	/** @var \phpbb\request\request_interface */
@@ -68,7 +68,7 @@ class toplist
 	* @param string                               $phpbb_root_path       phpbb_root_path
 	* @param string                               $php_ext               phpEx
 	* @param \phpbb\pagination                    $pagination            Pagination object
-	* @param \gfksx\ThanksForPosts\core\helper    $gfksx_helper          Helper object
+	* @param \gfksx\thanksforposts\core\helper    $gfksx_helper          Helper object
 	* @param \phpbb\request\request_interface     $request               Request object
 	* @param \phpbb\controller\helper             $controller_helper     Controller helper object
 	* @param string                               $thanks_table          THANKS_TABLE
@@ -76,7 +76,7 @@ class toplist
 	* @param string                               $posts_table           POSTS_TABLE
 	* @access public
 	*/
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \gfksx\ThanksForPosts\core\helper $gfksx_helper, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $posts_table)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \gfksx\thanksforposts\core\helper $gfksx_helper, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $posts_table)
 	{
 		$this->config = $config;
 		$this->db = $db;
@@ -99,7 +99,7 @@ class toplist
 	{
 		include_once($this->phpbb_root_path . 'includes/functions_display.' . $this->php_ext);
 		$this->user->add_lang(array('memberlist', 'groups', 'search'));
-		$this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
+		$this->user->add_lang_ext('gfksx/thanksforposts', 'thanks_mod');
 
 		// Grab data
 		$mode = $this->request->variable('mode', '');

@@ -8,7 +8,7 @@
 *
 */
 
-namespace gfksx\ThanksForPosts\event;
+namespace gfksx\thanksforposts\event;
 
 /**
 * Event listener
@@ -53,7 +53,7 @@ class listener implements EventSubscriberInterface
 	/** @var string phpEx */
 	protected $php_ext;
 
-	/** @var \gfksx\ThanksForPosts\core\helper */
+	/** @var \gfksx\thanksforposts\core\helper */
 	protected $helper;
 
 	/**
@@ -238,7 +238,7 @@ class listener implements EventSubscriberInterface
 	{
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
-			'ext_name' => 'gfksx/ThanksForPosts',
+			'ext_name' => 'gfksx/thanksforposts',
 			'lang_set' => 'thanks_mod',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;

@@ -8,10 +8,15 @@
 *
 */
 
-namespace gfksx\ThanksForPosts\migrations;
+namespace gfksx\thanksforposts\migrations;
 
 class v_0_4_0 extends \phpbb\db\migration\migration
 {
+	public function effectively_installed()
+	{
+		return $this->db_tools->sql_table_exists($this->table_prefix . 'thanks') && $this->db_tools->sql_column_exists($this->table_prefix . 'thanks', 'poster_id');
+	}
+
 	static public function depends_on()
 	{
 		return array('\phpbb\db\migration\data\v310\dev');

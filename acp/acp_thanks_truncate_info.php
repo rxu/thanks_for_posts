@@ -8,18 +8,18 @@
 *
 */
 
-namespace gfksx\ThanksForPosts\acp;
+namespace gfksx\thanksforposts\acp;
 
 class acp_thanks_truncate_info
 {
 	function module()
 	{
 		return array(
-			'filename'	=> '\gfksx\ThanksForPosts\acp\acp_thanks_truncate_module',
+			'filename'	=> '\gfksx\thanksforposts\acp\acp_thanks_truncate_module',
 			'title'		=> 'ACP_THANKS_TRUNCATE',
 			'version'	=> '1.3.4',
 			'modes'		=> array(
-				'thanks'			=> array('title' => 'ACP_THANKS_TRUNCATE', 'auth' => 'ext_gfksx/ThanksForPosts && acl_a_board', 'cat' => array('ACP_THANKS')),
+				'thanks'			=> array('title' => 'ACP_THANKS_TRUNCATE', 'auth' => 'ext_gfksx/thanksforposts && acl_a_board', 'cat' => array('ACP_THANKS')),
 			),
 		);
 	}

@@ -38,7 +38,7 @@ matrix:
 
 env:
   global:
-    - EXTNAME="gfksx/ThanksForPosts"  # CHANGE name of the extension HERE
+    - EXTNAME="gfksx/thanksforposts"  # CHANGE name of the extension HERE
     - SNIFF="1"            # Should we run code sniffer on your code?
     - IMAGE_ICC="1"        # Should we run icc profile sniffer on your images?
     - EPV="1"              # Should we run EPV (Extension Pre Validator) on your code?

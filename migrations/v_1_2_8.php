@@ -8,7 +8,7 @@
 *
 */
 
-namespace gfksx\ThanksForPosts\migrations;
+namespace gfksx\thanksforposts\migrations;
 
 class v_1_2_8 extends \phpbb\db\migration\migration
 {
@@ -20,7 +20,7 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 
 	static public function depends_on()
 	{
-			return array('\gfksx\ThanksForPosts\migrations\v_1_2_6');
+			return array('\gfksx\thanksforposts\migrations\v_1_2_6');
 	}
 
 	public function update_schema()
@@ -48,8 +48,8 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 			array('config.add', array('thanks_number_digits', 2)),
 			array('config.add', array('thanks_number_row_reput', 5)),
 			array('config.add', array('thanks_reput_graphic', 1)),
-			array('config.add', array('thanks_reput_image', 'ext/gfksx/ThanksForPosts/images/rating/reput_star_gold.gif')),
-			array('config.add', array('thanks_reput_image_back', 'ext/gfksx/ThanksForPosts/images/rating/reput_star_back.gif')),
+			array('config.add', array('thanks_reput_image', 'ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif')),
+			array('config.add', array('thanks_reput_image_back', 'ext/gfksx/thanksforposts/images/rating/reput_star_back.gif')),
 			array('config.add', array('thanks_time_view', 1)),
 			array('config.add', array('thanks_top_number', 0)),
 

@@ -53,13 +53,13 @@ $lang = array_merge($lang, array(
 	'ACP_USERSEND'						=> 'Restantes utilizadores com agradecimentos',
 	'ACP_USERSTHANKS'					=> 'Total de utilizadores com agradecimentos',
 
-	'GRAPHIC_BLOCK_BACK'				=> 'ext/gfksx/ThanksForPosts/images/rating/reput_block_back.gif',
-	'GRAPHIC_BLOCK_RED'					=> 'ext/gfksx/ThanksForPosts/images/rating/reput_block_red.gif',
+	'GRAPHIC_BLOCK_BACK'				=> 'ext/gfksx/thanksforposts/images/rating/reput_block_back.gif',
+	'GRAPHIC_BLOCK_RED'					=> 'ext/gfksx/thanksforposts/images/rating/reput_block_red.gif',
 	'GRAPHIC_DEFAULT'					=> 'Images',
 	'GRAPHIC_OPTIONS'					=> 'Graphics Options',
-	'GRAPHIC_STAR_BACK'					=> 'ext/gfksx/ThanksForPosts/images/rating/reput_star_back.gif',
-	'GRAPHIC_STAR_BLUE'					=> 'ext/gfksx/ThanksForPosts/images/rating/reput_star_blue.gif',
-	'GRAPHIC_STAR_GOLD'					=> 'ext/gfksx/ThanksForPosts/images/rating/reput_star_gold.gif',
+	'GRAPHIC_STAR_BACK'					=> 'ext/gfksx/thanksforposts/images/rating/reput_star_back.gif',
+	'GRAPHIC_STAR_BLUE'					=> 'ext/gfksx/thanksforposts/images/rating/reput_star_blue.gif',
+	'GRAPHIC_STAR_GOLD'					=> 'ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif',
 
 	'IMG_THANKPOSTS'					=> 'Para agradecer à mensagem',
 	'IMG_REMOVETHANKS'					=> 'Cancelar agradecimento',

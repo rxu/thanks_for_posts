@@ -8,18 +8,18 @@
 *
 */
 
-namespace gfksx\ThanksForPosts\acp;
+namespace gfksx\thanksforposts\acp;
 
 class acp_thanks_info
 {
 	function module()
 	{
 		return array(
-			'filename'	=> '\gfksx\ThanksForPosts\acp\acp_thanks_module',
+			'filename'	=> '\gfksx\thanksforposts\acp\acp_thanks_module',
 			'title'		=> 'ACP_THANKS_SETTINGS',
 			'version'	=> '1.3.4',
 			'modes'		=> array(
-				'thanks'			=> array('title' => 'ACP_THANKS_SETTINGS', 'auth' => 'ext_gfksx/ThanksForPosts && acl_a_board', 'cat' => array('ACP_THANKS')),
+				'thanks'			=> array('title' => 'ACP_THANKS_SETTINGS', 'auth' => 'ext_gfksx/thanksforposts && acl_a_board', 'cat' => array('ACP_THANKS')),
 			),
 		);
 	}

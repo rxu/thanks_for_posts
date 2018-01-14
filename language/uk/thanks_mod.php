@@ -61,8 +61,6 @@ $lang = array_merge($lang, array(
 
 	'NO_VIEW_USERS_THANKS'		=> 'У вас немає доступу до перегляду списку подяк.',
 
-	'NOTIFICATION_TYPE_THANKS'	=> 'Вам подякували за повідомлення',
-
 	'NOTIFICATION_THANKS_GIVE'	=> array(
 		1 => '<strong>Отримана подяка</strong> від користувача %1$s за повідомлення:',
 		2 => '<strong>Отримані подяки</strong> від користувачів %1$s за повідомлення:',

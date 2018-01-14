@@ -8,7 +8,7 @@
 *
 */
 
-namespace gfksx\ThanksForPosts\notification;
+namespace gfksx\thanksforposts\notification;
 
 /**
 * Thanks for posts notifications class
@@ -204,7 +204,7 @@ class thanks extends \phpbb\notification\type\base
 	*/
 	public function get_email_template()
 	{
-		return '@gfksx_ThanksForPosts/user_thanks';
+		return '@gfksx_thanksforposts/user_thanks';
 	}
 
 	/**

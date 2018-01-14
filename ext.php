@@ -8,7 +8,7 @@
 *
 */
 
-namespace gfksx\ThanksForPosts;
+namespace gfksx\thanksforposts;
 
 /**
 * Extension class for custom enable/disable/purge actions
@@ -38,8 +38,18 @@ class ext extends \phpbb\extension\base
 		{
 			case '': // Empty means nothing has run yet
 
-				// Enable notifications
 				$phpbb_notifications = $this->container->get('notification_manager');
+				$extension_manager = $this->container->get('ext.manager');
+
+				// Handle extension renaming
+				if ($extension_manager->is_enabled('gfksx/ThanksForPosts') || $extension_manager->is_disabled('gfksx/ThanksForPosts'))
+				{
+					$phpbb_notifications->disable_notifications('gfksx.ThanksForPosts.notification.type.thanks');
+					$phpbb_notifications->disable_notifications('gfksx.ThanksForPosts.notification.type.thanks_remove');
+					$this->rename_extension('gfksx/ThanksForPosts', $this->extension_name);
+				}
+
+				// Enable notifications
 				$phpbb_notifications->enable_notifications('gfksx.thanksforposts.notification.type.thanks');
 				$phpbb_notifications->enable_notifications('gfksx.thanksforposts.notification.type.thanks_remove');
 				return 'notifications';
@@ -113,5 +123,46 @@ class ext extends \phpbb\extension\base
 
 			break;
 		}
+	}
+
+	/**
+	* Rename extension
+	*
+	* @param string Old vendor/name
+	* @param string New vendor/name
+	* @return null
+	*/
+	function rename_extension($old_name, $new_name)
+	{
+		// For some fields vendor\name is used instead of vendor/name
+		$old_name_revert_separator = str_replace('/', '\\', $old_name);
+		$new_name_revert_separator = str_replace('/', '\\', $new_name);
+
+		$db = $this->container->get('dbal.conn');
+
+		$db->sql_transaction('begin');
+
+		$sql_migrations = 'UPDATE ' . MIGRATIONS_TABLE . " SET
+			migration_name = REPLACE(migration_name, '" . $db->sql_escape($old_name_revert_separator) . "', '" .  $db->sql_escape($new_name_revert_separator) . "'),
+			migration_depends_on = REPLACE(migration_depends_on, '" . $db->sql_escape($old_name_revert_separator) . "', '" .  $db->sql_escape($new_name_revert_separator) . "')";
+		$db->sql_query($sql_migrations);
+
+		$sql_modules = 'UPDATE ' . MODULES_TABLE . " SET
+			module_basename = REPLACE(module_basename, '" . $db->sql_escape($old_name_revert_separator) . "', '" .  $db->sql_escape($new_name_revert_separator) . "'),
+			module_auth = REPLACE(module_auth, '" . $db->sql_escape($old_name) . "', '" .  $db->sql_escape($new_name) . "')";
+		$db->sql_query($sql_modules);
+
+		$sql_ext = 'UPDATE ' . EXT_TABLE . " SET
+			ext_name = REPLACE(ext_name, '" . $db->sql_escape($old_name) . "', '" .  $db->sql_escape($new_name) . "')";
+		$db->sql_query($sql_ext);
+
+		$sql_notification_types = 'UPDATE ' . NOTIFICATION_TYPES_TABLE . " SET
+			notification_type_name = REPLACE(notification_type_name, '" . $db->sql_escape(str_replace('/', '.', $old_name)) . "', '" .  $db->sql_escape(str_replace('/', '.', $new_name)) . "')";
+		$db->sql_query($sql_notification_types);
+
+		$db->sql_transaction('commit');
+
+		$cache = $this->container->get('cache');
+		$cache->purge();
 	}
 }

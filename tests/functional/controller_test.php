@@ -8,7 +8,7 @@
  *
  */
 
-namespace gfksx\ThanksForPosts\tests\functional;
+namespace gfksx\thanksforposts\tests\functional;
 
 /**
  * @group functional
@@ -17,7 +17,7 @@ class controller_test extends \phpbb_functional_test_case
 {
 	static protected function setup_extensions()
 	{
-		return array('gfksx/ThanksForPosts');
+		return array('gfksx/thanksforposts');
 	}
 
 	public function test_thanklist()
@@ -40,7 +40,7 @@ class controller_test extends \phpbb_functional_test_case
 		$thanks_link = str_replace('./', '', html_entity_decode($crawler->filter('#lnk_thanks_post' . $post['post_id'])->attr('href')));
 		$crawler = self::request('GET', $thanks_link);
 
-		$this->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
+		$this->add_lang_ext('gfksx/thanksforposts', 'thanks_mod');
 
 		$crawler = self::request('GET', 'app.php/thankslist');
 		$this->assertContains($this->lang('THANKS_USER'), $crawler->filter('h2')->text());
@@ -51,12 +51,12 @@ class controller_test extends \phpbb_functional_test_case
 
 	public function test_toplist()
 	{
-		$this->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
+		$this->add_lang_ext('gfksx/thanksforposts', 'thanks_mod');
 
 		$this->login();
 
 		$this->admin_login();
-		$crawler = self::request('GET', "adm/index.php?sid={$this->sid}&i=-gfksx-ThanksForPosts-acp-acp_thanks_reput_module&mode=thanks");
+		$crawler = self::request('GET', "adm/index.php?sid={$this->sid}&i=-gfksx-thanksforposts-acp-acp_thanks_reput_module&mode=thanks");
 		$form = $crawler->selectButton('Submit')->form();
 		$values = $form->getValues();
 		// Enable forum rating rating options (post and topic ones are enabled by default)
@@ -71,14 +71,14 @@ class controller_test extends \phpbb_functional_test_case
 		$this->assertContains($this->lang('RATING_TOP_TOPIC'), $crawler->filter('h3')->eq(1)->text());
 		$this->assertContains($this->lang('RATING_TOP_FORUM'), $crawler->filter('h3')->eq(2)->text());
 
-		$this->assertContains('background: url(http://localhost/ext/gfksx/ThanksForPosts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(0)->attr('style'));
-		$this->assertContains('background: url(http://localhost/ext/gfksx/ThanksForPosts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(0)->attr('style'));
-		$this->assertContains('background: url(http://localhost/ext/gfksx/ThanksForPosts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(1)->attr('style'));
-		$this->assertContains('background: url(http://localhost/ext/gfksx/ThanksForPosts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(1)->attr('style'));
-		$this->assertContains('background: url(http://localhost/ext/gfksx/ThanksForPosts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(2)->attr('style'));
-		$this->assertContains('background: url(http://localhost/ext/gfksx/ThanksForPosts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(2)->attr('style'));
+		$this->assertContains('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(0)->attr('style'));
+		$this->assertContains('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(0)->attr('style'));
+		$this->assertContains('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(1)->attr('style'));
+		$this->assertContains('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(1)->attr('style'));
+		$this->assertContains('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(2)->attr('style'));
+		$this->assertContains('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(2)->attr('style'));
 
-		$crawler = self::request('GET', "adm/index.php?sid={$this->sid}&i=-gfksx-ThanksForPosts-acp-acp_thanks_reput_module&mode=thanks");
+		$crawler = self::request('GET', "adm/index.php?sid={$this->sid}&i=-gfksx-thanksforposts-acp-acp_thanks_reput_module&mode=thanks");
 		$form = $crawler->selectButton('Submit')->form();
 		$values = $form->getValues();
 		// Disable all rating options

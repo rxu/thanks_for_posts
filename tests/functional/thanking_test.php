@@ -8,7 +8,7 @@
  *
  */
 
-namespace gfksx\ThanksForPosts\tests\functional;
+namespace gfksx\thanksforposts\tests\functional;
 
 /**
  * @group functional
@@ -20,7 +20,7 @@ class thanking_test extends \phpbb_functional_test_case
 		$this->login();
 		$this->admin_login();
 
-		$crawler = self::request('GET', "adm/index.php?sid={$this->sid}&i=-gfksx-ThanksForPosts-acp-acp_thanks_module&mode=thanks");
+		$crawler = self::request('GET', "adm/index.php?sid={$this->sid}&i=-gfksx-thanksforposts-acp-acp_thanks_module&mode=thanks");
 		$form = $crawler->selectButton('Submit')->form();
 		$values = $form->getValues();
 		// Specify the number of users to show in the toplist on index page

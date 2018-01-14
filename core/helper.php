@@ -8,7 +8,7 @@
 *
 */
 
-namespace gfksx\ThanksForPosts\core;
+namespace gfksx\thanksforposts\core;
 
 class helper
 {
@@ -324,7 +324,7 @@ class helper
 	// remove a user's thanks
 	public function delete_thanks($post_id, $forum_id)
 	{
-		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
+		// $this->user->add_lang_ext('gfksx/thanksforposts', 'thanks_mod');
 		$to_id = $this->request->variable('to_id', 0);
 		$forum_id = ($forum_id) ?: $this->request->variable('f', 0);
 		$row = $this->get_post_info($post_id);
@@ -405,7 +405,7 @@ class helper
 	// display the text/image saying either to add or remove thanks
 	public function get_thanks_text($post_id)
 	{
-		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
+		// $this->user->add_lang_ext('gfksx/thanksforposts', 'thanks_mod');
 		if ($this->already_thanked($post_id, $this->user->data['user_id']))
 		{
 			return array(
@@ -456,7 +456,7 @@ class helper
 		$poster_give_count = 0;
 		$poster_limit = isset($this->config['thanks_number']) ? $this->config['thanks_number'] : false;
 
-		// $this->user->add_lang_ext('gfksx/ThanksForPosts', 'thanks_mod');
+		// $this->user->add_lang_ext('gfksx/thanksforposts', 'thanks_mod');
 
 		$sql = 'SELECT poster_id, COUNT(*) AS poster_receive_count
 			FROM ' . $this->thanks_table . '

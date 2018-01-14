@@ -8,7 +8,7 @@
 *
 */
 
-namespace gfksx\ThanksForPosts\acp;
+namespace gfksx\thanksforposts\acp;
 
 /**
 * @package acp

@@ -8,7 +8,7 @@
 *
 */
 
-namespace gfksx\ThanksForPosts\notification;
+namespace gfksx\thanksforposts\notification;
 
 /**
 * Thanks for posts notifications class

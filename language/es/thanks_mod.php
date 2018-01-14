@@ -112,7 +112,6 @@ $lang = array_merge($lang, array(
 
 	'THANKS_INSTALLED'			=> 'Gracias por el Mensaje',
 	'THANKS_INSTALLED_EXPLAIN'  => '<strong>¡Precaución!<br />Recomendamos ejecutar el instalador despues de hacer los cambios de codigo en los archivos indicados en el install_thanks_mod.xml(o instalar co automod)< /br>Tambien recomedamos Seleccionar "Si" para mostrar resultados completos</strong>',
-	'THANKS_CUSTOM_FUNCTION'	=> 'Actualizando los valores de la tabla _thanks',
 	'THANKS_CUSTOM0_FUNCTION'	=> 'Update values for the _thanks table',
 	'THANKS_CUSTOM1_FUNCTION'	=> 'Comprobar módulo retirado',
 	'THANKS_CUSTOM2_FUNCTION'	=> 'Comprobar el refresco de cache',

@@ -3,7 +3,7 @@ imports:
 
 services:
     gfksx.thanksforposts.listener:
-        class: gfksx\ThanksForPosts\event\listener
+        class: gfksx\thanksforposts\event\listener
         arguments:
             - '@config'
             - '@dbal.conn'
@@ -19,7 +19,7 @@ services:
         tags:
             - { name: event.listener }
     gfksx.thanksforposts.helper:
-        class: gfksx\ThanksForPosts\core\helper
+        class: gfksx\thanksforposts\core\helper
         arguments:
             - '@config'
             - '@dbal.conn'
@@ -39,7 +39,7 @@ services:
             - '%tables.posts%'
             - '%tables.notifications%'
     gfksx.thanksforposts.controller.thankslist:
-        class: gfksx\ThanksForPosts\controller\thankslist
+        class: gfksx\thanksforposts\controller\thankslist
         arguments:
             - '@config'
             - '@dbal.conn'
@@ -56,7 +56,7 @@ services:
             - '%core.root_path%'
             - '%core.php_ext%'
     gfksx.thanksforposts.controller.toplist:
-        class: gfksx\ThanksForPosts\controller\toplist
+        class: gfksx\thanksforposts\controller\toplist
         arguments:
             - '@config'
             - '@dbal.conn'
@@ -74,7 +74,7 @@ services:
             - '%tables.users%'
             - '%tables.posts%'
     gfksx.thanksforposts.notification.type.thanks:
-        class: gfksx\ThanksForPosts\notification\thanks
+        class: gfksx\thanksforposts\notification\thanks
         shared: false
         parent: notification.type.base
         calls:
@@ -83,7 +83,7 @@ services:
         tags:
             - { name: notification.type }
     gfksx.thanksforposts.notification.type.thanks_remove:
-        class: gfksx\ThanksForPosts\notification\thanks_remove
+        class: gfksx\thanksforposts\notification\thanks_remove
         shared: false
         parent: gfksx.thanksforposts.notification.type.thanks
         tags:
