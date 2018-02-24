@@ -144,7 +144,7 @@ class helper
 				else
 				{
 					$thanks_time_info = (($this->config['thanks_time_view'] && $thanker['thanks_time']) ? $this->user->format_date($thanker['thanks_time'], false, ($view == 'print') ? true : false) : '');
-					$usertname_string_tpl = ($thanks_time_info) ? '<span title="' . $thanks_time_info . '">' . 'USERNAME_STRING' . '<span>' : 'USERNAME_STRING';
+					$usertname_string_tpl = ($thanks_time_info) ? '<span title="' . $thanks_time_info . '">' . 'USERNAME_STRING' . '</span>' : 'USERNAME_STRING';
 					$user_list[] = str_replace('USERNAME_STRING', get_username_string('full', $thanker['user_id'], $thanker['username'], $thanker['user_colour']), $usertname_string_tpl);
 					$count++;
 				}
