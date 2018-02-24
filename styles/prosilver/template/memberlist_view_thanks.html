@@ -16,7 +16,7 @@
 			<dl>
 				<dt>{{ lang('GIVEN') }}{{ lang('COLON') }} {{ POSTER_GIVE_COUNT }}</dt>
 				<dd>
-					<a href="#" onclick="phpbb.toggleDisplay('show_thanks');">{{ lang('THANKS_LIST') }}</a>
+					<a href="#" onclick="phpbb.toggleDisplay('show_thanks'); return false;">{{ lang('THANKS_LIST') }}</a>
 					<div id="show_thanks" style="display: none;">{{ THANKS }}</div>
 				</dd>
 			</dl>
@@ -36,7 +36,7 @@
 			<dl>
 				<dt>{{ lang('RECEIVED') }}{{ lang('COLON') }} {{ POSTER_RECEIVE_COUNT }}</dt>
 				<dd>
-					<a href="#" onclick="toggleElement( getElement('show_thanked')); return false;">{{ lang('THANKS_LIST') }}</a>
+					<a href="#" onclick="phpbb.toggleDisplay('show_thanked'); return false;">{{ lang('THANKS_LIST') }}</a>
 					<div id="show_thanked" style="display: none;">{{ THANKED }}</div>
 				</dd>
 			</dl>
