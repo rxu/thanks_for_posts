@@ -56,8 +56,10 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Vés al tema',
 
 	'FOR_MESSAGE'				=> ' per missatge',
-	'FURTHER_THANKS'     	    => ' i un usuari més',
-	'FURTHER_THANKS_PL'         => ' i %d usuaris més',
+	'FURTHER_THANKS'     	    => array(
+		1 => ' i un usuari més',
+		2 => ' i %d usuaris més',
+	),
 
 	'NO_VIEW_USERS_THANKS'		=> 'No tens permís per veure la llista d\'agraïments.',
 
@@ -87,7 +89,6 @@ $lang = array_merge($lang, array(
 	'RATING_TOP_POST'			=> 'Valoració de missatges',
 	'RATING_TOP_TOPIC'			=> 'Valoració de temes',
 	'RATING_TOPIC'				=> 'Tema',
-//	'RETURN_POST'				=> 'Torna',
 
 	'THANK'						=> 'cop',
 	'THANK_FROM'				=> 'de',
@@ -109,11 +110,5 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Gràcies pel missatge',
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Cancel·la l\'agraïment',
 	'THANKS_USER'				=> 'Llista d\'agraïments',
-
-	'THANKS_INSTALLED'			=> 'Gràcies pel missatge',
-	'THANKS_INSTALLED_EXPLAIN'  => '<strong>ATENCIÓ!<br />Et recomanem només executar aquesta instalació després de seguir els canvis en els fitxers indicats a install_thanks_mod.xml (o realitzar la instal·lació amb AutoMod)! <br />També et recomanem que selecionis "Sí" a Mostrar Resultats Complets </strong>',
-	'THANKS_CUSTOM0_FUNCTION'	=> 'Actualitzant els valors de la taula _thanks',
-	'THANKS_CUSTOM1_FUNCTION'	=> 'Comprovant l\'eliminació del mòdul',
-	'THANKS_CUSTOM2_FUNCTION'	=> 'Comprovant l\'actualització de la cache',
 	'TOPLIST'					=> 'Llista de més agraïts',
 ));

@@ -14,8 +14,7 @@ class v_1_3_2 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return (isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.3.2', '>='))
-				|| (isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.3.2', '>='));
+		return isset($this->config['thanks_topic_reput_view_column']) && isset($this->config['thanks_topic_reput_view_column']);
 	}
 
 	static public function depends_on()
@@ -29,13 +28,6 @@ class v_1_3_2 extends \phpbb\db\migration\migration
 			// Add configs
 			array('config.add', array('thanks_forum_reput_view_column', 0)),
 			array('config.add', array('thanks_topic_reput_view_column', 0)),
-
-			// Current version
-			array('config.add', array('thanks_for_posts_version', '1.3.2')),
-			array('if', array(
-				(isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.3.2', '<')),
-				array('config.update', array('thanks_for_posts_version', '1.3.2')),
-			)),
 		);
 	}
 }

@@ -56,8 +56,10 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Перейти в тему',
 
 	'FOR_MESSAGE'				=> ' за повідомлення',
-	'FURTHER_THANKS'			=> ' і ще один',
-	'FURTHER_THANKS_PL'			=> ' і ще %d',
+	'FURTHER_THANKS'     	    => array(
+		1 => ' і ще один',
+		2 => ' і ще %d',
+	),
 
 	'NO_VIEW_USERS_THANKS'		=> 'У вас немає доступу до перегляду списку подяк.',
 
@@ -87,7 +89,6 @@ $lang = array_merge($lang, array(
 	'RATING_TOP_POST'			=> 'Рейтинг повідомлень',
 	'RATING_TOP_TOPIC'			=> 'Рейтинг тем',
 	'RATING_TOPIC'				=> 'Тема',
-//	'RETURN_POST'				=> 'Повернутися до повідомлення',
 
 	'THANK'						=> 'раз.',
 	'THANK_POST'				=> 'Подякувати за повідомлення автора: ',
@@ -110,11 +111,5 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Подяка за повідомлення',
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Подяка за повідомлення скасована',
 	'THANKS_USER'				=> 'Лист подяк',
-
-	'THANKS_INSTALLED'			=> 'Подяка за повідомлення',
-	'THANKS_INSTALLED_EXPLAIN' 	=> '<strong>УВАГА!<br />Рекомендується запускати дану установку тільки після виконання інструкції по внесенню змін в код файлів конференції (або виконання встановлення за допомогою AutoMod)!<br />Також наполегливо рекомендується включити опцію Відображати всі результати (нижче)!</strong>',
-	'THANKS_CUSTOM0_FUNCTION'	=> 'Оновлення даних у таблиці _thanks',
-	'THANKS_CUSTOM1_FUNCTION'	=> 'Перевірка видалення модуля',
-	'THANKS_CUSTOM2_FUNCTION'	=> 'Перевірка оновлення кеша',
 	'TOPLIST'					=> 'Топ лист повідомлень',
 ));

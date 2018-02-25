@@ -1,30 +1,3 @@
-<script type="text/JavaScript">
-// <![CDATA[
-function getElement(iElementId)
-{
-   if (document.all)
-   {
-      return document.all[iElementId];
-   }
-   if (document.getElementById)
-   {
-      return document.getElementById(iElementId);
-   }
-}
-
-function toggleElement(oElement)
-{
-   if (oElement.style.display == "none")
-   {
-      oElement.style.display = "";
-   }
-   else
-   {
-      oElement.style.display = "none";
-   }
-}
-// ]]>
-</script>
 {% if THANKS_PROFILELIST_VIEW and (POSTER_GIVE_COUNT or POSTER_RECEIVE_COUNT) %}
 <div class="panel">
 <div class="inner">
@@ -35,7 +8,7 @@ function toggleElement(oElement)
 		<a href="{{ U_CLEAR_LIST_THANKS_GIVE }}" title="{{ lang('CLEAR_LIST_THANKS') }}" class="button" style="float:right">x</a>
 		{% endif %}
 		<p>{{ lang('GIVEN') }}{{ lang('COLON') }} {{ POSTER_GIVE_COUNT }}<br />
-			<a href="#" onclick="toggleElement( getElement('show_thanks')); return false;">{{ lang('THANKS_LIST') }}</a>
+			<a href="#" onclick="phpbb.toggleDisplay('show_thanks'); return false;">{{ lang('THANKS_LIST') }}</a>
 			<div id="show_thanks" style="display: none;">{{ THANKS }}</div>
 		</p>
 	</div>
@@ -46,7 +19,7 @@ function toggleElement(oElement)
 		<a href="{{ U_CLEAR_LIST_THANKS_RECEIVE }}" title="{{ lang('CLEAR_LIST_THANKS') }}" class="button" style="float:right">x</a>
 		{% endif %}
 		<p>{{ lang('RECEIVED') }}{{ lang('COLON') }} {{ POSTER_RECEIVE_COUNT }}<br />
-			<a href="#" onclick="toggleElement( getElement('show_thanked')); return false;">{{ lang('THANKS_LIST') }}</a>
+			<a href="#" onclick="phpbb.toggleDisplay('show_thanked'); return false;">{{ lang('THANKS_LIST') }}</a>
 			<div id="show_thanked" style="display: none;">{{ THANKED }}</div>
 		</p>
 	</div>

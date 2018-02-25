@@ -24,26 +24,24 @@ class acp_thanks_truncate_module
 		$this->tpl_name = 'acp_thanks_truncate';
 		$this->page_title = 'ACP_THANKS_TRUNCATE';
 
-		$all_posts_thanks = $all_thanks = $del_thanks = $del_uposts = $del_posts = 0;
-
 		$thanks_table = $phpbb_container->getParameter('tables.thanks');
 
 		$sql = 'SELECT COUNT(post_id) as total_match_count
 			FROM ' . $thanks_table;
 		$result = $db->sql_query($sql);
-		$all_thanks = $end_thanks = $del_thanks = $db->sql_fetchfield('total_match_count');
+		$all_thanks = $end_thanks = (int) $db->sql_fetchfield('total_match_count');
 		$db->sql_freeresult($result);
 
 		$sql = 'SELECT COUNT(DISTINCT post_id) as total_match_count
 			FROM ' . $thanks_table;
 		$result = $db->sql_query($sql);
-		$all_posts_thanks = $del_posts = $end_posts_thanks = $db->sql_fetchfield('total_match_count');
+		$all_posts_thanks = $del_posts = $end_posts_thanks = (int) $db->sql_fetchfield('total_match_count');
 		$db->sql_freeresult($result);
 
 		$sql = 'SELECT COUNT(DISTINCT user_id) as total_match_count
 			FROM ' . $thanks_table;
 		$result = $db->sql_query($sql);
-		$all_users_thanks = $del_uposts = $end_users_thanks = $db->sql_fetchfield('total_match_count');
+		$all_users_thanks = $del_uposts = $end_users_thanks = (int) $db->sql_fetchfield('total_match_count');
 		$db->sql_freeresult($result);
 
 		$truncate = $request->variable('truncate', false);
@@ -53,7 +51,7 @@ class acp_thanks_truncate_module
 			// check mode
 			if (confirm_box(true))
 			{
-				$sql = 'TRUNCATE TABLE ' . $thanks_table;
+				$sql = 'DELETE FROM ' . $thanks_table;
 				$result = $db->sql_query($sql);
 				$db->sql_freeresult($result);
 
@@ -65,7 +63,6 @@ class acp_thanks_truncate_module
 
 				$end_posts_thanks = $all_posts_thanks - $del_posts;
 				$end_users_thanks = $all_users_thanks - $del_uposts;
-				$del_thanks = $all_thanks - $end_thanks;
 			}
 			else
 			{

@@ -67,4 +67,13 @@ class v_0_4_0 extends \phpbb\db\migration\migration
 			'drop_tables'	=> array($this->table_prefix . 'thanks'),
 		);
 	}
+
+	public function revert_data()
+	{
+		return array(
+			// Remove configs
+			array('config.remove', array('thanks_for_posts_version')),
+			array('config.remove', array('thanks_mod_version')),
+		);
+	}
 }

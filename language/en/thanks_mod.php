@@ -56,8 +56,10 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Jump to topic',
 
 	'FOR_MESSAGE'				=> ' for post',
-	'FURTHER_THANKS'     	    => ' and one more user',
-	'FURTHER_THANKS_PL'         => ' and %d more users',
+	'FURTHER_THANKS'     	    => array(
+		1 => ' and one more user',
+		2 => ' and %d more users',
+	),
 
 	'NO_VIEW_USERS_THANKS'		=> 'You are not authorised to view the Thanks List.',
 
@@ -87,7 +89,6 @@ $lang = array_merge($lang, array(
 	'RATING_TOP_POST'			=> 'Rating posts',
 	'RATING_TOP_TOPIC'			=> 'Rating topics',
 	'RATING_TOPIC'				=> 'Topic',
-//	'RETURN_POST'				=> 'Return',
 
 	'THANK'						=> 'time',
 	'THANK_FROM'				=> 'from',
@@ -109,11 +110,5 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Thank for the post',
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Removed thank for the post',
 	'THANKS_USER'				=> 'List of thanks',
-
-	'THANKS_INSTALLED'			=> 'Thanks for the post',
-	'THANKS_INSTALLED_EXPLAIN'  => '<strong>CAUTION!<br />You are strongly advised to only run this installation after following the instruction on code changes to the files (or perform the installation using AutoMod)! <br />It is also strongly recommended to select Yes to Display Full Results (below)!</strong>',
-	'THANKS_CUSTOM0_FUNCTION'	=> 'Update values for the _thanks table',
-	'THANKS_CUSTOM1_FUNCTION'	=> 'Check remove module',
-	'THANKS_CUSTOM2_FUNCTION'	=> 'Check refrech cache',
 	'TOPLIST'					=> 'Posts toplist',
 ));

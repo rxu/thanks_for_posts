@@ -56,8 +56,10 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Ir para o Tópico',
 
 	'FOR_MESSAGE'				=> ' pela mensagem',
-	'FURTHER_THANKS'     	    => ' e mais um utilizador',
-	'FURTHER_THANKS_PL'         => 'em mais %d utilizadores',
+	'FURTHER_THANKS'     	    => array(
+		1 => ' e mais um utilizador',
+		2 => ' em mais %d utilizadores',
+	),
 
 	'NO_VIEW_USERS_THANKS'		=> 'Não tem autorização para ver a lista de agradecimentos.',
 
@@ -87,7 +89,6 @@ $lang = array_merge($lang, array(
 	'RATING_TOP_POST'			=> 'Avaliação Mensagens',
 	'RATING_TOP_TOPIC'			=> 'Avaliação Tópicos',
 	'RATING_TOPIC'				=> 'Tópico',
-//	'RETURN_POST'				=> 'Voltar',
 
 	'THANK'						=> 'vez',
 	'THANK_FROM'				=> 'de',
@@ -109,11 +110,5 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Agradecer pela mensagem',
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Retirar agradecimento',
 	'THANKS_USER'				=> 'Lista de agradecimentos',
-
-	'THANKS_INSTALLED'			=> 'Módulo de Agradecimentos',
-	'THANKS_INSTALLED_EXPLAIN'  => '<strong>Atenção!<br />Recomendamos que só execute a instalação depois de fazer a modificação do código dos ficheiros (ou executar a instalação usando o AutoMod)! <br /> Também se recomenda que selecione Sim para ver os resultados completos (em baixo)!</strong>',
-	'THANKS_CUSTOM0_FUNCTION'	=> 'Atualizar a tabela _thanks',
-	'THANKS_CUSTOM1_FUNCTION'	=> 'Verificar remoção do módulo',
-	'THANKS_CUSTOM2_FUNCTION'	=> 'Verificar atualização de cache',
 	'TOPLIST'					=> 'TOP lista mensagens',
 ));

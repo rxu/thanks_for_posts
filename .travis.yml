@@ -49,6 +49,7 @@ branches:
     - master
     - develop
     - /^develop-.*$/
+    - /^.*_prep$/
     - /^\d+(\.\d+)?\.x$/
 
 before_install:

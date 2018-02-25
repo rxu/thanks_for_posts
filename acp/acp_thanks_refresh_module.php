@@ -24,9 +24,9 @@ class acp_thanks_refresh_module
 		$this->tpl_name = 'acp_thanks_refresh';
 		$this->page_title = 'ACP_THANKS_REFRESH';
 
-		$posts_delete_us = $all_posts = array();
+		$posts_delete_us = array();
 		$del_thanks = $end_thanks = $del_uthanks = $end_posts_thanks = $end_users_thanks = $thanks_update = 0;
-		$del_nofirst_thanks = $del_selfthanks = $all_users_thanks = $all_thanks = $all_posts_number = $all_posts_thanks = 0;
+		$all_users_thanks = $all_thanks = $all_posts_number = $all_posts_thanks = 0;
 
 		$thanks_table = $phpbb_container->getParameter('tables.thanks');
 
@@ -41,38 +41,43 @@ class acp_thanks_refresh_module
 			$cache->destroy('_all_posts_number');
 
 			// count all posts, thanks, users
-			$sql = 'SELECT DISTINCT post_id
+			$sql = 'SELECT COUNT(DISTINCT post_id) as all_posts_thanks
 				FROM ' . $thanks_table;
-			$result = $db->sql_query($sql);
-			$all_posts_thanks = $db->sql_affectedrows($result);
-			$db->sql_freeresult($result);
+			$db->sql_query($sql);
+			$all_posts_thanks = (int) $db->sql_fetchfield('all_posts_thanks');
 
-			$sql = 'SELECT DISTINCT user_id
+			$sql = 'SELECT COUNT(DISTINCT user_id) as all_users_thanks
 				FROM ' . $thanks_table;
-			$result = $db->sql_query($sql);
-			$all_users_thanks = $db->sql_affectedrows($result);
-			$db->sql_freeresult($result);
+			$db->sql_query($sql);
+			$all_users_thanks = (int) $db->sql_fetchfield('all_users_thanks');
 
 			$sql = 'SELECT COUNT(post_id) as total_match_count
 				FROM ' . $thanks_table;
-			$result = $db->sql_query($sql);
-			$all_thanks = $db->sql_fetchfield('total_match_count');
-			$db->sql_freeresult($result);
+			$db->sql_query($sql);
+			$all_thanks = (int) $db->sql_fetchfield('total_match_count');
 
-			unset($all_posts);
 			$all_posts = array();
-
-			$sql = 'SELECT t.*
-				FROM ' . $thanks_table .' t
-				LEFT JOIN ' . POSTS_TABLE .' p ON t.post_id = p.post_id
-				WHERE p.post_id IS NULL';
-			$result = $db->sql_query($sql);
+			$sql_ary = array(
+				'SELECT' =>  't.*',
+				'FROM' => array(
+					$thanks_table => 't',
+				),
+				'LEFT_JOIN' => array(
+					array(
+						'FROM' => array(POSTS_TABLE => 'p'),
+						'ON' => 't.post_id = p.post_id',
+					),
+				),
+				'WHERE' => 'p.post_id IS NULL',
+			);
+			$result = $db->sql_query($db->sql_build_query('SELECT', $sql_ary));
 			while ($row = $db->sql_fetchrow($result))
 			{
-				$all_posts[] = $row['post_id'];
+				$all_posts[] = (int) $row['post_id'];
 			}
 			$db->sql_freeresult($result);
-			$all_posts_number = $config['num_posts'];
+
+			$all_posts_number = (int) $config['num_posts'];
 
 			$cache->put('_all_posts_thanks', $all_posts_thanks);
 			$cache->put('_all_users_thanks', $all_users_thanks);
@@ -102,18 +107,26 @@ class acp_thanks_refresh_module
 				{
 					$sql = 'DELETE FROM ' . $thanks_table ."
 						WHERE " . $db->sql_in_set('post_id', $all_posts, false);
-					$result = $db->sql_query($sql);
-					$del_thanks = (int) $db->sql_affectedrows($result);
-					$db->sql_freeresult($result);
+					$db->sql_query($sql);
+					$del_thanks = (int) $db->sql_affectedrows();
 					$end_thanks = $all_thanks - $del_thanks;
 				}
 
 				// update delete users
-				$sql = 'SELECT t.post_id
-					FROM ' . $thanks_table . ' t 
-					LEFT JOIN ' . POSTS_TABLE . ' p ON (t.post_id = p.post_id)
-					WHERE p.poster_id = '. ANONYMOUS;
-				$result = $db->sql_query($sql);
+				$sql_ary = array(
+					'SELECT' =>  't.post_id',
+					'FROM' => array(
+						$thanks_table => 't',
+					),
+					'LEFT_JOIN' => array(
+						array(
+							'FROM' => array(POSTS_TABLE => 'p'),
+							'ON' => 't.post_id = p.post_id',
+						),
+					),
+					'WHERE' => 'p.poster_id = '. ANONYMOUS,
+				);
+				$result = $db->sql_query($db->sql_build_query('SELECT', $sql_ary));
 
 				while ($row = $db->sql_fetchrow($result))
 				{
@@ -126,15 +139,24 @@ class acp_thanks_refresh_module
 					$del_uthanks = count($posts_delete_us);
 					$sql = 'DELETE FROM ' . $thanks_table ."
 						WHERE " . $db->sql_in_set('post_id', $posts_delete_us);
-					$result = $db->sql_query($sql);
-					$db->sql_freeresult($result);
+					$db->sql_query($sql);
 				}
+
 				//update move posts /topics /forums and change posters
-				$sql = 'SELECT p.post_id
-					FROM ' . POSTS_TABLE . ' p 
-					LEFT JOIN ' . $thanks_table . ' t ON (p.post_id = t.post_id)
-					WHERE p.topic_id <> t.topic_id OR p.forum_id <> t.forum_id OR p.poster_id <> t.poster_id';
-				$result = $db->sql_query($sql);
+				$sql_ary = array(
+					'SELECT' =>  'p.post_id',
+					'FROM' => array(
+						POSTS_TABLE => 'p',
+					),
+					'LEFT_JOIN' => array(
+						array(
+							'FROM' => array($thanks_table => 't'),
+							'ON' => 'p.post_id = t.post_id',
+						),
+					),
+					'WHERE' => 'p.topic_id <> t.topic_id OR p.forum_id <> t.forum_id OR p.poster_id <> t.poster_id',
+				);
+				$result = $db->sql_query($db->sql_build_query('SELECT', $sql_ary));
 				$thanks_update = 0;
 				if ($result)
 				{
@@ -142,9 +164,10 @@ class acp_thanks_refresh_module
 					{
 						$sql = 'SELECT forum_id, topic_id, poster_id, post_id
 							FROM ' . POSTS_TABLE . '
-							WHERE post_id = '.$row['post_id'];
+							WHERE post_id = ' . $row['post_id'];
 						$results = $db->sql_query($sql);
 						$rows = $db->sql_fetchrow($results);
+						$db->sql_freeresult($results);
 
 						$sql_ary = array(
 							'post_id'	=> $rows['post_id'],
@@ -180,9 +203,8 @@ class acp_thanks_refresh_module
 					{
 						$sql = 'DELETE FROM ' . $thanks_table ."
 							WHERE " . $db->sql_in_set('post_id', $all_first_posts, true);
-						$result = $db->sql_query($sql);
-						$del_nofirst_thanks = $db->sql_affectedrows($result);
-						$db->sql_freeresult($result);
+						$db->sql_query($sql);
+						$del_nofirst_thanks = $db->sql_affectedrows();
 						$end_thanks = $end_thanks - $del_nofirst_thanks;
 						$del_thanks = $del_thanks + $del_nofirst_thanks;
 					}
@@ -204,9 +226,8 @@ class acp_thanks_refresh_module
 					{
 						$sql = 'DELETE FROM ' . $thanks_table ."
 							WHERE " . $db->sql_in_set('topic_id', $all_global_posts, false);
-						$result = $db->sql_query($sql);
-						$del_global_thanks = $db->sql_affectedrows($result);
-						$db->sql_freeresult($result);
+						$db->sql_query($sql);
+						$del_global_thanks = $db->sql_affectedrows();
 						$end_thanks = $end_thanks - $del_global_thanks;
 						$del_thanks = $del_thanks + $del_global_thanks;
 					}
@@ -214,23 +235,20 @@ class acp_thanks_refresh_module
 				// delete selfthanks
 				$sql = 'DELETE FROM ' . $thanks_table .'
 					WHERE poster_id = user_id';
-				$result = $db->sql_query($sql);
-				$del_selfthanks = $db->sql_affectedrows($result);
-				$db->sql_freeresult($result);
+				$db->sql_query($sql);
+				$del_selfthanks = $db->sql_affectedrows();
 				$del_thanks = $del_thanks + $del_selfthanks;
 				$end_thanks = $end_thanks - $del_selfthanks;
 
-				$sql = 'SELECT DISTINCT post_id
+				$sql = 'SELECT COUNT(DISTINCT post_id) as end_posts_thanks
 					FROM ' . $thanks_table;
-				$result = $db->sql_query($sql);
-				$end_posts_thanks = $db->sql_affectedrows($result);
-				$db->sql_freeresult($result);
+				$db->sql_query($sql);
+				$end_posts_thanks = (int) $db->sql_fetchfield('end_posts_thanks');
 
-				$sql = 'SELECT DISTINCT user_id
+				$sql = 'SELECT COUNT(DISTINCT user_id) as end_users_thanks
 					FROM ' . $thanks_table;
-				$result = $db->sql_query($sql);
-				$end_users_thanks = $db->sql_affectedrows($result);
-				$db->sql_freeresult($result);
+				$db->sql_query($sql);
+				$end_users_thanks = (int) $db->sql_fetchfield('end_users_thanks');
 
 				$template->assign_vars(array(
 					'S_REFRESH'	=> true,

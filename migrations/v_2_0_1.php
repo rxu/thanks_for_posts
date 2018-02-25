@@ -14,7 +14,8 @@ class v_2_0_1 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '2.0.1', '>=');
+		return !$this->db_tools->sql_column_exists($this->table_prefix . 'users', 'user_allow_thanks_email')
+			&& !$this->db_tools->sql_column_exists($this->table_prefix . 'users', 'user_allow_thanks_pm');
 	}
 
 	static public function depends_on()
@@ -40,6 +41,12 @@ class v_2_0_1 extends \phpbb\db\migration\migration
 	public function revert_schema()
 	{
 		return array(
+			'add_columns' => array(
+				$this->table_prefix . 'users' => array(
+					'user_allow_thanks_email'	=> array('BOOL', 0),
+					'user_allow_thanks_pm'		=> array('BOOL', 0),
+				),
+			),
 		);
 	}
 
@@ -48,9 +55,6 @@ class v_2_0_1 extends \phpbb\db\migration\migration
 		return array(
 			// Update notification names
 			array('custom', array(array($this, 'update_notifications_name'))),
-
-			// Current version
-			array('config.update', array('thanks_for_posts_version', '2.0.1')),
 		);
 	}
 

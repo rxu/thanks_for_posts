@@ -56,8 +56,10 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Ir ao tópico',
 
 	'FOR_MESSAGE'				=> ' pelo post',
-	'FURTHER_THANKS'     	    => ' e mais um usuário',
-	'FURTHER_THANKS_PL'         => ' e mais %d usuários',
+	'FURTHER_THANKS'     	    => array(
+		1 => ' e mais um usuário',
+		2 => ' e mais %d usuários',
+	),
 
 	'NO_VIEW_USERS_THANKS'		=> 'Você não tem autorização para ver a lista de agradecimentos.',
 
@@ -109,11 +111,5 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Agradecimento pelo seu post',
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Removido agradecimento pelo post',
 	'THANKS_USER'				=> 'Lista de agradecimentos',
-
-	'THANKS_INSTALLED'			=> 'Thanks for the post',
-	'THANKS_INSTALLED_EXPLAIN'  => '<strong>CAUTION!<br />You are strongly advised to only run this installation after following the instruction on code changes to the files (or perform the installation using AutoMod)! <br />It is also strongly recommended to select Yes to Display Full Results (below)!</strong>',
-	'THANKS_CUSTOM0_FUNCTION'	=> 'Update values for the _thanks table',
-	'THANKS_CUSTOM1_FUNCTION'	=> 'Check remove module',
-	'THANKS_CUSTOM2_FUNCTION'	=> 'Check refrech cache',
 	'TOPLIST'					=> 'Posts toplist',
 ));

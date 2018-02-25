@@ -56,8 +56,10 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Zum Thema wechseln',
 
 	'FOR_MESSAGE'				=> ' für den Beitrag',
-	'FURTHER_THANKS'     	    => ' und ein weiterer Benutzer',
-	'FURTHER_THANKS_PL'         => ' und %d weitere Benutzer',
+	'FURTHER_THANKS'     	    => array(
+		1 => ' und ein weiterer Benutzer',
+		2 => ' und %d weitere Benutzer',
+	),
 
 	'NO_VIEW_USERS_THANKS'		=> 'Sie haben keine Berechtigung, die Liste der Danksagungen zu sehen.',
 
@@ -87,7 +89,6 @@ $lang = array_merge($lang, array(
 	'RATING_TOP_POST'			=> 'Beitragsbewertung',
 	'RATING_TOP_TOPIC'			=> 'Themenbewertung',
 	'RATING_TOPIC'				=> 'Thema',
-//	'RETURN_POST'				=> 'Zurück',
 
 	'THANK'						=> 'Mal',
 	'THANK_FROM'				=> 'von',
@@ -109,10 +110,5 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Danksagung für den Beitrag',
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Danksagung entfernt für den Beitrag',
 	'THANKS_USER'				=> 'Liste der Danksagungen',
-	'THANKS_INSTALLED'			=> 'Thanks for the post', // Not used
-	'THANKS_INSTALLED_EXPLAIN'  => '<strong>CAUTION!<br />You are strongly advised to only run this installation after following the instruction on code changes to the files (or perform the installation using AutoMod)! <br />It is also strongly recommended to select Yes to Display Full Results (below)!</strong>', // Not used
-	'THANKS_CUSTOM0_FUNCTION'	=> 'Update values for the _thanks table', // Not used
-	'THANKS_CUSTOM1_FUNCTION'	=> 'Check remove module', // Not used
-	'THANKS_CUSTOM2_FUNCTION'	=> 'Check refrech cache', // Not used
 	'TOPLIST'					=> 'Beitragstopliste',
 ));
