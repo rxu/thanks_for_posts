@@ -22,7 +22,6 @@ class acp_thanks_reput_module
 	{
 		global $request, $user, $template, $config, $phpbb_root_path, $phpbb_container;
 
-		$action	= $request->variable('action', '');
 		$submit = $request->is_set_post('submit');
 
 		$form_key = 'acp_thanks_reput';
@@ -58,7 +57,7 @@ class acp_thanks_reput_module
 		}
 
 		$this->new_config = $config;
-		$cfg_array = ($request->is_set('config')) ? utf8_normalize_nfc($request->variable('config', array('' => ''), true)) : $this->new_config;
+		$cfg_array = ($request->is_set('config')) ? $request->variable('config', array('' => ''), true) : $this->new_config;
 		$error = array();
 
 		// We validate the complete config if whished

@@ -124,7 +124,6 @@ class thankslist
 		{
 			case 'givens':
 				$per_page = $this->config['posts_per_page'];
-				$total_match_count = 0;
 				$page_title = $this->user->lang['SEARCH'];
 				$template_html = 'thanks_results.html';
 
@@ -163,7 +162,7 @@ class thankslist
 					$sql_array = array(
 						'SELECT'	=> 'u.username, u.user_colour, p.poster_id, p.post_id, p.topic_id, p.forum_id, p.post_time, p.post_subject, p.post_text, p.post_username, p.bbcode_bitfield, p.bbcode_uid, p.post_attachment, p.enable_bbcode, p. enable_smilies, p.enable_magic_url',
 						'FROM'		=> array ($this->thanks_table => 't'),
-						'WHERE'		=> '('. $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0) AND t.' . $where . " = $author_id"
+						'WHERE'		=> '('. $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0) AND t.' . $where . ' = ' . (int) $author_id,
 					);
 					$sql_array['LEFT_JOIN'][] = array(
 						'FROM'	=> array($this->users_table => 'u'),
@@ -295,7 +294,7 @@ class thankslist
 				// Sorting
 				$sort_key_text = array('a' => $this->user->lang['SORT_USERNAME'], 'b' => $this->user->lang['SORT_LOCATION'], 'c' => $this->user->lang['SORT_JOINED'], 'd' => $this->user->lang['SORT_POST_COUNT'], 'e' => 'R_THANKS', 'f' => 'G_THANKS',);
 				$sort_key_sql = array('a' => 'u.username_clean', 'b' => 'u.user_from', 'c' => 'u.user_regdate', 'd' => 'u.user_posts', 'e' => 'count_thanks', 'f' => 'count_thanks');
-				$sort_dir_text = array('a' => $this->user->lang['ASCENDING'], 'd' => $this->user->lang['DESCENDING']);
+
 				if ($this->auth->acl_get('u_viewonline'))
 				{
 					$sort_key_text['l'] = $this->user->lang['SORT_LAST_ACTIVE'];
@@ -343,6 +342,7 @@ class thankslist
 				{
 					$rowsp[] = $row['poster_id'];
 				}
+				$this->db->sql_freeresult($result);
 
 				$sql = 'SELECT DISTINCT user_id
 					FROM ' . $this->thanks_table;
@@ -352,6 +352,7 @@ class thankslist
 				{
 					$rowsu[] = $row['user_id'];
 				}
+				$this->db->sql_freeresult($result);
 
 				if ($sort_key == 'e')
 				{
@@ -476,9 +477,14 @@ class thankslist
 						$user_id = $user_list[$i];
 						$row = $id_cache[$user_id];
 						$rank_title = $rank_img = $rank_img_src = '';
-						include_once($this->phpbb_root_path . 'includes/functions_display.' . $this->php_ext);
-						get_user_rank($row['user_rank'], (($user_id == ANONYMOUS) ? false : $row['user_posts']), $rank_title, $rank_img, $rank_img_src);
 						$sthanks = true;
+
+						if (!function_exists('get_user_rank'))
+						{
+							include($this->phpbb_root_path . 'includes/functions_display.' . $this->php_ext);
+						}
+						get_user_rank($row['user_rank'], (($user_id == ANONYMOUS) ? false : $row['user_posts']), $rank_title, $rank_img, $rank_img_src);
+
 						// Custom Profile Fields
 						$cp_row = array();
 						if ($this->config['load_cpf_memberlist'])

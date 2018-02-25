@@ -14,8 +14,7 @@ class v_1_3_4 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return (isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.3.4', '>='))
-				|| (isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.3.4', '>='));
+		return isset($this->config['thanks_global_announce']);
 	}
 
 	static public function depends_on()
@@ -38,18 +37,26 @@ class v_1_3_4 extends \phpbb\db\migration\migration
 		);
 	}
 
+	public function revert_schema()
+	{
+		return array(
+			'drop_keys' => array(
+				$this->table_prefix . 'thanks' => array(
+					'post_id',
+					'topic_id',
+					'forum_id',
+					'user_id',
+					'poster_id',
+				),
+			),
+		);
+	}
+
 	public function update_data()
 	{
 		return array(
 			// Add configs
 			array('config.add', array('thanks_global_announce', 1)),
-
-			// Current version
-			array('config.add', array('thanks_for_posts_version', '1.3.4')),
-			array('if', array(
-				(isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.3.4', '<')),
-				array('config.update', array('thanks_for_posts_version', '1.3.4')),
-			)),
 
 			// Add permissions sets
 			array('permission.permission_set', array('ROLE_FORUM_FULL', 'f_thanks', 'role', true)),

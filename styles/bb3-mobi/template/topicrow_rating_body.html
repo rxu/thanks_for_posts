@@ -3,6 +3,6 @@
 	{% if rating.S_THANKS_REPUT_GRAPHIC %}
 	<span style="display: block; float: left; width: {{ rating.THANKS_REPUT_GRAPHIC_WIDTH }}px; height: {{ rating.THANKS_REPUT_HEIGHT }}px; background: url({{ rating.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ rating.THANKS_REPUT_HEIGHT }}px; width: {{ rating.TOPIC_REPUT }}; background: url({{ rating.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;"></span></span>&nbsp;
 	{% endif %}
-	{{ lang('REPUT') }}:&nbsp;{{ rating.TOPIC_REPUT }}
+	{{ lang('REPUT') }}{{ lang('COLON') }}&nbsp;{{ rating.TOPIC_REPUT }}
 	</span>
 {% endif %}

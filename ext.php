@@ -143,20 +143,24 @@ class ext extends \phpbb\extension\base
 
 			$sql_migrations = 'UPDATE ' . MIGRATIONS_TABLE . " SET
 				migration_name = REPLACE(migration_name, '" . $db->sql_escape($old_name_revert_separator) . "', '" .  $db->sql_escape($new_name_revert_separator) . "'),
-				migration_depends_on = REPLACE(migration_depends_on, '" . $db->sql_escape($old_name_revert_separator) . "', '" .  $db->sql_escape($new_name_revert_separator) . "')";
+				migration_depends_on = REPLACE(migration_depends_on, '" . $db->sql_escape($old_name_revert_separator) . "', '" .  $db->sql_escape($new_name_revert_separator) . "')
+				ORDER BY migration_name DESC";
 			$db->sql_query($sql_migrations);
 
 			$sql_modules = 'UPDATE ' . MODULES_TABLE . " SET
 				module_basename = REPLACE(module_basename, '" . $db->sql_escape($old_name_revert_separator) . "', '" .  $db->sql_escape($new_name_revert_separator) . "'),
-				module_auth = REPLACE(module_auth, '" . $db->sql_escape($old_name) . "', '" .  $db->sql_escape($new_name) . "')";
+				module_auth = REPLACE(module_auth, '" . $db->sql_escape($old_name) . "', '" .  $db->sql_escape($new_name) . "')
+				ORDER BY module_basename DESC";
 			$db->sql_query($sql_modules);
 
 			$sql_ext = 'UPDATE ' . EXT_TABLE . " SET
-				ext_name = REPLACE(ext_name, '" . $db->sql_escape($old_name) . "', '" .  $db->sql_escape($new_name) . "')";
+				ext_name = REPLACE(ext_name, '" . $db->sql_escape($old_name) . "', '" .  $db->sql_escape($new_name) . "')
+				ORDER BY ext_name DESC";
 			$db->sql_query($sql_ext);
 
 			$sql_notification_types = 'UPDATE ' . NOTIFICATION_TYPES_TABLE . " SET
-				notification_type_name = REPLACE(notification_type_name, '" . $db->sql_escape(str_replace('/', '.', $old_name)) . "', '" .  $db->sql_escape(str_replace('/', '.', $new_name)) . "')";
+				notification_type_name = REPLACE(notification_type_name, '" . $db->sql_escape(str_replace('/', '.', $old_name)) . "', '" .  $db->sql_escape(str_replace('/', '.', $new_name)) . "')
+				ORDER BY notification_type_name DESC";
 			$db->sql_query($sql_notification_types);
 
 			$db->sql_transaction('commit');

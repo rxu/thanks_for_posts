@@ -12,35 +12,10 @@ namespace gfksx\thanksforposts\migrations;
 
 class v_2_0_5 extends \phpbb\db\migration\migration
 {
-	public function effectively_installed()
-	{
-		return isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '2.0.5', '>=');
-	}
-
 	static public function depends_on()
 	{
 			return array(
 				'\gfksx\thanksforposts\migrations\v_2_0_4',
 			);
-	}
-
-	public function update_schema()
-	{
-		return array(
-		);
-	}
-
-	public function revert_schema()
-	{
-		return array(
-		);
-	}
-
-	public function update_data()
-	{
-		return array(
-			// Current version
-			array('config.update', array('thanks_for_posts_version', '2.0.5')),
-		);
 	}
 }

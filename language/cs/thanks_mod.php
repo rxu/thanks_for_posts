@@ -56,8 +56,10 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Přejdi na vlákno',
 
 	'FOR_MESSAGE'				=> ' za příspěvěk',
-	'FURTHER_THANKS'     	    => ' a jeden další uživatel',
-	'FURTHER_THANKS_PL'         => ' a %d dalších uživatelů',
+	'FURTHER_THANKS'     	    => array(
+		1 => ' a jeden další uživatel',
+		2 => ' a %d dalších uživatelů',
+	),
 
 	'NO_VIEW_USERS_THANKS'		=> 'Nemáte oprávnění zobrazit seznam poděkování.',
 
@@ -87,7 +89,6 @@ $lang = array_merge($lang, array(
 	'RATING_TOP_POST'			=> 'Příspěvky s nejvíce poděkováními',
 	'RATING_TOP_TOPIC'			=> 'Témata s nejvíce poděkováními',
 	'RATING_TOPIC'				=> 'Téma',
-//	'RETURN_POST'				=> 'Return',
 
 	'THANK'						=> 'krát',
 	'THANK_FROM'				=> 'od',
@@ -109,11 +110,5 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Poděkování za příspěvek',
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Odebrané poděkování za příspěvek',
 	'THANKS_USER'				=> 'Seznam poděkování',
-
-	'THANKS_INSTALLED'			=> 'Poděkování za příspěvky',
-	'THANKS_INSTALLED_EXPLAIN'  => '<strong>CAUTION!<br />You are strongly advised to only run this installation after following the instruction on code changes to the files (or perform the installation using AutoMod)! <br />It is also strongly recommended to select Yes to Display Full Results (below)!</strong>',
-	'THANKS_CUSTOM0_FUNCTION'	=> 'Aktualizovat hodnoty pro tabulku _thanks',
-	'THANKS_CUSTOM1_FUNCTION'	=> 'Check remove module',
-	'THANKS_CUSTOM2_FUNCTION'	=> 'Check refrech cache',
 	'TOPLIST'					=> 'Toplist',
 ));

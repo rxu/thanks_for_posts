@@ -117,14 +117,14 @@ class listener implements EventSubscriberInterface
 		$thanks_list = '';
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (sizeof($ex_fid_ary)) ? $ex_fid_ary : 0;
-		if (isset($this->config['thanks_top_number']) && $this->config['thanks_top_number'])
+		if ($this->config['thanks_top_number'])
 		{
 			$thanks_list = $this->helper->get_toplist_index($ex_fid_ary);
 		}
 		$this->template->assign_vars(array(
 			'THANKS_LIST'		=> ($thanks_list != '') ? $thanks_list : false,
-			'S_THANKS_LIST'		=> (isset($this->config['thanks_top_number']) && $thanks_list != '') ? true : false,
-			'L_TOP_THANKS_LIST'	=> isset($this->config['thanks_top_number']) ? sprintf($this->user->lang['REPUT_TOPLIST'], (int) $this->config['thanks_top_number']) : false,
+			'S_THANKS_LIST'		=> ($this->config['thanks_top_number'] && $thanks_list != '') ? true : false,
+			'L_TOP_THANKS_LIST'	=> $this->config['thanks_top_number'] ? sprintf($this->user->lang['REPUT_TOPLIST'], (int) $this->config['thanks_top_number']) : false,
 		));
 	}
 
@@ -140,7 +140,7 @@ class listener implements EventSubscriberInterface
 		{
 			$this->helper->clear_list_thanks($user_id, $this->request->variable('list_thanks', ''));
 		}
-		if (isset($this->config['thanks_for_posts_version']))
+		if ($this->config['thanks_profilelist_view'])
 		{
 			$this->helper->output_thanks_memberlist($user_id, $ex_fid_ary);
 		}
@@ -227,7 +227,7 @@ class listener implements EventSubscriberInterface
 	{
 		$forum_row = $event['forum_row'];
 		$row = $event['row'];
-		if (isset($this->config['thanks_forum_reput_view']) && $this->config['thanks_forum_reput_view'])
+		if ($this->config['thanks_forum_reput_view'])
 		{
 			$forum_row = array_merge($forum_row, $this->helper->get_thanks_forum_reput($row['forum_id']));
 		}

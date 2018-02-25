@@ -14,7 +14,8 @@ class v_2_0_3 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '2.0.3', '>=');
+		return !isset($this->config['thanks_forum_reput_view_column'])
+			&& !isset($this->config['thanks_topic_reput_view_column']);
 	}
 
 	static public function depends_on()
@@ -24,26 +25,11 @@ class v_2_0_3 extends \phpbb\db\migration\migration
 			);
 	}
 
-	public function update_schema()
-	{
-		return array(
-		);
-	}
-
-	public function revert_schema()
-	{
-		return array(
-		);
-	}
-
 	public function update_data()
 	{
 		return array(
 			array('config.remove', array('thanks_topic_reput_view_column')),
 			array('config.remove', array('thanks_forum_reput_view_column')),
-
-			// Current version
-			array('config.update', array('thanks_for_posts_version', '2.0.3')),
 		);
 	}
 }

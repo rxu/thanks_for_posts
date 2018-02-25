@@ -33,7 +33,7 @@
 	<tr class="row {% if toptopicrow.S_ROW_COUNT is even %}bg1{% else %}bg2{% endif %}">
 		<td><a href="{{ toptopicrow.U_VIEW_TOPIC }}" class="forumtitle">{{ toptopicrow.TOPIC_TITLE }}</a> &raquo; <b>{{ toptopicrow.TOPIC_AUTHOR }}</b></td>
 		<td>{{ toptopicrow.TOPIC_THANKS }}</td>
-		<td><span style="display: block;">{{ lang('REPUT') }}:{{ toptopicrow.TOPIC_REPUT }}
+		<td><span style="display: block;">{{ lang('REPUT') }}{{ lang('COLON') }}{{ toptopicrow.TOPIC_REPUT }}
 			{% if toptopicrow.S_THANKS_REPUT_GRAPHIC %}
 			<span style="display: block; width: {{ toptopicrow.THANKS_REPUT_GRAPHIC_WIDTH }}px; height: {{ toptopicrow.THANKS_REPUT_HEIGHT }}px; background: url({{ toptopicrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ toptopicrow.THANKS_REPUT_HEIGHT }}px; width: {{ toptopicrow.TOPIC_REPUT }}; background: url({{ toptopicrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
 			{% endif %}
@@ -58,7 +58,7 @@
 	<tr class="row {% if topforumrow.S_ROW_COUNT is even %}bg1{% else %}bg2{% endif %}">
 		<td><a href="{{ topforumrow.U_VIEW_FORUM }}" class="forumtitle">{{ topforumrow.FORUM_NAME }}</a></td>
 		<td>{{ topforumrow.FORUM_THANKS }}</td>
-		<td><span style="display: block;">{{ lang('REPUT') }}:{{ topforumrow.FORUM_REPUT }}
+		<td><span style="display: block;">{{ lang('REPUT') }}{{ lang('COLON') }}{{ topforumrow.FORUM_REPUT }}
 			{% if topforumrow.S_THANKS_REPUT_GRAPHIC %}
 			<span style="display: block; width: {{ topforumrow.THANKS_REPUT_GRAPHIC_WIDTH }}px; height: {{ topforumrow.THANKS_REPUT_HEIGHT }}px; background: url({{ topforumrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;"><span style="display: block; height: {{ topforumrow.THANKS_REPUT_HEIGHT }}px; width: {{ topforumrow.FORUM_REPUT }}; background: url({{ topforumrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;">&nbsp;</span></span>
 			{% endif %}

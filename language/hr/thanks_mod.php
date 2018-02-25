@@ -47,8 +47,11 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_FORUM'				=> 'Prebaci se na forum',
 	'JUMP_TO_TOPIC'				=> 'Prebaci se na temu',
 	'FOR_MESSAGE'				=> ' za post',
-	'FURTHER_THANKS'     	    => ' i još jedan korisnik',
-	'FURTHER_THANKS_PL'         => ' i još %d korisnika',
+	'FURTHER_THANKS'     	    => array(
+		1 => ' i još jedan korisnik',
+		2 => ' i još %d korisnika',
+	),
+
 	'NO_VIEW_USERS_THANKS'		=> 'Nemaš ovlasti vidjeti Listu zahvala.',
 	'NOTIFICATION_THANKS_GIVE'	=> array(
 		1 => '<strong>Primljena zahvala</strong> od %1$s za post:',
@@ -75,7 +78,7 @@ $lang = array_merge($lang, array(
 	'RATING_TOP_POST'			=> 'Ocjenjeni postovi',
 	'RATING_TOP_TOPIC'			=> 'Ocjenjene teme',
 	'RATING_TOPIC'				=> 'Tema',
-//	'RETURN_POST'				=> 'Povrat',
+
 	'THANK'						=> 'vrijeme',
 	'THANK_FROM'				=> 'od',
 	'THANK_TEXT_1'				=> 'Ovi su korisnici zahvalili autoru ',
@@ -96,10 +99,5 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Zahvali na postu',
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Ukloni zahvalu s posta',
 	'THANKS_USER'				=> 'Lista zahvala',
-	'THANKS_INSTALLED'			=> 'Zahvale na postovima',
-	'THANKS_INSTALLED_EXPLAIN'  => '<strong>PAŽNJA!<br />Strogo je preporučljivo odabrati Da kako bi vidjeli sve rezultate (ispod)!</strong>',
-	'THANKS_CUSTOM0_FUNCTION'	=> 'Ažuriraj vrijednosti za _thanks tablicu',
-	'THANKS_CUSTOM1_FUNCTION'	=> 'Provjeri uklanjanje modula',
-	'THANKS_CUSTOM2_FUNCTION'	=> 'Provjeri osvježivanje cache-a',
 	'TOPLIST'					=> 'Toplista postova',
 ));

@@ -97,17 +97,8 @@ class v_2_0_0 extends \phpbb\db\migration\migration
 
 		// Update config values
 		$update_config =  array(
-			// Current version
-			array('config.add', array('thanks_for_posts_version', '2.0.0')),
-			array('if', array(
-				(isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '2.0.0', '<')),
-				array('config.update', array('thanks_for_posts_version', '2.0.0')),
-			)),
 			// Remove phpBB 3.0 Thanks for posts MOD config entry
-			array('if', array(
-				(isset($this->config['thanks_mod_version'])),
-				array('config.remove', array('thanks_mod_version')),
-			)),
+			array('config.remove', array('thanks_mod_version')),
 		);
 
 		return (isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.2.7', '>=')) ?

@@ -57,8 +57,10 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Aller au sujet',
 
 	'FOR_MESSAGE'				=> ' pour le message',
-	'FURTHER_THANKS'     	    => ' et un autre utilisateur',
-	'FURTHER_THANKS_PL'         => ' et %d autres utilisateurs',
+	'FURTHER_THANKS'     	    => array(
+		1 => ' et un autre utilisateur',
+		2 => ' et %d autres utilisateurs',
+	),
 
 	'NO_VIEW_USERS_THANKS'		=> 'Vous n’êtes pas autorisé à voir la liste des remerciements.',
 
@@ -88,7 +90,6 @@ $lang = array_merge($lang, array(
 	'RATING_TOP_POST'			=> 'Classement des messages',
 	'RATING_TOP_TOPIC'			=> 'Classement des sujets',
 	'RATING_TOPIC'				=> 'Sujet',
-//	'RETURN_POST'				=> 'Retour',
 
 	'THANK'						=> 'Heure',
 	'THANK_FROM'				=> 'de',
@@ -110,11 +111,5 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_GIVE'	=> 'Remerciement pour le message',
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Remerciement supprimé pour le message',
 	'THANKS_USER'				=> 'Liste des remerciements',
-
-	'THANKS_INSTALLED'			=> 'Remerciements pour le message',
-	'THANKS_INSTALLED_EXPLAIN'  => '<strong>Merci de noter :<br />Il est fortement recommandé de démarrer l’installation après avoir suivi l’instruction sur les modifications du code dans les fichiers (ou d’effectuer l’installation à l’aide de l’outil « AutoMod ») ! <br />Il est également fortement recommandé de sélectionner « Oui » pour afficher les résultats complets (ci-dessous) !</strong>',
-	'THANKS_CUSTOM0_FUNCTION'	=> 'Mettre à jour les valeurs de la table de la basse de données : _thanks',
-	'THANKS_CUSTOM1_FUNCTION'	=> 'Vérifier que l’extension a été retirée',
-	'THANKS_CUSTOM2_FUNCTION'	=> 'Vérifier la mise à jour du cache',
 	'TOPLIST'					=> 'Top du classement des remerciements',
 ));

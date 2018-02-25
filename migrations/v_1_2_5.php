@@ -17,8 +17,7 @@ class v_1_2_5 extends \phpbb\db\migration\migration
 
 	public function effectively_installed()
 	{
-		return (isset($this->config['thanks_for_posts_version']) && version_compare($this->config['thanks_for_posts_version'], '1.2.5', '>='))
-				|| (isset($this->config['thanks_mod_version']) && version_compare($this->config['thanks_mod_version'], '1.2.5', '>='));
+		return isset($this->config['thanks_only_first_post']);
 	}
 
 	static public function depends_on()
@@ -37,9 +36,6 @@ class v_1_2_5 extends \phpbb\db\migration\migration
 			array('config.add', array('thanks_number', 100)),
 			array('config.add', array('thanks_info_page', 1)),
 			array('config.add', array('thanks_only_first_post', 0)),
-
-			// Current version
-			array('config.add', array('thanks_for_posts_version', '1.2.5')),
 
 			// Add permissions
 			array('permission.add', array('f_thanks', false)),

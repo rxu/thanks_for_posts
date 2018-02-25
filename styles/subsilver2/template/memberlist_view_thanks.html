@@ -1,30 +1,3 @@
-<script type="text/JavaScript">
-// <![CDATA[
-function getElement(iElementId)
-{
-   if (document.all) 
-   {
-      return document.all[iElementId];
-   }
-   if (document.getElementById)
-   {
-      return document.getElementById(iElementId);
-   }
-}
-
-function toggleElement(oElement)
-{
-   if (oElement.style.display == "none")
-   {
-      oElement.style.display = "";
-   }
-   else
-   {
-      oElement.style.display = "none";
-   }
-}
-// ]]>
-</script>
 {% if THANKS_PROFILELIST_VIEW and (POSTER_GIVE_COUNT or POSTER_RECEIVE_COUNT) %}
 <table class="tablebg" width="100%" cellspacing="1">
 	<tr>
@@ -36,7 +9,7 @@ function toggleElement(oElement)
 			{% if S_MOD_THANKS %}<a href="{{ U_CLEAR_LIST_THANKS_GIVE }}">{{ DELETE_IMG }}</a>&nbsp;{% endif %}
 			<span class="gen">{{ lang('GIVEN') }}{{ lang('COLON') }} <b>{{ POSTER_GIVE_COUNT }}</b></span>
 			<br />
-			<a href="javascript: toggleElement( getElement('show_thanks'));">{{ lang('THANKS_LIST') }}</a>
+			<a href="#" onclick="phpbb.toggleDisplay('show_thanks'); return false;">{{ lang('THANKS_LIST') }}</a>
 			<div id="show_thanks" style="display: none;">{{ THANKS }}</div>
 		{% endif %}
 		</td>
@@ -45,7 +18,7 @@ function toggleElement(oElement)
 			{% if S_MOD_THANKS %}<a href="{{ U_CLEAR_LIST_THANKS_RECEIVE }}">{{ DELETE_IMG }}</a>&nbsp;{% endif %}
 			<span class="gen">{{ lang('RECEIVED') }}{{ lang('COLON') }} <b>{{ POSTER_RECEIVE_COUNT }}</b></span>
 			<br />
-			<a href="javascript: toggleElement( getElement('show_thanked'));">{{ lang('THANKS_LIST') }}</a>
+			<a href="#" onclick="phpbb.toggleDisplay('show_thanked'); return false;">{{ lang('THANKS_LIST') }}</a>
 			<div id="show_thanked" style="display: none;">{{ THANKED }}</div>
 		{% endif %}
 		</td>
