@@ -34,11 +34,6 @@ class ext extends \phpbb\extension\base
 	*/
 	function enable_step($old_state)
 	{
-		if ($this->rename_extension('gfksx/ThanksForPosts', 'gfksx/thanksforposts'))
-		{
-			return 0;
-		}
-
 		switch ($old_state)
 		{
 			case '': // Empty means nothing has run yet
@@ -118,58 +113,5 @@ class ext extends \phpbb\extension\base
 
 			break;
 		}
-	}
-
-	/**
-	* Rename extension
-	*
-	* @param string Old vendor/name
-	* @param string New vendor/name
-	* @return null
-	*/
-	function rename_extension($old_name, $new_name)
-	{
-		$renaming = false;
-		// For some fields vendor\name is used instead of vendor/name
-		$old_name_revert_separator = str_replace('/', '\\', $old_name);
-		$new_name_revert_separator = str_replace('/', '\\', $new_name);
-
-		$db = $this->container->get('dbal.conn');
-		$result = $db->sql_query('SELECT ext_active FROM ' . EXT_TABLE . " WHERE ext_name = '" . $db->sql_escape($old_name) . "'");
-
-		if ($db->sql_fetchrow($result))
-		{
-			$db->sql_transaction('begin');
-
-			$sql_migrations = 'UPDATE ' . MIGRATIONS_TABLE . " SET
-				migration_name = REPLACE(migration_name, '" . $db->sql_escape($old_name_revert_separator) . "', '" .  $db->sql_escape($new_name_revert_separator) . "'),
-				migration_depends_on = REPLACE(migration_depends_on, '" . $db->sql_escape($old_name_revert_separator) . "', '" .  $db->sql_escape($new_name_revert_separator) . "')
-				ORDER BY migration_name DESC";
-			$db->sql_query($sql_migrations);
-
-			$sql_modules = 'UPDATE ' . MODULES_TABLE . " SET
-				module_basename = REPLACE(module_basename, '" . $db->sql_escape($old_name_revert_separator) . "', '" .  $db->sql_escape($new_name_revert_separator) . "'),
-				module_auth = REPLACE(module_auth, '" . $db->sql_escape($old_name) . "', '" .  $db->sql_escape($new_name) . "')
-				ORDER BY module_basename DESC";
-			$db->sql_query($sql_modules);
-
-			$sql_ext = 'UPDATE ' . EXT_TABLE . " SET
-				ext_name = REPLACE(ext_name, '" . $db->sql_escape($old_name) . "', '" .  $db->sql_escape($new_name) . "')
-				ORDER BY ext_name DESC";
-			$db->sql_query($sql_ext);
-
-			$sql_notification_types = 'UPDATE ' . NOTIFICATION_TYPES_TABLE . " SET
-				notification_type_name = REPLACE(notification_type_name, '" . $db->sql_escape(str_replace('/', '.', $old_name)) . "', '" .  $db->sql_escape(str_replace('/', '.', $new_name)) . "')
-				ORDER BY notification_type_name DESC";
-			$db->sql_query($sql_notification_types);
-
-			$db->sql_transaction('commit');
-
-			$this->container->get('cache')->purge();
-			$this->migrator->load_migration_state();
-			$renaming = true;
-		}
-		$db->sql_freeresult($result);
-		return $renaming;
 	}
 }
