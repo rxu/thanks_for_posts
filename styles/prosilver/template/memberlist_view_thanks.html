@@ -20,7 +20,7 @@
 					<div id="show_thanks" style="display: none;">
 						<span style="float: left;">
 							{% for thanks_row in loops.thanks_row %}
-								&nbsp;&nbsp;&bull;&nbsp;&nbsp;{{ thanks_row.USERNAME_FULL }} &#8594; <a href="{{ thanks_row.U_POST_LINK }}">{{ lang('FOR_MESSAGE') }}</a><br />{% if thanks_row.S_SWITCH_COLUMN and not thanks_row.S_LAST_ROW %}&nbsp;</span><<span style="float: left;">{% endif %}
+								&nbsp;&nbsp;&bull;&nbsp;&nbsp;{{ thanks_row.USERNAME_FULL }} &#8594; <a href="{{ thanks_row.U_POST_LINK }}">{{ lang('FOR_MESSAGE') }}</a><br />{% if thanks_row.S_SWITCH_COLUMN and not thanks_row.S_LAST_ROW %}&nbsp;</span><span style="float: left;">{% endif %}
 							{% endfor %}
 						</span>
 						{% if FURTHER_THANKS_TEXT %}<span style="float: left;">&nbsp;{{ FURTHER_THANKS_TEXT }}</span>{% endif %}
@@ -47,7 +47,7 @@
 					<div id="show_thanked" style="display: none;">
 						<span style="float: left;">
 							{% for thanked_row in loops.thanked_row %}
-								&nbsp;&nbsp;&bull;&nbsp;&nbsp;{{ thanked_row.USERNAME_FULL }} &#8594; <a href="{{ thanked_row.U_POST_LINK }}">{{ lang('FOR_MESSAGE') }}</a><br />{% if thanked_row.S_SWITCH_COLUMN and not thanked_row.S_LAST_ROW %}&nbsp;</span><<span style="float: left;">{% endif %}
+								&nbsp;&nbsp;&bull;&nbsp;&nbsp;{{ thanked_row.USERNAME_FULL }} &#8594; <a href="{{ thanked_row.U_POST_LINK }}">{{ lang('FOR_MESSAGE') }}</a><br />{% if thanked_row.S_SWITCH_COLUMN and not thanked_row.S_LAST_ROW %}&nbsp;</span><span style="float: left;">{% endif %}
 							{% endfor %}
 						</span>
 						{% if FURTHER_THANKS_TEXT %}<span style="float: left;">&nbsp;{{ FURTHER_THANKS_TEXT }}</span>{% endif %}

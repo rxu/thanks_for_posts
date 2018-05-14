@@ -21,7 +21,7 @@ class v_2_0_6 extends \phpbb\db\migration\migration
 	static public function depends_on()
 	{
 			return array(
-				'\gfksx\thanksforposts\migrations\v_2_0_5',
+				'\gfksx\thanksforposts\migrations\v_2_0_3',
 			);
 	}
 

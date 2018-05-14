@@ -164,7 +164,6 @@ class helper
 		return $return;
 	}
 
-	//get thanks number
 	public function get_thanks_number($post_id)
 	{
 		$i = 0;
@@ -178,7 +177,6 @@ class helper
 		return $i;
 	}
 
-	// add a user to the thanks list
 	public function insert_thanks($post_id, $user_id, $forum_id)
 	{
 		$to_id = $this->request->variable('to_id', 0);
@@ -230,10 +228,8 @@ class helper
 		return;
 	}
 
-	// clear list user's thanks
 	public function clear_list_thanks($object_id, $list_thanks = '')
 	{
-		// confirm
 		$s_hidden_fields = build_hidden_fields(array(
 				'list_thanks'		=> $list_thanks,
 			)
@@ -321,13 +317,11 @@ class helper
 		return;
 	}
 
-	// remove a user's thanks
 	public function delete_thanks($post_id, $forum_id)
 	{
 		$to_id = $this->request->variable('to_id', 0);
 		$forum_id = ($forum_id) ?: $this->request->variable('f', 0);
 		$row = $this->get_post_info($post_id);
-		// confirm
 		$hidden = build_hidden_fields(array(
 			'to_id'		=> $to_id,
 			'rthanks'	=> $post_id,
@@ -443,19 +437,18 @@ class helper
 		return $thanked;
 	}
 
-	// stuff goes here to avoid over-editing memberlist.php
 	public function output_thanks_memberlist($user_id, $ex_fid_ary)
 	{
 		$thankers_member = $thankered_member = array();
-		$thanks = $thanked = '';
 		$poster_limit = (int) $this->config['thanks_number'];
 
 		$sql = 'SELECT poster_id, COUNT(*) AS poster_receive_count
 			FROM ' . $this->thanks_table . '
 			WHERE poster_id = ' . (int) $user_id. ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
 			GROUP BY poster_id';
-		$this->db->sql_query($sql);
+		$result = $this->db->sql_query($sql);
 		$poster_receive_count = (int) $this->db->sql_fetchfield('poster_receive_count');
+		$db->sql_freeresult($result);
 
 		$sql_array = array(
 			'SELECT'	=> 't.*, u.username, u.user_colour',
@@ -525,7 +518,7 @@ class helper
 			$this->template->assign_var('FURTHER_THANKS_TEXT', $further_thanks_text);
 		}
 		unset ($value);
-	//===
+
 		$sql = 'SELECT user_id, COUNT(*) AS poster_give_count
 			FROM ' . $this->thanks_table . "
 			WHERE user_id = " . (int) $user_id.  ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
@@ -616,7 +609,6 @@ class helper
 		));
 	}
 
-	// stuff goes here to avoid over-editing viewtopic.php
 	public function output_thanks($poster_id, &$postrow, $row, $topic_data, $forum_id)
 	{
 		if (!empty($postrow))
@@ -760,7 +752,6 @@ class helper
 		return;
 	}
 
-	// topic reput
 	public function get_thanks_topic_reput($topic_id, $max_topic_thanks, $topic_thanks)
 	{
 		return array(
@@ -774,7 +765,6 @@ class helper
 		);
 	}
 
-	// topic thanks number
 	public function get_thanks_topic_number($topic_list)
 	{
 		$topic_thanks = array();
@@ -848,7 +838,6 @@ class helper
 		return $thanks_list;
 	}
 
-	// forum reput
 	public function get_thanks_forum_reput($forum_id)
 	{
 		return array(
@@ -862,7 +851,6 @@ class helper
 		);
 	}
 
-	// forum thanks number
 	public function get_thanks_forum_number()
 	{
 		if ($this->config['thanks_forum_reput_view'])
@@ -884,7 +872,6 @@ class helper
 		}
 	}
 
-	// max forum thanks
 	public function get_max_forum_thanks()
 	{
 		if ($this->config['thanks_forum_reput_view'])
@@ -899,7 +886,6 @@ class helper
 		}
 	}
 
-	// Add notifications
 	public function add_notification($notification_data, $notification_type_name = 'gfksx.thanksforposts.notification.type.thanks')
 	{
 		if ($this->notification_exists($notification_data, $notification_type_name))

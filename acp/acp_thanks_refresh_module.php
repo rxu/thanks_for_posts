@@ -43,18 +43,21 @@ class acp_thanks_refresh_module
 			// count all posts, thanks, users
 			$sql = 'SELECT COUNT(DISTINCT post_id) as all_posts_thanks
 				FROM ' . $thanks_table;
-			$db->sql_query($sql);
+			$result = $db->sql_query($sql);
 			$all_posts_thanks = (int) $db->sql_fetchfield('all_posts_thanks');
+			$db->sql_freeresult($result);
 
 			$sql = 'SELECT COUNT(DISTINCT user_id) as all_users_thanks
 				FROM ' . $thanks_table;
-			$db->sql_query($sql);
+			$result = $db->sql_query($sql);
 			$all_users_thanks = (int) $db->sql_fetchfield('all_users_thanks');
+			$db->sql_freeresult($result);
 
 			$sql = 'SELECT COUNT(post_id) as total_match_count
 				FROM ' . $thanks_table;
-			$db->sql_query($sql);
+			$result = $db->sql_query($sql);
 			$all_thanks = (int) $db->sql_fetchfield('total_match_count');
+			$db->sql_freeresult($result);
 
 			$all_posts = array();
 			$sql_ary = array(
@@ -235,20 +238,24 @@ class acp_thanks_refresh_module
 				// delete selfthanks
 				$sql = 'DELETE FROM ' . $thanks_table .'
 					WHERE poster_id = user_id';
-				$db->sql_query($sql);
+				$result = $db->sql_query($sql);
 				$del_selfthanks = $db->sql_affectedrows();
+				$db->sql_freeresult($result);
+
 				$del_thanks = $del_thanks + $del_selfthanks;
 				$end_thanks = $end_thanks - $del_selfthanks;
 
 				$sql = 'SELECT COUNT(DISTINCT post_id) as end_posts_thanks
 					FROM ' . $thanks_table;
-				$db->sql_query($sql);
+				$result = $db->sql_query($sql);
 				$end_posts_thanks = (int) $db->sql_fetchfield('end_posts_thanks');
+				$db->sql_freeresult($result);
 
 				$sql = 'SELECT COUNT(DISTINCT user_id) as end_users_thanks
 					FROM ' . $thanks_table;
-				$db->sql_query($sql);
+				$result = $db->sql_query($sql);
 				$end_users_thanks = (int) $db->sql_fetchfield('end_users_thanks');
+				$db->sql_freeresult($result);
 
 				$template->assign_vars(array(
 					'S_REFRESH'	=> true,
