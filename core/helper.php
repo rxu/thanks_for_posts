@@ -448,7 +448,7 @@ class helper
 			GROUP BY poster_id';
 		$result = $this->db->sql_query($sql);
 		$poster_receive_count = (int) $this->db->sql_fetchfield('poster_receive_count');
-		$db->sql_freeresult($result);
+		$this->db->sql_freeresult($result);
 
 		$sql_array = array(
 			'SELECT'	=> 't.*, u.username, u.user_colour',
