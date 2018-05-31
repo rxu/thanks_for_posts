@@ -53,7 +53,7 @@ class acp_thanks_reput_module
 
 		if (isset($display_vars['lang']))
 		{
-			$user->add_lang($display_vars['lang']);
+			$phpbb_container->get('language')->add_lang($display_vars['lang']);
 		}
 
 		$this->new_config = $config;
