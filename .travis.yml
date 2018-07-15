@@ -33,7 +33,7 @@ matrix:
     - php: nightly
       env: PHPBB_BRANCH="master";DB=mysqli
   allow_failures:
-    - php: nightly
+    - env: PHPBB_BRANCH="master";DB=mysqli
   fast_finish: true
 
 env:
