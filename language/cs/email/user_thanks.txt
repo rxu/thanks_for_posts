@@ -1,4 +1,4 @@
-Předmět: {THANKS_SUBG} — "{POST_SUBJECT}"
+Subject: {THANKS_SUBG} — "{POST_SUBJECT}"
 
 Dobrý den {POSTER_NAME},
 
