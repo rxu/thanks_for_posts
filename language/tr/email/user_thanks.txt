@@ -1,0 +1,10 @@
+Konu: {THANKS_SUBG} — "{POST_SUBJECT}"
+
+Merhaba {POSTER_NAME},
+
+BU mesajı alma nedeniniz "{SITENAME}" adresinde "{POST_SUBJECT}" mesajınıza {USERNAME} tarafından {POST_THANKS} aldınız.
+
+Teşekkür aldığınız mesajı görmek istiyorsanız, aşağıdaki bağlantıyı tıklayın.:
+{U_POST_THANKS}
+
+{EMAIL_SIG}
