@@ -438,8 +438,8 @@ class thankslist
 					$id_cache = array();
 					do
 					{
-						$row['session_time'] = (!empty($session_times[$session['user_id']])) ? $session_times[$session['user_id']] : 0;
-						$row['last_visit'] = (!empty($session['session_time'])) ? $session['session_time'] : $session['user_lastvisit'];
+						$row['session_time'] = (!empty($session_times[$row['user_id']])) ? $session_times[$row['user_id']] : 0;
+						$row['last_visit'] = (!empty($row['session_time'])) ? $row['session_time'] : $row['user_lastvisit'];
 						$user_list[] = (int) $row['user_id'];
 						$id_cache[$row['user_id']] = $row;
 					}

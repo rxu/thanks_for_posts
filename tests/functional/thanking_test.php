@@ -40,7 +40,7 @@ class thanking_test extends \phpbb_functional_test_case
 
 		$this->login();
 
-		$this->get_db;
+		$this->get_db();
 		$sql = 'SELECT post_id, topic_id FROM ' . POSTS_TABLE . '
 			ORDER BY post_id DESC LIMIT 1';
 		$result = $this->db->sql_query($sql);
