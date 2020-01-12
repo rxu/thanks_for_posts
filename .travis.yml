@@ -1,35 +1,29 @@
 language: php
-dist: trusty
+dist: xenial
 
 matrix:
   include:
-    - php: 5.5
-      env: DB=none;NOTESTS=1
-    - php: 5.4
-      env: DB=mysqli #myisam
-    - php: 5.4
-      env: DB=mysql
-    - php: 5.4
-      env: DB=mariadb
-    - php: 5.4
-      env: DB=postgres
-    - php: 5.4
-      env: DB=sqlite3
-    - php: 5.5
-      env: DB=mysqli
-    - php: 5.6
-      env: DB=mysqli
-    - php: 7.0
-      env: DB=mysqli
     - php: 7.1
-      env: DB=mysqli
+      env: DB=none;NOTESTS=1
+    - php: 7.1
+      env: DB=mariadb
+    - php: 7.1
+      env: DB=postgres
+    - php: 7.1
+      env: DB=sqlite3
+    - php: 7.1
+      env: DB=mysqli # MyISAM
     - php: 7.2
       env: DB=mysqli
     - php: 7.2
       env: PHPBB_BRANCH="master";DB=mysqli
     - php: 7.3
-      env: PHPBB_BRANCH="3.3.x";DB=mysqli
+      env: DB=mysqli
     - php: 7.3
+      env: PHPBB_BRANCH="master";DB=mysqli
+    - php: 7.4
+      env: DB=mysqli
+    - php: 7.4
       env: PHPBB_BRANCH="master";DB=mysqli
     - php: nightly
       env: PHPBB_BRANCH="master";DB=mysqli
@@ -43,15 +37,11 @@ env:
     - SNIFF="1"            # Should we run code sniffer on your code?
     - IMAGE_ICC="1"        # Should we run icc profile sniffer on your images?
     - EPV="1"              # Should we run EPV (Extension Pre Validator) on your code?
-    - PHPBB_BRANCH="3.2.x"
+    - PHPBB_BRANCH="3.3.x"
 
-branches:
-  only:
-    - master
-    - develop
-    - /^develop-.*$/
-    - /^.*_prep$/
-    - /^\d+(\.\d+)?\.x$/
+services:
+  - postgresql
+  - mysql
 
 before_install:
   - sudo mkdir travis
@@ -65,7 +55,7 @@ install:
   - cd ../../phpBB3
   - travis/prepare-extension.sh $EXTNAME $PHPBB_BRANCH
   - travis/setup-phpbb.sh $DB $TRAVIS_PHP_VERSION $NOTESTS
-  - sh -c "if [ '$EPV' = '1' -a '$NOTESTS' = '1' ]; then cd phpBB; composer remove sami/sami --update-with-dependencies --dev --no-interaction; composer require phpbb/epv:dev-master --dev --no-interaction --ignore-platform-reqs; cd ../; fi"
+  - sh -c "if [ '$EPV' = '1' -a '$NOTESTS' = '1' ]; then cd phpBB; composer remove sami/sami --update-with-dependencies --no-interaction; composer require phpbb/epv:dev-master --no-interaction --ignore-platform-reqs; cd ../; fi"
 
 before_script:
   - travis/setup-database.sh $DB $TRAVIS_PHP_VERSION $NOTESTS
