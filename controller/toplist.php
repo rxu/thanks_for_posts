@@ -26,6 +26,9 @@ class toplist
 	/** @var \phpbb\user */
 	protected $user;
 
+	/** @var \phpbb\language\language $language */
+	protected $language;
+
 	/** @var \phpbb\cache\driver\driver_interface */
 	protected $cache;
 
@@ -57,32 +60,34 @@ class toplist
 	protected $posts_table;
 
 	/**
-	* Constructor
-	*
-	* @param \phpbb\config\config                 $config                Config object
-	* @param \phpbb\db\driver\driver_interface    $db                    DBAL object
-	* @param \phpbb\auth\auth                     $auth                  Auth object
-	* @param \phpbb\template\template             $template              Template object
-	* @param \phpbb\user                          $user                  User object
-	* @param \phpbb\cache\driver\driver_interface $cache                 Cache driver object
-	* @param string                               $phpbb_root_path       phpbb_root_path
-	* @param string                               $php_ext               phpEx
-	* @param \phpbb\pagination                    $pagination            Pagination object
-	* @param \gfksx\thanksforposts\core\helper    $gfksx_helper          Helper object
-	* @param \phpbb\request\request_interface     $request               Request object
-	* @param \phpbb\controller\helper             $controller_helper     Controller helper object
-	* @param string                               $thanks_table          THANKS_TABLE
-	* @param string                               $users_table           USERS_TABLE
-	* @param string                               $posts_table           POSTS_TABLE
-	* @access public
-	*/
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \gfksx\thanksforposts\core\helper $gfksx_helper, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $posts_table)
+	 * Constructor
+	 *
+	 * @param \phpbb\config\config					$config				Config object
+	 * @param \phpbb\db\driver\driver_interface		$db					DBAL object
+	 * @param \phpbb\auth\auth						$auth				Auth object
+	 * @param \phpbb\template\template				$template			Template object
+	 * @param \phpbb\user							$user				User object
+	 * @param \phpbb\language\language				$language			Language object
+	 * @param \phpbb\cache\driver\driver_interface	$cache				Cache driver object
+	 * @param string								$phpbb_root_path	phpbb_root_path
+	 * @param string								$php_ext			phpEx
+	 * @param \phpbb\pagination						$pagination			Pagination object
+	 * @param \gfksx\thanksforposts\core\helper		$gfksx_helper		Helper object
+	 * @param \phpbb\request\request_interface		$request			Request object
+	 * @param \phpbb\controller\helper				$controller_helper	Controller helper object
+	 * @param string								$thanks_table		THANKS_TABLE
+	 * @param string								$users_table		USERS_TABLE
+	 * @param string								$posts_table		POSTS_TABLE
+	 * @access public
+	 */
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, \phpbb\language\language $language, \phpbb\cache\driver\driver_interface $cache, $phpbb_root_path, $php_ext, \phpbb\pagination $pagination, \gfksx\thanksforposts\core\helper $gfksx_helper, \phpbb\request\request_interface $request, \phpbb\controller\helper $controller_helper, $thanks_table, $users_table, $posts_table)
 	{
 		$this->config = $config;
 		$this->db = $db;
 		$this->auth = $auth;
 		$this->template = $template;
 		$this->user = $user;
+		$this->language = $language;
 		$this->cache = $cache;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
@@ -97,8 +102,8 @@ class toplist
 
 	public function main()
 	{
-		$this->user->add_lang(array('memberlist', 'groups', 'search'));
-		$this->user->add_lang_ext('gfksx/thanksforposts', 'thanks_mod');
+		$this->language->add_lang(['memberlist', 'groups', 'search']);
+		$this->language->add_lang('thanks_mod', 'gfksx/thanksforposts');
 
 		// Grab data
 		$mode = $this->request->variable('mode', '');
