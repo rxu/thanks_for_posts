@@ -828,7 +828,9 @@ class helper
 			'GROUP_BY' => 't.poster_id, u.user_id',
 			'ORDER_BY' => 'tally DESC',
 		);
-		$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_ary), (int) $this->config['thanks_top_number']);
+
+		$cache_ttl = 86400; // Cache thanks toplist on index for 24 hours
+		$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_ary), (int) $this->config['thanks_top_number'], 0, $cache_ttl);
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
