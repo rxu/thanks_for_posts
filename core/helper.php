@@ -403,13 +403,13 @@ class helper
 			return array(
 				'THANK_ALT'		=> $this->user->lang['REMOVE_THANKS'],
 				'THANK_ALT_SHORT'	=> $this->user->lang['REMOVE_THANKS_SHORT'],
-				'THANKS_IMG'	=> 'removethanks-icon',
+				'THANKED'	=> true,
 			);
 		}
 		return array(
 			'THANK_ALT'		=> $this->user->lang['THANK_POST'],
 			'THANK_ALT_SHORT'	=> $this->user->lang['THANK_POST_SHORT'],
-			'THANKS_IMG'	=> 'thanks-icon',
+			'THANKED'	=> false,
 		);
 	}
 
