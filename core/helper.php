@@ -131,7 +131,7 @@ class helper
 		$further_thanks_text = $return = '';
 		$user_list = array();
 		$further_thanks = $count = 0;
-		$maxcount = $this->config['thanks_number_post'];
+		$maxcount = (int) $this->config['thanks_number_post'];
 
 		foreach ($this->thankers as $thanker)
 		{
@@ -644,11 +644,11 @@ class helper
 				'S_ALREADY_THANKED'			=> $already_thanked,
 				'S_REMOVE_THANKS'			=> $this->config['remove_thanks'],
 				'S_FIRST_POST_ONLY'			=> $this->config['thanks_only_first_post'],
-				'POST_REPUT'				=> ($this->get_thanks_number($row['post_id']) != 0) ? round($this->get_thanks_number($row['post_id']) / ($this->max_post_thanks / 100), $this->config['thanks_number_digits']) . '%' : '',
+				'POST_REPUT'				=> ($this->get_thanks_number($row['post_id']) != 0) ? round($this->get_thanks_number($row['post_id']) / ($this->max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
 				'S_THANKS_POST_REPUT_VIEW' 	=> (bool) $this->config['thanks_post_reput_view'],
 				'S_THANKS_REPUT_GRAPHIC' 	=> $this->config['thanks_reput_graphic'],
 				'THANKS_REPUT_HEIGHT'		=> $this->config['thanks_reput_height'] ?: false,
-				'THANKS_REPUT_GRAPHIC_WIDTH'=> ($this->config['thanks_reput_level'] && $this->config['thanks_reput_height']) ? $this->config['thanks_reput_level']*$this->config['thanks_reput_height'] : false,
+				'THANKS_REPUT_GRAPHIC_WIDTH'=> ($this->config['thanks_reput_level'] && $this->config['thanks_reput_height']) ? (int) $this->config['thanks_reput_level'] * (int) $this->config['thanks_reput_height'] : false,
 				'THANKS_REPUT_IMAGE' 		=> $this->config['thanks_reput_image'] ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
 				'THANKS_REPUT_IMAGE_BACK'	=> $this->config['thanks_reput_image_back'] ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
 				'S_GLOBAL_POST_THANKS'		=> ($topic_data['topic_type'] == POST_GLOBAL) ? !$this->config['thanks_global_post'] : false,
@@ -759,7 +759,7 @@ class helper
 			'S_THANKS_TOPIC_REPUT_VIEW' => (bool) $this->config['thanks_topic_reput_view'],
 			'S_THANKS_REPUT_GRAPHIC' 	=> $this->config['thanks_reput_graphic'],
 			'THANKS_REPUT_HEIGHT'		=> $this->config['thanks_reput_height'] ?: false,
-			'THANKS_REPUT_GRAPHIC_WIDTH'=> ($this->config['thanks_reput_level'] && $this->config['thanks_reput_height']) ? $this->config['thanks_reput_level']*$this->config['thanks_reput_height'] : false,
+			'THANKS_REPUT_GRAPHIC_WIDTH'=> ($this->config['thanks_reput_level'] && $this->config['thanks_reput_height']) ? (int) $this->config['thanks_reput_level'] * (int) $this->config['thanks_reput_height'] : false,
 			'THANKS_REPUT_IMAGE' 		=> $this->config['thanks_reput_image'] ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
 			'THANKS_REPUT_IMAGE_BACK'	=> $this->config['thanks_reput_image_back'] ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
 		);
@@ -843,11 +843,11 @@ class helper
 	public function get_thanks_forum_reput($forum_id)
 	{
 		return array(
-			'FORUM_REPUT'				=> (isset($this->forum_thanks[$forum_id])) ? round($this->forum_thanks[$forum_id] / ($this->max_forum_thanks / 100), ($this->config['thanks_number_digits'])) . '%' : '',
+			'FORUM_REPUT'				=> (isset($this->forum_thanks[$forum_id])) ? round($this->forum_thanks[$forum_id] / ($this->max_forum_thanks / 100), ((int) $this->config['thanks_number_digits'])) . '%' : '',
 			'S_THANKS_FORUM_REPUT_VIEW'	=> (bool) $this->config['thanks_forum_reput_view'],
 			'S_THANKS_REPUT_GRAPHIC'	=> $this->config['thanks_reput_graphic'],
 			'THANKS_REPUT_HEIGHT'		=> $this->config['thanks_reput_height'] ? $this->config['thanks_reput_height'] : false,
-			'THANKS_REPUT_GRAPHIC_WIDTH'=> ($this->config['thanks_reput_level'] && $this->config['thanks_reput_height']) ? $this->config['thanks_reput_level']*$this->config['thanks_reput_height'] : false,
+			'THANKS_REPUT_GRAPHIC_WIDTH'=> ($this->config['thanks_reput_level'] && $this->config['thanks_reput_height']) ? (int) $this->config['thanks_reput_level'] * (int) $this->config['thanks_reput_height'] : false,
 			'THANKS_REPUT_IMAGE'		=> $this->config['thanks_reput_image'] ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
 			'THANKS_REPUT_IMAGE_BACK'	=> $this->config['thanks_reput_image_back'] ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
 		);
