@@ -14,7 +14,9 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return isset($this->config['thanks_top_number']);
+		return $this->db_tools->sql_column_exists($this->table_prefix . 'thanks', 'topic_id') &&
+			$this->db_tools->sql_column_exists($this->table_prefix . 'thanks', 'forum_id') &&
+			$this->db_tools->sql_column_exists($this->table_prefix . 'thanks', 'thanks_time');
 	}
 
 	static public function depends_on()

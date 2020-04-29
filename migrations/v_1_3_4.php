@@ -14,7 +14,7 @@ class v_1_3_4 extends \phpbb\db\migration\migration
 {
 	public function effectively_installed()
 	{
-		return isset($this->config['thanks_global_announce']);
+		return $this->db_tools->sql_index_exists($this->table_prefix . 'thanks', 'poster_id');
 	}
 
 	static public function depends_on()
