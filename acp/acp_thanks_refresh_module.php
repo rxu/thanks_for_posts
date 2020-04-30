@@ -182,7 +182,7 @@ class acp_thanks_refresh_module
 					{
 						$sql = 'SELECT forum_id, topic_id, poster_id, post_id
 							FROM ' . POSTS_TABLE . '
-							WHERE post_id = ' . $row['post_id'];
+							WHERE post_id = ' . (int) $row['post_id'];
 						$results = $db->sql_query($sql);
 						$rows = $db->sql_fetchrow($results);
 						$db->sql_freeresult($results);

@@ -3,8 +3,8 @@
     "type": "phpbb-extension",
     "description": "Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.",
     "homepage": "http://www.phpbbguru.net",
-    "version": "2.0.7-dev",
-    "license": "GPL-2.0",
+    "version": "2.0.7",
+    "license": "GPL-2.0-only",
     "authors": [
         {
             "name": "Палыч",

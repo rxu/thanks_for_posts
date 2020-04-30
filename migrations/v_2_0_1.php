@@ -78,12 +78,12 @@ class v_2_0_1 extends \phpbb\db\migration\migration
 
 			$sql_update = 'UPDATE ' . NOTIFICATION_TYPES_TABLE . '
 				SET ' . $this->db->sql_build_array('UPDATE', $sql) . "
-				WHERE notification_type_name = '" . $notification_type_name[1] . "'";
+				WHERE notification_type_name = '" . $this->db->sql_escape($notification_type_name[1]) . "'";
 			$this->db->sql_query($sql_update);
 
 			$sql_update = 'UPDATE ' . USER_NOTIFICATIONS_TABLE . "
 				SET item_type = '" . $this->db->sql_escape($sql['notification_type_name']) . "'
-				WHERE item_type = '" . $notification_type_name[1] . "'";
+				WHERE item_type = '" . $this->db->sql_escape($notification_type_name[1]) . "'";
 			$this->db->sql_query($sql_update);
 		}
 	}
