@@ -1,13 +1,14 @@
 <?php
 /**
-*
-* Thanks for posts extension for the phpBB Forum Software package.
-* French translation by Galixte (http://www.galixte.com)
-*
-* @copyright (c) 2015 rxu
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
 * DO NOT CHANGE
@@ -19,7 +20,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -38,9 +39,9 @@ if (empty($lang) || !is_array($lang))
 // ’ « » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'ACL_F_THANKS' 						=> 'Peut remercier les messages.',
 	'ACL_M_THANKS' 						=> 'Peut purger la liste des remerciements.',
 	'ACL_U_VIEWTHANKS' 					=> 'Peut voir la liste des remerciements.',
 	'ACL_U_VIEWTOPLIST'					=> 'Peut voir le Top du classement des remerciements.',
-));
+]);

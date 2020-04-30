@@ -1,37 +1,39 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace gfksx\thanksforposts;
 
 /**
-* Extension class for custom enable/disable/purge actions
-*
-* NOTE TO EXTENSION DEVELOPERS:
-* Normally it is not necessary to define any functions inside the ext class below.
-* The ext class may contain special (un)installation commands in the methods
-* enable_step(), disable_step() and purge_step(). As it is, these methods are defined
-* in phpbb_extension_base, which this class extends, but you can overwrite them to
-* give special instructions for those cases. This extension must do this because it uses
-* the notifications system, which requires the methods enable_notifications(),
-* disable_notifications() and purge_notifications() be run to properly manage the
-* notifications created by it when enabling, disabling or deleting this extension.
-*/
+ * Extension class for custom enable/disable/purge actions
+ *
+ * NOTE TO EXTENSION DEVELOPERS:
+ * Normally it is not necessary to define any functions inside the ext class below.
+ * The ext class may contain special (un)installation commands in the methods
+ * enable_step(), disable_step() and purge_step(). As it is, these methods are defined
+ * in phpbb_extension_base, which this class extends, but you can overwrite them to
+ * give special instructions for those cases. This extension must do this because it uses
+ * the notifications system, which requires the methods enable_notifications(),
+ * disable_notifications() and purge_notifications() be run to properly manage the
+ * notifications created by it when enabling, disabling or deleting this extension.
+ */
 class ext extends \phpbb\extension\base
 {
 	/**
-	* Overwrite enable_step to enable notifications
-	* before any included migrations are installed.
-	*
-	* @param mixed $old_state State returned by previous call of this method
-	* @return mixed Returns false after last step, otherwise temporary state
-	*/
+	 * Overwrite enable_step to enable notifications
+	 * before any included migrations are installed.
+	 *
+	 * @param mixed $old_state State returned by previous call of this method
+	 * @return mixed Returns false after last step, otherwise temporary state
+	 */
 	function enable_step($old_state)
 	{
 		switch ($old_state)
@@ -56,12 +58,12 @@ class ext extends \phpbb\extension\base
 	}
 
 	/**
-	* Overwrite disable_step to disable notifications
-	* before the extension is disabled.
-	*
-	* @param mixed $old_state State returned by previous call of this method
-	* @return mixed Returns false after last step, otherwise temporary state
-	*/
+	 * Overwrite disable_step to disable notifications
+	 * before the extension is disabled.
+	 *
+	 * @param mixed $old_state State returned by previous call of this method
+	 * @return mixed Returns false after last step, otherwise temporary state
+	 */
 	function disable_step($old_state)
 	{
 		switch ($old_state)
@@ -86,12 +88,12 @@ class ext extends \phpbb\extension\base
 	}
 
 	/**
-	* Overwrite purge_step to purge notifications before
-	* any included and installed migrations are reverted.
-	*
-	* @param mixed $old_state State returned by previous call of this method
-	* @return mixed Returns false after last step, otherwise temporary state
-	*/
+	 * Overwrite purge_step to purge notifications before
+	 * any included and installed migrations are reverted.
+	 *
+	 * @param mixed $old_state State returned by previous call of this method
+	 * @return mixed Returns false after last step, otherwise temporary state
+	 */
 	function purge_step($old_state)
 	{
 		switch ($old_state)

@@ -1,12 +1,14 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
 * DO NOT CHANGE
@@ -18,7 +20,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -33,7 +35,7 @@ if (empty($lang) || !is_array($lang))
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'ACP_DELTHANKS'						=> 'Удалено учтённых благодарностей',
 	'ACP_POSTS'							=> 'Всего сообщений',
 	'ACP_POSTSEND'						=> 'Осталось сообщений с благодарностями',
@@ -130,4 +132,4 @@ $lang = array_merge($lang, array(
 	'TRUNCATE_NO_THANKS'				=> 'Действие отменено',
 	'ALLOW_THANKS_PM_ON'				=> 'Получать уведомления о благодарностях в ЛС',
 	'ALLOW_THANKS_EMAIL_ON'				=> 'Получать уведомления о благодарностях по Email',
-));
+]);

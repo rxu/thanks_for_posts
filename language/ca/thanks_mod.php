@@ -1,12 +1,14 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
 * DO NOT CHANGE
@@ -18,7 +20,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -37,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'CLEAR_LIST_THANKS'			=> 'Esborrar la llista d\'agraïments',
 	'CLEAR_LIST_THANKS_CONFIRM'	=> 'Realment vols esborrar la llista d\'agraïments de l\'usuari?',
 	'CLEAR_LIST_THANKS_GIVE'	=> 'S\'ha esborrat la llista d\'agraïments fets per l\'usuari.',
@@ -56,21 +58,21 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Vés al tema',
 
 	'FOR_MESSAGE'				=> ' per missatge',
-	'FURTHER_THANKS'     	    => array(
+	'FURTHER_THANKS'     	    => [
 		1 => ' i un usuari més',
 		2 => ' i %d usuaris més',
-	),
+	],
 
 	'NO_VIEW_USERS_THANKS'		=> 'No tens permís per veure la llista d\'agraïments.',
 
-	'NOTIFICATION_THANKS_GIVE'	=> array(
+	'NOTIFICATION_THANKS_GIVE'	=> [
 		1 => '<strong>Agraïment rebut</strong> de %1$s pel missatge:',
 		2 => '<strong>Agraïments rebuts</strong> de %1$s pel missatge:',
-	),
-	'NOTIFICATION_THANKS_REMOVE'=> array(
+	],
+	'NOTIFICATION_THANKS_REMOVE'=> [
 		1 => '<strong>Agraïment cancel·lat</strong> de %1$s pel missatge:',
 		2 => '<strong>Agraïments cancel·lats</strong> de %1$s pel missatge:',
-	),
+	],
 	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Algú ha agraït un missatge teu',
 	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Algú ha cancel·lat un agraïment en un missatge teu',
 
@@ -97,10 +99,10 @@ $lang = array_merge($lang, array(
 	'THANK_TEXT_2PL'			=> ' pel missatge (%d en total):',
 	'THANK_POST'				=> 'Agraeix l\'autor del missatge: ',
 	'THANK_POST_SHORT'			=> 'Gràcies',
-	'THANKS'					=> array(
+	'THANKS'					=> [
 		1	=> '%d cop',
 		2	=> '%d cops',
-	),
+	],
 	'THANKS_BACK'				=> 'Torna',
 	'THANKS_INFO_GIVE'			=> 'Acabes d\'agrair el missatge.',
 	'THANKS_INFO_REMOVE'		=> 'Acabes de cancel·lar el teu agraïment.',
@@ -111,4 +113,4 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Cancel·la l\'agraïment',
 	'THANKS_USER'				=> 'Llista d\'agraïments',
 	'TOPLIST'					=> 'Llista de més agraïts',
-));
+]);

@@ -1,13 +1,14 @@
 <?php
 /**
-*
-* Thanks for posts extension for the phpBB Forum Software package.
-* French translation by Galixte (http://www.galixte.com)
-*
-* @copyright (c) 2015 rxu
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
 * DO NOT CHANGE
@@ -19,7 +20,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -38,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 // ’ « » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'CLEAR_LIST_THANKS'			=> 'Purger la liste des remerciements',
 	'CLEAR_LIST_THANKS_CONFIRM'	=> 'Confirmer la purge de la liste des remerciements.',
 	'CLEAR_LIST_THANKS_GIVE'	=> 'La liste des remerciements de cet utilisateur a été purgée.',
@@ -57,21 +58,21 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Aller au sujet',
 
 	'FOR_MESSAGE'				=> ' pour le message',
-	'FURTHER_THANKS'     	    => array(
+	'FURTHER_THANKS'     	    => [
 		1 => ' et un autre utilisateur',
 		2 => ' et %d autres utilisateurs',
-	),
+	],
 
 	'NO_VIEW_USERS_THANKS'		=> 'Vous n’êtes pas autorisé à voir la liste des remerciements.',
 
-	'NOTIFICATION_THANKS_GIVE'	=> array(
+	'NOTIFICATION_THANKS_GIVE'	=> [
 		1 => '<strong>Remerciement reçu</strong> de %1$s pour le message :',
 		2 => '<strong>Remerciements reçus</strong> de %1$s pour le message :',
-	),
-	'NOTIFICATION_THANKS_REMOVE'=> array(
+	],
+	'NOTIFICATION_THANKS_REMOVE'=> [
 		1 => '<strong>Remerciement retiré</strong> de %1$s pour le message : ',
 		2 => '<strong>Remerciements retirés</strong> de %1$s pour le message : ',
-	),
+	],
 	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Quelqu’un vous a remercié pour votre message.',
 	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Quelqu’un a retiré son remerciement pour votre message.',
 
@@ -98,10 +99,10 @@ $lang = array_merge($lang, array(
 	'THANK_TEXT_2PL'			=> ' pour son message (%d au total) : ',
 	'THANK_POST'				=> 'Remercier l’auteur de ce message : ',
 	'THANK_POST_SHORT'			=> 'Remercier',
-	'THANKS'					=> array(
+	'THANKS'					=> [
 		1	=> '%d fois',
 		2	=> '%d fois',
-	),
+	],
 	'THANKS_BACK'				=> 'Retour',
 	'THANKS_INFO_GIVE'			=> 'Vous venez de remercier l’auteur de ce message.',
 	'THANKS_INFO_REMOVE'		=> 'Vous venez de supprimer votre remerciement pour l’auteur de ce message.',
@@ -112,4 +113,4 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Remerciement supprimé pour le message',
 	'THANKS_USER'				=> 'Liste des remerciements',
 	'TOPLIST'					=> 'Top du classement des remerciements',
-));
+]);

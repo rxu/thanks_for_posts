@@ -1,13 +1,14 @@
 <?php
 /**
-*
-* Thanks for posts extension for the phpBB Forum Software package.
-* French translation by Galixte (http://www.galixte.com)
-*
-* @copyright (c) 2015 rxu
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
 * DO NOT CHANGE
@@ -19,7 +20,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -38,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 // ’ « » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'ACP_DELTHANKS'						=> 'Nombre de remerciements supprimés',
 	'ACP_POSTS'							=> 'Nombre de messages',
 	'ACP_POSTSEND'						=> 'Nombre de messages remerciés restants à prendre en compte',
@@ -136,4 +137,4 @@ $lang = array_merge($lang, array(
 	'TRUNCATE_NO_THANKS'				=> 'L’opération a été annulée.',
 	'ALLOW_THANKS_PM_ON'				=> 'Notifier moi par message privé si quelqu’un remercie un de mes messages',
 	'ALLOW_THANKS_EMAIL_ON'				=> 'Notifier moi par e-mail si un quelqu’un remercie un de mes messages',
-));
+]);

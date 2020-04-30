@@ -1,12 +1,14 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace gfksx\thanksforposts\notification;
 
@@ -40,10 +42,10 @@ class thanks_remove extends thanks
 	* @var bool|array False if the service should use it's default data
 	* 					Array of data (including keys 'id', 'lang', and 'group')
 	*/
-	public static $notification_option = array(
+	public static $notification_option = [
 		'lang'	=> 'NOTIFICATION_TYPE_THANKS_REMOVE',
 		'group'	=> 'NOTIFICATION_GROUP_MISCELLANEOUS',
-	);
+	];
 
 	/**
 	* Get the id of the parent

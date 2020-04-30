@@ -1,12 +1,14 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
 * DO NOT CHANGE
@@ -18,7 +20,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -37,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'CLEAR_LIST_THANKS'			=> 'Очистить список благодарностей',
 	'CLEAR_LIST_THANKS_CONFIRM'	=> 'Вы действительно хотите очистить список благодарностей пользователя?',
 	'CLEAR_LIST_THANKS_GIVE'	=> 'Cписок благодарностей, выданных пользователем, очищен.',
@@ -56,21 +58,21 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Перейти в тему',
 
 	'FOR_MESSAGE'				=> ' за сообщение',
-	'FURTHER_THANKS'     	    => array(
+	'FURTHER_THANKS'     	    => [
 		1 => ' и ещё один',
 		2 => ' и ещё %d',
-	),
+	],
 
 	'NO_VIEW_USERS_THANKS'		=> 'У вас нет доступа к просмотру списка благодарностей.',
 
-	'NOTIFICATION_THANKS_GIVE'	=> array(
+	'NOTIFICATION_THANKS_GIVE'	=> [
 		1 => '<strong>Получена благодарность</strong> от пользователя %1$s за сообщение:',
 		2 => '<strong>Получены благодарности</strong> от пользователей %1$s за сообщение:',
-	),
-	'NOTIFICATION_THANKS_REMOVE'=> array(
+	],
+	'NOTIFICATION_THANKS_REMOVE'=> [
 		1 => '<strong>Удалена благодарность</strong> от пользователя %1$s за сообщение:',
 		2 => '<strong>Удалены благодарности</strong> от пользователей %1$s за сообщение:',
-	),
+	],
 	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Вас поблагодарили за сообщение',
 	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Удалена благодарность за ваше сообщение',
 
@@ -97,11 +99,11 @@ $lang = array_merge($lang, array(
 	'THANK_TEXT_1'				=> 'За это сообщение автора ',
 	'THANK_TEXT_2'				=> ' поблагодарил:',
 	'THANK_TEXT_2PL'			=> ' поблагодарили (всего %d):',
-	'THANKS'					=> array(
+	'THANKS'					=> [
 		1	=> '%d раз',
 		2	=> '%d раза',
 		3	=> '%d раз',
-	),
+	],
 	'THANKS_BACK'				=> 'Вернуться к листу благодарностей',
 	'THANKS_INFO_GIVE'			=> 'Вы поблагодарили автора сообщения',
 	'THANKS_INFO_REMOVE'		=> 'Вы отменили благодарность автору',
@@ -112,4 +114,4 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Благодарность за сообщение отменена',
 	'THANKS_USER'				=> 'Лист благодарностей',
 	'TOPLIST'					=> 'Топлист сообщений',
-));
+]);

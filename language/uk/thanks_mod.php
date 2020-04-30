@@ -1,12 +1,14 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
 * DO NOT CHANGE
@@ -18,7 +20,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -37,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'CLEAR_LIST_THANKS'			=> 'Очистити список подяк',
 	'CLEAR_LIST_THANKS_CONFIRM'	=> 'Ви дійсно хочете очистити список подяк користувача?',
 	'CLEAR_LIST_THANKS_GIVE'	=> 'Cписок подяк, виданих користувачем, очищений.',
@@ -56,21 +58,21 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Перейти в тему',
 
 	'FOR_MESSAGE'				=> ' за повідомлення',
-	'FURTHER_THANKS'     	    => array(
+	'FURTHER_THANKS'     	    => [
 		1 => ' і ще один',
 		2 => ' і ще %d',
-	),
+	],
 
 	'NO_VIEW_USERS_THANKS'		=> 'У вас немає доступу до перегляду списку подяк.',
 
-	'NOTIFICATION_THANKS_GIVE'	=> array(
+	'NOTIFICATION_THANKS_GIVE'	=> [
 		1 => '<strong>Отримана подяка</strong> від користувача %1$s за повідомлення:',
 		2 => '<strong>Отримані подяки</strong> від користувачів %1$s за повідомлення:',
-	),
-	'NOTIFICATION_THANKS_REMOVE'=> array(
+	],
+	'NOTIFICATION_THANKS_REMOVE'=> [
 		1 => '<strong>Вилучена подяка</strong> від користувача %1$s за повідомлення:',
 		2 => '<strong>Вилучені подяки</strong> від користувачів %1$s за повідомлення:',
-	),
+	],
 	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Вам подякували за повідомлення',
 	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Вилучено подяку за ваше повідомлення',
 
@@ -97,11 +99,11 @@ $lang = array_merge($lang, array(
 	'THANK_TEXT_1'				=> 'За це повідомлення автора ',
 	'THANK_TEXT_2'				=> ' подякував:',
 	'THANK_TEXT_2PL'			=> ' подякували (всього %d):',
-	'THANKS'					=> array(
+	'THANKS'					=> [
 		1	=> '%d раз',
 		2	=> '%d рази',
 		3	=> '%d разів',
-	),
+	],
 	'THANKS_BACK'				=> 'Повернутися до листу подяк',
 	'THANKS_INFO_GIVE'			=> 'Ви подякували автора повідомлення',
 	'THANKS_INFO_REMOVE'		=> 'Ви скасували подяку автору',
@@ -112,4 +114,4 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Подяка за повідомлення скасована',
 	'THANKS_USER'				=> 'Лист подяк',
 	'TOPLIST'					=> 'Топ лист повідомлень',
-));
+]);

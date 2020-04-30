@@ -1,12 +1,15 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
+
 /**
 * DO NOT CHANGE
 */
@@ -14,10 +17,12 @@ if (!defined('IN_PHPBB'))
 {
 	exit;
 }
+
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
+
 // DEVELOPERS PLEASE NOTE
 //
 // All language files should use UTF-8 as their encoding and the files must not contain a BOM.
@@ -33,7 +38,7 @@ if (empty($lang) || !is_array($lang))
 // Some characters you may want to copy&paste:
 // ’ » “ ” …
 //
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'CLEAR_LIST_THANKS'			=> 'Brisanje liste zahvala',
 	'CLEAR_LIST_THANKS_CONFIRM'	=> 'Zaista želiš obrisati korisničku listu zahvala?',
 	'CLEAR_LIST_THANKS_GIVE'	=> 'Lista zahvala izdana korisnicima je obrisana.',
@@ -47,22 +52,23 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_FORUM'				=> 'Prebaci se na forum',
 	'JUMP_TO_TOPIC'				=> 'Prebaci se na temu',
 	'FOR_MESSAGE'				=> ' za post',
-	'FURTHER_THANKS'     	    => array(
+	'FURTHER_THANKS'     	    => [
 		1 => ' i još jedan korisnik',
 		2 => ' i još %d korisnika',
-	),
+	],
 
 	'NO_VIEW_USERS_THANKS'		=> 'Nemaš ovlasti vidjeti Listu zahvala.',
-	'NOTIFICATION_THANKS_GIVE'	=> array(
+	'NOTIFICATION_THANKS_GIVE'	=> [
 		1 => '<strong>Primljena zahvala</strong> od %1$s za post:',
 		2 => '<strong>Primljene zahvale</strong> od %1$s za post:',
-	),
-	'NOTIFICATION_THANKS_REMOVE'=> array(
+	],
+	'NOTIFICATION_THANKS_REMOVE'=> [
 		1 => '<strong>Uklonjena zahvala</strong> od %1$s za post:',
 		2 => '<strong>Uklonjene zahvale</strong> od %1$s za post:',
-	),
+	],
 	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Netko je zahvalio na tvojem postu',
 	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Netko je uklonio zahvalu s tvojeg posta',
+
 	'RECEIVED'					=> '&nbsp;pohvaljen',
 	'REMOVE_THANKS'				=> 'Ukloni svoje zahvale: ',
 	'REMOVE_THANKS_CONFIRM'		=> 'Zaista želiš ukloniti svoje zahvale?',
@@ -86,10 +92,10 @@ $lang = array_merge($lang, array(
 	'THANK_TEXT_2PL'			=> ' za post (ukupno %d):',
 	'THANK_POST'				=> 'Zahvali se autoru posta:  ',
 	'THANK_POST_SHORT'			=> 'Hvala',
-	'THANKS'					=> array(
+	'THANKS'					=> [
 		1	=> '%d put',
 		2	=> '%d puta',
-	),
+	],
 	'THANKS_BACK'				=> 'Povrat',
 	'THANKS_INFO_GIVE'			=> 'Upravo si zahvalio na postu.',
 	'THANKS_INFO_REMOVE'		=> 'upravo si uklonio zahvalu.',
@@ -100,4 +106,4 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Ukloni zahvalu s posta',
 	'THANKS_USER'				=> 'Lista zahvala',
 	'TOPLIST'					=> 'Toplista postova',
-));
+]);

@@ -1,12 +1,14 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
 * DO NOT CHANGE
@@ -18,7 +20,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -37,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'CLEAR_LIST_THANKS'			=> 'Vymazat seznam poděkování',
 	'CLEAR_LIST_THANKS_CONFIRM'	=> 'Opravdu chcete uživatelův seznam poděkování?',
 	'CLEAR_LIST_THANKS_GIVE'	=> 'Seznam poděkování udělených uživatelem byl vymazán.',
@@ -56,21 +58,21 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Přejdi na vlákno',
 
 	'FOR_MESSAGE'				=> ' za příspěvěk',
-	'FURTHER_THANKS'     	    => array(
+	'FURTHER_THANKS'     	    => [
 		1 => ' a jeden další uživatel',
 		2 => ' a %d dalších uživatelů',
-	),
+	],
 
 	'NO_VIEW_USERS_THANKS'		=> 'Nemáte oprávnění zobrazit seznam poděkování.',
 
-	'NOTIFICATION_THANKS_GIVE'	=> array(
+	'NOTIFICATION_THANKS_GIVE'	=> [
 		1 => '<strong>Obdrženo poděkování </strong> od %1$s za příspěvek:',
 		2 => '<strong>Obdržena poděkování</strong> od %1$s za příspěvek:',
-	),
-	'NOTIFICATION_THANKS_REMOVE'=> array(
+	],
+	'NOTIFICATION_THANKS_REMOVE'=> [
 		1 => '<strong>Odebráno poděkování</strong> od %1$s za příspěvěk:',
 		2 => '<strong>Odebrána poděkování</strong> od %1$s za příspěvek:',
-	),
+	],
 	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Někdo poděkoval za váš příspěvek',
 	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Někdo odebral poděkování za váš příspěvek',
 
@@ -97,10 +99,10 @@ $lang = array_merge($lang, array(
 	'THANK_TEXT_2PL'			=> ' za příspěvky (celkem %d):',
 	'THANK_POST'				=> 'Poděkujte autorovi příspěvku: ',
 	'THANK_POST_SHORT'			=> 'Poděkujte',
-	'THANKS'					=> array(
+	'THANKS'					=> [
 		1	=> '%d poděkování',
 		2	=> '%d poděkování',
-	),
+	],
 	'THANKS_BACK'				=> 'Zpět',
 	'THANKS_INFO_GIVE'			=> 'Poděkoval jste za tuto zprávu.',
 	'THANKS_INFO_REMOVE'		=> 'Odebral jste poděkování.',
@@ -111,4 +113,4 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Odebrané poděkování za příspěvek',
 	'THANKS_USER'				=> 'Seznam poděkování',
 	'TOPLIST'					=> 'Toplist',
-));
+]);

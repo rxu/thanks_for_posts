@@ -1,12 +1,14 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-* @copyright (c) 2019 - TR (Turkish) Translate by awr - http://www.frmist.com
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
 * DO NOT CHANGE
@@ -18,7 +20,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -37,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'CLEAR_LIST_THANKS'			=> 'Teşekkür Listesini Temizle',
 	'CLEAR_LIST_THANKS_CONFIRM'	=> 'Kullanıcı Teşekkür Listesini gerçekten silmek istiyor musunuz?',
 	'CLEAR_LIST_THANKS_GIVE'	=> 'Kullanıcı tarafından verilen teşekkürlerin listesi temizlendi.',
@@ -56,21 +58,21 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Konuya git',
 
 	'FOR_MESSAGE'				=> ' mesaj için',
-	'FURTHER_THANKS'     	    => array(
+	'FURTHER_THANKS'     	    => [
 		1 => ' ve bir kullanıcı için',
 		2 => ' ve %d kullanıcı için',
-	),
+	],
 
 	'NO_VIEW_USERS_THANKS'		=> 'Teşekkürler Listesini görüntüleme izniniz yok.',
 
-	'NOTIFICATION_THANKS_GIVE'	=> array(
+	'NOTIFICATION_THANKS_GIVE'	=> [
 		1 => 'Mesaj için %1$s kişisinden <strong>teşekkür aldı</strong>:',
 		2 => 'Mesaj için %1$s kişilerden <strong>teşekkür aldı</strong>:',
-	),
-	'NOTIFICATION_THANKS_REMOVE'=> array(
+	],
+	'NOTIFICATION_THANKS_REMOVE'=> [
 		1 => 'Mesajdan %1$s kişisinin <strong>teşekkürü kaldırıldı</strong>:',
 		2 => 'Mesajdan %1$s kişisinin <strong>teşekkürü kaldırıldı</strong>:',
-	),
+	],
 	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Birisi mesajınız için teşekkür ediyor',
 	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Birisi mesajınızdan için teşekkürü kaldırdı',
 
@@ -97,10 +99,10 @@ $lang = array_merge($lang, array(
 	'THANK_TEXT_2PL'			=> ' mesaj için (toplam %d):',
 	'THANK_POST'				=> 'Mesaj yazarına teşekkür et: ',
 	'THANK_POST_SHORT'			=> 'Teşekkür et',
-	'THANKS'					=> array(
+	'THANKS'					=> [
 		1	=> '%d',
 		2	=> '%d',
-	),
+	],
 	'THANKS_BACK'				=> 'Geri dön',
 	'THANKS_INFO_GIVE'			=> 'Mesaja teşekkür ettin.',
 	'THANKS_INFO_REMOVE'		=> 'Mesajdan teşekkürü kaldırdın.',
@@ -111,4 +113,4 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Mesajdan teşekkürü kaldır',
 	'THANKS_USER'				=> 'Teşekkür listesi',
 	'TOPLIST'					=> 'Mesaj toplisti',
-));
+]);

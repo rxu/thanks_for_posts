@@ -1,12 +1,14 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
 * DO NOT CHANGE
@@ -18,7 +20,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -37,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'CLEAR_LIST_THANKS'			=> 'Die Liste der Danksagungen löschen',
 	'CLEAR_LIST_THANKS_CONFIRM'	=> 'Möchten Sie wirklich die Liste der Danksagungen des Benutzers löschen?',
 	'CLEAR_LIST_THANKS_GIVE'	=> 'Die Liste der Danksagungen des Benutzers wurde gelöscht',
@@ -56,21 +58,21 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Zum Thema wechseln',
 
 	'FOR_MESSAGE'				=> ' für den Beitrag',
-	'FURTHER_THANKS'     	    => array(
+	'FURTHER_THANKS'     	    => [
 		1 => ' und ein weiterer Benutzer',
 		2 => ' und %d weitere Benutzer',
-	),
+	],
 
 	'NO_VIEW_USERS_THANKS'		=> 'Sie haben keine Berechtigung, die Liste der Danksagungen zu sehen.',
 
-	'NOTIFICATION_THANKS_GIVE'	=> array(
+	'NOTIFICATION_THANKS_GIVE'	=> [
 		1 => '<strong>Danksagung erhalten</strong> von %1$s für den Beitrag:',
 		2 => '<strong>Danksagungen erhalten</strong> von %1$s für den Beitrag:',
-	),
-	'NOTIFICATION_THANKS_REMOVE'=> array(
+	],
+	'NOTIFICATION_THANKS_REMOVE'=> [
 		1 => '<strong>Danksagung entfernt</strong> von %1$s für den Beitrag:',
 		2 => '<strong>Danksagungen entfernt</strong> von %1$s für den Beitrag:',
-	),
+	],
 	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Jemand hat sich für Ihren Beitrag bedankt.',
 	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Jemand hat seine Danksagung für Ihren Beitrag entfernt.',
 
@@ -97,10 +99,10 @@ $lang = array_merge($lang, array(
 	'THANK_TEXT_2PL'			=> ' für den Beitrag (Insgesamt %d):',
 	'THANK_POST'				=> 'Bedanken Sie sich beim Autor des Beitrags: ',
 	'THANK_POST_SHORT'			=> 'Danke',
-	'THANKS'					=> array(
+	'THANKS'					=> [
 		1	=> '%d Mal',
 		2	=> '%d Mal',
-	),
+	],
 	'THANKS_BACK'				=> 'Zurück',
 	'THANKS_INFO_GIVE'			=> 'Sie haben sich für den Beitrag bedankt.',
 	'THANKS_INFO_REMOVE'		=> 'Sie haben Ihre Danksagung entfernt.',
@@ -111,4 +113,4 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Danksagung entfernt für den Beitrag',
 	'THANKS_USER'				=> 'Liste der Danksagungen',
 	'TOPLIST'					=> 'Beitragstopliste',
-));
+]);

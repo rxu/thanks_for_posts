@@ -1,12 +1,14 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace gfksx\thanksforposts\notification;
 
@@ -40,10 +42,10 @@ class thanks extends \phpbb\notification\type\base
 	* @var bool|array False if the service should use it's default data
 	* 					Array of data (including keys 'id', 'lang', and 'group')
 	*/
-	public static $notification_option = array(
+	public static $notification_option = [
 		'lang'	=> 'NOTIFICATION_TYPE_THANKS_GIVE',
 		'group'	=> 'NOTIFICATION_GROUP_MISCELLANEOUS',
-	);
+	];
 
 	/** @var string */
 	protected $notifications_table;
@@ -97,13 +99,13 @@ class thanks extends \phpbb\notification\type\base
 	*
 	* @return array
 	*/
-	public function find_users_for_notification($thanks_data, $options = array())
+	public function find_users_for_notification($thanks_data, $options = [])
 	{
-		$options = array_merge(array(
-			'ignore_users'		=> array(),
-		), $options);
+		$options = array_merge([
+			'ignore_users'		=> [],
+		], $options);
 
-		$users = array((int) $thanks_data['poster_id']);
+		$users = [(int) $thanks_data['poster_id']];
 		return $this->check_user_notification_options($users, $options);
 	}
 
@@ -113,7 +115,7 @@ class thanks extends \phpbb\notification\type\base
 	public function get_avatar()
 	{
 		$thankers = $this->get_data('thankers');
-		return (sizeof($thankers) == 1) ? $this->user_loader->get_avatar($thankers[0]['user_id']) : '';
+		return (count($thankers) == 1) ? $this->user_loader->get_avatar($thankers[0]['user_id']) : '';
 	}
 
 	/**
@@ -124,16 +126,16 @@ class thanks extends \phpbb\notification\type\base
 	public function get_title()
 	{
 		$thankers = $this->get_data('thankers');
-		$usernames = array();
+		$usernames = [];
 
 		if (!is_array($thankers))
 		{
-			$thankers = array();
+			$thankers = [];
 		}
 
-		$thankers_cnt = sizeof($thankers);
+		$thankers_cnt = count($thankers);
 		$thankers = $this->trim_user_ary($thankers);
-		$trimmed_thankers_cnt = $thankers_cnt - sizeof($thankers);
+		$trimmed_thankers_cnt = $thankers_cnt - count($thankers);
 
 		foreach ($thankers as $thanker)
 		{
@@ -164,9 +166,9 @@ class thanks extends \phpbb\notification\type\base
 	public function users_to_query()
 	{
 		$thankers = $this->get_data('thankers');
-		$users = array(
+		$users = [
 			$this->get_data('user_id'),
-		);
+		];
 
 		if (is_array($thankers))
 		{
@@ -229,7 +231,7 @@ class thanks extends \phpbb\notification\type\base
 	*/
 	public function trim_user_ary($users)
 	{
-		if (sizeof($users) > 4)
+		if (count($users) > 4)
 		{
 			array_splice($users, 3);
 		}
@@ -245,14 +247,14 @@ class thanks extends \phpbb\notification\type\base
 	{
 		$username = $this->user_loader->get_username($this->get_data('poster_id'), 'username');
 
-		return array(
-				'THANKS_SUBG'	=> htmlspecialchars_decode($this->language->lang('THANKS_PM_SUBJECT_'. $this->get_data('lang_act'))),
+		return [
+				'THANKS_SUBG'	=> htmlspecialchars_decode($this->language->lang('THANKS_PM_SUBJECT_' . $this->get_data('lang_act'))),
 				'USERNAME'		=> htmlspecialchars_decode($this->user->data['username']),
 				'POST_SUBJECT'	=> htmlspecialchars_decode(censor_text($this->get_data('post_subject'))),
-				'POST_THANKS'	=> htmlspecialchars_decode($this->language->lang('THANKS_PM_MES_'. $this->get_data('lang_act'))),
+				'POST_THANKS'	=> htmlspecialchars_decode($this->language->lang('THANKS_PM_MES_' . $this->get_data('lang_act'))),
 				'POSTER_NAME'	=> htmlspecialchars_decode($username),
 				'U_POST_THANKS'	=> generate_board_url() . '/viewtopic.' . $this->php_ext . "?p={$this->item_id}#p{$this->item_id}",
-		);
+		];
 	}
 
 	/**
@@ -264,11 +266,11 @@ class thanks extends \phpbb\notification\type\base
 	*
 	* @return array Array of data ready to be inserted into the database
 	*/
-	public function create_insert_array($thanks_data, $pre_create_data = array())
+	public function create_insert_array($thanks_data, $pre_create_data = [])
 	{
-		$thankers = (isset($thanks_data['thankers'])) ? $thanks_data['thankers'] : array();
+		$thankers = (isset($thanks_data['thankers'])) ? $thanks_data['thankers'] : [];
 		$thankers = array_merge(
-			array(array('user_id' => $thanks_data['user_id'])),
+			[['user_id' => $thanks_data['user_id']]],
 			$thankers
 		);
 		$this->set_data('thankers', $thankers);
@@ -298,7 +300,7 @@ class thanks extends \phpbb\notification\type\base
 		if ($row = $this->db->sql_fetchrow($result))
 		{
 			$data = unserialize($row['notification_data']);
-			$thanks_data['thankers'] = (!empty($data['thankers'])) ? $data['thankers'] : array();
+			$thanks_data['thankers'] = (!empty($data['thankers'])) ? $data['thankers'] : [];
 		}
 
 		$this->create_insert_array($thanks_data);

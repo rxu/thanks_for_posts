@@ -1,12 +1,15 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
+
 /**
 * DO NOT CHANGE
 */
@@ -14,10 +17,12 @@ if (!defined('IN_PHPBB'))
 {
 	exit;
 }
+
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
+
 // DEVELOPERS PLEASE NOTE
 //
 // All language files should use UTF-8 as their encoding and the files must not contain a BOM.
@@ -29,7 +34,7 @@ if (empty($lang) || !is_array($lang))
 // You do not need this where single placeholders are used, e.g. 'Message %d' is fine
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'ACP_DELTHANKS'						=> 'Obrisanih zapisa zahvala',
 	'ACP_POSTS'							=> 'Ukupno postova',
 	'ACP_POSTSEND'						=> 'Preostalo postova sa zahvalama',
@@ -121,4 +126,4 @@ $lang = array_merge($lang, array(
 	'TRUNCATE_NO_THANKS'				=> 'Operacija poništena',
 	'ALLOW_THANKS_PM_ON'				=> 'Obavijesti me u PP ako mi netko zahvali na postu',
 	'ALLOW_THANKS_EMAIL_ON'				=> 'Obavijesti me na e-mail ako mi netko zahvali na postu',
-));
+]);

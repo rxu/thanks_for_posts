@@ -1,12 +1,14 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
 * DO NOT CHANGE
@@ -18,7 +20,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -37,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'CLEAR_LIST_THANKS'			=> 'Limpar Lista de Agradecimento',
 	'CLEAR_LIST_THANKS_CONFIRM'	=> 'Quer realmente limpar esta lista?',
 	'CLEAR_LIST_THANKS_GIVE'	=> 'Lista de agradecimentos foi limpa.',
@@ -56,21 +58,21 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_TOPIC'				=> 'Ir ao tópico',
 
 	'FOR_MESSAGE'				=> ' pelo post',
-	'FURTHER_THANKS'     	    => array(
+	'FURTHER_THANKS'     	    => [
 		1 => ' e mais um usuário',
 		2 => ' e mais %d usuários',
-	),
+	],
 
 	'NO_VIEW_USERS_THANKS'		=> 'Você não tem autorização para ver a lista de agradecimentos.',
 
-	'NOTIFICATION_THANKS_GIVE'	=> array(
+	'NOTIFICATION_THANKS_GIVE'	=> [
 		1 => '<strong>Recebeu agradecimento</strong> de %1$s pelo post:',
 		2 => '<strong>Recebeu agradecimentos</strong> de %1$s pelo post:',
-	),
-	'NOTIFICATION_THANKS_REMOVE'=> array(
+	],
+	'NOTIFICATION_THANKS_REMOVE'=> [
 		1 => '<strong>Removido agradecimento</strong> de %1$s pelo post:',
 		2 => '<strong>Removidos agradecimentos</strong> de %1$s pelo post:',
-	),
+	],
 	'NOTIFICATION_TYPE_THANKS_GIVE'		=> 'Alguém agradeceu seu post',
 	'NOTIFICATION_TYPE_THANKS_REMOVE'	=> 'Alguém removeu o agradecimento pelo seu post',
 
@@ -98,10 +100,10 @@ $lang = array_merge($lang, array(
 	'THANK_TEXT_2PL'			=> ' pelo post (total %d):',
 	'THANK_POST'				=> 'Agradeça ao autor pelo post: ',
 	'THANK_POST_SHORT'			=> 'Agradeça',
-	'THANKS'					=> array(
+	'THANKS'					=> [
 		1	=> '%d vez',
 		2	=> '%d vezes',
-	),
+	],
 	'THANKS_BACK'				=> 'Voltar',
 	'THANKS_INFO_GIVE'			=> 'Você agradeceu o post.',
 	'THANKS_INFO_REMOVE'		=> 'Você removeu seu agradecimento.',
@@ -112,4 +114,4 @@ $lang = array_merge($lang, array(
 	'THANKS_PM_SUBJECT_REMOVE'	=> 'Removido agradecimento pelo post',
 	'THANKS_USER'				=> 'Lista de agradecimentos',
 	'TOPLIST'					=> 'Posts toplist',
-));
+]);

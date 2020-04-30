@@ -1,12 +1,14 @@
 <?php
 /**
-*
-* Thanks For Posts extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * Thanks For Posts.
+ * Adds the ability to thank the author and to use per posts/topics/forum rating system based on the count of thanks.
+ * An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 namespace gfksx\thanksforposts\acp;
 
@@ -19,12 +21,25 @@ class acp_thanks_truncate_module
 
 	function main($id, $mode)
 	{
-		global $db, $request, $user, $template, $phpbb_container;
+		global $phpbb_container;
+
+		/** @var \phpbb\db\driver\driver_interface $db DBAL object */
+		$db = $phpbb_container->get('dbal.conn');
+
+		/** @var \phpbb\language\language $language Language object */
+		$language = $phpbb_container->get('language');
+
+		/** @var \phpbb\request\request $request Request object */
+		$request  = $phpbb_container->get('request');
+
+		/** @var \phpbb\template\template $template Template object */
+		$template = $phpbb_container->get('template');
+
+		/** @var string $thanks_table _thanks database table */
+		$thanks_table = $phpbb_container->getParameter('tables.thanks');
 
 		$this->tpl_name = 'acp_thanks_truncate';
 		$this->page_title = 'ACP_THANKS_TRUNCATE';
-
-		$thanks_table = $phpbb_container->getParameter('tables.thanks');
 
 		$sql = 'SELECT COUNT(post_id) as total_match_count
 			FROM ' . $thanks_table;
@@ -48,12 +63,10 @@ class acp_thanks_truncate_module
 
 		if ($truncate)
 		{
-			// check mode
 			if (confirm_box(true))
 			{
 				$sql = 'DELETE FROM ' . $thanks_table;
-				$result = $db->sql_query($sql);
-				$db->sql_freeresult($result);
+				$db->sql_query($sql);
 
 				$sql = 'SELECT COUNT(post_id) as total_match_count
 					FROM ' . $thanks_table;
@@ -66,17 +79,17 @@ class acp_thanks_truncate_module
 			}
 			else
 			{
-				$s_hidden_fields = build_hidden_fields(array(
+				$s_hidden_fields = build_hidden_fields([
 					'truncate'		=> true,
-					)
-				);
-				//display mode
+				]);
+
+				// Display mode
 				confirm_box(false, 'TRUNCATE_THANKS', $s_hidden_fields);
-				trigger_error($user->lang['TRUNCATE_NO_THANKS'] . adm_back_link($this->u_action));
+				trigger_error($language->lang('TRUNCATE_NO_THANKS') . adm_back_link($this->u_action));
 			}
 		}
 
-		$template->assign_vars(array(
+		$template->assign_vars([
 			'ALLTHANKS'		=> $all_thanks,
 			'POSTSTHANKS'	=> $all_posts_thanks,
 			'USERSTHANKS'	=> $all_users_thanks,
@@ -84,6 +97,6 @@ class acp_thanks_truncate_module
 			'USERSEND'		=> $end_users_thanks,
 			'THANKSEND'		=> $end_thanks,
 			'S_TRUNCATE' 	=> $truncate,
-		));
+		]);
 	}
 }
