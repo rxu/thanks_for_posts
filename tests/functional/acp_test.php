@@ -13,15 +13,22 @@ namespace gfksx\thanksforposts\tests\functional;
 /**
  * @group functional
  */
-class thanks_acp_test extends \phpbb_functional_test_case
+class acp_test extends \phpbb_functional_test_case
 {
+	static protected function setup_extensions()
+	{
+		return array('gfksx/thanksforposts');
+	}
+
 	public function test_update_counters_module()
 	{
 		$this->login();
 		$this->admin_login();
 
+		$this->add_lang_ext('gfksx/thanksforposts', 'info_acp_thanks');
+
 		$crawler = self::request('GET', "adm/index.php?sid={$this->sid}&i=-gfksx-thanksforposts-acp-acp_thanks_refresh_module&mode=thanks");
-		$this->assertContains('Warning', $crawler->filter('div[class="errorbox"] > h3')->text());
+		$this->assertContains($this->lang('WARNING'), $crawler->filter('div[class="errorbox"] > h3')->text());
 		$this->assertContains('This can take a few minutes to complete. All incorrect thanks entries will be deleted!', $crawler->filter('div[class="errorbox"] > p')->text());
 
 		$form = $crawler->selectButton('Refresh')->form();
@@ -30,8 +37,8 @@ class thanks_acp_test extends \phpbb_functional_test_case
 
 		$form = $crawler->selectButton('Yes')->form();
 		$crawler = self::submit($form);
-		$this->assertContains('Notification', $crawler->filter('div[class="successbox"] > h3')->text());
-		$this->assertContains('Counters updated', $crawler->filter('div[class="successbox"] > p')->text());
+		$this->assertContains($this->lang('NOTIFY'), $crawler->filter('div[class="successbox"] > h3')->text());
+		$this->assertContains($this->lang('THANKS_REFRESHED_MSG'), $crawler->filter('div[class="successbox"] > p')->text());
 	}
 
 	public function test_clear_list_of_thanks_module()
@@ -39,17 +46,19 @@ class thanks_acp_test extends \phpbb_functional_test_case
 		$this->login();
 		$this->admin_login();
 
+		$this->add_lang_ext('gfksx/thanksforposts', 'info_acp_thanks');
+
 		$crawler = self::request('GET', "adm/index.php?sid={$this->sid}&i=-gfksx-thanksforposts-acp-acp_thanks_truncate_module&mode=thanks");
-		$this->assertContains('Warning', $crawler->filter('div[class="errorbox"] > h3')->text());
-		$this->assertContains('This procedure completely clears all thanks counters (removes all issued thanks)', $crawler->filter('div[class="errorbox"] > p')->text());
+		$this->assertContains($this->lang('WARNING'), $crawler->filter('div[class="errorbox"] > h3')->text());
+		$this->assertContains('This procedure completely clears all thanks counters (removes all issued thanks).', $crawler->filter('div[class="errorbox"] > p')->text());
 
 		$form = $crawler->selectButton('Clear')->form();
 		$crawler = self::submit($form);
-		$this->assertContains('Clear the list of thanks', $crawler->filter('fieldset > h1')->text());
+		$this->assertContains($this->lang('ACP_THANKS_TRUNCATE'), $crawler->filter('fieldset > h1')->text());
 
 		$form = $crawler->selectButton('Yes')->form();
 		$crawler = self::submit($form);
-		$this->assertContains('Notification', $crawler->filter('div[class="successbox"] > h3')->text());
-		$this->assertContains('Thanks counters cleared.', $crawler->filter('div[class="successbox"] > p')->text());
+		$this->assertContains($this->lang('NOTIFY'), $crawler->filter('div[class="successbox"] > h3')->text());
+		$this->assertContains($this->lang('TRUNCATE_THANKS_MSG'), $crawler->filter('div[class="successbox"] > p')->text());
 	}
 }

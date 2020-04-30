@@ -17,11 +17,6 @@ namespace gfksx\thanksforposts\tests\functional;
  */
 class controller_test extends \phpbb_functional_test_case
 {
-	static protected function setup_extensions()
-	{
-		return array('gfksx/thanksforposts');
-	}
-
 	public function test_thanklist()
 	{
 		$this->create_user('user1');
