@@ -418,7 +418,26 @@ class helper
 	public function output_thanks_memberlist($user_id, $ex_fid_ary)
 	{
 		$user_thankers = $user_thanked = [];
+		$poster_receive_count = $poster_give_count = 0;
 		$poster_limit = (int) $this->config['thanks_number'];
+
+		// Get all user's received thanks count
+		$sql = 'SELECT poster_id, COUNT(*) AS poster_receive_count
+			FROM ' . $this->thanks_table . '
+			WHERE poster_id = ' . (int) $user_id. ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
+			GROUP BY poster_id';
+		$result = $this->db->sql_query($sql);
+		$poster_receive_count = (int) $this->db->sql_fetchfield('poster_receive_count');
+		$this->db->sql_freeresult($result);
+
+		// Get all user's given thanks count
+		$sql = 'SELECT user_id, COUNT(*) AS poster_give_count
+			FROM ' . $this->thanks_table . "
+			WHERE user_id = " . (int) $user_id.  ' AND (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
+			GROUP BY user_id';
+		$result = $this->db->sql_query($sql);
+		$poster_give_count = (int) $this->db->sql_fetchfield('poster_give_count');
+		$this->db->sql_freeresult($result);
 
 		$sql_array = [
 			'SELECT'	=> 't.user_id, t.post_id, u.username, u.user_colour',
@@ -439,7 +458,6 @@ class helper
 			];
 		}
 		$this->db->sql_freeresult($result);
-		$poster_receive_count = count($user_thankers);
 
 		$collim = ($poster_limit > $poster_receive_count)? ceil($poster_receive_count/4) : ceil($poster_limit/4);
 		$thanked_row = [];
@@ -488,7 +506,6 @@ class helper
 			);
 		}
 		$this->db->sql_freeresult($result);
-		$poster_give_count = count($user_thanked);
 
 		$collim = ($poster_limit > $poster_give_count) ? ceil($poster_give_count/4) : ceil($poster_limit/4);
 		$thanks_row = array();
