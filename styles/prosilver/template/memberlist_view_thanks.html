@@ -23,7 +23,7 @@
 								&nbsp;&nbsp;&bull;&nbsp;&nbsp;{{ thanks_row.USERNAME_FULL }} &#8594; <a href="{{ thanks_row.U_POST_LINK }}">{{ lang('FOR_MESSAGE') }}</a><br />{% if thanks_row.S_SWITCH_COLUMN and not thanks_row.S_LAST_ROW %}&nbsp;</span><span style="float: left;">{% endif %}
 							{% endfor %}
 						</span>
-						{% if FURTHER_THANKS_TEXT %}<span style="float: left;">&nbsp;{{ FURTHER_THANKS_TEXT }}</span>{% endif %}
+						{% if FURTHER_THANKS_TEXT_GIVEN %}<span style="float: left;">&nbsp;{{ FURTHER_THANKS_TEXT_GIVEN }}</span>{% endif %}
 					</div>
 				</dd>
 			</dl>
@@ -50,7 +50,7 @@
 								&nbsp;&nbsp;&bull;&nbsp;&nbsp;{{ thanked_row.USERNAME_FULL }} &#8594; <a href="{{ thanked_row.U_POST_LINK }}">{{ lang('FOR_MESSAGE') }}</a><br />{% if thanked_row.S_SWITCH_COLUMN and not thanked_row.S_LAST_ROW %}&nbsp;</span><span style="float: left;">{% endif %}
 							{% endfor %}
 						</span>
-						{% if FURTHER_THANKS_TEXT %}<span style="float: left;">&nbsp;{{ FURTHER_THANKS_TEXT }}</span>{% endif %}
+						{% if FURTHER_THANKS_TEXT_RECEIVED %}<span style="float: left;">&nbsp;{{ FURTHER_THANKS_TEXT_RECEIVED }}</span>{% endif %}
 					</div>
 				</dd>
 			</dl>

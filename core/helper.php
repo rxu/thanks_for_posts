@@ -484,7 +484,7 @@ class helper
 		{
 			$further_thanks = $poster_receive_count - $poster_limit;
 			$further_thanks_text = $this->language->lang('FURTHER_THANKS', $further_thanks);
-			$this->template->assign_var('FURTHER_THANKS_TEXT', $further_thanks_text);
+			$this->template->assign_var('FURTHER_THANKS_TEXT_RECEIVED', $further_thanks_text);
 		}
 
 		$sql_array = [
@@ -535,7 +535,7 @@ class helper
 		{
 			$further_thanks = $poster_give_count - $poster_limit;
 			$further_thanks_text = $this->language->lang('FURTHER_THANKS', $further_thanks);
-			$this->template->assign_var('FURTHER_THANKS_TEXT', $further_thanks_text);
+			$this->template->assign_var('FURTHER_THANKS_TEXT_GIVEN', $further_thanks_text);
 		}
 
 		$l_poster_receive_count = ($poster_receive_count) ? $this->language->lang('THANKS', $poster_receive_count) : '';
