@@ -456,7 +456,8 @@ class thankslist
 								'ON'	=> 't . ' . $sortparam . '_id = u.user_id',
 							],
 						],
-						'GROUP_BY' => 't.' . $sortparam.'_id',
+						'ORDER_BY'	=> $order_by,
+						'GROUP_BY'	=> 't.' . $sortparam.'_id, u.user_id',
 					];
 				}
 
