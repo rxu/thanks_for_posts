@@ -20,30 +20,72 @@ class controller_test extends \phpbb_functional_test_case
 	public function test_thanklist()
 	{
 		$this->create_user('user1');
-		$this->add_user_group('ADMINISTRATORS', array('user1'));
+		$this->add_user_group('ADMINISTRATORS', ['user1']);
 		$this->login('user1');
 
-		// Create a post
-		$topic = $this->create_topic(2, 'Test Topic 1', 'This is a first test topic posted by the testing framework.');
-		$post = $this->create_post(2, $topic['topic_id'], 'Re: Test Topic 1', 'This is a reply to the first test topic posted by the testing framework.');
+		// Create 2 posts for user1
+		$topic = $this->create_topic(2, 'Test Topic 1', 'This is a first test topic posted by user1.');
+		$post = $this->create_post(2, $topic['topic_id'], 'Re: Test Topic 1', 'This is a first reply to the topic posted by user1.');
+
+		// Create a thank by user1 for admin's post
+		$crawler = self::request('GET', "viewtopic.php?f=2&t=1&sid={$this->sid}");
+		$thanks_link = str_replace('./', '', html_entity_decode($crawler->filter('#lnk_thanks_post1')->attr('href')));
+		self::request('GET', $thanks_link);
 
 		// Logout user1
 		$this->logout();
 		// Login as admin
 		$this->login();
 
-		// Create a thank for the post
-		$crawler = self::request('GET', "viewtopic.php?f=2&t={$post['topic_id']}&sid={$this->sid}&p={$post['post_id']}#p{$post['post_id']}");
-		$thanks_link = str_replace('./', '', html_entity_decode($crawler->filter('#lnk_thanks_post' . $post['post_id'])->attr('href')));
-		$crawler = self::request('GET', $thanks_link);
+		// Create a thank for every user1's post
+		$crawler = self::request('GET', "viewtopic.php?f=2&t={$topic['topic_id']}&sid={$this->sid}");
+		$thanks_link1 = str_replace('./', '', html_entity_decode($crawler->filter('#lnk_thanks_post' . ((int) $post['post_id'] - 1))->attr('href')));
+		self::request('GET', $thanks_link1);
+		$thanks_link2 = str_replace('./', '', html_entity_decode($crawler->filter('#lnk_thanks_post' . $post['post_id'])->attr('href')));
+		self::request('GET', $thanks_link2);
 
 		$this->add_lang_ext('gfksx/thanksforposts', 'thanks_mod');
 
+		// At this point:
+		// admin has: received thanks - 1, given thanks - 2
+		// user1 has: received thanks - 2, given thanks - 1
 		$crawler = self::request('GET', 'app.php/thankslist');
 		$this->assertContains($this->lang('THANKS_USER'), $crawler->filter('h2')->text());
 		$this->assertContains('2 users', $crawler->filter('div[class="pagination"]')->text());
 		$this->assertContains('user1', $crawler->filter('a[class="username"]')->text());
 		$this->assertContains('admin', $crawler->filter('a[class="username-coloured"]')->text());
+	}
+
+	public function test_thanklist_sorting()
+	{
+		$this->login();
+
+		$this->add_lang_ext('gfksx/thanksforposts', 'thanks_mod');
+
+		// Default sorting: username desc
+		$crawler = self::request('GET', 'app.php/thankslist');
+		$this->assertContains('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
+		$this->assertContains('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+
+		// Sorting by `Has thanked` desc
+		$crawler = self::request('GET', 'app.php/thankslist?sk=f&sd=d');
+		$this->assertContains('admin', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
+		$this->assertContains('user1', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+
+		// Sorting by `Has thanked` asc
+		$crawler = self::request('GET', 'app.php/thankslist?sk=f&sd=a');
+		$this->assertContains('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
+		$this->assertContains('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+
+		// Sorting by `Been thanked` desc
+		$crawler = self::request('GET', 'app.php/thankslist?sk=e&sd=d');
+		$this->assertContains('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
+		$this->assertContains('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+
+		// Sorting by `Been thanked` asc
+		$crawler = self::request('GET', 'app.php/thankslist?sk=e&sd=a');
+		$this->assertContains('admin', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
+		$this->assertContains('user1', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
 	}
 
 	public function test_toplist()
