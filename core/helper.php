@@ -21,13 +21,13 @@ class helper
 	protected $forum_thanks = [];
 
 	/** @var int max_post_thanks */
-	protected $max_post_thanks;
+	protected $max_post_thanks = 0;
 
 	/** @var int max_topic_thanks */
-	protected $max_topic_thanks;
+	protected $max_topic_thanks = 0;
 
 	/** @var int max_forum_thanks */
-	protected $max_forum_thanks;
+	protected $max_forum_thanks = 0;
 
 	/** @var int poster_list_count */
 	protected $poster_list_count;
@@ -242,7 +242,6 @@ class helper
 				trigger_error($this->language->lang('INCORRECT_THANKS') . '<br /><br />' . $this->language->lang('RETURN_POST', '<a href="'.append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '#p' . $post_id) . '">', '</a>'));
 			}
 		}
-		return;
 	}
 
 	public function clear_list_thanks($object_id, $mode = '')
@@ -302,8 +301,6 @@ class helper
 			confirm_box(false, 'CLEAR_LIST_THANKS', $s_hidden_fields);
 			redirect($redirect_url);
 		}
-
-		return;
 	}
 
 	public function delete_thanks($post_id, $forum_id)
@@ -378,8 +375,6 @@ class helper
 			confirm_box(false, 'REMOVE_THANKS', $hidden);
 			redirect($redirect_url);
 		}
-
-		return;
 	}
 
 	// Display the text/image saying either to add or remove thanks
@@ -418,7 +413,6 @@ class helper
 	public function output_thanks_memberlist($user_id, $ex_fid_ary)
 	{
 		$user_thankers = $user_thanked = [];
-		$poster_receive_count = $poster_give_count = 0;
 		$poster_limit = (int) $this->config['thanks_number'];
 
 		// Get all user's received thanks count
@@ -695,8 +689,6 @@ class helper
 			}
 			$this->db->sql_freeresult($result);
 		}
-
-		return;
 	}
 
 	public function get_thanks_topic_reput($topic_id, $max_topic_thanks, $topic_thanks)
@@ -729,7 +721,6 @@ class helper
 			}
 			$this->db->sql_freeresult($result);
 		}
-
 		return $topic_thanks;
 	}
 
@@ -743,8 +734,8 @@ class helper
 			$result = $this->db->sql_query($sql);
 			$this->max_topic_thanks = (int) $this->db->sql_fetchfield('max_topic_thanks');
 			$this->db->sql_freeresult($result);
-			return $this->max_topic_thanks;
 		}
+		return $this->max_topic_thanks;
 	}
 
 	// Max post thanks for toplist
@@ -819,9 +810,8 @@ class helper
 				}
 				$this->db->sql_freeresult($result);
 			}
-
-			return $this->forum_thanks;
 		}
+		return $this->forum_thanks;
 	}
 
 	public function get_max_forum_thanks()
@@ -834,9 +824,8 @@ class helper
 			$result = $this->db->sql_query($sql);
 			$this->max_forum_thanks = (int) $this->db->sql_fetchfield('max_forum_thanks');
 			$this->db->sql_freeresult($result);
-
-			return $this->max_forum_thanks;
 		}
+		return $this->max_forum_thanks;
 	}
 
 	public function add_notification($notification_data, $notification_type_name = 'gfksx.thanksforposts.notification.type.thanks')

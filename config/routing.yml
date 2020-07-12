@@ -1,5 +1,5 @@
 gfksx_thanksforposts_thankslist_controller_user:
-    path: /thankslist/{mode}/{author_id}/{give}{tslash}
+    path: /thankslist/{mode}/{author_id}/{give}
     defaults: { _controller: gfksx.thanksforposts.controller.thankslist:main, top: 0, start: 0, sort_key: "a", sort_dir: "d", topic_id: 0, return_chars: 300 }
     requirements:
         mode: \w+
@@ -11,10 +11,9 @@ gfksx_thanksforposts_thankslist_controller_user:
         topic_id: \d+
         return_chars: \d+
         give: true|false
-        tslash : "/?"
 
 gfksx_thanksforposts_thankslist_controller:
-    path: /thankslist{tslash}
+    path: /thankslist
     defaults: { _controller: gfksx.thanksforposts.controller.thankslist:main, mode: "", author_id: 1, give: "", top: 0, start: 0, sort_key: "a", sort_dir: "d", topic_id: 0, return_chars: 300 }
     requirements:
         mode: \w+
@@ -26,14 +25,12 @@ gfksx_thanksforposts_thankslist_controller:
         topic_id: \d+
         return_chars: \d+
         give: true|false
-        tslash : "/?"
 
 gfksx_thanksforposts_toplist_controller:
-    path: /toplist{tslash}
+    path: /toplist
     defaults: { _controller: gfksx.thanksforposts.controller.toplist:main, mode: "", start: 0, topic_id: 0, return_chars: 300 }
     requirements:
         mode: \w+
         start: \d+
         topic_id: \d+
         return_chars: \d+
-        tslash : "/?"

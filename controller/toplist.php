@@ -307,12 +307,12 @@ class toplist
 						'POST_AUTHOR'				=> get_username_string('full', $row['poster_id'], $row['username'], $row['user_colour'], $row['post_username']),
 						'POST_REPUT'				=> round($row['post_thanks'] / ($max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%',
 						'POST_THANKS'				=> $row['post_thanks'],
-						'S_THANKS_POST_REPUT_VIEW' 	=> isset($this->config['thanks_post_reput_view']) && $this->config['thanks_post_reput_view'],
-						'S_THANKS_REPUT_GRAPHIC' 	=> isset($this->config['thanks_reput_graphic']) && $this->config['thanks_reput_graphic'],
+						'S_THANKS_POST_REPUT_VIEW' 	=> (bool) $this->config['thanks_post_reput_view'],
+						'S_THANKS_REPUT_GRAPHIC' 	=> (bool) $this->config['thanks_reput_graphic'],
 						'THANKS_REPUT_HEIGHT'		=> (int) $this->config['thanks_reput_height'],
 						'THANKS_REPUT_GRAPHIC_WIDTH'=> (int) $this->config['thanks_reput_level'] * (int) $this->config['thanks_reput_height'],
-						'THANKS_REPUT_IMAGE' 		=> isset($this->config['thanks_reput_image']) ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
-						'THANKS_REPUT_IMAGE_BACK'	=> isset($this->config['thanks_reput_image_back']) ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
+						'THANKS_REPUT_IMAGE' 		=> !empty($this->config['thanks_reput_image']) ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
+						'THANKS_REPUT_IMAGE_BACK'	=> !empty($this->config['thanks_reput_image_back']) ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
 					]);
 				}
 				while ($row = $this->db->sql_fetchrow($result));
@@ -378,12 +378,12 @@ class toplist
 						'TOPIC_AUTHOR'				=> get_username_string('full', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']),
 						'TOPIC_THANKS'				=> $row['topic_thanks'],
 						'TOPIC_REPUT'				=> round($row['topic_thanks'] / ($max_topic_thanks / 100), (int) $this->config['thanks_number_digits']) . '%',
-						'S_THANKS_TOPIC_REPUT_VIEW' => isset($this->config['thanks_topic_reput_view']) && $this->config['thanks_topic_reput_view'],
-						'S_THANKS_REPUT_GRAPHIC' 	=> isset($this->config['thanks_reput_graphic']) && $this->config['thanks_reput_graphic'],
+						'S_THANKS_TOPIC_REPUT_VIEW' => (bool) $this->config['thanks_topic_reput_view'],
+						'S_THANKS_REPUT_GRAPHIC' 	=> (bool) $this->config['thanks_reput_graphic'],
 						'THANKS_REPUT_HEIGHT'		=> (int) $this->config['thanks_reput_height'],
 						'THANKS_REPUT_GRAPHIC_WIDTH'=> (int) $this->config['thanks_reput_level'] * (int) $this->config['thanks_reput_height'],
-						'THANKS_REPUT_IMAGE' 		=> (isset($this->config['thanks_reput_image'])) ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
-						'THANKS_REPUT_IMAGE_BACK'	=> (isset($this->config['thanks_reput_image_back'])) ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
+						'THANKS_REPUT_IMAGE' 		=> !empty($this->config['thanks_reput_image']) ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
+						'THANKS_REPUT_IMAGE_BACK'	=> !empty($this->config['thanks_reput_image_back']) ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
 					]);
 				}
 				while ($row = $this->db->sql_fetchrow($result));
@@ -434,12 +434,12 @@ class toplist
 							'U_VIEW_FORUM'				=> $u_viewforum,
 							'FORUM_THANKS'				=> $row['forum_thanks'],
 							'FORUM_REPUT'				=> round($row['forum_thanks'] / ($max_forum_thanks / 100), (int) $this->config['thanks_number_digits']) . '%',
-							'S_THANKS_FORUM_REPUT_VIEW' => isset($this->config['thanks_forum_reput_view']) && $this->config['thanks_forum_reput_view'],
-							'S_THANKS_REPUT_GRAPHIC' 	=> isset($this->config['thanks_reput_graphic']) && $this->config['thanks_reput_graphic'],
+							'S_THANKS_FORUM_REPUT_VIEW' => (bool) $this->config['thanks_forum_reput_view'],
+							'S_THANKS_REPUT_GRAPHIC' 	=> (bool) $this->config['thanks_reput_graphic'],
 							'THANKS_REPUT_HEIGHT'		=> (int) $this->config['thanks_reput_height'],
 							'THANKS_REPUT_GRAPHIC_WIDTH'=> (int) $this->config['thanks_reput_level'] * (int) $this->config['thanks_reput_height'],
-							'THANKS_REPUT_IMAGE' 		=> (isset($this->config['thanks_reput_image'])) ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
-							'THANKS_REPUT_IMAGE_BACK'	=> (isset($this->config['thanks_reput_image_back'])) ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
+							'THANKS_REPUT_IMAGE' 		=> !empty($this->config['thanks_reput_image']) ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
+							'THANKS_REPUT_IMAGE_BACK'	=> !empty($this->config['thanks_reput_image_back']) ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
 						]);
 					}
 				}
@@ -460,9 +460,9 @@ class toplist
 			'PAGE_NUMBER'				=> $this->pagination->on_page($total_match_count, (int) $this->config['posts_per_page'], $start),
 			'PAGE_TITLE'				=> $page_title,
 			'PHPBB_VERSION'				=> phpbb_version_compare(PHPBB_VERSION, '3.2.0', '>=') ? '3.2' : '3.1',
-			'S_THANKS_FORUM_REPUT_VIEW' => isset($this->config['thanks_forum_reput_view']) && $this->config['thanks_forum_reput_view'],
-			'S_THANKS_TOPIC_REPUT_VIEW' => isset($this->config['thanks_topic_reput_view']) && $this->config['thanks_topic_reput_view'],
-			'S_THANKS_POST_REPUT_VIEW'	=> isset($this->config['thanks_post_reput_view']) && $this->config['thanks_post_reput_view'],
+			'S_THANKS_FORUM_REPUT_VIEW' => (bool) $this->config['thanks_forum_reput_view'],
+			'S_THANKS_TOPIC_REPUT_VIEW' => (bool) $this->config['thanks_topic_reput_view'],
+			'S_THANKS_POST_REPUT_VIEW'	=> (bool) $this->config['thanks_post_reput_view'],
 			'S_FULL_POST_RATING'		=> $full_post_rating,
 			'S_FULL_TOPIC_RATING'		=> $full_topic_rating,
 			'S_FULL_FORUM_RATING'		=> $full_forum_rating,
