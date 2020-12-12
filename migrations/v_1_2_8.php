@@ -103,6 +103,13 @@ class v_1_2_8 extends \phpbb\db\migration\migration
 					topic_id = (SELECT p.topic_id FROM ' . POSTS_TABLE . ' p, ' . $thanks_table . ' t WHERE t.post_id = p.post_id)
 				WHERE EXISTS (SELECT p.* FROM ' . POSTS_TABLE . ' p, ' . $thanks_table . ' t WHERE t.post_id = p.post_id)';
 		}
+		else if ($this->db->get_sql_layer() == 'mssql' || $this->db->get_sql_layer() == 'mssqlnative')
+		{
+			$sql = 'UPDATE t
+				SET t.forum_id = p.forum_id, t.topic_id = p.topic_id
+				FROM ' . POSTS_TABLE . ' p, ' . $thanks_table . ' t
+				WHERE t.post_id = p.post_id';
+		}
 
 		$this->db->sql_query($sql);
 	}
