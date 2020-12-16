@@ -50,10 +50,10 @@ class controller_test extends \phpbb_functional_test_case
 		// admin has: received thanks - 1, given thanks - 2
 		// user1 has: received thanks - 2, given thanks - 1
 		$crawler = self::request('GET', 'app.php/thankslist');
-		$this->assertContains($this->lang('THANKS_USER'), $crawler->filter('h2')->text());
-		$this->assertContains('2 users', $crawler->filter('div[class="pagination"]')->text());
-		$this->assertContains('user1', $crawler->filter('a[class="username"]')->text());
-		$this->assertContains('admin', $crawler->filter('a[class="username-coloured"]')->text());
+		$this->assertStringContainsString($this->lang('THANKS_USER'), $crawler->filter('h2')->text());
+		$this->assertStringContainsString('2 users', $crawler->filter('div[class="pagination"]')->text());
+		$this->assertStringContainsString('user1', $crawler->filter('a[class="username"]')->text());
+		$this->assertStringContainsString('admin', $crawler->filter('a[class="username-coloured"]')->text());
 	}
 
 	public function test_thanklist_sorting()
@@ -64,28 +64,28 @@ class controller_test extends \phpbb_functional_test_case
 
 		// Default sorting: username desc
 		$crawler = self::request('GET', 'app.php/thankslist');
-		$this->assertContains('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
-		$this->assertContains('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+		$this->assertStringContainsString('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
+		$this->assertStringContainsString('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
 
 		// Sorting by `Has thanked` desc
 		$crawler = self::request('GET', 'app.php/thankslist?sk=f&sd=d');
-		$this->assertContains('admin', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
-		$this->assertContains('user1', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+		$this->assertStringContainsString('admin', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
+		$this->assertStringContainsString('user1', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
 
 		// Sorting by `Has thanked` asc
 		$crawler = self::request('GET', 'app.php/thankslist?sk=f&sd=a');
-		$this->assertContains('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
-		$this->assertContains('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+		$this->assertStringContainsString('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
+		$this->assertStringContainsString('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
 
 		// Sorting by `Been thanked` desc
 		$crawler = self::request('GET', 'app.php/thankslist?sk=e&sd=d');
-		$this->assertContains('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
-		$this->assertContains('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+		$this->assertStringContainsString('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
+		$this->assertStringContainsString('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
 
 		// Sorting by `Been thanked` asc
 		$crawler = self::request('GET', 'app.php/thankslist?sk=e&sd=a');
-		$this->assertContains('admin', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
-		$this->assertContains('user1', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+		$this->assertStringContainsString('admin', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
+		$this->assertStringContainsString('user1', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
 	}
 
 	public function test_toplist()
@@ -102,20 +102,20 @@ class controller_test extends \phpbb_functional_test_case
 		$values['config[thanks_forum_reput_view]'] = true;
 		$form->setValues($values);
 		$crawler = self::submit($form);
-		$this->assertContains($this->lang('CONFIG_UPDATED'), $crawler->filter('.successbox')->text());
+		$this->assertStringContainsString($this->lang('CONFIG_UPDATED'), $crawler->filter('.successbox')->text());
 
 		$crawler = self::request('GET', 'app.php/toplist');
-		$this->assertContains($this->lang('TOPLIST'), $crawler->filter('h2')->text());
-		$this->assertContains($this->lang('RATING_TOP_POST'), $crawler->filter('h3')->eq(0)->text());
-		$this->assertContains($this->lang('RATING_TOP_TOPIC'), $crawler->filter('h3')->eq(1)->text());
-		$this->assertContains($this->lang('RATING_TOP_FORUM'), $crawler->filter('h3')->eq(2)->text());
+		$this->assertStringContainsString($this->lang('TOPLIST'), $crawler->filter('h2')->text());
+		$this->assertStringContainsString($this->lang('RATING_TOP_POST'), $crawler->filter('h3')->eq(0)->text());
+		$this->assertStringContainsString($this->lang('RATING_TOP_TOPIC'), $crawler->filter('h3')->eq(1)->text());
+		$this->assertStringContainsString($this->lang('RATING_TOP_FORUM'), $crawler->filter('h3')->eq(2)->text());
 
-		$this->assertContains('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(0)->attr('style'));
-		$this->assertContains('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(0)->attr('style'));
-		$this->assertContains('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(1)->attr('style'));
-		$this->assertContains('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(1)->attr('style'));
-		$this->assertContains('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(2)->attr('style'));
-		$this->assertContains('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(2)->attr('style'));
+		$this->assertStringContainsString('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(0)->attr('style'));
+		$this->assertStringContainsString('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(0)->attr('style'));
+		$this->assertStringContainsString('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(1)->attr('style'));
+		$this->assertStringContainsString('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(1)->attr('style'));
+		$this->assertStringContainsString('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(2)->attr('style'));
+		$this->assertStringContainsString('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(2)->attr('style'));
 
 		$crawler = self::request('GET', "adm/index.php?sid={$this->sid}&i=-gfksx-thanksforposts-acp-acp_thanks_reput_module&mode=thanks");
 		$form = $crawler->selectButton('Submit')->form();
@@ -126,10 +126,10 @@ class controller_test extends \phpbb_functional_test_case
 		$values['config[thanks_forum_reput_view]'] = false;
 		$form->setValues($values);
 		$crawler = self::submit($form);
-		$this->assertContains($this->lang('CONFIG_UPDATED'), $crawler->filter('.successbox')->text());
+		$this->assertStringContainsString($this->lang('CONFIG_UPDATED'), $crawler->filter('.successbox')->text());
 
 		$crawler = self::request('GET', 'app.php/toplist');
-		$this->assertContains($this->lang('RATING_VIEW_TOPLIST_NO'), $crawler->filter('html')->text());
+		$this->assertStringContainsString($this->lang('RATING_VIEW_TOPLIST_NO'), $crawler->filter('html')->text());
 		$this->assertNotContains($this->lang('TOPLIST'), $crawler->filter('ul[class="dropdown-contents"]')->text());
 		$this->assertCount(0, $crawler->filter('.fa-star-o'));
 	}

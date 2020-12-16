@@ -25,6 +25,8 @@ matrix:
       env: DB=mysqli
     - php: 7.4
       env: PHPBB_BRANCH="master";DB=mysqli
+    - php: 8.0
+      env: DB=mysqli
     - php: nightly
       env: PHPBB_BRANCH="master";DB=mysqli
   allow_failures:
