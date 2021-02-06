@@ -130,7 +130,7 @@ class controller_test extends \phpbb_functional_test_case
 
 		$crawler = self::request('GET', 'app.php/toplist');
 		$this->assertStringContainsString($this->lang('RATING_VIEW_TOPLIST_NO'), $crawler->filter('html')->text());
-		$this->assertNotContains($this->lang('TOPLIST'), $crawler->filter('ul[class="dropdown-contents"]')->text());
+		$this->assertStringNotContainsString($this->lang('TOPLIST'), $crawler->filter('ul[class="dropdown-contents"]')->text());
 		$this->assertCount(0, $crawler->filter('.fa-star-o'));
 	}
 }
