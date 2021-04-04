@@ -106,7 +106,7 @@ class thanks extends \phpbb\notification\type\base
 		], $options);
 
 		$users = [(int) $thanks_data['poster_id']];
-		return $this->check_user_notification_options($users, $options);
+		return $this->get_authorised_recipients($users, $thanks_data['forum_id'], $options, true);
 	}
 
 	/**

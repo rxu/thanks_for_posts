@@ -194,7 +194,9 @@ class listener implements EventSubscriberInterface
 	{
 		$post_list = $event['post_list'];
 		$forum_id = (int) $event['forum_id'];
+		$topic_data = $event['topic_data'];
 		$this->helper->array_all_thanks($post_list, $forum_id);
+		$this->helper->topic_data = $topic_data;
 
 		if ($this->request->is_set('thanks') && !$this->request->is_set('rthanks'))
 		{

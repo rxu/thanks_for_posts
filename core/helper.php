@@ -83,6 +83,9 @@ class helper
 	/** @var string NOTIFICATIONS_TABLE */
 	protected $notifications_table;
 
+	/** @var array */
+	public $topic_data;
+
 	/**
 	 * Constructor
 	 *
@@ -137,6 +140,7 @@ class helper
 		$this->users_table = $users_table;
 		$this->posts_table = $posts_table;
 		$this->notifications_table = $notifications_table;
+		$this->topic_data = [];
 	}
 
 	// Output thanks list
@@ -551,6 +555,7 @@ class helper
 		{
 			$thanks_text = $this->get_thanks_text($row['post_id']);
 			$thank_mode = $this->get_thanks_link($row['post_id']);
+			$thanks_count = $this->get_thanks_number((int) $row['post_id']);
 			$already_thanked = $this->already_thanked($row['post_id'], $this->user->data['user_id']);
 			$l_poster_receive_count = (isset($this->poster_list_count[$poster_id]['R']) && $this->poster_list_count[$poster_id]['R']) ? $this->language->lang('THANKS', (int) $this->poster_list_count[$poster_id]['R']) : '';
 			$l_poster_give_count = (isset($this->poster_list_count[$poster_id]['G']) && $this->poster_list_count[$poster_id]['G']) ? $this->language->lang('THANKS', (int) $this->poster_list_count[$poster_id]['G']) : '';
@@ -565,7 +570,7 @@ class helper
 				'THANK_MODE'				=> $thank_mode,
 				'THANKS_LINK'				=> append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $row['post_id'] . '&amp;' . $thank_mode . '=' . $row['post_id'] . '&amp;to_id=' . $poster_id . '&amp;from_id=' . $this->user->data['user_id']),
 				'THANK_TEXT'				=> $this->language->lang('THANK_TEXT_1'),
-				'THANK_TEXT_2'				=> ($this->get_thanks_number($row['post_id']) != 1) ? $this->language->lang('THANK_TEXT_2PL', $this->get_thanks_number((int) $row['post_id'])) : $this->language->lang('THANK_TEXT_2'),
+				'THANK_TEXT_2'				=> ($thanks_count != 1) ? $this->language->lang('THANK_TEXT_2PL', $thanks_count) : $this->language->lang('THANK_TEXT_2'),
 				'THANKS_FROM'				=> $this->language->lang('THANK_FROM'),
 				'POSTER_RECEIVE_COUNT'		=> $l_poster_receive_count,
 				'POSTER_GIVE_COUNT'			=> $l_poster_give_count,
@@ -580,7 +585,7 @@ class helper
 				'S_ALREADY_THANKED'			=> $already_thanked,
 				'S_REMOVE_THANKS'			=> (bool) $this->config['remove_thanks'],
 				'S_FIRST_POST_ONLY'			=> (bool) $this->config['thanks_only_first_post'],
-				'POST_REPUT'				=> ($this->get_thanks_number($row['post_id']) != 0) ? round($this->get_thanks_number($row['post_id']) / ($this->max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
+				'POST_REPUT'				=> ($thanks_count != 0) ? round($thanks_count / ($this->max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
 				'S_THANKS_POST_REPUT_VIEW' 	=> (bool) $this->config['thanks_post_reput_view'],
 				'S_THANKS_REPUT_GRAPHIC' 	=> (bool) $this->config['thanks_reput_graphic'],
 				'THANKS_REPUT_HEIGHT'		=> $this->config['thanks_reput_height'] ?: false,
@@ -591,6 +596,7 @@ class helper
 				'U_CLEAR_LIST_THANKS_POST'	=> append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $row['post_id'] . '&amp;list_thanks=post'),
 				'S_MOD_THANKS'				=> $this->auth->acl_get('m_thanks'),
 				'S_ONLY_TOPICSTART'         => $topic_data['topic_first_post_id'] == $row['post_id'],
+				'THANKS_COUNT'				=> $thanks_count,
 			]);
 		}
 	}
@@ -830,6 +836,22 @@ class helper
 
 	public function add_notification($notification_data, $notification_type_name = 'gfksx.thanksforposts.notification.type.thanks')
 	{
+		$topic_data = $this->topic_data;
+		$mode = '';
+
+		/**
+		 * Modify notification data
+		 *
+		 * @event gfksx.thanksforposts.modify_thanks_notification_data
+		 * @var	string		notification_type_name		The notification name
+		 * @var	array		notification_data			The notification data to be inserted in to the database
+		 * @var	array		topic_data					Array with topic data
+		 * @var	string		mode						Thanking mode 'give|receive|post'
+		 * @since 2.0.3
+		 */
+		$vars = ['notification_type_name', 'notification_data', 'topic_data', 'mode'];
+		extract($this->phpbb_dispatcher->trigger_event('gfksx.thanksforposts.modify_thanks_notification_data', compact($vars)));
+
 		if ($this->notification_exists($notification_data, $notification_type_name))
 		{
 			$this->notification_manager->update_notifications($notification_type_name, $notification_data);
