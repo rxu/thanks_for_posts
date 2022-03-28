@@ -143,6 +143,16 @@ class helper
 		$this->topic_data = [];
 	}
 
+	/**
+	 * Used to apply a curve to ratings and give more even distribution
+	 */
+	public function ease_out_exponential(float $percentage)
+	{
+		$num = $percentage / 100.0;
+
+		return ($num === 1.0 ? 1.0 : 1.0 - pow(2.0, -10.0 * $num)) * 100.0;
+	}
+
 	// Output thanks list
 	public function get_thanks($post_id)
 	{
@@ -585,7 +595,7 @@ class helper
 				'S_ALREADY_THANKED'			=> $already_thanked,
 				'S_REMOVE_THANKS'			=> (bool) $this->config['remove_thanks'],
 				'S_FIRST_POST_ONLY'			=> (bool) $this->config['thanks_only_first_post'],
-				'POST_REPUT'				=> ($thanks_count != 0) ? round($thanks_count / ($this->max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
+				'POST_REPUT'				=> ($thanks_count != 0) ? round($this->ease_out_exponential($thanks_count / ($this->max_post_thanks / 100)), (int) $this->config['thanks_number_digits']) . '%' : '',
 				'S_THANKS_POST_REPUT_VIEW' 	=> (bool) $this->config['thanks_post_reput_view'],
 				'S_THANKS_REPUT_GRAPHIC' 	=> (bool) $this->config['thanks_reput_graphic'],
 				'THANKS_REPUT_HEIGHT'		=> $this->config['thanks_reput_height'] ?: false,
@@ -700,7 +710,7 @@ class helper
 	public function get_thanks_topic_reput($topic_id, $max_topic_thanks, $topic_thanks)
 	{
 		return [
-			'TOPIC_REPUT'				=> (isset($topic_thanks[$topic_id])) ? round((int) $topic_thanks[$topic_id] / ($max_topic_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
+			'TOPIC_REPUT'				=> (isset($topic_thanks[$topic_id])) ? round($this->ease_out_exponential((int) $topic_thanks[$topic_id] / ($max_topic_thanks / 100)), (int) $this->config['thanks_number_digits']) . '%' : '',
 			'S_THANKS_TOPIC_REPUT_VIEW' => (bool) $this->config['thanks_topic_reput_view'],
 			'S_THANKS_REPUT_GRAPHIC' 	=> (bool) $this->config['thanks_reput_graphic'],
 			'THANKS_REPUT_HEIGHT'		=> $this->config['thanks_reput_height'] ?: false,
@@ -788,7 +798,7 @@ class helper
 	public function get_thanks_forum_reput($forum_id)
 	{
 		return [
-			'FORUM_REPUT'				=> (isset($this->forum_thanks[$forum_id])) ? round($this->forum_thanks[$forum_id] / ($this->max_forum_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
+			'FORUM_REPUT'				=> (isset($this->forum_thanks[$forum_id])) ? round($this->ease_out_exponential($this->forum_thanks[$forum_id] / ($this->max_forum_thanks / 100)), (int) $this->config['thanks_number_digits']) . '%' : '',
 			'S_THANKS_FORUM_REPUT_VIEW'	=> (bool) $this->config['thanks_forum_reput_view'],
 			'S_THANKS_REPUT_GRAPHIC'	=> (bool) $this->config['thanks_reput_graphic'],
 			'THANKS_REPUT_HEIGHT'		=> $this->config['thanks_reput_height'] ? $this->config['thanks_reput_height'] : false,
