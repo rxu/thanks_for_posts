@@ -142,6 +142,7 @@ class listener implements EventSubscriberInterface
 			'THANKS_LIST'		=> ($thanks_list != '') ? $thanks_list : false,
 			'S_THANKS_LIST'		=> $this->config['thanks_top_number'] && $thanks_list != '',
 			'L_TOP_THANKS_LIST'	=> $this->config['thanks_top_number'] ? $this->language->lang('REPUT_TOPLIST', (int) $this->config['thanks_top_number']) : false,
+			'S_THANKS_USE_AJAX'		=> (bool) $this->config['thanks_use_ajax'],
 		]);
 	}
 
@@ -274,6 +275,7 @@ class listener implements EventSubscriberInterface
 			'S_DISPLAY_TOPLIST'		=> $this->auth->acl_get('u_viewtoplist') && ($this->config['thanks_post_reput_view'] || $this->config['thanks_topic_reput_view'] || $this->config['thanks_forum_reput_view']),
 			'MINI_THANKS_IMG'		=> $this->user->img('icon_mini_thanks', $this->language->lang('GRATITUDES')),
 			'MINI_TOPLIST_IMG'		=> $this->user->img('icon_mini_toplist', $this->language->lang('TOPLIST')),
+			'S_THANKS_USE_AJAX'		=> (bool) $this->config['thanks_use_ajax'],
 		]);
 	}
 
@@ -288,6 +290,7 @@ class listener implements EventSubscriberInterface
 		$forum_id = (int) $event['forum_id'];
 		$this->template->assign_vars([
 			'S_FORUM_THANKS'	=> (bool) ($this->auth->acl_get('f_thanks', $forum_id)),
+			'S_THANKS_USE_AJAX'		=> (bool) $this->config['thanks_use_ajax'],
 		]);
 	}
 
