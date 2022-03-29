@@ -1,9 +1,5 @@
 ;(() => {
-	/**
-	 * @typedef {{
-	 * 		fadeOut: (ms: number) => JQuery,
-	 * }} JQuery
-	 */
+	/** @typedef {{ fadeOut: (ms: number) => JQuery }} JQuery */
 
 	/**
 	 * @type {{
@@ -11,6 +7,11 @@
 	 * 		alertTime: number,
 	 * 		loadingIndicator: () => JQuery,
 	 * 		alert: (title: string, message: string) => JQuery,
+	 * 		confirm: (
+	 *			msg: string,
+	 * 			callback: (val: boolean) => void,
+	 * 			fadedark?: boolean,
+	 * 		) => JQuery,
 	 * 		clearLoadingTimeout: () => void,
 	 * 	},
 	 * 	thanksForPosts: {
@@ -21,20 +22,20 @@
 	 * 	},
 	 * }}
 	 */
-	const { phpbb, thanksForPosts: data } = window
-	const { l10n } = data
+	const { phpbb, thanksForPosts: { l10n } } = window
 
 	/**
-	 * @param {HTMLAnchorElement} link
+	 * @param {HTMLAnchorElement} $link
 	 * @param {Document} doc
 	 */
 	const getReplacerForLink = ($link, doc) => {
-		/** @type {HTMLDivElement} */
 		const $post = $link.closest('.post')
 		const $replacement = doc.getElementById($post.id)
 
 		if ($replacement) {
-			$replacement.querySelector('.content').replaceWith($post.querySelector('.content'))
+			$replacement.querySelector('.content').replaceWith(
+				$post.querySelector('.content'),
+			)
 
 			return () => $post.replaceWith($replacement)
 		}
@@ -80,11 +81,33 @@
 				// we check for presence of elements on the page to determine
 				// which load event we're inside of
 
-				const $confirmBtn = $iframe.contentDocument.querySelector('#confirm [name=confirm]')
+				const $form = $iframe.contentDocument.querySelector('form#confirm')
+				const $confirmBtn = $form?.querySelector('[name=confirm]')
 
-				// is form
+				// is confirmation form
 				if ($confirmBtn) {
-					$confirmBtn.click()
+					const $clone = $form.cloneNode(true)
+
+					const $confirmContent = $clone.querySelector('.inner') ?? $clone
+
+					// must be <input type=button name=confirm/cancel>
+					// in order for phpbb.confirm to recognize clicks
+					for (const $btn of $confirmContent.querySelectorAll('[type=submit]')) {
+						$btn.type = 'button'
+					}
+
+					phpbb.confirm(
+						$confirmContent.innerHTML,
+						(val) => {
+							if (val) {
+								$confirmBtn.click()
+
+								phpbb.loadingIndicator()
+							} else {
+								$iframe.remove()
+							}
+						},
+					)
 
 					return
 				}
