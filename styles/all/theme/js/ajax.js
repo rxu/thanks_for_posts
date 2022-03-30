@@ -52,9 +52,10 @@
 	/** @param {HTMLAnchorElement} $link */
 	const thankHandler = async ($link) => {
 		const $loadingIndicator = phpbb.loadingIndicator()
-		const res = await fetch($link.href)
+		// use HEAD instead of GET, as response body is not used
+		const { ok } = await fetch($link.href, { method: 'HEAD' })
 
-		if (res.ok) {
+		if (ok) {
 			const res = await fetch(window.location.href)
 			const text = await res.text()
 
@@ -73,12 +74,21 @@
 	const unthankHandler = ($link) => {
 		const $loadingIndicator = phpbb.loadingIndicator()
 
+		// Safari needs width and height to be set to ensure media queries are
+		// triggered correctly (mobile vs desktop content)
+		const { width, height } =
+			document.documentElement.getBoundingClientRect()
+
 		const $iframe = Object.assign(document.createElement('iframe'), {
 			src: $link.href,
 			sandbox: 'allow-same-origin allow-forms allow-scripts',
 			// Firefox will not submit form if iframe is `hidden` or
 			// `display: none`, so we place it out of view instead
-			style: 'width: 1; height: 1; position: fixed; top: -10000px',
+			style: `position: fixed;
+				width: ${width}px;
+				height: ${height}px;
+				left: -${width * 2}px;
+				top: -${height * 2}px`,
 			// a11y - hide from assistive technology etc.
 			ariaHidden: 'true',
 		})
