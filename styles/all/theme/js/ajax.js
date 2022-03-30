@@ -71,9 +71,15 @@
 
 			const $loadingIndicator = phpbb.loadingIndicator()
 
-			const $iframe = document.createElement('iframe')
-			$iframe.src = $link.href
-			$iframe.hidden = true
+			const $iframe = Object.assign(document.createElement('iframe'), {
+				src: $link.href,
+				// Firefox will not submit form if iframe is `hidden` or
+				// `display: none`, so we place it out of view instead
+				style: 'width: 1; height: 1; position: fixed; top: -10000px',
+			})
+
+			$iframe.setAttribute('aria-hidden', 'true')
+
 			document.body.appendChild($iframe)
 
 			$iframe.addEventListener('load', () => {
@@ -87,7 +93,6 @@
 				// is confirmation form
 				if ($confirmBtn) {
 					const $clone = $form.cloneNode(true)
-
 					const $confirmContent = $clone.querySelector('.inner') ?? $clone
 
 					// must be <input type=button name=confirm/cancel>
