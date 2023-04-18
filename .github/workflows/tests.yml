@@ -1,7 +1,8 @@
 name: Tests
 
 env:
-    EXTNAME: gfksx/thanksforposts # Your extension vendor/package name
+    EXTVENDOR: gfksx # Your extension vendor name
+    EXTNAME: thanksforposts # Your extension package name
     SNIFF: 1            # Run code sniffer on your code? 1 or 0
     IMAGE_ICC: 1        # Run icc profile sniffer on your images? 1 or 0
     EPV: 1              # Run EPV (Extension Pre Validator) on your code? 1 or 0
@@ -13,11 +14,11 @@ on: [push, pull_request]
 jobs:
     # START Basic Checks Job (EPV, code sniffer, images check, etc.)
     basic-checks:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-20.04
         strategy:
             matrix:
                 include:
-                    - php: '7.1'
+                    - php: '7.2'
                       db: "none"
                       NOTESTS: 1
 
@@ -25,16 +26,16 @@ jobs:
 
         steps:
             - name: Checkout phpBB
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
                   repository: phpbb/phpbb
                   ref: ${{ env.PHPBB_BRANCH }}
                   path: phpBB3
 
             - name: Checkout extension
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
-                  path: phpBB3/phpBB/ext/${{ env.EXTNAME }}
+                  path: phpBB3/phpBB/ext/${{ env.EXTVENDOR }}/${{ env.EXTNAME }}
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
@@ -60,7 +61,7 @@ jobs:
               if: ${{ env.SNIFF != 0 }}
               env:
                   NOTESTS: '1'
-              run: .github/ext-sniff.sh $EXTNAME $NOTESTS
+              run: .github/ext-sniff.sh $EXTVENDOR/$EXTNAME $NOTESTS
               working-directory: ./phpBB3
 
             - name: Check image ICC profiles
@@ -70,18 +71,18 @@ jobs:
 
             - name: Check executable files
               if: ${{ env.EXECUTABLE_FILES != 0 }}
-              run: .github/ext-check-executable-files.sh ./ $EXTNAME
+              run: .github/ext-check-executable-files.sh ./ $EXTVENDOR/$EXTNAME
               working-directory: ./phpBB3
 
             - name: Run EPV
               if: ${{ env.EPV != 0 }}
-              run: phpBB/vendor/bin/EPV.php run --dir="phpBB/ext/$EXTNAME/"
+              run: phpBB/vendor/bin/EPV.php run --dir="phpBB/ext/$EXTVENDOR/$EXTNAME/"
               working-directory: ./phpBB3
     # END Basic Checks Job
 
     # START MySQL and MariaDB Job
     mysql-tests:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-20.04
         strategy:
             matrix:
                 include:
@@ -95,6 +96,10 @@ jobs:
                       db: "mariadb:10.4"
                     - php: '7.1'
                       db: "mariadb:10.5"
+                    - php: '7.1'
+                      db: "mysql:5.6"
+                      db_alias: "MySQL Slow Tests"
+                      SLOWTESTS: 1
                     - php: '7.1'
                       db: "mysql:5.6"
                       db_alias: "MyISAM Tests"
@@ -113,8 +118,10 @@ jobs:
                       db: "mysql:8.0"
                     - php: '8.0'
                       db: "mysql:5.7"
-                    #- php: '8.1'
-                    #  db: "mysql:5.7"
+                    - php: '8.1'
+                      db: "mysql:5.7"
+                    - php: '8.2'
+                      db: "mysql:5.7"
 
         name: PHP ${{ matrix.php }} - ${{ matrix.db_alias != '' && matrix.db_alias || matrix.db }}
 
@@ -144,16 +151,16 @@ jobs:
 
         steps:
             - name: Checkout phpBB
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
                   repository: phpbb/phpbb
                   ref: ${{ env.PHPBB_BRANCH }}
                   path: phpBB3
 
             - name: Checkout extension
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
-                  path: phpBB3/phpBB/ext/${{ env.EXTNAME }}
+                  path: phpBB3/phpBB/ext/${{ env.EXTVENDOR }}/${{ env.EXTNAME }}
 
             - id: database-type
               env:
@@ -185,22 +192,24 @@ jobs:
               working-directory: ./phpBB3
 
             - name: Setup PHPUnit files
-              run: mkdir -p phpBB/ext/$EXTNAME/.github && cp .github/phpunit* $_
+              run: mkdir -p phpBB/ext/$EXTVENDOR/$EXTNAME/.github && cp .github/phpunit* $_
               working-directory: ./phpBB3
 
             - name: Run unit tests
               env:
                   DB: ${{steps.database-type.outputs.db}}
-              run: phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php
+              run: phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTVENDOR/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php
               working-directory: ./phpBB3
     # END MySQL and MariaDB Job
 
     # START PostgreSQL Job
     postgres-tests:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-20.04
         strategy:
             matrix:
                 include:
+                    - php: '7.1'
+                      db: "postgres:9.3"
                     - php: '7.1'
                       db: "postgres:9.5"
                     - php: '7.1'
@@ -213,12 +222,26 @@ jobs:
                       db: "postgres:12"
                     - php: '7.1'
                       db: "postgres:13"
+                    - php: '7.2'
+                      db: "postgres:13"
+                    - php: '7.3'
+                      db: "postgres:13"
+                    - php: '7.4'
+                      db: "postgres:13"
+                    - php: '8.0'
+                      db: "postgres:12"
+                    - php: '8.0'
+                      db: "postgres:13"
+                    - php: '8.1'
+                      db: "postgres:14"
+                    - php: '8.2'
+                      db: "postgres:14"
 
         name: PHP ${{ matrix.php }} - ${{ matrix.db }}
 
         services:
             postgres:
-                image: ${{ matrix.db != 'postgres:9.5' && matrix.db != 'postgres:9.6' && matrix.db != 'postgres:10' && matrix.db != 'postgres:11' && matrix.db != 'postgres:12' && matrix.db != 'postgres:13' && 'postgres:10' || matrix.db }}
+                image: ${{ matrix.db != 'postgres:9.3' && matrix.db != 'postgres:9.5' && matrix.db != 'postgres:9.6' && matrix.db != 'postgres:10' && matrix.db != 'postgres:11' && matrix.db != 'postgres:12' && matrix.db != 'postgres:13' && 'postgres:10' || matrix.db }}
                 env:
                     POSTGRES_HOST: localhost
                     POSTGRES_USER: postgres
@@ -244,16 +267,16 @@ jobs:
 
         steps:
             - name: Checkout phpBB
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
                   repository: phpbb/phpbb
                   ref: ${{ env.PHPBB_BRANCH }}
                   path: phpBB3
 
             - name: Checkout extension
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
-                  path: phpBB3/phpBB/ext/${{ env.EXTNAME }}
+                  path: phpBB3/phpBB/ext/${{ env.EXTVENDOR }}/${{ env.EXTNAME }}
 
             - id: database-type
               env:
@@ -285,28 +308,28 @@ jobs:
               working-directory: ./phpBB3
 
             - name: Setup PHPUnit files
-              run: mkdir -p phpBB/ext/$EXTNAME/.github && cp .github/phpunit* $_
+              run: mkdir -p phpBB/ext/$EXTVENDOR/$EXTNAME/.github && cp .github/phpunit* $_
               working-directory: ./phpBB3
 
             - name: Run unit tests
               env:
                   DB: ${{steps.database-type.outputs.db}}
-              run: phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php
+              run: phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTVENDOR/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php
               working-directory: ./phpBB3
     # END PostgreSQL Job
 
     # START Other Tests Job (SQLite 3 and mssql)
     other-tests:
-        runs-on: ubuntu-18.04
+        runs-on: ubuntu-20.04
         strategy:
             matrix:
                 include:
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "sqlite3"
-                    - php: '7.2'
+                    - php: '7.3'
                       db: "mcr.microsoft.com/mssql/server:2017-latest"
                       db_alias: 'MSSQL 2017'
-                    - php: '7.2'
+                    - php: '7.3'
                       db: "mcr.microsoft.com/mssql/server:2019-latest"
                       db_alias: 'MSSQL 2019'
 
@@ -339,16 +362,16 @@ jobs:
 
         steps:
             - name: Checkout phpBB
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
                   repository: phpbb/phpbb
                   ref: ${{ env.PHPBB_BRANCH }}
                   path: phpBB3
 
             - name: Checkout extension
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
               with:
-                  path: phpBB3/phpBB/ext/${{ env.EXTNAME }}
+                  path: phpBB3/phpBB/ext/${{ env.EXTVENDOR }}/${{ env.EXTNAME }}
 
             - id: database-type
               env:
@@ -360,7 +383,7 @@ jobs:
                   else
                       db=$(echo "${MATRIX_DB%%:*}")
                   fi
-                  echo "::set-output name=db::$db"
+                  echo "db=$db" >> $GITHUB_OUTPUT
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
@@ -385,12 +408,140 @@ jobs:
               working-directory: ./phpBB3
 
             - name: Setup PHPUnit files
-              run: mkdir -p phpBB/ext/$EXTNAME/.github && cp .github/phpunit* $_
+              run: mkdir -p phpBB/ext/$EXTVENDOR/$EXTNAME/.github && cp .github/phpunit* $_
               working-directory: ./phpBB3
 
             - name: Run unit tests
               env:
                   DB: ${{steps.database-type.outputs.db}}
-              run: phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php
+              run: phpBB/vendor/bin/phpunit --configuration phpBB/ext/$EXTVENDOR/$EXTNAME/.github/phpunit-$DB-github.xml --bootstrap ./tests/bootstrap.php
               working-directory: ./phpBB3
     # END Other Tests Job
+
+    # Test with IIS & PostgreSQL on Windows
+    windows-tests:
+        runs-on: windows-latest
+        strategy:
+            matrix:
+                include:
+                    - php: '7.4'
+                      db: "postgres"
+                    - php: '8.0'
+                      db: "postgres"
+                    - php: '8.1'
+                      db: "postgres"
+                    - php: '8.2'
+                      db: "postgres"
+
+        name: Windows - PHP ${{ matrix.php }} - ${{ matrix.db }}
+
+        steps:
+            - name: Prepare git for Windows
+              run: |
+                  git config --system core.autocrlf false
+                  git config --system core.eol lf
+
+            - name: Checkout phpBB
+              uses: actions/checkout@v3
+              with:
+                  repository: phpbb/phpbb
+                  ref: ${{ env.PHPBB_BRANCH }}
+                  path: phpBB3
+
+            - name: Checkout extension
+              uses: actions/checkout@v3
+              with:
+                  path: phpBB3/phpBB/ext/${{ env.EXTVENDOR }}/${{ env.EXTNAME }}
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, intl, gd, exif, iconv, pgsql, pdo_pgsql
+                  ini-values: upload_tmp_dir=${{ runner.temp }}, sys_temp_dir=${{ runner.temp }}
+                  coverage: none
+
+            - name: Setup environment for phpBB
+              env:
+                  DB: ${{steps.database-type.outputs.db}}
+                  PHP_VERSION: ${{ matrix.php }}
+                  NOTESTS: '0'
+                  GITHUB_WORKSPACE: ${{ github.workspace }}
+                  TEMP_DIR: ${{ runner.temp }}
+              run: |
+                  Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServerRole, IIS-WebServer, IIS-CommonHttpFeatures, IIS-ManagementConsole, IIS-HttpErrors, IIS-HttpRedirect, IIS-WindowsAuthentication, IIS-StaticContent, IIS-DefaultDocument, IIS-HttpCompressionStatic, IIS-DirectoryBrowsing, IIS-WebServerManagementTools, IIS-CGI -All
+                  Set-Service wuauserv -StartupType Manual
+                  (Get-Content ${env:GITHUB_WORKSPACE}\phpBB3\phpBB\web.config).replace("<configuration>", "<configuration>`n`t<system.web>`n`t`t<customErrors mode=`"Off`"/>`n`t</system.web>") | Set-Content ${env:GITHUB_WORKSPACE}\phpBB3\phpBB\web.config
+                  (Get-Content ${env:GITHUB_WORKSPACE}\phpBB3\phpBB\web.config).replace("`t</system.webServer>", "`t`t<httpErrors errorMode=`"Detailed`" />`n`t</system.webServer>") | Set-Content ${env:GITHUB_WORKSPACE}\phpBB3\phpBB\web.config
+                  choco install urlrewrite -y
+                  Import-Module WebAdministration
+                  New-WebSite -Name 'phpBBTest' -PhysicalPath "${env:GITHUB_WORKSPACE}\phpBB3\phpBB" -Force
+                  $session = Get-PSSession -Name WinPSCompatSession
+                  $sb = {Set-ItemProperty 'IIS:\Sites\phpBBTest' -name Bindings -value @{protocol='http';bindingInformation='*:80:phpbb.test'}}
+                  Invoke-Command -Scriptblock $sb -Session $session
+                  $sb = {Set-WebConfigurationProperty -filter /system.WebServer/security/authentication/AnonymousAuthentication -name enabled -value true -location "IIS:\Sites\phpBBTest"}
+                  Invoke-Command -Scriptblock $sb -Session $session
+                  Add-Content -Path $env:windir\System32\drivers\etc\hosts -Value "`r`n127.0.0.1`tphpbb.test" -Force
+                  [System.Environment]::SetEnvironmentVariable('PATH',$Env:PATH+";%windir%\system32\inetsrv")
+                  echo Setup FAST-CGI configuration
+                  Add-WebConfiguration -Filter /system.webServer/fastCgi -PSPath IIS:\ -Value @{fullpath="C:\tools\php\php-cgi.exe"}
+                  echo Setup FACT-CGI handler
+                  New-WebHandler -Name "PHP-FastCGI" -Path "*.php" -Modules FastCgiModule -ScriptProcessor "C:\tools\php\php-cgi.exe" -Verb '*' -ResourceType Either
+                  iisreset
+                  NET START W3SVC
+                  mkdir "${env:GITHUB_WORKSPACE}\phpBB3\phpBB\cache\test"
+                  mkdir "${env:GITHUB_WORKSPACE}\phpBB3\phpBB\cache\installer"
+                  icacls "${env:GITHUB_WORKSPACE}\phpBB3\phpBB\cache" /grant Users:F /T
+                  icacls "${env:GITHUB_WORKSPACE}\phpBB3\phpBB\files" /grant Users:F /T
+                  icacls "${env:GITHUB_WORKSPACE}\phpBB3\phpBB\store" /grant Users:F /T
+                  icacls "${env:GITHUB_WORKSPACE}\phpBB3\phpBB\images\avatars\upload" /grant Users:F /T
+                  $accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule("IIS_IUSRS", "FullControl", "ContainerInherit,ObjectInherit", "None", "Allow")
+                  $acl = Get-ACL "${env:TEMP_DIR}"
+                  $acl.AddAccessRule($accessRule)
+                  Set-ACL -Path "${env:TEMP_DIR}" -ACLObject $acl
+                  cd ${env:GITHUB_WORKSPACE}\phpBB3\phpBB
+                  php ..\composer.phar install
+                  php ..\composer.phar remove phpunit/dbunit --dev --update-with-dependencies
+                  php ..\composer.phar require symfony/yaml:~4.4 misantron/dbunit:~5.0 phpunit/phpunit:^9.3 doctrine/instantiator:^1.4 --dev --update-with-all-dependencies --ignore-platform-reqs
+                  cd ..
+
+            - name: Setup database
+              env:
+                  DB: ${{steps.database-type.outputs.db}}
+                  MYISAM: '0'
+                  GITHUB_WORKSPACE: ${{ github.workspace }}
+              run: |
+                  $postgreSqlSvc = Get-Service "postgresql*"
+                  Set-Service $postgreSqlSvc.Name -StartupType manual
+                  $runningStatus = [System.ServiceProcess.ServiceControllerStatus]::Running
+                  $maxStartTimeout = New-TimeSpan -Seconds 30
+                  try {
+                    $postgreSqlSvc.Start()
+                    $postgreSqlSvc.WaitForStatus($runningStatus, $maxStartTimeout)
+                  } catch  {
+                    $_ | select *
+                  }
+                  [System.Environment]::SetEnvironmentVariable('PATH',$Env:PATH+";${env:PGBIN}")
+                  $env:PGPASSWORD = 'root'
+                  psql -c 'ALTER SYSTEM SET hot_standby = on;' -U postgres
+                  psql -c 'ALTER SYSTEM SET wal_level = minimal;' -U postgres
+                  psql -c 'DROP DATABASE IF EXISTS phpbb_tests;' -U postgres
+                  psql -c 'create database phpbb_tests;' -U postgres
+                  Set-MpPreference -ExclusionPath "${env:PGDATA}" # Exclude PGDATA directory from Windows Defender
+                  Set-MpPreference -DisableRealtimeMonitoring $true
+              working-directory: ./phpBB3
+
+            - name: Setup PHPUnit files
+              env:
+                  GITHUB_WORKSPACE: ${{ github.workspace }}
+              run: |
+                  icacls "${env:GITHUB_WORKSPACE}\phpBB3\phpBB\ext\${env:EXTVENDOR}\${env:EXTNAME}\.github" /grant Users:F /T
+                  copy "${env:GITHUB_WORKSPACE}\phpBB3\.github\phpunit*.*" "${env:GITHUB_WORKSPACE}\phpBB3\phpBB\ext\${env:EXTVENDOR}\${env:EXTNAME}\.github"
+              working-directory: ./phpBB3
+
+            - name: Run unit tests
+              env:
+                  DB: ${{steps.database-type.outputs.db}}
+              run: |
+                  phpBB/vendor/bin/phpunit --configuration phpBB/ext/${env:EXTVENDOR}/${env:EXTNAME}/.github/phpunit-psql-windows-github.xml --bootstrap ./tests/bootstrap.php
+              working-directory: ./phpBB3

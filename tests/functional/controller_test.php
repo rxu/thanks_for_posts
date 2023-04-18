@@ -90,11 +90,12 @@ class controller_test extends \phpbb_functional_test_case
 
 	public function test_toplist()
 	{
+		$url = self::$root_url;
 		$this->add_lang_ext('gfksx/thanksforposts', 'thanks_mod');
 
 		$this->login();
-
 		$this->admin_login();
+
 		$crawler = self::request('GET', "adm/index.php?sid={$this->sid}&i=-gfksx-thanksforposts-acp-acp_thanks_reput_module&mode=thanks");
 		$form = $crawler->selectButton('Submit')->form();
 		$values = $form->getValues();
@@ -110,12 +111,12 @@ class controller_test extends \phpbb_functional_test_case
 		$this->assertStringContainsString($this->lang('RATING_TOP_TOPIC'), $crawler->filter('h3')->eq(1)->text());
 		$this->assertStringContainsString($this->lang('RATING_TOP_FORUM'), $crawler->filter('h3')->eq(2)->text());
 
-		$this->assertStringContainsString('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(0)->attr('style'));
-		$this->assertStringContainsString('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(0)->attr('style'));
-		$this->assertStringContainsString('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(1)->attr('style'));
-		$this->assertStringContainsString('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(1)->attr('style'));
-		$this->assertStringContainsString('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)', $crawler->filter('dd[class="lastpost"] > span > span')->eq(2)->attr('style'));
-		$this->assertStringContainsString('background: url(http://localhost/ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)', $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(2)->attr('style'));
+		$this->assertStringContainsString("background: url({$url}ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)", $crawler->filter('dd[class="lastpost"] > span > span')->eq(0)->attr('style'));
+		$this->assertStringContainsString("background: url({$url}ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)", $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(0)->attr('style'));
+		$this->assertStringContainsString("background: url({$url}ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)", $crawler->filter('dd[class="lastpost"] > span > span')->eq(1)->attr('style'));
+		$this->assertStringContainsString("background: url({$url}ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)", $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(1)->attr('style'));
+		$this->assertStringContainsString("background: url({$url}ext/gfksx/thanksforposts/images/rating/reput_star_back.gif)", $crawler->filter('dd[class="lastpost"] > span > span')->eq(2)->attr('style'));
+		$this->assertStringContainsString("background: url({$url}ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif)", $crawler->filter('dd[class="lastpost"] > span > span > span')->eq(2)->attr('style'));
 
 		$crawler = self::request('GET', "adm/index.php?sid={$this->sid}&i=-gfksx-thanksforposts-acp-acp_thanks_reput_module&mode=thanks");
 		$form = $crawler->selectButton('Submit')->form();
