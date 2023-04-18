@@ -1,0 +1,10 @@
+Subject: {THANKS_SUBG} — "{POST_SUBJECT}"
+
+Dobry den {POSTER_NAME},
+
+Obdrzali ste toto upozornenie, pretoze {USERNAME} {POST_THANKS} "{POST_SUBJECT}" na stranke "{SITENAME}".
+
+Pokial chcete prispevok zobrazit, kliknite na nasledujuci odkaz :
+{U_POST_THANKS}
+
+{EMAIL_SIG}
