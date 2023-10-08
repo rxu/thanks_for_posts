@@ -310,7 +310,7 @@ class toplist
 						'POST_DATE'					=> !empty($row['post_time']) ? $this->user->format_date($row['post_time']) : '',
 						'POST_ID'					=> append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'p=' . $row['post_id'] . '#p' . $row['post_id']),
 						'POST_SUBJECT'				=> $this->auth->acl_get('f_read', $row['forum_id']) ? $row['post_subject'] : ((!empty($row['forum_id'])) ? $this->language->lang('SORRY_AUTH_READ') : ''),
-						'POST_AUTHOR'				=> $this->user_loader->get_username($row['user_id'], 'full', $row['post_username']),
+						'POST_AUTHOR'				=> $this->user_loader->get_username((int) $row['user_id'], 'full', $row['post_username']),
 						'POST_REPUT'				=> round($row['post_thanks'] / ($max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%',
 						'POST_THANKS'				=> $row['post_thanks'],
 						'S_THANKS_POST_REPUT_VIEW' 	=> (bool) $this->config['thanks_post_reput_view'],
@@ -321,7 +321,7 @@ class toplist
 						'THANKS_REPUT_IMAGE_BACK'	=> !empty($this->config['thanks_reput_image_back']) ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
 					]);
 				}
-				unset($rowset);
+				unset($rowset, $user_list);
 			}
 		}
 
@@ -360,7 +360,7 @@ class toplist
 			{
 				$notoplist = false;
 
-				$rowset = [];
+				$rowset = $user_list = [];
 				do
 				{
 					$rowset[(int) $row['topic_id']] = $row;
@@ -382,6 +382,7 @@ class toplist
 				while ($row = $this->db->sql_fetchrow($result))
 				{
 					$rowset[(int) $row['topic_id']] = array_merge($rowset[(int) $row['topic_id']], $row);
+					$user_list[] = (int) $row['topic_poster'];
 				}
 				unset($row);
 				$this->db->sql_freeresult($result);
@@ -399,12 +400,14 @@ class toplist
 					$view_topic_url_params = 'f=' . (($row['forum_id']) ? $row['forum_id'] : '') . '&amp;t=' . $row['topic_id'];
 					$view_topic_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", $view_topic_url_params);
 
+					$this->user_loader->load_users($user_list);
+
 					$this->template->assign_block_vars('toptopicrow', [
 						'TOPIC_IMG_STYLE'			=> $folder_img,
 						'TOPIC_FOLDER_IMG_SRC'		=> $row['forum_id'] ? 'topic_read' : 'announce_read',
 						'TOPIC_TITLE'				=> ($this->auth->acl_get('f_read', $row['forum_id'])) ? $row['topic_title'] : ((!empty($row['forum_id'])) ? $this->language->lang('SORRY_AUTH_READ') : ''),
 						'U_VIEW_TOPIC'				=> $view_topic_url,
-						'TOPIC_AUTHOR'				=> $this->user_loader->get_username($row['topic_poster'], 'full', $row['topic_first_poster_name'], false, true),
+						'TOPIC_AUTHOR'				=> $this->user_loader->get_username((int) $row['topic_poster'], 'full', $row['topic_first_poster_name']),
 						'TOPIC_THANKS'				=> $row['topic_thanks'],
 						'TOPIC_REPUT'				=> round($row['topic_thanks'] / ($max_topic_thanks / 100), (int) $this->config['thanks_number_digits']) . '%',
 						'S_THANKS_TOPIC_REPUT_VIEW' => (bool) $this->config['thanks_topic_reput_view'],
@@ -415,7 +418,7 @@ class toplist
 						'THANKS_REPUT_IMAGE_BACK'	=> !empty($this->config['thanks_reput_image_back']) ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
 					]);
 				}
-				unset($rowset, $row);
+				unset($rowset, $row, $user_list);
 			}
 		}
 
