@@ -443,10 +443,10 @@ class helper
 			'SELECT'	=> 't.user_id, t.post_id, u.username, u.user_colour',
 			'FROM'		=> [$this->thanks_table => 't', $this->users_table => 'u'],
 			'WHERE' 	=> 't.poster_id =' . (int) $user_id .' AND u.user_id = t.user_id AND (' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0)',
-			'ORDER_BY'	=> 't.post_id DESC LIMIT ' . $poster_limit,
+			'ORDER_BY'	=> 't.post_id DESC',
 		];
 		$sql = $this->db->sql_build_query('SELECT', $sql_array);
-		$result = $this->db->sql_query($sql);
+		$result = $this->db->sql_query_limit($sql, $poster_limit, 0);
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -491,10 +491,10 @@ class helper
 			'SELECT'	=> 't.poster_id, t.post_id, u.username, u.user_colour',
 			'FROM'		=> [$this->thanks_table => 't', $this->users_table => 'u'],
 			'WHERE'		=> 't.user_id =' . (int) $user_id . ' AND u.user_id = t.poster_id AND (' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0)',
-			'ORDER_BY'	=> 't.post_id DESC LIMIT ' . (int) $poster_limit,
+			'ORDER_BY'	=> 't.post_id DESC' ,
 		];
 		$sql = $this->db->sql_build_query('SELECT', $sql_array);
-		$result = $this->db->sql_query($sql);
+		$result = $this->db->sql_query_limit($sql, $poster_limit, 0);
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
