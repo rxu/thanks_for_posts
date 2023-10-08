@@ -76,6 +76,7 @@ services:
             - '@gfksx.thanksforposts.helper'
             - '@request'
             - '@controller.helper'
+            - '@user_loader'
             - '%tables.forums%'
             - '%tables.thanks%'
             - '%tables.users%'
