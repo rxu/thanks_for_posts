@@ -53,6 +53,7 @@ services:
             - '@profilefields.manager'
             - '@request'
             - '@controller.helper'
+            - '@user_loader'
             - '%tables.posts%'
             - '%tables.thanks%'
             - '%tables.sessions%'
