@@ -47,6 +47,9 @@ class thankslist
 	/** @var \phpbb\controller\helper */
 	protected $controller_helper;
 
+	/** @var \phpbb\user_loader */
+	protected $user_loader;
+
 	/** @var string POSTS_TABLE */
 	protected $posts_table;
 

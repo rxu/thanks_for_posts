@@ -1,6 +1,13 @@
 {% if S_THANKS_LIST %}
 <div class="stat-block thanks-list">
 	<h3><a href="{{ U_THANKS_LIST }}">{{ lang('TOP_THANKS_LIST') }}</a></h3>
-	<p>{{ THANKS_LIST }}</p>
+	<p>
+		{% set thankslist = [] %}
+		{% for user in toplist %}
+			{% set thankslist = thankslist|merge([user.USERNAME ~ ' (' ~ user.THANKS_COUNT ~ ')']) %}
+		{% endfor %}
+
+		{{ thankslist|join(', ') }}
+	</p>
 </div>
 {% endif %}

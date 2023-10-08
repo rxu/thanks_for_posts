@@ -131,7 +131,7 @@ class listener implements EventSubscriberInterface
 	public function get_thanks_list($event)
 	{
 		// Generate thankslist if required
-		$thanks_list = '';
+		$thanks_list = [];
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (count($ex_fid_ary)) ? $ex_fid_ary : [0];
 		if ($this->config['thanks_top_number'])
@@ -139,10 +139,11 @@ class listener implements EventSubscriberInterface
 			$thanks_list = $this->helper->get_toplist_index($ex_fid_ary);
 		}
 		$this->template->assign_vars([
-			'THANKS_LIST'		=> ($thanks_list != '') ? $thanks_list : false,
-			'S_THANKS_LIST'		=> $this->config['thanks_top_number'] && $thanks_list != '',
+			'S_THANKS_LIST'		=> $this->config['thanks_top_number'] && !empty($thanks_list),
 			'L_TOP_THANKS_LIST'	=> $this->config['thanks_top_number'] ? $this->language->lang('REPUT_TOPLIST', (int) $this->config['thanks_top_number']) : false,
 		]);
+
+		$this->template->assign_block_vars_array('toplist', $thanks_list);
 	}
 
 	public function memberlist_viewprofile($event)

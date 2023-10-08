@@ -53,6 +53,9 @@ class toplist
 	/** @var \phpbb\controller\helper */
 	protected $controller_helper;
 
+	/** @var \phpbb\user_loader */
+	protected $user_loader;
+
 	/** @var string FORUMS_TABLE */
 	protected $forums_table;
 

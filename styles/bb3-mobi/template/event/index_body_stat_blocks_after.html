@@ -1,5 +1,12 @@
 {% if S_THANKS_LIST %}
 <div class="panel bg3"><a href="{{ U_THANKS_LIST }}">{{ lang('TOP_THANKS_LIST') }}</a>
-<div class="post bg1">{{ THANKS_LIST }}</div>
+<div class="post bg1">
+	{% set thankslist = [] %}
+	{% for user in toplist %}
+		{% set thankslist = thankslist|merge([user.USERNAME ~ ' (' ~ user.THANKS_COUNT ~ ')']) %}
+	{% endfor %}
+
+	{{ thankslist|join(', ') }}
+</div>
 </div>
 {% endif %}

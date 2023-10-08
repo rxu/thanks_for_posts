@@ -65,6 +65,9 @@ class helper
 	/** @var \phpbb\language\language */
 	protected $language;
 
+	/** @var \phpbb\user_loader */
+	protected $user_loader;
+
 	/** @var string phpbb_root_path */
 	protected $phpbb_root_path;
 
@@ -83,29 +86,27 @@ class helper
 	/** @var string NOTIFICATIONS_TABLE */
 	protected $notifications_table;
 
-	/** @var array */
-	public $topic_data;
-
 	/**
 	 * Constructor
 	 *
-	 * @param \phpbb\config\config                 $config                Config object
-	 * @param \phpbb\db\driver\driver_interface    $db                    DBAL object
-	 * @param \phpbb\auth\auth                     $auth                  User object
-	 * @param \phpbb\template\template             $template              Template object
-	 * @param \phpbb\user                          $user                  User object
-	 * @param \phpbb\cache\driver\driver_interface $cache                 Cache driver object
-	 * @param \phpbb\request\request_interface     $request               Request object
-	 * @param \phpbb\request\request_interface     $request               Request object
-	 * @param \phpbb\controller\helper             $controller_helper     Controller helper object
-	 * @param \phpbb\event\dispatcher_interface    $phpbb_dispatcher      Event dispatcher object
-	 * @param \phpbb\language\language             $language              Language object
-	 * @param string                               $phpbb_root_path       phpbb_root_path
-	 * @param string                               $php_ext               phpEx
-	 * @param string                               $thanks_table          THANKS_TABLE
-	 * @param string                               $users_table           USERS_TABLE
-	 * @param string                               $posts_table           POSTS_TABLE
-	 * @param string                               $notifications_table   NOTIFICATIONS_TABLE
+	 * @param \phpbb\config\config					$config					Config object
+	 * @param \phpbb\db\driver\driver_interface		$db						DBAL object
+	 * @param \phpbb\auth\auth						$auth					User object
+	 * @param \phpbb\template\template				$template				Template object
+	 * @param \phpbb\user							$user					User object
+	 * @param \phpbb\cache\driver\driver_interface	$cache					Cache driver object
+	 * @param \phpbb\request\request_interface		$request				Request object
+	 * @param \phpbb\request\request_interface		$request				Request object
+	 * @param \phpbb\controller\helper				$controller_helper		Controller helper object
+	 * @param \phpbb\event\dispatcher_interface		$phpbb_dispatcher		Event dispatcher object
+	 * @param \phpbb\language\language				$language				Language object
+	 * @param \phpbb\user_loader					$user_loader			User loader object
+	 * @param string								$phpbb_root_path		phpbb_root_path
+	 * @param string								$php_ext				phpEx
+	 * @param string								$thanks_table			THANKS_TABLE
+	 * @param string								$users_table			USERS_TABLE
+	 * @param string								$posts_table			POSTS_TABLE
+	 * @param string								$notifications_table	NOTIFICATIONS_TABLE
 	 * @access public
 	 */
 	public function __construct(
@@ -120,6 +121,7 @@ class helper
 		\phpbb\controller\helper $controller_helper,
 		\phpbb\event\dispatcher_interface $phpbb_dispatcher,
 		\phpbb\language\language $language,
+		\phpbb\user_loader $user_loader,
 		$phpbb_root_path, $php_ext, $thanks_table, $users_table, $posts_table, $notifications_table
 	)
 	{
@@ -134,13 +136,13 @@ class helper
 		$this->controller_helper = $controller_helper;
 		$this->phpbb_dispatcher = $phpbb_dispatcher;
 		$this->language = $language;
+		$this->user_loader = $user_loader;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
 		$this->thanks_table = $thanks_table;
 		$this->users_table = $users_table;
 		$this->posts_table = $posts_table;
 		$this->notifications_table = $notifications_table;
-		$this->topic_data = [];
 	}
 
 	// Output thanks list
@@ -441,10 +443,10 @@ class helper
 			'SELECT'	=> 't.user_id, t.post_id, u.username, u.user_colour',
 			'FROM'		=> [$this->thanks_table => 't', $this->users_table => 'u'],
 			'WHERE' 	=> 't.poster_id =' . (int) $user_id .' AND u.user_id = t.user_id AND (' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0)',
-			'ORDER_BY'	=> 't.post_id DESC',
+			'ORDER_BY'	=> 't.post_id DESC LIMIT ' . $poster_limit,
 		];
 		$sql = $this->db->sql_build_query('SELECT', $sql_array);
-		$result = $this->db->sql_query_limit($sql, (int) $poster_limit);
+		$result = $this->db->sql_query($sql);
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -489,10 +491,10 @@ class helper
 			'SELECT'	=> 't.poster_id, t.post_id, u.username, u.user_colour',
 			'FROM'		=> [$this->thanks_table => 't', $this->users_table => 'u'],
 			'WHERE'		=> 't.user_id =' . (int) $user_id . ' AND u.user_id = t.poster_id AND (' . $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0)',
-			'ORDER_BY'	=> 't.post_id DESC',
+			'ORDER_BY'	=> 't.post_id DESC LIMIT ' . (int) $poster_limit,
 		];
 		$sql = $this->db->sql_build_query('SELECT', $sql_array);
-		$result = $this->db->sql_query_limit($sql, (int) $poster_limit);
+		$result = $this->db->sql_query($sql);
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -555,7 +557,6 @@ class helper
 		{
 			$thanks_text = $this->get_thanks_text($row['post_id']);
 			$thank_mode = $this->get_thanks_link($row['post_id']);
-			$thanks_count = $this->get_thanks_number((int) $row['post_id']);
 			$already_thanked = $this->already_thanked($row['post_id'], $this->user->data['user_id']);
 			$l_poster_receive_count = (isset($this->poster_list_count[$poster_id]['R']) && $this->poster_list_count[$poster_id]['R']) ? $this->language->lang('THANKS', (int) $this->poster_list_count[$poster_id]['R']) : '';
 			$l_poster_give_count = (isset($this->poster_list_count[$poster_id]['G']) && $this->poster_list_count[$poster_id]['G']) ? $this->language->lang('THANKS', (int) $this->poster_list_count[$poster_id]['G']) : '';
@@ -570,7 +571,7 @@ class helper
 				'THANK_MODE'				=> $thank_mode,
 				'THANKS_LINK'				=> append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $row['post_id'] . '&amp;' . $thank_mode . '=' . $row['post_id'] . '&amp;to_id=' . $poster_id . '&amp;from_id=' . $this->user->data['user_id']),
 				'THANK_TEXT'				=> $this->language->lang('THANK_TEXT_1'),
-				'THANK_TEXT_2'				=> ($thanks_count != 1) ? $this->language->lang('THANK_TEXT_2PL', $thanks_count) : $this->language->lang('THANK_TEXT_2'),
+				'THANK_TEXT_2'				=> ($this->get_thanks_number($row['post_id']) != 1) ? $this->language->lang('THANK_TEXT_2PL', $this->get_thanks_number((int) $row['post_id'])) : $this->language->lang('THANK_TEXT_2'),
 				'THANKS_FROM'				=> $this->language->lang('THANK_FROM'),
 				'POSTER_RECEIVE_COUNT'		=> $l_poster_receive_count,
 				'POSTER_GIVE_COUNT'			=> $l_poster_give_count,
@@ -585,7 +586,8 @@ class helper
 				'S_ALREADY_THANKED'			=> $already_thanked,
 				'S_REMOVE_THANKS'			=> (bool) $this->config['remove_thanks'],
 				'S_FIRST_POST_ONLY'			=> (bool) $this->config['thanks_only_first_post'],
-				'POST_REPUT'				=> ($thanks_count != 0) ? round($thanks_count / ($this->max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
+				'POST_REPUT'				=> ($this->get_thanks_number($row['post_id']) != 0) ? round($this->get_thanks_number($row['post_id']) / ($this->max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
+				'POST_THANKS_COUNT'			=> $this->get_thanks_number($row['post_id']) ?: '',
 				'S_THANKS_POST_REPUT_VIEW' 	=> (bool) $this->config['thanks_post_reput_view'],
 				'S_THANKS_REPUT_GRAPHIC' 	=> (bool) $this->config['thanks_reput_graphic'],
 				'THANKS_REPUT_HEIGHT'		=> $this->config['thanks_reput_height'] ?: false,
@@ -596,7 +598,6 @@ class helper
 				'U_CLEAR_LIST_THANKS_POST'	=> append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $row['post_id'] . '&amp;list_thanks=post'),
 				'S_MOD_THANKS'				=> $this->auth->acl_get('m_thanks'),
 				'S_ONLY_TOPICSTART'         => $topic_data['topic_first_post_id'] == $row['post_id'],
-				'THANKS_COUNT'				=> $thanks_count,
 			]);
 		}
 	}
@@ -759,7 +760,7 @@ class helper
 	public function get_toplist_index($ex_fid_ary)
 	{
 		$sql_ary = [
-			'SELECT' =>  't.poster_id, COUNT(t.user_id) AS tally, u.user_id, u.username, u.user_colour',
+			'SELECT' =>  't.poster_id, COUNT(t.user_id) AS tally',
 			'FROM' => [$this->users_table => 'u'],
 			'LEFT_JOIN' => [
 				[
@@ -775,12 +776,23 @@ class helper
 		$cache_ttl = 86400; // Cache thanks toplist on index for 24 hours
 		$result = $this->db->sql_query_limit($this->db->sql_build_query('SELECT', $sql_ary), (int) $this->config['thanks_top_number'], 0, $cache_ttl);
 
-		$thanks_list = '';
+		$user_list = $thanks_list = [];
 		while ($row = $this->db->sql_fetchrow($result))
 		{
-			$thanks_list .= (($thanks_list != '') ? ', ' : '') . get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']) . ' (' . $row['tally'] . ')';
+			$user_list[$row['poster_id']] = $row;
 		}
+		unset($row);
 		$this->db->sql_freeresult($result);
+
+		$this->user_loader->load_users(array_keys($user_list));
+
+		foreach ($user_list as $row)
+		{
+			$thanks_list[] = [
+				'USERNAME'	=> $this->user_loader->get_username((int) $row['poster_id'], 'full'),
+				'THANKS_COUNT'	=> (int) $row['tally'],
+			];
+		}
 
 		return $thanks_list;
 	}
@@ -836,22 +848,6 @@ class helper
 
 	public function add_notification($notification_data, $notification_type_name = 'gfksx.thanksforposts.notification.type.thanks')
 	{
-		$topic_data = $this->topic_data;
-		$mode = '';
-
-		/**
-		 * Modify notification data
-		 *
-		 * @event gfksx.thanksforposts.modify_thanks_notification_data
-		 * @var	string		notification_type_name		The notification name
-		 * @var	array		notification_data			The notification data to be inserted in to the database
-		 * @var	array		topic_data					Array with topic data
-		 * @var	string		mode						Thanking mode 'give|receive|post'
-		 * @since 2.0.3
-		 */
-		$vars = ['notification_type_name', 'notification_data', 'topic_data', 'mode'];
-		extract($this->phpbb_dispatcher->trigger_event('gfksx.thanksforposts.modify_thanks_notification_data', compact($vars)));
-
 		if ($this->notification_exists($notification_data, $notification_type_name))
 		{
 			$this->notification_manager->update_notifications($notification_type_name, $notification_data);

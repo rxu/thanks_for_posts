@@ -33,6 +33,7 @@ services:
             - '@controller.helper'
             - '@dispatcher'
             - '@language'
+            - '@user_loader'
             - '%core.root_path%'
             - '%core.php_ext%'
             - '%tables.thanks%'

@@ -7,7 +7,14 @@
 	</tr>
 	<tr>
 		<td class="row1" align="center" valign="middle"><img src="{{ T_THEME_PATH }}/images/whosonline.gif" alt="{{ lang('TOP_THANKS_LIST') }}" /></td>
-		<td class="row1" width="100%"><p class="genmed"><b>{{ THANKS_LIST }}</b></p></td>
+		<td class="row1" width="100%"><p class="genmed">
+			{% set thankslist = [] %}
+			{% for user in toplist %}
+				{% set thankslist = thankslist|merge([user.USERNAME ~ ' (' ~ user.THANKS_COUNT ~ ')']) %}
+			{% endfor %}
+
+			{{ thankslist|join(', ') }}
+		</p></td>
 	</tr>
 	</table>
 {% endif %}
