@@ -1,0 +1,12 @@
+{% if S_THANKS_USE_AJAX %}
+
+<script>
+	window.thanksForPosts = {
+		l10n: {
+			errorTitle: "{{lang('AJAX_ERROR_TITLE') | e('js')}}",
+			errorMessage: "{{lang('AJAX_ERROR_TEXT') | e('js')}}",
+		}
+	}
+</script>
+
+{% endif %}

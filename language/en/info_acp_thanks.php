@@ -122,6 +122,8 @@ $lang = array_merge($lang, [
 	'THANKS_TIME_VIEW_EXPLAIN'			=> 'If enabled, the post will display the thanks time.',
 	'THANKS_TOP_NUMBER'					=> 'Number of users in top list',
 	'THANKS_TOP_NUMBER_EXPLAIN'			=> 'Specify the number of users to show in the toplist on index. 0 - off displaying toplist.',
+	'THANKS_USE_AJAX'					=> 'Use AJAX (same-page updates)?',
+	'THANKS_USE_AJAX_EXPLAIN'			=> 'Yes = thanking and un-thanking updates the UI directly, without leaving the page; no = thanking and un-thanking causes full-page reloads with confirmation screens',
 	'THANKS_TOPIC_REPUT_VIEW'			=> 'Show topic rating',
 	'THANKS_TOPIC_REPUT_VIEW_EXPLAIN'	=> 'If enabled, topic rating will be displayed when viewing a forum.',
 	'TRUNCATE'							=> 'Clear',
