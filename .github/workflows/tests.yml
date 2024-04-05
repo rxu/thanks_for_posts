@@ -18,7 +18,7 @@ jobs:
         strategy:
             matrix:
                 include:
-                    - php: '7.2'
+                    - php: '7.3'
                       db: "none"
                       NOTESTS: 1
 
@@ -86,30 +86,26 @@ jobs:
         strategy:
             matrix:
                 include:
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "mariadb:10.1"
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "mariadb:10.2"
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "mariadb:10.3"
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "mariadb:10.4"
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "mariadb:10.5"
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "mysql:5.6"
                       db_alias: "MySQL Slow Tests"
                       SLOWTESTS: 1
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "mysql:5.6"
                       db_alias: "MyISAM Tests"
                       MYISAM: 1
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "mysql:5.6"
-                    - php: '7.1'
-                      db: "mysql:5.7"
-                    - php: '7.2'
-                      db: "mysql:5.7"
                     - php: '7.3'
                       db: "mysql:5.7"
                     - php: '7.4'
@@ -121,6 +117,8 @@ jobs:
                     - php: '8.1'
                       db: "mysql:5.7"
                     - php: '8.2'
+                      db: "mysql:5.7"
+                    - php: '8.3'
                       db: "mysql:5.7"
 
         name: PHP ${{ matrix.php }} - ${{ matrix.db_alias != '' && matrix.db_alias || matrix.db }}
@@ -208,22 +206,16 @@ jobs:
         strategy:
             matrix:
                 include:
-                    - php: '7.1'
-                      db: "postgres:9.3"
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "postgres:9.5"
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "postgres:9.6"
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "postgres:10"
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "postgres:11"
-                    - php: '7.1'
+                    - php: '7.3'
                       db: "postgres:12"
-                    - php: '7.1'
-                      db: "postgres:13"
-                    - php: '7.2'
-                      db: "postgres:13"
                     - php: '7.3'
                       db: "postgres:13"
                     - php: '7.4'
@@ -235,6 +227,8 @@ jobs:
                     - php: '8.1'
                       db: "postgres:14"
                     - php: '8.2'
+                      db: "postgres:14"
+                    - php: '8.3'
                       db: "postgres:14"
 
         name: PHP ${{ matrix.php }} - ${{ matrix.db }}
@@ -431,6 +425,8 @@ jobs:
                     - php: '8.1'
                       db: "postgres"
                     - php: '8.2'
+                      db: "postgres"
+                    - php: '8.3'
                       db: "postgres"
 
         name: Windows - PHP ${{ matrix.php }} - ${{ matrix.db }}
