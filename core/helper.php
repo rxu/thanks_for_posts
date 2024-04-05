@@ -229,6 +229,30 @@ class helper
 
 				$this->add_notification($thanks_data);
 
+				if ($this->request->is_ajax())
+				{
+					$received_count = empty($this->poster_list_count[$to_id]['R']) ? 0 : $this->poster_list_count[$to_id]['R'];
+					$given_count = empty($this->poster_list_count[$from_id]['G']) ? 0 : $this->poster_list_count[$from_id]['G'];
+					$data = [
+						'mode'				=> 'insert',
+						'post_id'			=> $post_id,
+						'to_id'				=> $to_id,
+						'from_id'			=> $from_id,
+						'received_count'	=> (int) $received_count,
+						'given_count'		=> (int) $given_count,
+						'l_thanks_received'	=> $this->language->lang('THANKS', (int) $received_count + 1),
+						'l_thanks_given'	=> $this->language->lang('THANKS', (int) $given_count + 1),
+						'u_received'		=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $row['poster_id'], 'give' => 'false']),
+						'l_received'		=> $this->language->lang('RECEIVED'),
+						'u_given'			=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $row['poster_id'], 'give' => 'true']),
+						'l_given'			=> $this->language->lang('GIVEN'),
+						'l_colon'			=> $this->language->lang('COLON'),
+					];
+
+					$json_response = new \phpbb\json_response();
+					$json_response->send($data);
+				}
+
 				if ($this->config['thanks_info_page'])
 				{
 					meta_refresh (1, append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id .'&amp;p=' . $post_id . '#p' . $post_id));
@@ -312,6 +336,7 @@ class helper
 	public function delete_thanks($post_id, $forum_id)
 	{
 		$to_id = $this->request->variable('to_id', 0);
+		$from_id = $this->request->variable('from_id', 0);
 		$forum_id = ((int) $forum_id) ?: $this->request->variable('f', 0);
 		$row = $this->get_post_info((int) $post_id);
 		$redirect_url = append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", "f=$forum_id&amp;p=$post_id#p$post_id");
@@ -359,6 +384,30 @@ class helper
 						'post_subject'	=> $row['post_subject'],
 					);
 					$this->add_notification($thanks_data, 'gfksx.thanksforposts.notification.type.thanks_remove');
+
+					if ($this->request->is_ajax())
+					{
+						$received_count = empty($this->poster_list_count[$to_id]['R']) ? 0 : $this->poster_list_count[$to_id]['R'];
+						$given_count = empty($this->poster_list_count[$from_id]['G']) ? 0 : $this->poster_list_count[$from_id]['G'];
+						$data = [
+							'mode'				=> 'delete',
+							'post_id'			=> $post_id,
+							'to_id'				=> $to_id,
+							'from_id'			=> $from_id,
+							'received_count'	=> (int) $received_count,
+							'given_count'		=> (int) $given_count,
+							'l_thanks_received'	=> $this->language->lang('THANKS', (int) $received_count - 1),
+							'l_thanks_given'	=> $this->language->lang('THANKS', (int) $given_count - 1),
+							'u_received'		=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $row['poster_id'], 'give' => 'false']),
+							'l_received'		=> $this->language->lang('RECEIVED'),
+							'u_given'			=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $row['poster_id'], 'give' => 'true']),
+							'l_given'			=> $this->language->lang('GIVEN'),
+							'l_colon'			=> $this->language->lang('COLON'),
+						];
+
+						$json_response = new \phpbb\json_response();
+						$json_response->send($data);
+					}
 
 					if ($this->config['thanks_info_page'])
 					{
