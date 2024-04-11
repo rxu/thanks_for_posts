@@ -199,7 +199,7 @@ class helper
 		return $i;
 	}
 
-	public function insert_thanks($post_id, $user_id, $forum_id)
+	public function insert_thanks($post_id, $user_id, $forum_id, $post_list)
 	{
 		$to_id = $this->request->variable('to_id', 0);
 		$from_id = $this->request->variable('from_id', 0);
@@ -229,29 +229,7 @@ class helper
 
 				$this->add_notification($thanks_data);
 
-				if ($this->request->is_ajax())
-				{
-					$received_count = empty($this->poster_list_count[$to_id]['R']) ? 0 : $this->poster_list_count[$to_id]['R'];
-					$given_count = empty($this->poster_list_count[$from_id]['G']) ? 0 : $this->poster_list_count[$from_id]['G'];
-					$data = [
-						'mode'				=> 'insert',
-						'post_id'			=> $post_id,
-						'to_id'				=> $to_id,
-						'from_id'			=> $from_id,
-						'received_count'	=> (int) $received_count,
-						'given_count'		=> (int) $given_count,
-						'l_thanks_received'	=> $this->language->lang('THANKS', (int) $received_count + 1),
-						'l_thanks_given'	=> $this->language->lang('THANKS', (int) $given_count + 1),
-						'u_received'		=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $row['poster_id'], 'give' => 'false']),
-						'l_received'		=> $this->language->lang('RECEIVED'),
-						'u_given'			=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $row['poster_id'], 'give' => 'true']),
-						'l_given'			=> $this->language->lang('GIVEN'),
-						'l_colon'			=> $this->language->lang('COLON'),
-					];
-
-					$json_response = new \phpbb\json_response();
-					$json_response->send($data);
-				}
+				$this->handle_ajax_request('insert', $row, $to_id, $from_id, $post_list);
 
 				if ($this->config['thanks_info_page'])
 				{
@@ -333,7 +311,7 @@ class helper
 		}
 	}
 
-	public function delete_thanks($post_id, $forum_id)
+	public function delete_thanks($post_id, $forum_id, $post_list)
 	{
 		$to_id = $this->request->variable('to_id', 0);
 		$from_id = $this->request->variable('from_id', 0);
@@ -385,29 +363,7 @@ class helper
 					);
 					$this->add_notification($thanks_data, 'gfksx.thanksforposts.notification.type.thanks_remove');
 
-					if ($this->request->is_ajax())
-					{
-						$received_count = empty($this->poster_list_count[$to_id]['R']) ? 0 : $this->poster_list_count[$to_id]['R'];
-						$given_count = empty($this->poster_list_count[$from_id]['G']) ? 0 : $this->poster_list_count[$from_id]['G'];
-						$data = [
-							'mode'				=> 'delete',
-							'post_id'			=> $post_id,
-							'to_id'				=> $to_id,
-							'from_id'			=> $from_id,
-							'received_count'	=> (int) $received_count,
-							'given_count'		=> (int) $given_count,
-							'l_thanks_received'	=> $this->language->lang('THANKS', (int) $received_count - 1),
-							'l_thanks_given'	=> $this->language->lang('THANKS', (int) $given_count - 1),
-							'u_received'		=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $row['poster_id'], 'give' => 'false']),
-							'l_received'		=> $this->language->lang('RECEIVED'),
-							'u_given'			=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $row['poster_id'], 'give' => 'true']),
-							'l_given'			=> $this->language->lang('GIVEN'),
-							'l_colon'			=> $this->language->lang('COLON'),
-						];
-
-						$json_response = new \phpbb\json_response();
-						$json_response->send($data);
-					}
+					$this->handle_ajax_request('delete', $row, $to_id, $from_id, $post_list);
 
 					if ($this->config['thanks_info_page'])
 					{
@@ -662,21 +618,9 @@ class helper
 	// Create an array of all thanks info
 	public function array_all_thanks($post_list, $forum_id)
 	{
-		$poster_list = [];
+		$poster_list = $this->thankers = [];
 
-		// Max post thanks
-		if ($this->config['thanks_post_reput_view'])
-		{
-			$sql = 'SELECT MAX(tally) AS max_post_thanks
-				FROM (SELECT post_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY post_id) t';
-			$result = $this->db->sql_query($sql);
-			$this->max_post_thanks = (int) $this->db->sql_fetchfield('max_post_thanks');
-			$this->db->sql_freeresult($result);
-		}
-		else
-		{
-			$this->max_post_thanks = 1;
-		}
+		$this->get_max_post_thanks();
 
 		// Array all user who say thanks on viewtopic page
 		if ($this->auth->acl_get('f_thanks', $forum_id))
@@ -797,11 +741,18 @@ class helper
 	// Max post thanks for toplist
 	public function get_max_post_thanks()
 	{
-		$sql = 'SELECT MAX(tally) AS max_post_thanks
-			FROM (SELECT post_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY post_id) t';
-		$result = $this->db->sql_query($sql);
-		$this->max_post_thanks = (int) $this->db->sql_fetchfield('max_post_thanks');
-		$this->db->sql_freeresult($result);
+		if ($this->config['thanks_post_reput_view'])
+		{
+			$sql = 'SELECT MAX(tally) AS max_post_thanks
+				FROM (SELECT post_id, COUNT(*) AS tally FROM ' . $this->thanks_table . ' GROUP BY post_id) t';
+			$result = $this->db->sql_query($sql);
+			$this->max_post_thanks = (int) $this->db->sql_fetchfield('max_post_thanks');
+			$this->db->sql_freeresult($result);
+		}
+		else
+		{
+			$this->max_post_thanks = 1;
+		}
 		return $this->max_post_thanks;
 	}
 
@@ -937,9 +888,15 @@ class helper
 		}
 
 		$sql_array = [
-			'SELECT'	=> 'p.post_id, p.poster_id, p.topic_id, p.forum_id, p.post_subject',
+			'SELECT'	=> 'p.post_id, p.poster_id, p.topic_id, p.forum_id, p.post_subject, u.username, u.user_colour',
 			'FROM'		=> [$this->posts_table => 'p'],
-			'WHERE'		=> 'p.post_id =' . (int) $post_id
+			'LEFT_JOIN' => [
+				[
+					'FROM' => [$this->users_table => 'u'],
+					'ON' => 'u.user_id = p.poster_id',
+				],
+			],
+			'WHERE'		=> 'p.post_id =' . (int) $post_id,
 		];
 		$sql = $this->db->sql_build_query('SELECT', $sql_array);
 		$result = $this->db->sql_query($sql);
@@ -947,5 +904,85 @@ class helper
 		$this->db->sql_freeresult($result);
 
 		return ($row) ?: [];
+	}
+
+	public function handle_ajax_request($mode, $row, $to_id, $from_id, $post_list)
+	{
+		if ($this->request->is_ajax())
+		{
+			$html = '';
+			$forum_id = (int) $row['forum_id'];
+			$post_id = (int) $row['post_id'];
+			$poster_id = (int) $row['poster_id'];
+			$this->array_all_thanks($post_list, $forum_id);
+			$post_thanks_number = $this->get_thanks_number($post_id);
+			$post_reput = $post_thanks_number != 0 ? round($post_thanks_number / ($this->max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '';
+			$post_anonymous = $poster_id == ANONYMOUS;
+			$received_count = empty($this->poster_list_count[$to_id]['R']) ? 0 : (int) $this->poster_list_count[$to_id]['R'];
+			$given_count = empty($this->poster_list_count[$from_id]['G']) ? 0 : (int) $this->poster_list_count[$from_id]['G'];
+
+			if ($mode == 'insert' && $post_thanks_number == 1)
+			{
+				$this->template->set_filenames([
+					'post_reput_tpl'	=> '@gfksx_thanksforposts/ajax_post_thanks_view.html',
+				]);
+
+				$template_data = [
+					'POST_AUTHOR_FULL'			=> get_username_string('full', $poster_id, $row['username'], $row['user_colour']),
+					'POST_ID'					=> $post_id,
+					'POSTER_ID'					=> $poster_id,
+					'POSTER_GIVE_COUNT_LINK'	=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true']),
+					'POSTER_RECEIVE_COUNT_LINK'	=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false']),
+					'POST_REPUT'				=> ($post_thanks_number != 0) ? round($post_thanks_number / ($this->max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
+					'THANKS'					=> $this->get_thanks($post_id),
+					'THANKS_POSTLIST_VIEW'		=> $this->config['thanks_postlist_view'],
+					'THANK_TEXT'				=> $this->language->lang('THANK_TEXT_1'),
+					'THANK_TEXT_2'				=> $post_thanks_number != 1 ? $this->language->lang('THANK_TEXT_2PL', $post_thanks_number) : $this->language->lang('THANK_TEXT_2'),
+					'THANKS_REPUT_GRAPHIC_WIDTH'=> ($this->config['thanks_reput_level'] && $this->config['thanks_reput_height']) ? (int) $this->config['thanks_reput_level'] * (int) $this->config['thanks_reput_height'] : false,
+					'THANKS_REPUT_HEIGHT'		=> $this->config['thanks_reput_height'] ?: false,
+					'THANKS_REPUT_IMAGE' 		=> $this->config['thanks_reput_image'] ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
+					'THANKS_REPUT_IMAGE_BACK'	=> $this->config['thanks_reput_image_back'] ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
+
+					'S_IS_BOT'					=> !empty($this->user->data['is_bot']),
+					'S_MOD_THANKS'				=> $this->auth->acl_get('m_thanks'),
+					'S_POST_ANONYMOUS'			=> $post_anonymous,
+					'S_THANKS_COUNTERS_VIEW'	=> (bool) $this->config['thanks_counters_view'],
+					'S_THANKS_POST_REPUT_VIEW' 	=> (bool) $this->config['thanks_post_reput_view'],
+					'S_THANKS_REPUT_GRAPHIC'	=> (bool) $this->config['thanks_reput_graphic'],
+
+					'U_CLEAR_LIST_THANKS_POST'	=> append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '&amp;list_thanks=post'),
+				];
+
+				$this->template->assign_vars($template_data);
+				$html = $this->template->assign_display('post_reput_tpl');
+			}
+
+			$data = [
+				'mode'				=> $mode,
+				'html'				=> $html,
+				'post_id'			=> $post_id,
+				'to_id'				=> $to_id,
+				'from_id'			=> $from_id,
+				'given_count'		=> (int) $given_count,
+				'post_thanks_number'=> $post_thanks_number,
+				'received_count'	=> (int) $received_count,
+				'username'			=> $this->user->data['username'],
+
+				'l_colon'			=> $this->language->lang('COLON'),
+				'l_further_thank'	=> $this->language->lang('FURTHER_THANKS', 1),
+				'l_given'			=> $this->language->lang('GIVEN'),
+				'l_received'		=> $this->language->lang('RECEIVED'),
+				'l_reput'			=> $this->language->lang('REPUT'),
+				'l_thanks_given'	=> $this->language->lang('THANKS', $given_count),
+				'l_thanks_received'	=> $this->language->lang('THANKS', $received_count),
+				'l_thank_text_2'	=> $this->language->lang('THANK_TEXT_2'),
+
+				'u_given'			=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true']),
+				'u_received'		=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false']),
+			];
+
+			$json_response = new \phpbb\json_response();
+			$json_response->send($data);
+		}
 	}
 }

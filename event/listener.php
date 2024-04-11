@@ -199,12 +199,12 @@ class listener implements EventSubscriberInterface
 
 		if ($this->request->is_set('thanks') && !$this->request->is_set('rthanks'))
 		{
-			$this->helper->insert_thanks($this->request->variable('thanks', 0), $this->user->data['user_id'], $forum_id);
+			$this->helper->insert_thanks($this->request->variable('thanks', 0), $this->user->data['user_id'], $forum_id, $post_list);
 		}
 
 		if ($this->request->is_set('rthanks') && !$this->request->is_set('thanks'))
 		{
-			$this->helper->delete_thanks($this->request->variable('rthanks', 0), $forum_id);
+			$this->helper->delete_thanks($this->request->variable('rthanks', 0), $forum_id, $post_list);
 		}
 
 		if ($this->request->is_set('list_thanks'))
