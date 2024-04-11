@@ -921,41 +921,38 @@ class helper
 			$received_count = empty($this->poster_list_count[$to_id]['R']) ? 0 : (int) $this->poster_list_count[$to_id]['R'];
 			$given_count = empty($this->poster_list_count[$from_id]['G']) ? 0 : (int) $this->poster_list_count[$from_id]['G'];
 
-			if ($mode == 'insert' && $post_thanks_number == 1)
-			{
-				$this->template->set_filenames([
-					'post_reput_tpl'	=> '@gfksx_thanksforposts/ajax_post_thanks_view.html',
-				]);
+			$this->template->set_filenames([
+				'post_reput_tpl'	=> '@gfksx_thanksforposts/ajax_post_thanks_view.html',
+			]);
 
-				$template_data = [
-					'POST_AUTHOR_FULL'			=> get_username_string('full', $poster_id, $row['username'], $row['user_colour']),
-					'POST_ID'					=> $post_id,
-					'POSTER_ID'					=> $poster_id,
-					'POSTER_GIVE_COUNT_LINK'	=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true']),
-					'POSTER_RECEIVE_COUNT_LINK'	=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false']),
-					'POST_REPUT'				=> ($post_thanks_number != 0) ? round($post_thanks_number / ($this->max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
-					'THANKS'					=> $this->get_thanks($post_id),
-					'THANKS_POSTLIST_VIEW'		=> $this->config['thanks_postlist_view'],
-					'THANK_TEXT'				=> $this->language->lang('THANK_TEXT_1'),
-					'THANK_TEXT_2'				=> $post_thanks_number != 1 ? $this->language->lang('THANK_TEXT_2PL', $post_thanks_number) : $this->language->lang('THANK_TEXT_2'),
-					'THANKS_REPUT_GRAPHIC_WIDTH'=> ($this->config['thanks_reput_level'] && $this->config['thanks_reput_height']) ? (int) $this->config['thanks_reput_level'] * (int) $this->config['thanks_reput_height'] : false,
-					'THANKS_REPUT_HEIGHT'		=> $this->config['thanks_reput_height'] ?: false,
-					'THANKS_REPUT_IMAGE' 		=> $this->config['thanks_reput_image'] ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
-					'THANKS_REPUT_IMAGE_BACK'	=> $this->config['thanks_reput_image_back'] ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
+			$template_data = [
+				'POST_AUTHOR_FULL'			=> get_username_string('full', $poster_id, $row['username'], $row['user_colour']),
+				'POST_ID'					=> $post_id,
+				'POSTER_ID'					=> $poster_id,
+				'POSTER_GIVE_COUNT_LINK'	=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true']),
+				'POSTER_RECEIVE_COUNT_LINK'	=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false']),
+				'POST_REPUT'				=> ($post_thanks_number != 0) ? round($post_thanks_number / ($this->max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
+				'THANKS'					=> $this->get_thanks($post_id),
+				'THANKS_POSTLIST_VIEW'		=> $this->config['thanks_postlist_view'],
+				'THANK_TEXT'				=> $this->language->lang('THANK_TEXT_1'),
+				'THANK_TEXT_2'				=> $post_thanks_number != 1 ? $this->language->lang('THANK_TEXT_2PL', $post_thanks_number) : $this->language->lang('THANK_TEXT_2'),
+				'THANKS_REPUT_GRAPHIC_WIDTH'=> ($this->config['thanks_reput_level'] && $this->config['thanks_reput_height']) ? (int) $this->config['thanks_reput_level'] * (int) $this->config['thanks_reput_height'] : false,
+				'THANKS_REPUT_HEIGHT'		=> $this->config['thanks_reput_height'] ?: false,
+				'THANKS_REPUT_IMAGE' 		=> $this->config['thanks_reput_image'] ? generate_board_url() . '/' . $this->config['thanks_reput_image'] : '',
+				'THANKS_REPUT_IMAGE_BACK'	=> $this->config['thanks_reput_image_back'] ? generate_board_url() . '/' . $this->config['thanks_reput_image_back'] : '',
 
-					'S_IS_BOT'					=> !empty($this->user->data['is_bot']),
-					'S_MOD_THANKS'				=> $this->auth->acl_get('m_thanks'),
-					'S_POST_ANONYMOUS'			=> $post_anonymous,
-					'S_THANKS_COUNTERS_VIEW'	=> (bool) $this->config['thanks_counters_view'],
-					'S_THANKS_POST_REPUT_VIEW' 	=> (bool) $this->config['thanks_post_reput_view'],
-					'S_THANKS_REPUT_GRAPHIC'	=> (bool) $this->config['thanks_reput_graphic'],
+				'S_IS_BOT'					=> !empty($this->user->data['is_bot']),
+				'S_MOD_THANKS'				=> $this->auth->acl_get('m_thanks'),
+				'S_POST_ANONYMOUS'			=> $post_anonymous,
+				'S_THANKS_COUNTERS_VIEW'	=> (bool) $this->config['thanks_counters_view'],
+				'S_THANKS_POST_REPUT_VIEW' 	=> (bool) $this->config['thanks_post_reput_view'],
+				'S_THANKS_REPUT_GRAPHIC'	=> (bool) $this->config['thanks_reput_graphic'],
 
-					'U_CLEAR_LIST_THANKS_POST'	=> append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '&amp;list_thanks=post'),
-				];
+				'U_CLEAR_LIST_THANKS_POST'	=> append_sid("{$this->phpbb_root_path}viewtopic.$this->php_ext", 'f=' . $forum_id . '&amp;p=' . $post_id . '&amp;list_thanks=post'),
+			];
 
-				$this->template->assign_vars($template_data);
-				$html = $this->template->assign_display('post_reput_tpl');
-			}
+			$this->template->assign_vars($template_data);
+			$html = $this->template->assign_display('post_reput_tpl');
 
 			$data = [
 				'mode'				=> $mode,
