@@ -985,18 +985,13 @@ class helper
 				'to_id'				=> $to_id,
 				'from_id'			=> $from_id,
 				'given_count'		=> (int) $given_count,
-				'post_thanks_number'=> $post_thanks_number,
 				'received_count'	=> (int) $received_count,
-				'username'			=> $this->user->data['username'],
 
 				'l_colon'			=> $this->language->lang('COLON'),
-				'l_further_thank'	=> $this->language->lang('FURTHER_THANKS', 1),
 				'l_given'			=> $this->language->lang('GIVEN'),
 				'l_received'		=> $this->language->lang('RECEIVED'),
-				'l_reput'			=> $this->language->lang('REPUT'),
 				'l_thanks_given'	=> $this->language->lang('THANKS', $given_count),
 				'l_thanks_received'	=> $this->language->lang('THANKS', $received_count),
-				'l_thank_text_2'	=> $this->language->lang('THANK_TEXT_2'),
 
 				'u_given'			=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true']),
 				'u_received'		=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false']),

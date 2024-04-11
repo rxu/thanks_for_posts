@@ -41,11 +41,6 @@ phpbb.addAjaxCallback('handle_thanks', function(res) {
 		} else {
 			$(userGiveId + ' > a').html(l_thanks_given);
 		}
-
-		// Handle posts thanker lists and ratings
-		$(thanksListId).remove();
-		$(postReputId).replaceWith(res.html);
-
 	} else 	if (mode == 'delete') { // Handle thanks deletion
 		if (res.received_count == 0) { // Handle received thanks count in posts miniprofiles
 			$(userReceiveId).html('');
@@ -58,11 +53,11 @@ phpbb.addAjaxCallback('handle_thanks', function(res) {
 		} else {
 			$(userGiveId + ' > a').html(l_thanks_given);
 		}
-
-		// Handle posts thanker lists and ratings
-		$(thanksListId).remove();
-		$(postReputId).replaceWith(res.html);
 	}
+
+	// Handle posts thanker lists and ratings
+	$(thanksListId).remove();
+	$(postReputId).replaceWith(res.html);
 
 	// Refresh existing post ratings on the page if leader post rating changes
 	if (!$.isEmptyObject(res.post_reput_html)) {
@@ -71,7 +66,6 @@ phpbb.addAjaxCallback('handle_thanks', function(res) {
 			$(postReputId).replaceWith(value);
 		});
 	}
-
 });
 
 })(jQuery); // Avoid conflicts with other libraries
