@@ -1,0 +1,16 @@
+<div id='div_post_reput{{ POST_ID }}'>
+{% if S_THANKS_POST_REPUT_VIEW and POST_REPUT and not S_POST_ANONYMOUS and not S_IS_BOT %}
+	<div class="notice">
+		<dl>
+			<dt class="small"><strong>{{ lang('REPUT') }}{{ lang('COLON') }}</strong>&nbsp;{{ POST_REPUT }}</dt>
+			<dd>
+			{% if S_THANKS_REPUT_GRAPHIC %}
+			<span style="display: block; float: left; width: {{ THANKS_REPUT_GRAPHIC_WIDTH }}px; height: {{ THANKS_REPUT_HEIGHT }}px; background: url({{ THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;">
+				<span style="display: block; height: {{ THANKS_REPUT_HEIGHT }}px; width: {{ POST_REPUT }}; background: url({{ THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;"></span>
+			</span>&nbsp;
+			{% endif %}
+			</dd>
+		</dl>
+	</div>
+{% endif %}
+</div>

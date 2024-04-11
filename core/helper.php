@@ -922,7 +922,8 @@ class helper
 			$given_count = empty($this->poster_list_count[$from_id]['G']) ? 0 : (int) $this->poster_list_count[$from_id]['G'];
 
 			$this->template->set_filenames([
-				'post_reput_tpl'	=> '@gfksx_thanksforposts/ajax_post_thanks_view.html',
+				'post_thanks_tpl'	=> '@gfksx_thanksforposts/ajax_post_thanks_view.html',
+				'post_reput_tpl'	=> '@gfksx_thanksforposts/ajax_post_reput_view.html',
 			]);
 
 			$template_data = [
@@ -952,11 +953,34 @@ class helper
 			];
 
 			$this->template->assign_vars($template_data);
-			$html = $this->template->assign_display('post_reput_tpl');
+			$html_thanks = $this->template->assign_display('post_thanks_tpl');
+			$html_reput = $this->template->assign_display('post_reput_tpl');
+
+			// If post with maximum thanks count changes, refresh all post ratings on the page
+			$post_reput_html = [];
+			if ($post_thanks_number == $this->max_post_thanks)
+			{
+				for ($i = 0, $end = count($post_list); $i < $end; ++$i)
+				{
+					$id = $post_list[$i];
+					$id_thanks_number = $this->get_thanks_number($id);
+					if ($id == $post_id || $id_thanks_number == 0)
+					{
+						continue;
+					}
+
+					$this->template->assign_vars([
+						'POST_ID'		=> $id,
+						'POST_REPUT'	=> ($id_thanks_number != 0) ? round($id_thanks_number / ($this->max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
+					]);
+					$post_reput_html[$id] = $this->template->assign_display('post_reput_tpl');
+				}
+			}
 
 			$data = [
 				'mode'				=> $mode,
-				'html'				=> $html,
+				'html'				=> $html_thanks . $html_reput,
+				'post_reput_html'	=> $post_reput_html,
 				'post_id'			=> $post_id,
 				'to_id'				=> $to_id,
 				'from_id'			=> $from_id,
