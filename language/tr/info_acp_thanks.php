@@ -74,6 +74,8 @@ $lang = array_merge($lang, [
 
 	'STEPR'								=> ' - düzenle, adım %s',
 
+	'THANKS_AJAX_ENABLE'				=> 'Enable Ajax',
+	'THANKS_AJAX_ENABLE_EXPLAIN'		=> 'If enabled, thanking and removing thanks will be carried out without page reload.',
 	'THANKS_COUNTERS_VIEW'				=> 'Teşekkür sayacı',
 	'THANKS_COUNTERS_VIEW_EXPLAIN'		=> 'Etkinleştirilirse, yazar hakkındaki blok bilgileri, verilen/ alınan teşekkür sayısını gösterir.',
 	'THANKS_FORUM_REPUT_VIEW'			=> 'Forum derecelendirmesini göster',

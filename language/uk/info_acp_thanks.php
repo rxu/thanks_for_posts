@@ -73,6 +73,8 @@ $lang = array_merge($lang, [
 
 	'STEPR'								=> ' - виконання, крок %s',
 
+	'THANKS_AJAX_ENABLE'				=> 'Enable Ajax',
+	'THANKS_AJAX_ENABLE_EXPLAIN'		=> 'If enabled, thanking and removing thanks will be carried out without page reload.',
 	'THANKS_COUNTERS_VIEW'				=> 'Лічильники подяк',
 	'THANKS_COUNTERS_VIEW_EXPLAIN'		=> 'Якщо включено, в блоці інформації про автора буде відображатися кількість виданих/отриманих подяк.',
 	'THANKS_FORUM_REPUT_VIEW'			=> 'Відображення рейтингу для форумів',

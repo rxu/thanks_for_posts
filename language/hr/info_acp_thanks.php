@@ -53,6 +53,7 @@ $lang = array_merge($lang, [
 	'ACP_UPDATETHANKS'					=> 'Ažurirani zapisi zahvala',
 	'ACP_USERSEND'						=> 'Preostali korisnici koji su zahvalili',
 	'ACP_USERSTHANKS'					=> 'Ukupni korisnici koji su zahvalili',
+
 	'GRAPHIC_BLOCK_BACK'				=> 'ext/gfksx/thanksforposts/images/rating/reput_block_back.gif',
 	'GRAPHIC_BLOCK_RED'					=> 'ext/gfksx/thanksforposts/images/rating/reput_block_red.gif',
 	'GRAPHIC_DEFAULT'					=> 'Slike',
@@ -60,13 +61,19 @@ $lang = array_merge($lang, [
 	'GRAPHIC_STAR_BACK'					=> 'ext/gfksx/thanksforposts/images/rating/reput_star_back.gif',
 	'GRAPHIC_STAR_BLUE'					=> 'ext/gfksx/thanksforposts/images/rating/reput_star_blue.gif',
 	'GRAPHIC_STAR_GOLD'					=> 'ext/gfksx/thanksforposts/images/rating/reput_star_gold.gif',
+
 	'IMG_THANKPOSTS'					=> 'Za zahvalu na postu',
 	'IMG_REMOVETHANKS'					=> 'Poništi zahvale',
+
 	'LOG_CONFIG_THANKS'					=> 'Ažurirana je konfiguracija ekstenzije Zahvale na postovima',
+
 	'REFRESH'							=> 'Osvježi',
 	'REMOVE_THANKS'						=> 'Ukloni zahvale',
 	'REMOVE_THANKS_EXPLAIN'				=> 'Korisnici mogu uklanjati zahvale ako je ova opcija omogućena.',
 	'STEPR'								=> ' - izvršeno, korak %s',
+
+	'THANKS_AJAX_ENABLE'				=> 'Enable Ajax',
+	'THANKS_AJAX_ENABLE_EXPLAIN'		=> 'If enabled, thanking and removing thanks will be carried out without page reload.',
 	'THANKS_COUNTERS_VIEW'				=> 'Brojači zahvala',
 	'THANKS_COUNTERS_VIEW_EXPLAIN'		=> 'Ako je omogućeno, biti će prikazan blok s informacijama o autoru koji je izdao/primio zahvale.',
 	'THANKS_FORUM_REPUT_VIEW'			=> 'Prikaži ocjene foruma',

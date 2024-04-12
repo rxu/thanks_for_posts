@@ -590,6 +590,8 @@ class helper
 				'S_MOD_THANKS'				=> $this->auth->acl_get('m_thanks'),
 				'S_ONLY_TOPICSTART'         => $topic_data['topic_first_post_id'] == $row['post_id'],
 			]);
+
+			$this->template->assign_var('S_AJAX_ENABLED', (bool) $this->config['thanks_ajax_enabled']);
 		}
 	}
 

@@ -75,6 +75,8 @@ $lang = array_merge($lang, [
 
 	'STEPR'								=> ' - udført, skridt %s',
 
+	'THANKS_AJAX_ENABLE'				=> 'Enable Ajax',
+	'THANKS_AJAX_ENABLE_EXPLAIN'		=> 'If enabled, thanking and removing thanks will be carried out without page reload.',
 	'THANKS_COUNTERS_VIEW'				=> 'Syntes godt om tællere',
 	'THANKS_COUNTERS_VIEW_EXPLAIN'		=> 'Hvis slået til, vil informations blokken for forfatteren vise antal udstedte/modtagne antal syntes godt om.',
 	'THANKS_FORUM_REPUT_VIEW'			=> 'Vis forum syntes godt om',

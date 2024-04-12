@@ -74,6 +74,8 @@ $lang = array_merge($lang, [
 
 	'STEPR'								=> ' - ausgeführt, Schritt %s',
 
+	'THANKS_AJAX_ENABLE'				=> 'Enable Ajax',
+	'THANKS_AJAX_ENABLE_EXPLAIN'		=> 'If enabled, thanking and removing thanks will be carried out without page reload.',
 	'THANKS_COUNTERS_VIEW'				=> 'Danksagungszähler',
 	'THANKS_COUNTERS_VIEW_EXPLAIN'		=> 'Falls aktiviert, wird im Informationsblock des Autors die Anzahl an Danksagungen und erhaltenen Danksagungen angezeigt.',
 	'THANKS_FORUM_REPUT_VIEW'			=> 'Forenbewertungen anzeigen',

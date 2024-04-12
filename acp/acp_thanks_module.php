@@ -65,6 +65,7 @@ class acp_thanks_module
 				'thanks_profilelist_view'	=> ['lang' => 'THANKS_PROFILELIST_VIEW', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true],
 				'thanks_number'				=> ['lang' => 'THANKS_NUMBER', 'validate' => 'int:1',	'type' => 'text:4:4', 'explain' => true],
 				'thanks_top_number'			=> ['lang' => 'THANKS_TOP_NUMBER', 'validate' => 'int:0', 'type' => 'text:4:6', 'explain' => true],
+				'thanks_ajax_enabled'		=> ['lang' => 'THANKS_AJAX_ENABLE', 'validate' => 'bool', 'type' => 'radio:yes_no', 'explain' => true],
 			]
 		];
 
