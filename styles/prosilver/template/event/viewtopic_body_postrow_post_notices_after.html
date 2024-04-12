@@ -13,7 +13,12 @@
 			{% endif %}
 
 			<dt>{{ postrow.THANK_TEXT }}{{ postrow.POST_AUTHOR_FULL }}{{ postrow.THANK_TEXT_2 }}</dt>
-			<dd>{{ postrow.THANKS }}</dd>
+			<dd>
+				{% for userdata in postrow.THANKS.DATA %}
+					<span title="{{ userdata.THANKS_TIME_INFO }}">{{ userdata.USERNAME_STRING}}</span>{% if not loop.last %}{{ lang('COMMA_SEPARATOR') }}{% endif %}
+				{% endfor %}
+				{% if postrow.THANKS.FURTHER_THANKS %}{{ lang('FURTHER_THANKS', postrow.THANKS.FURTHER_THANKS)}}{% endif %}
+			</dd>
 		</dl>
 	</div>
 {% endif %}
@@ -22,11 +27,11 @@
 {% if postrow.S_THANKS_POST_REPUT_VIEW and postrow.POST_REPUT and not postrow.S_POST_ANONYMOUS and not S_IS_BOT %}
 	<div class="notice">
 		<dl>
-			<dt class="small"><strong>{{ lang('REPUT') }}{{ lang('COLON') }}</strong>&nbsp;{{ postrow.POST_REPUT }}</dt>
+			<dt class="small"><strong>{{ lang('REPUT') }}{{ lang('COLON') }}</strong>&nbsp;{{ postrow.POST_REPUT ~ '%' }}</dt>
 			<dd>
 			{% if postrow.S_THANKS_REPUT_GRAPHIC %}
 			<span style="display: block; float: left; width: {{ postrow.THANKS_REPUT_GRAPHIC_WIDTH }}px; height: {{ postrow.THANKS_REPUT_HEIGHT }}px; background: url({{ postrow.THANKS_REPUT_IMAGE_BACK }}); background-repeat: repeat-x;">
-				<span style="display: block; height: {{ postrow.THANKS_REPUT_HEIGHT }}px; width: {{ postrow.POST_REPUT }}; background: url({{ postrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;"></span>
+				<span style="display: block; height: {{ postrow.THANKS_REPUT_HEIGHT }}px; width: {{ postrow.POST_REPUT ~ '%' }}; background: url({{ postrow.THANKS_REPUT_IMAGE }}); background-repeat: repeat-x;"></span>
 			</span>&nbsp;
 			{% endif %}
 			</dd>

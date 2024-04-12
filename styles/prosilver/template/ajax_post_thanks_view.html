@@ -13,7 +13,12 @@
 			{% endif %}
 
 			<dt>{{ THANK_TEXT }}{{ POST_AUTHOR_FULL }}{{ THANK_TEXT_2 }}</dt>
-			<dd>{{ THANKS }}</dd>
+			<dd>
+				{% for userdata in THANKS.DATA %}
+					<span title="{{ userdata.THANKS_TIME_INFO }}">{{ userdata.USERNAME_STRING}}</span>{% if not loop.last %}{{ lang('COMMA_SEPARATOR') }}{% endif %}
+				{% endfor %}
+				{% if THANKS.FURTHER_THANKS %}{{ lang('FURTHER_THANKS', THANKS.FURTHER_THANKS)}}{% endif %}
+			</dd>
 		</dl>
 	</div>
 {% endif %}
