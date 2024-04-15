@@ -5,7 +5,7 @@
 <p><a class="arrow-{{ S_CONTENT_FLOW_BEGIN }}" href="{{ U_THANKS }}" title="{{ lang('THANKS_BACK') }}">{{ lang('THANKS_BACK') }}</a></p>
 
 {% if loops.pagination|length or SEARCH_MATCHES %}
-	<div class="action-bar top">
+	<div class="action-bar bar-top">
 		<div class="pagination">
 			{{ SEARCH_MATCHES }}
 			{% if loops.pagination|length %}
@@ -55,7 +55,7 @@
 	{% endfor %}
 
 {% if loops.pagination|length or SEARCH_MATCHES %}
-<div class="action-bar bottom">
+<div class="action-bar bar-bottom">
 	<div class="pagination">
 		{{ SEARCH_MATCHES }}
 		{% if loops.pagination|length %}
