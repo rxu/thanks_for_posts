@@ -273,6 +273,7 @@ class listener implements EventSubscriberInterface
 			'S_DISPLAY_TOPLIST'		=> $this->auth->acl_get('u_viewtoplist') && ($this->config['thanks_post_reput_view'] || $this->config['thanks_topic_reput_view'] || $this->config['thanks_forum_reput_view']),
 			'MINI_THANKS_IMG'		=> $this->user->img('icon_mini_thanks', $this->language->lang('GRATITUDES')),
 			'MINI_TOPLIST_IMG'		=> $this->user->img('icon_mini_toplist', $this->language->lang('TOPLIST')),
+			'S_AJAX_ENABLED'		=> (bool) $this->config['thanks_ajax_enabled'],
 		]);
 	}
 
