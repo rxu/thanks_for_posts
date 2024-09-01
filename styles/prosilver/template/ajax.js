@@ -41,6 +41,10 @@ phpbb.addAjaxCallback('handle_thanks', function(res) {
 		} else {
 			$(userGiveId + ' > a').html(l_thanks_given);
 		}
+
+		if (!res.s_remove_thanks) { // Remove un-thank button if thanks removal is not allowed
+			$(thanksId).parent('li').remove();
+		}
 	} else 	if (mode == 'delete') { // Handle thanks deletion
 		if (res.received_count == 0) { // Handle received thanks count in posts miniprofiles
 			$(userReceiveId).html('');

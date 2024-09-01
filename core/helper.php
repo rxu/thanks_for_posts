@@ -977,6 +977,8 @@ class helper
 				'l_thanks_given'	=> $this->language->lang('THANKS', $given_count),
 				'l_thanks_received'	=> $this->language->lang('THANKS', $received_count),
 
+				's_remove_thanks'	=> (bool) $this->config['remove_thanks'],
+
 				'u_given'			=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $poster_id, 'give' => 'true']),
 				'u_received'		=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $poster_id, 'give' => 'false']),
 			];
