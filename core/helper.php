@@ -955,7 +955,7 @@ class helper
 
 					$this->template->assign_vars([
 						'POST_ID'		=> $id,
-						'POST_REPUT'	=> ($id_thanks_number != 0) ? round($id_thanks_number / ($this->max_post_thanks / 100), (int) $this->config['thanks_number_digits']) . '%' : '',
+						'POST_REPUT'	=> round($id_thanks_number / ($this->max_post_thanks / 100), (int) $this->config['thanks_number_digits']),
 					]);
 					$post_reput_html[$id] = $this->template->assign_display('post_reput_tpl');
 				}
@@ -976,6 +976,11 @@ class helper
 				'l_received'		=> $this->language->lang('RECEIVED'),
 				'l_thanks_given'	=> $this->language->lang('THANKS', $given_count),
 				'l_thanks_received'	=> $this->language->lang('THANKS', $received_count),
+
+				'l_remove_thanks'		=> $this->language->lang('REMOVE_THANKS'),
+				'l_remove_thanks_short'	=> $this->language->lang('REMOVE_THANKS_SHORT'),
+				'l_thank_post'			=> $this->language->lang('THANK_POST'),
+				'l_thank_post_short'	=> $this->language->lang('THANK_POST_SHORT'),
 
 				's_remove_thanks'	=> (bool) $this->config['remove_thanks'],
 
