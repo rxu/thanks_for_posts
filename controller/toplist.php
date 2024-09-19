@@ -354,6 +354,7 @@ class toplist
 
 			if (!$row = $this->db->sql_fetchrow($result))
 			{
+				$this->db->sql_freeresult($result);
 				trigger_error('RATING_VIEW_TOPLIST_NO');
 			}
 			else

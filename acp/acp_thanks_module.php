@@ -123,7 +123,7 @@ class acp_thanks_module
 			'L_TITLE'			=> $language->lang($display_vars['title']),
 			'L_TITLE_EXPLAIN'	=> $language->lang($display_vars['title'] . '_EXPLAIN'),
 
-			'S_ERROR'			=> (sizeof($error)) ? true : false,
+			'S_ERROR'			=> (bool) sizeof($error),
 			'ERROR_MSG'			=> implode('<br />', $error),
 
 			'U_ACTION'			=> $this->u_action,

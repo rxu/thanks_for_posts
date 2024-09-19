@@ -96,7 +96,7 @@ class helper
 	 * @param \phpbb\user							$user					User object
 	 * @param \phpbb\cache\driver\driver_interface	$cache					Cache driver object
 	 * @param \phpbb\request\request_interface		$request				Request object
-	 * @param \phpbb\request\request_interface		$request				Request object
+	 * @param \phpbb\notification\manager			$notification_manager	Notification manager object
 	 * @param \phpbb\controller\helper				$controller_helper		Controller helper object
 	 * @param \phpbb\event\dispatcher_interface		$phpbb_dispatcher		Event dispatcher object
 	 * @param \phpbb\language\language				$language				Language object
@@ -152,7 +152,7 @@ class helper
 		$user_list = [];
 		$maxcount = (int) $this->config['thanks_number_post'];
 
-		$posts_thanks = array_keys(array_column($this->thankers, 'post_id', 'id'), $post_id);
+		$posts_thanks = array_keys(array_column($this->thankers, 'post_id', 'index'), $post_id);
 		if (!$posts_thanks)
 		{
 			return false;
@@ -181,7 +181,7 @@ class helper
 
 	public function get_thanks_number($post_id)
 	{
-		$posts_thanks_number = count(array_keys(array_column($this->thankers, 'post_id', 'id'), $post_id));
+		$posts_thanks_number = count(array_keys(array_column($this->thankers, 'post_id', 'index'), $post_id));
 		return $posts_thanks_number;
 	}
 
@@ -623,7 +623,7 @@ class helper
 			while ($row = $this->db->sql_fetchrow($result))
 			{
 				$this->thankers[] = [
-					'id' 				=> count($this->thankers),
+					'index' 			=> count($this->thankers),
 					'user_id' 			=> $row['user_id'],
 					'poster_id' 		=> $row['poster_id'],
 					'post_id' 			=> $row['post_id'],
@@ -894,7 +894,6 @@ class helper
 	{
 		if ($this->request->is_ajax())
 		{
-			$html = '';
 			$forum_id = (int) $row['forum_id'];
 			$post_id = (int) $row['post_id'];
 			$poster_id = (int) $row['poster_id'];

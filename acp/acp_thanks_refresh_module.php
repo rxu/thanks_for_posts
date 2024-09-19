@@ -198,7 +198,6 @@ class acp_thanks_refresh_module
 							SET ' . $db->sql_build_array('UPDATE', $sql_ary) .'
 							WHERE post_id = '. $sql_ary['post_id'];
 						$db->sql_query($sql);
-						$thanks_updated++;
 					}
 				}
 				$db->sql_freeresult($result);

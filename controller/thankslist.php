@@ -176,6 +176,7 @@ class thankslist
 					break;
 
 					case 'false':
+					default:
 						$u_search = $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $author_id, 'give' => 'false']);
 
 						$sql = 'SELECT COUNT(DISTINCT post_id) as total_match_count
@@ -196,7 +197,7 @@ class thankslist
 					$this->db->sql_freeresult($result);
 
 					$sql_array = [
-						'SELECT'	=> 'u.username, u.user_colour, p.poster_id, p.post_id, p.topic_id, p.forum_id, p.post_time, p.post_subject, p.post_text, p.post_username, p.bbcode_bitfield, p.bbcode_uid, p.post_attachment, p.enable_bbcode, p. enable_smilies, p.enable_magic_url',
+						'SELECT'	=> 'u.username, u.user_colour, p.poster_id, p.post_id, p.topic_id, p.forum_id, p.post_time, p.post_subject, p.post_text, p.post_username, p.bbcode_bitfield, p.bbcode_uid, p.post_attachment, p.enable_bbcode, p.enable_smilies, p.enable_magic_url',
 						'FROM'		=> [$this->thanks_table => 't'],
 						'LEFT_JOIN' => [
 							[
@@ -382,11 +383,6 @@ class thankslist
 					$param = call_user_func_array(array($this->request, 'variable'), $call);
 					$param = (is_string($param)) ? urlencode($param) : $param;
 					$params[$key] = $param;
-
-					if ($key != 'sk' && $key != 'sd')
-					{
-						$sort_params[] = $param;
-					}
 				}
 				$pagination_url = $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller', $params);
 

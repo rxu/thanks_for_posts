@@ -75,7 +75,7 @@ class listener implements EventSubscriberInterface
 	 * @param \phpbb\language\language             $language              Language object
 	 * @param string                               $phpbb_root_path       phpbb_root_path
 	 * @param string                               $php_ext               phpEx
-	 * @param rxu\PostsMerging\core\helper         $helper                The extension helper object
+	 * @param rxu\thanksforposts\core\helper       $helper                The extension helper object
 	 * @access public
 	 */
 	public function __construct(
