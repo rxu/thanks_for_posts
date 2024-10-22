@@ -745,15 +745,9 @@ class helper
 	{
 		$sql_ary = [
 			'SELECT' =>  't.poster_id, COUNT(t.user_id) AS tally',
-			'FROM' => [$this->users_table => 'u'],
-			'LEFT_JOIN' => [
-				[
-					'FROM' => [$this->thanks_table => 't'],
-					'ON' => 'u.user_id = t.poster_id',
-				],
-			],
+			'FROM' => [$this->thanks_table => 't'],
 			'WHERE' => $this->db->sql_in_set('t.forum_id', $ex_fid_ary, true) . ' OR t.forum_id = 0',
-			'GROUP_BY' => 't.poster_id, u.user_id',
+			'GROUP_BY' => 't.poster_id',
 			'ORDER_BY' => 'tally DESC',
 		];
 

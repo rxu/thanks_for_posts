@@ -99,7 +99,7 @@ class controller_test extends \phpbb_functional_test_case
 		$crawler = self::request('GET', "adm/index.php?sid={$this->sid}&i=-gfksx-thanksforposts-acp-acp_thanks_reput_module&mode=thanks");
 		$form = $crawler->selectButton('Submit')->form();
 		$values = $form->getValues();
-		// Enable forum rating rating options (post and topic ones are enabled by default)
+		// Enable forum rating options (post and topic ones are enabled by default)
 		$values['config[thanks_forum_reput_view]'] = true;
 		$form->setValues($values);
 		$crawler = self::submit($form);

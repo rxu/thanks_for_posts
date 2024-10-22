@@ -34,7 +34,13 @@ class thanking_test extends \phpbb_functional_test_case
 		// Now test toplist on index exists
 		$this->add_lang_ext('gfksx/thanksforposts', 'thanks_mod');
 		$crawler = self::request('GET', "index.php?sid={$this->sid}");
-		$this->assertStringContainsString($this->lang('REPUT_TOPLIST', 5), $crawler->filter('div[class="stat-block thanks-list"]')->text());
+		$this->assertStringContainsString($this->lang('REPUT_TOPLIST', 5), $crawler->filter('div[class="stat-block thanks-list"] > h3')->text());
+
+		// From controller test:
+		// user1 has: received thanks - 2
+		// admin has: received thanks - 1
+		$this->assertEquals('user1', $crawler->filter('div[class="stat-block thanks-list"] > p > a')->eq(0)->text());
+		$this->assertEquals('admin', $crawler->filter('div[class="stat-block thanks-list"] > p > a')->eq(1)->text());
 	}
 
 	public function test_profile_info()
