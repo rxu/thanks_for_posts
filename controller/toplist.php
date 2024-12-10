@@ -488,6 +488,7 @@ class toplist
 		$this->pagination->generate_template_pagination($pagination_url, 'pagination', 'start', $total_match_count, (int) $this->config['topics_per_page'], $start);
 
 		// Output the page
+		$u_toplist = $this->controller_helper->route('gfksx_thanksforposts_toplist_controller');
 		$this->template->assign_vars([
 			'PAGE_NUMBER'				=> $this->pagination->on_page($total_match_count, (int) $this->config['posts_per_page'], $start),
 			'PAGE_TITLE'				=> $page_title,
@@ -501,6 +502,12 @@ class toplist
 			'U_SEARCH_POST'				=> $u_search_post,
 			'U_SEARCH_TOPIC'			=> $u_search_topic,
 			'U_SEARCH_FORUM'			=> $u_search_forum,
+		]);
+
+		// Add breadcrumb
+		$this->template->assign_block_vars('navlinks', [
+			'BREADCRUMB_NAME'	=> $this->language->lang('TOPLIST'),
+			'U_BREADCRUMB'		=> $u_toplist,
 		]);
 
 		make_jumpbox(append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext"));

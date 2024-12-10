@@ -589,10 +589,17 @@ class thankslist
 		}
 
 		// Output the page
+		$u_thankslist = $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller');
 		$this->template->assign_vars([
 			'TOTAL_USERS'		=> $this->language->lang('LIST_USERS', $total_users),
 			'U_THANKS'			=> $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller'),
 			'S_THANKS'			=> $sthanks,
+		]);
+
+		// Add breadcrumb
+		$this->template->assign_block_vars('navlinks', [
+			'BREADCRUMB_NAME'	=> $this->language->lang('GRATITUDES'),
+			'U_BREADCRUMB'		=> $u_thankslist,
 		]);
 
 		make_jumpbox(append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext"));
