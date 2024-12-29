@@ -175,7 +175,6 @@ class acp_thanks_refresh_module
 				];
 				$result = $db->sql_query($db->sql_build_query('SELECT', $sql_ary));
 
-				$thanks_updated = 0;
 				if ($result)
 				{
 					while ($row = $db->sql_fetchrow($result))
