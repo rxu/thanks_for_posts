@@ -379,7 +379,7 @@ class toplist
 				];
 
 				$sql = $this->db->sql_build_query('SELECT',$topics_data_sql);
-				$result = $this->db->sql_query_limit($sql, $end, $start);
+				$result = $this->db->sql_query($sql);
 				while ($row = $this->db->sql_fetchrow($result))
 				{
 					$rowset[(int) $row['topic_id']] = array_merge($rowset[(int) $row['topic_id']], $row);
