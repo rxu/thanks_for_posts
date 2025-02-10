@@ -1,6 +1,0 @@
-{% if postrow.THANKS and postrow.THANKS_POSTLIST_VIEW and not postrow.S_POST_ANONYMOUS and not S_IS_BOT %}
-<div id='list_thanks{{ postrow.POST_ID }}' class="panel">
-	{% if postrow.S_MOD_THANKS %}[<a href="{{ postrow.U_CLEAR_LIST_THANKS_POST }}" title="{{ lang('CLEAR_LIST_THANKS') }}">x</a>]{% endif %}
-	{{ lang('RECEIVED') }}{{ lang('COLON') }}<hr />{{ postrow.THANKS }}
-</div>
-{% endif %}
