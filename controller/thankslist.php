@@ -134,7 +134,7 @@ class thankslist
 
 		// Grab data
 		$row_number	= $total_users = 0;
-		$givens = $reseved = $rowsp = $rowsu = $words = $where = [];
+		$givens = $received = [];
 		$sthanks = false;
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (count($ex_fid_ary)) ? $ex_fid_ary : false;
@@ -329,7 +329,7 @@ class thankslist
 
 				while ($row = $this->db->sql_fetchrow($result))
 				{
-					$reseved[$row['poster_id']] = $row['tally'];
+					$received[$row['poster_id']] = $row['tally'];
 				}
 				$this->db->sql_freeresult($result);
 
@@ -387,55 +387,22 @@ class thankslist
 				}
 				$pagination_url = $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller', $params);
 
-				// Grab relevant data
-				$sql = 'SELECT DISTINCT poster_id
-					FROM ' . $this->thanks_table;
-				$result = $this->db->sql_query($sql);
-
-				while ($row = $this->db->sql_fetchrow($result))
-				{
-					$rowsp[] = $row['poster_id'];
-				}
-				$this->db->sql_freeresult($result);
-
-				$sql = 'SELECT DISTINCT user_id
-					FROM ' . $this->thanks_table;
-				$result = $this->db->sql_query($sql);
-
-				while ($row = $this->db->sql_fetchrow($result))
-				{
-					$rowsu[] = $row['user_id'];
-				}
-				$this->db->sql_freeresult($result);
-
+				$sortparam = '';
 				if ($sort_key == 'e')
 				{
 					$sortparam = 'poster_id';
-					$rows = $rowsp;
 				}
 				else if ($sort_key == 'f')
 				{
 					$sortparam = 'user_id';
-					$rows = $rowsu;
 				}
-				else
-				{
-					$sortparam = '';
-					$rows = array_merge($rowsp,$rowsu);
-				}
-
-				$total_users = count(array_unique($rows));
+				$rows = array_unique(array_merge(array_keys($givens), array_keys($received)));
+				$total_users = count($rows);
 
 				if (empty($rows))
 				{
 					break;
 				}
-
-				$sql_array = [
-					'SELECT'	=> 'u.user_id',
-					'FROM'		=> [$this->users_table => 'u'],
-					'ORDER_BY'	=> $order_by,
-				];
 
 				if ($top)
 				{
@@ -451,25 +418,27 @@ class thankslist
 				if ($sortparam)
 				{
 					$sql_array = [
-						'SELECT'	=> 't.' . $sortparam . ' , count(t . ' . $sortparam . ') as count_thanks',
+						'SELECT'	=> 'u.user_id , count(t.' . $sortparam . ') as count_thanks',
 						'FROM'		=> [$this->thanks_table => 't'],
 						'LEFT_JOIN'	=> [
 							[
 								'FROM'	=> [$this->users_table => 'u'],
-								'ON'	=> 't . ' . $sortparam . ' = u.user_id',
+								'ON'	=> 't.user_id = u.user_id OR t.poster_id = u.user_id',
 							],
 						],
 						'ORDER_BY'	=> $order_by,
-						'GROUP_BY'	=> 't.' . $sortparam . ', u.username_clean',
+						'GROUP_BY'	=> 'u.user_id',
 					];
 				}
-
-				$where[] = $rows[0];
-				for ($i = 1, $end = count($rows); $i < $end; ++$i)
+				else
 				{
-					$where[] = $rows[$i];
+					$sql_array = [
+						'SELECT'	=> 'u.user_id',
+						'FROM'		=> [$this->users_table => 'u'],
+						'ORDER_BY'	=> $order_by,
+					];
 				}
-				$sql_array['WHERE'] = $this->db->sql_in_set('u.user_id', $where);
+				$sql_array['WHERE'] = $this->db->sql_in_set('u.user_id', $rows);
 				$sql = $this->db->sql_build_query('SELECT', $sql_array);
 				$result = $this->db->sql_query_limit($sql, $top, $start);
 
@@ -482,7 +451,7 @@ class thankslist
 					$sql = 'SELECT session_user_id, MAX(session_time) AS session_time
 						FROM ' . $this->sessions_table . '
 						WHERE session_time >= ' . (time() - (int) $this->config['session_length']) . '
-							AND ' . $this->db->sql_in_set('session_user_id', $where) . '
+							AND ' . $this->db->sql_in_set('session_user_id', $rows) . '
 						GROUP BY session_user_id';
 					$result_sessions = $this->db->sql_query($sql);
 
@@ -496,7 +465,7 @@ class thankslist
 					$user_list = [];
 					do
 					{
-						$user_list[] = (int) $row[$sortparam ?: 'user_id'];
+						$user_list[] = (int) $row['user_id'];
 					}
 					while ($row = $this->db->sql_fetchrow($result));
 					$this->db->sql_freeresult($result);
@@ -550,8 +519,8 @@ class thankslist
 
 						$memberrow = array_merge(phpbb_show_profile($row, false, false, false), [
 							'ROW_NUMBER'			=> $row_number + ($start + 1),
-							'GIVENS'				=> (!isset($givens[$user_id])) ? 0 : $givens[$user_id],
-							'RECEIVED'				=> (!isset($reseved[$user_id])) ? 0 : $reseved[$user_id],
+							'GIVENS'				=> $givens[$user_id] ?? 0,
+							'RECEIVED'				=> $received[$user_id] ?? 0,
 							'U_SEARCH_USER_GIVENS'	=> ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $user_id, 'give' => 'true']) : '',
 							'U_SEARCH_USER_RECEIVED'=> ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $user_id, 'give' => 'false']) : ''
 						]);
