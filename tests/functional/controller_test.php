@@ -70,12 +70,11 @@ class controller_test extends \phpbb_functional_test_case
 		// user2 has: received thanks - 0, given thanks - 2 (user1)
 		$crawler = self::request('GET', 'app.php/thankslist');
 		$this->assertStringContainsString($this->lang('THANKS_USER'), $crawler->filter('h2')->text());
-		$this->assertStringContainsString('3 users', $crawler->filter('div.pagination')->text());
-
-		// default sorting order is 'u.username_clean DESC'
-		$this->assertStringContainsString('user2', $crawler->filter('a.username')->eq(0)->text());
-		$this->assertStringContainsString('user1', $crawler->filter('a.username')->eq(1)->text());
-		$this->assertStringContainsString('admin', $crawler->filter('a.username-coloured')->text());
+		
+		// Default sorting is "received thanks" desc, thus only 2 users are listed as user2 didn't receive thanks
+		$this->assertStringContainsString('2 users', $crawler->filter('div.pagination')->text());
+		$this->assertStringContainsString('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
+		$this->assertStringContainsString('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
 	}
 
 	public function test_thanklist_sorting()
@@ -84,11 +83,10 @@ class controller_test extends \phpbb_functional_test_case
 
 		$this->add_lang_ext('gfksx/thanksforposts', 'thanks_mod');
 
-		// Default sorting: username desc
+		// Default sorting: "received thanks" desc, thus only 2 users are listed as user2 didn't receive thanks
 		$crawler = self::request('GET', 'app.php/thankslist');
-		$this->assertStringContainsString('user2', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
-		$this->assertStringContainsString('user1', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
-		$this->assertStringContainsString('admin', $crawler->filter('tbody')->filter('tr')->eq(2)->filter('td > a')->text());
+		$this->assertStringContainsString('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
+		$this->assertStringContainsString('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
 
 		// Sorting by `Has thanked` desc
 		$crawler = self::request('GET', 'app.php/thankslist?sk=f&sd=d');
