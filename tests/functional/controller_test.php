@@ -71,10 +71,11 @@ class controller_test extends \phpbb_functional_test_case
 		$crawler = self::request('GET', 'app.php/thankslist');
 		$this->assertStringContainsString($this->lang('THANKS_USER'), $crawler->filter('h2')->text());
 		
-		// Default sorting is "received thanks" desc, thus only 2 users are listed as user2 didn't receive thanks
-		$this->assertStringContainsString('2 users', $crawler->filter('div.pagination')->text());
+		// Default sorting is "received thanks" desc
+		$this->assertStringContainsString('3 users', $crawler->filter('div.pagination')->text());
 		$this->assertStringContainsString('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
 		$this->assertStringContainsString('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+		$this->assertStringContainsString('user2', $crawler->filter('tbody')->filter('tr')->eq(2)->filter('td > a')->text());
 	}
 
 	public function test_thanklist_sorting()
@@ -87,6 +88,7 @@ class controller_test extends \phpbb_functional_test_case
 		$crawler = self::request('GET', 'app.php/thankslist');
 		$this->assertStringContainsString('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
 		$this->assertStringContainsString('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+		$this->assertStringContainsString('user2', $crawler->filter('tbody')->filter('tr')->eq(2)->filter('td > a')->text());
 
 		// Sorting by `Has thanked` desc
 		$crawler = self::request('GET', 'app.php/thankslist?sk=f&sd=d');
@@ -104,11 +106,13 @@ class controller_test extends \phpbb_functional_test_case
 		$crawler = self::request('GET', 'app.php/thankslist?sk=e&sd=d');
 		$this->assertStringContainsString('user1', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
 		$this->assertStringContainsString('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+		$this->assertStringContainsString('user2', $crawler->filter('tbody')->filter('tr')->eq(2)->filter('td > a')->text());
 
 		// Sorting by `Been thanked` asc
 		$crawler = self::request('GET', 'app.php/thankslist?sk=e&sd=a');
-		$this->assertStringContainsString('admin', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
-		$this->assertStringContainsString('user1', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+		$this->assertStringContainsString('user2', $crawler->filter('tbody')->filter('tr')->eq(0)->filter('td > a')->text());
+		$this->assertStringContainsString('admin', $crawler->filter('tbody')->filter('tr')->eq(1)->filter('td > a')->text());
+		$this->assertStringContainsString('user1', $crawler->filter('tbody')->filter('tr')->eq(2)->filter('td > a')->text());
 	}
 
 	public function test_toplist()

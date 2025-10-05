@@ -134,7 +134,7 @@ class thankslist
 
 		// Grab data
 		$row_number	= $total_users = 0;
-		$givens = $received = [];
+		$rows = $user_ids = $cp_row = [];
 		$sthanks = false;
 		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
 		$ex_fid_ary = (count($ex_fid_ary)) ? $ex_fid_ary : false;
@@ -357,27 +357,38 @@ class thankslist
 
 					while ($row = $this->db->sql_fetchrow($result))
 					{
-						$$type[$row[$sortparam]] = $row['tally'];
+						$rows[$row[$sortparam]][$type] = $row['tally'];
+						$rows[$row[$sortparam]][$type_negated] = 0;
 					}
 					$this->db->sql_freeresult($result);
 
 					$sql = 'SELECT ' . $sortparam_negated . ', COUNT(user_id) AS tally
 						FROM ' . $this->thanks_table . '
 						WHERE ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0
-							AND ' . $this->db->sql_in_set($sortparam_negated, array_keys($$type)) . '
+							AND ' . $this->db->sql_in_set($sortparam_negated, array_keys($rows)) . '
 						GROUP BY ' . $sortparam_negated . '
 						ORDER BY tally' . (($sort_dir == 'a') ? ' ASC' : ' DESC');
 					$result = $this->db->sql_query($sql);
 
 					while ($row = $this->db->sql_fetchrow($result))
 					{
-						$$type_negated[$row[$sortparam_negated]] = $row['tally'];
+						$tmp = [];
+						$tmp[$row[$sortparam_negated]][$type] = $rows[$row[$sortparam_negated]][$type] ?? 0;
+						$tmp[$row[$sortparam_negated]][$type_negated] = $row['tally'];
+						if ($tmp[$row[$sortparam_negated]][$type] == 0 && $sort_dir == 'a')
+						{
+							$rows = $tmp + $rows;
+						}
+						else
+						{
+							$rows[$row[$sortparam_negated]] = $tmp[$row[$sortparam_negated]];
+						}
 					}
 					$this->db->sql_freeresult($result);
 				}
 
-				$rows = array_keys($$type);
-				$total_users = count($rows);
+				$user_ids = array_keys($rows);
+				$total_users = count($user_ids);
 
 				if (!$total_users)
 				{
@@ -392,7 +403,7 @@ class thankslist
 				$sql = 'SELECT session_user_id, MAX(session_time) AS session_time
 					FROM ' . $this->sessions_table . '
 					WHERE session_time >= ' . (time() - (int) $this->config['session_length']) . '
-						AND ' . $this->db->sql_in_set('session_user_id', $rows) . '
+						AND ' . $this->db->sql_in_set('session_user_id', $user_ids) . '
 					GROUP BY session_user_id';
 				$result_sessions = $this->db->sql_query($sql);
 
@@ -413,7 +424,7 @@ class thankslist
 					}
 
 					// Grab all profile fields from users in id cache for later use - similar to the poster cache
-					$profile_fields_cache = $this->profilefields_manager->grab_profile_fields_data($rows);
+					$profile_fields_cache = $this->profilefields_manager->grab_profile_fields_data($user_ids);
 
 					// Filter the fields we don't want to show
 					foreach ($profile_fields_cache as $user_id => $user_profile_fields)
@@ -428,8 +439,8 @@ class thankslist
 					}
 				}
 
-				$this->user_loader->load_users($rows);
-				foreach ($rows as $user_id)
+				$this->user_loader->load_users($user_ids);
+				foreach ($user_ids as $user_id)
 				{
 					$row = $this->user_loader->get_user($user_id);
 					$row['session_time'] = (!empty($session_times[$row['user_id']])) ? (int) $session_times[$row['user_id']] : 0;
@@ -451,8 +462,8 @@ class thankslist
 
 					$memberrow = array_merge(phpbb_show_profile($row, false, false, false), [
 						'ROW_NUMBER'			=> $row_number + ($start + 1),
-						'GIVENS'				=> $givens[$user_id] ?? 0,
-						'RECEIVED'				=> $received[$user_id] ?? 0,
+						'GIVENS'				=> $rows[$user_id]['givens'],
+						'RECEIVED'				=> $rows[$user_id]['received'],
 						'U_SEARCH_USER_GIVENS'	=> ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $user_id, 'give' => 'true']) : '',
 						'U_SEARCH_USER_RECEIVED'=> ($this->auth->acl_get('u_search')) ? $this->controller_helper->route('gfksx_thanksforposts_thankslist_controller_user', ['mode' => 'givens', 'author_id' => $user_id, 'give' => 'false']) : ''
 					]);
