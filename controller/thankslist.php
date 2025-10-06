@@ -136,8 +136,7 @@ class thankslist
 		$row_number	= $total_users = 0;
 		$rows = $user_ids = $cp_row = [];
 		$sthanks = false;
-		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true));
-		$ex_fid_ary = (count($ex_fid_ary)) ? $ex_fid_ary : false;
+		$ex_fid_ary = array_keys($this->auth->acl_getf('!f_read', true)) ?: false;
 
 		if (!$this->auth->acl_gets('u_viewthanks'))
 		{
@@ -312,10 +311,15 @@ class thankslist
 				$page_title = $this->language->lang('THANKS_USER');
 				$template_html = 'thankslist_body.html';
 
-				$sql = 'SELECT (COUNT(DISTINCT user_id) + (SELECT COUNT(DISTINCT poster_id) FROM ' . $this->thanks_table . '
-					WHERE poster_id NOT IN (SELECT DISTINCT user_id FROM ' . $this->thanks_table . '))) as num_users FROM ' . $this->thanks_table;
+				$sql_forum_id_in = $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0';
+				$sql = 'SELECT (
+					(SELECT COUNT(DISTINCT user_id) FROM ' . $this->thanks_table . " WHERE ($sql_forum_id_in)) +
+					(SELECT COUNT(DISTINCT poster_id) FROM " . $this->thanks_table . '
+						WHERE poster_id NOT IN (SELECT DISTINCT user_id FROM ' . $this->thanks_table . " WHERE ($sql_forum_id_in))
+							AND ($sql_forum_id_in))) as total_users
+						FROM " . $this->thanks_table;
 				$this->db->sql_query($sql, 86400);
-				$total_users = (int) $this->db->sql_fetchfield('num_users') ?: 0;
+				$total_users = (int) $this->db->sql_fetchfield('total_users') ?: 0;
 
 				if (!$total_users)
 				{
@@ -348,7 +352,7 @@ class thankslist
 				{
 					$limit = $top;
 					$start = 0;
-					$page_title = $this->language->lang('REPUT_TOPLIST', $total_users);
+					$page_title = $this->language->lang('REPUT_TOPLIST', $top);
 				}
 				else
 				{
@@ -358,9 +362,9 @@ class thankslist
 				if ($sortparam)
 				{
 					// Grab relevant data thanks
-					$sql = 'SELECT ' . $sortparam . ', COUNT(user_id) AS tally
+					$sql = 'SELECT ' . $sortparam . ', COUNT(*) AS tally
 						FROM ' . $this->thanks_table . '
-						WHERE ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0
+						WHERE (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
 						GROUP BY ' . $sortparam . '
 						ORDER BY tally' . (($sort_dir == 'a') ? ' ASC' : ' DESC') . ', ' . $sortparam;
 					$result = $this->db->sql_query_limit($sql, $limit, $start);
@@ -372,10 +376,10 @@ class thankslist
 					}
 					$this->db->sql_freeresult($result);
 
-					$sql = 'SELECT ' . $sortparam_negated . ', COUNT(user_id) AS tally
+					$sql = 'SELECT ' . $sortparam_negated . ', COUNT(*) AS tally
 						FROM ' . $this->thanks_table . '
-						WHERE ' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0
-							AND ' . $this->db->sql_in_set($sortparam_negated, array_keys($rows)) . '
+						WHERE (' . $this->db->sql_in_set('forum_id', $ex_fid_ary, true) . ' OR forum_id = 0)
+							AND ' . $this->db->sql_in_set($sortparam_negated, array_keys($rows)) . ((count($rows) < $limit) ? ' OR ' . $this->db->sql_in_set($sortparam_negated, array_keys($rows), true) : '') . '
 						GROUP BY ' . $sortparam_negated . '
 						ORDER BY tally' . (($sort_dir == 'a') ? ' ASC' : ' DESC');
 					$result = $this->db->sql_query($sql);
