@@ -312,6 +312,16 @@ class thankslist
 				$page_title = $this->language->lang('THANKS_USER');
 				$template_html = 'thankslist_body.html';
 
+				$sql = 'SELECT (COUNT(DISTINCT user_id) + (SELECT COUNT(DISTINCT poster_id) FROM ' . $this->thanks_table . '
+					WHERE poster_id NOT IN (SELECT DISTINCT user_id FROM ' . $this->thanks_table . '))) as num_users FROM ' . $this->thanks_table;
+				$this->db->sql_query($sql, 86400);
+				$total_users = (int) $this->db->sql_fetchfield('num_users') ?: 0;
+
+				if (!$total_users)
+				{
+					trigger_error('NO_USER');
+				}
+
 				// Build a relevant pagination_url
 				$params = [
 					'sk'	=> $sort_key,
@@ -388,12 +398,6 @@ class thankslist
 				}
 
 				$user_ids = array_keys($rows);
-				$total_users = count($user_ids);
-
-				if (!$total_users)
-				{
-					trigger_error('NO_USER');
-				}
 
 				if ($top)
 				{

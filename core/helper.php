@@ -206,6 +206,7 @@ class helper
 				$sql = 'INSERT INTO ' . $this->thanks_table . ' ' . $this->db->sql_build_array('INSERT', $thanks_data);
 				$this->db->sql_query($sql);
 
+				$this->cache->destroy('sql', $this->thanks_table);
 				$lang_act = 'GIVE';
 				$thanks_data = array_merge($thanks_data, [
 					'username'		=> $this->user->data['username'],
@@ -329,6 +330,7 @@ class helper
 
 			if ($this->db->sql_affectedrows())
 			{
+				$this->cache->destroy('sql', $this->thanks_table);
 				$thanks_data = [
 					'user_id'	=> (int) $this->user->data['user_id'],
 					'post_id'	=> $post_id,
