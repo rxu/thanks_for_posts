@@ -48,7 +48,7 @@ $lang = array_merge($lang, [
 
 	'DISABLE_REMOVE_THANKS'		=> 'Usuwanie podziękowań zostało wyłączone przez administratora',
 
-	'GIVEN'						=> 'Dał&nbsp;podziękowanie',
+	'GIVEN'						=> 'Podziękował',
 	'GLOBAL_INCORRECT_THANKS'	=> 'Nie możesz podziękować za Ogłoszenie globalne, które nie ma odniesienia do konkretnego forum.',
 	'GRATITUDES'				=> 'Lista podziękowań',
 
